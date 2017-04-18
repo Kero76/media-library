@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.model;
+package fr.nicolasgille.medialibrary.models;
 
 /**
  * An enumeration who representing all
