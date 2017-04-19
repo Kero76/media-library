@@ -12,9 +12,12 @@ import javax.transaction.Transactional;
  * So, this interface don't implements to use method present on it.
  * Then, we add in the future much method to interact with the table "movies", in particular getXXXX methods.
  *
+ * V1.1 :
+ *  -> Added method findByTitleAndDurationAndReleaseDate()
+ *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
- * @version 1.0
+ * @version 1.1
  */
 @Transactional
 public interface MovieDAO extends CrudRepository<Movie, Long> {
@@ -30,4 +33,20 @@ public interface MovieDAO extends CrudRepository<Movie, Long> {
      * @version 1.0
      */
     Movie findByTitleIgnoreCase(String title);
+
+    /**
+     * Find a movie by his name, his duration and date of release.
+     *
+     * @param title
+     *  Title of the movie.
+     * @param duration
+     *  Duration of the movie.
+     * @param releaseDate
+     *  Date of release of the movie search.
+     * @return
+     *  An instance of movie search by title, duration and releaseDate.
+     * @since 1.1
+     * @version 1.0
+     */
+    Movie findByTitleAndDurationAndReleaseDate(String title, int duration, int releaseDate);
 }

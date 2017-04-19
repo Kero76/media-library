@@ -85,4 +85,30 @@ public class ClientMovieTest {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(REST_SERVICE_URI + "/movies/delete/1");
     }
+
+    @Test
+    public void testInsertMovieAlreadyPresent() {
+        RestTemplate restTemplate = new RestTemplate();
+        Movie movie = new Movie("Transformers", MovieCategory.ACTION, 2010, 123, "BOUM PAF PAN PAN BOUM ", "Optimus Prime, Bumblebee, Megatron");
+        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        System.out.println(uri.toASCIIString());
+
+        movie = new Movie("Transformers", MovieCategory.ACTION, 2010, 123, "BOUM PAF PAN PAN BOUM ", "Optimus Prime, Bumblebee, Megatron");
+        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        System.out.println(uri.toASCIIString());
+    }
+
+    @Test
+    public void testUpdateMovieNotPresent() {
+        RestTemplate restTemplate = new RestTemplate();
+        Movie movie = new Movie(1,"Batman Fornever", MovieCategory.ACTION, 1995, 95, "I'm Batman !!!", "Batman et Robin");
+        restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
+        System.out.println(movie.toString());
+    }
+
+    @Test
+    public void testDeleteMovieNotPresent() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/666");
+    }
 }

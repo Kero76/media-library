@@ -108,14 +108,14 @@ public class MovieController {
      * @return
      *  A ResponseEntity with the movie added, or an error HTTP 409 : CONFLICT.
      * @since 1.0
-     * @version 2.0
+     * @version 2.1
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Movie movie, UriComponentsBuilder uriBuilder) {
         logger.info("Created movie : {}", movie);
 
         // Check if the movie already exist on database.
-        Movie movieExist = movieDao.findOne(movie.getId());
+        Movie movieExist = movieDao.findByTitleAndDurationAndReleaseDate(movie.getTitle(), movie.getDuration(), movie.getReleaseDate());
         if (movieExist != null) {
             logger.error("Unable to create. The movie {} already exist", movie.getTitle());
             return new ResponseEntity<Object>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
