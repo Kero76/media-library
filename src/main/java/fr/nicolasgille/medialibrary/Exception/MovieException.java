@@ -1,15 +1,19 @@
 package fr.nicolasgille.medialibrary.Exception;
 
 /**
+ * Exception send at the client when a problem occurred during CRUD process.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
+ * @since Media-Library 1.0
+ * @see fr.nicolasgille.medialibrary.controllers.MovieController
  * @version 1.0
  */
 public class MovieException extends Exception {
 
     /**
      * Message at display when the exception was throw.
+     *
+     * @since 1.0
      */
     private String message;
 
@@ -18,6 +22,8 @@ public class MovieException extends Exception {
      *
      * @param message
      *  Message at display when the error was throw.
+     * @since 1.0
+     * @version 1.0
      */
     public MovieException(String message) {
         this.message = message;
@@ -28,6 +34,8 @@ public class MovieException extends Exception {
      *
      * @return
      *  The message at display.
+     * @since 1.0
+     * @version 1.0
      */
     @Override
     public String toString() {

@@ -6,11 +6,18 @@ import javax.validation.constraints.NotNull;
 /**
  * Movie class.
  *
- * This class represent the information about a specific movies.
+ * This class is a model of the movie object stored in persistent system.
+ * If you would add new attribute on the Database, you just add new attribute on this class
+ * to regenerate new Database with new row.
+ *
+ * V 1.1 :
+ *  -> Added constructor Movie(Movie movie) use to copy a movie into another movie. (see MovieController for more information).
+ *  -> Added toString() method to see result on logger.
+ *  -> Removed unused constructors.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
- * @version 1.0
+ * @since Media-Library 1.0
+ * @version 1.1
  */
 @Entity
 @Table(name = "movies")
@@ -18,6 +25,9 @@ public class Movie {
 
     /**
      * Identifier of the movie.
+     * It auto-increment to avoid same identifier for 2 movies.
+     *
+     * @since 1.0
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +36,8 @@ public class Movie {
 
     /**
      * Title of the movie.
+     *
+     * @since 1.0
      */
     @NotNull
     private String title;
@@ -34,46 +46,48 @@ public class Movie {
      * Category of the movie.
      *
      * @see MovieCategory
+     * @since 1.0
      */
     @NotNull
     private MovieCategory category;
 
     /**
      * Date of release.
+     *
+     * @since 1.0
      */
     @NotNull
     private int releaseDate;
 
     /**
      * Duration of the movies (in minutes).
+     *
+     * @since 1.0
      */
     @NotNull
     private int duration;
 
     /**
      * Synopsis of the movie.
+     *
+     * @since 1.0
      */
     private String synopsis;
 
     /**
-     * Main actors present on the movie.
+     * Main actors present on the movie, separate only by one comma.
+     *
+     * @since 1.0
      */
     private String mainActors;
 
     /**
      * Empty constructor.
+     *
+     * @since 1.0
+     * @version 1.0
      */
     public Movie() {}
-
-    /**
-     * Constructor used to delete movie on Database.
-     *
-     * @param title
-     *  Title of the movie at remove.
-     */
-    public Movie(String title) {
-        this.title = title;
-    }
 
     /**
      * Constructor of the movie object.
@@ -90,6 +104,8 @@ public class Movie {
      *  Synopsis of the movie.
      * @param mainActors
      *  Main actors of the movie.
+     * @since 1.0
+     * @version 1.0
      */
     public Movie(String title, MovieCategory category, int releaseDate, int duration, String synopsis, String mainActors) {
         this.title       = title;
@@ -102,6 +118,7 @@ public class Movie {
 
     /**
      * Constructor of the movie object.
+     * This constructor is used to stored information retrieve from the persistent system.
      *
      * @param id
      *  identifier of the movie.
@@ -117,6 +134,8 @@ public class Movie {
      *  Synopsis of the movie.
      * @param mainActors
      *  Main actors of the movie.
+     * @since 1.0
+     * @version 1.0
      */
     public Movie(long id, String title, MovieCategory category, int releaseDate, int duration, String synopsis, String mainActors) {
         this.id          = id;
@@ -130,8 +149,11 @@ public class Movie {
 
     /**
      * Constructor use to update attribute of the current movie by the movie passed on parameter.
+     *
      * @param movie
      *  New content of each attribute of this.
+     * @since 1.1
+     * @version 1.0
      */
     public Movie(Movie movie) {
         this.id          = movie.getId();
@@ -148,6 +170,8 @@ public class Movie {
      *
      * @return
      *  The id.
+     * @since 1.0
+     * @version 1.0
      */
     public long getId() {
         return id;
@@ -158,6 +182,8 @@ public class Movie {
      *
      * @param id
      *  New id.
+     * @since 1.0
+     * @version 1.0
      */
     public void setId(long id) {
         this.id = id;
@@ -168,6 +194,8 @@ public class Movie {
      *
      * @return
      *  The title of the movie.
+     * @since 1.0
+     * @version 1.0
      */
     public String getTitle() {
         return title;
@@ -178,6 +206,8 @@ public class Movie {
      *
      * @param title
      *  New title.
+     * @since 1.0
+     * @version 1.0
      */
     public void setTitle(String title) {
         this.title = title;
@@ -189,6 +219,8 @@ public class Movie {
      * @return
      *  The category of the movie.
      * @see MovieCategory
+     * @since 1.0
+     * @version 1.0
      */
     public MovieCategory getCategory() {
         return category;
@@ -199,6 +231,8 @@ public class Movie {
      *
      * @param category
      *  New category.
+     * @since 1.0
+     * @version 1.0
      */
     public void setCategory(MovieCategory category) {
         this.category = category;
@@ -209,6 +243,8 @@ public class Movie {
      *
      * @return
      *  The release date.
+     * @since 1.0
+     * @version 1.0
      */
     public int getReleaseDate() {
         return releaseDate;
@@ -219,6 +255,8 @@ public class Movie {
      *
      * @param releaseDate
      *  New date of release.
+     * @since 1.0
+     * @version 1.0
      */
     public void setReleaseDate(int releaseDate) {
         this.releaseDate = releaseDate;
@@ -229,6 +267,8 @@ public class Movie {
      *
      * @return
      *  The duration in minute.
+     * @since 1.0
+     * @version 1.0
      */
     public int getDuration() {
         return duration;
@@ -239,6 +279,8 @@ public class Movie {
      *
      * @param duration
      *  New duration in minute.
+     * @since 1.0
+     * @version 1.0
      */
     public void setDuration(int duration) {
         this.duration = duration;
@@ -249,6 +291,8 @@ public class Movie {
      *
      * @return
      *  The synopsis.
+     * @since 1.0
+     * @version 1.0
      */
     public String getSynopsis() {
         return synopsis;
@@ -259,6 +303,8 @@ public class Movie {
      *
      * @param synopsis
      *  New synopsis.
+     * @since 1.0
+     * @version 1.0
      */
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
@@ -269,6 +315,8 @@ public class Movie {
      *
      * @return
      *  A string representation of the actor separated by comma.
+     * @since 1.0
+     * @version 1.0
      */
     public String getMainActors() {
         return mainActors;
@@ -279,8 +327,31 @@ public class Movie {
      *
      * @param mainActors
      *  New mainActors.
+     * @since 1.0
+     * @version 1.0
      */
     public void setMainActors(String mainActors) {
         this.mainActors = mainActors;
+    }
+
+    /**
+     * Display Movie information.
+     *
+     * @return
+     *  A short description of the content of the movie's attribute.
+     * @since 1.1
+     * @version 1.0
+     */
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", category=" + category +
+                ", releaseDate=" + releaseDate +
+                ", duration=" + duration +
+                ", synopsis='" + synopsis + '\'' +
+                ", mainActors='" + mainActors + '\'' +
+                '}';
     }
 }
