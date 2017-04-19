@@ -77,7 +77,7 @@ public class MovieController {
      * This method can call by GET request and take an path variable the title of the movie at research.
      *
      * @param title
-     *  Title of the movie ti search on Database.
+     *  Title of the movie to search on Database.
      * @return
      *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
      * @since 1.0

@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Test persistence of the movie in Database MySQL / MariaDB.
@@ -27,6 +29,39 @@ public class ClientMovieTest {
         Movie movie = new Movie("Batman return", MovieCategory.ACTION, 1995, 95, "I'm Batman !!!", "Batman et Robin");
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
+        movie = new Movie("Batman Dark Knight", MovieCategory.ACTION, 2012, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", "Batman, Robin, Joker");
+        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        System.out.println(uri.toASCIIString());
+    }
+
+    /**
+     * METHOD  |        URL      | BODY
+     *  GET    |     /movies/    |  /
+     */
+    @Test
+    public void testGetAllMovies() {
+        RestTemplate restTemplate = new RestTemplate();
+        List<LinkedHashMap<String, Object>> movies = restTemplate.getForObject(REST_SERVICE_URI + "/movies/", List.class);
+
+        if (movies != null) {
+            for(LinkedHashMap<String, Object> map : movies){
+                for (String key : map.keySet()) {
+                    System.out.print(key + " : " + map.get(key) + " | ");
+                }
+                System.out.println();
+            }
+        }
+    }
+
+    /**
+     * METHOD  |                URL           | BODY
+     *  GET    | /movies/search/title/{title} |  /
+     */
+    @Test
+    public void testMovie() {
+        RestTemplate restTemplate = new RestTemplate();
+        Movie movie = restTemplate.getForObject(REST_SERVICE_URI + "/movies/search/title/Batman return", Movie.class);
+        System.out.println(movie.toString());
     }
 
     /**
