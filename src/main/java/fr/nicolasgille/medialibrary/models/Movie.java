@@ -92,12 +92,12 @@ public class Movie {
      *  Main actors of the movie.
      */
     public Movie(String title, MovieCategory category, int releaseDate, int duration, String synopsis, String mainActors) {
-        this.title = title;
-        this.category = category;
+        this.title       = title;
+        this.category    = category;
         this.releaseDate = releaseDate;
-        this.duration = duration;
-        this.synopsis = synopsis;
-        this.mainActors = mainActors;
+        this.duration    = duration;
+        this.synopsis    = synopsis;
+        this.mainActors  = mainActors;
     }
 
     /**
@@ -119,13 +119,28 @@ public class Movie {
      *  Main actors of the movie.
      */
     public Movie(long id, String title, MovieCategory category, int releaseDate, int duration, String synopsis, String mainActors) {
-        this.id = id;
-        this.title = title;
-        this.category = category;
+        this.id          = id;
+        this.title       = title;
+        this.category    = category;
         this.releaseDate = releaseDate;
-        this.duration = duration;
-        this.synopsis = synopsis;
-        this.mainActors = mainActors;
+        this.duration    = duration;
+        this.synopsis    = synopsis;
+        this.mainActors  = mainActors;
+    }
+
+    /**
+     * Constructor use to update attribute of the current movie by the movie passed on parameter.
+     * @param movie
+     *  New content of each attribute of this.
+     */
+    public Movie(Movie movie) {
+        this.id          = movie.getId();
+        this.title       = movie.getTitle();
+        this.category    = movie.getCategory();
+        this.releaseDate = movie.getReleaseDate();
+        this.duration    = movie.getDuration();
+        this.synopsis    = movie.getSynopsis();
+        this.mainActors  = movie.getMainActors();
     }
 
     /**

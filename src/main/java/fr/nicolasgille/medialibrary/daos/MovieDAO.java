@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.dao;
+package fr.nicolasgille.medialibrary.daos;
 
 import fr.nicolasgille.medialibrary.models.Movie;
 import org.springframework.data.repository.CrudRepository;
@@ -24,4 +24,13 @@ public interface MovieDAO extends CrudRepository<Movie, Long> {
      *  An instance of movie search by the name.
      */
     public Movie findByTitleIgnoreCase(String title);
+
+    /**
+     *
+     * @param movie
+     *  Movie at search on Database.
+     * @return
+     *  True or false in function of the movie exist or not in Database.
+     */
+    public boolean isMovieExist(Movie movie);
 }
