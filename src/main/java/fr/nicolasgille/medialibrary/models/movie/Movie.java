@@ -1,7 +1,8 @@
-package fr.nicolasgille.medialibrary.models;
+package fr.nicolasgille.medialibrary.models.movie;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Movie class.
@@ -14,6 +15,8 @@ import javax.validation.constraints.NotNull;
  *  -> Added constructor Movie(Movie movie) use to copy a movie into another movie. (see MovieController for more information).
  *  -> Added toString() method to see result on logger.
  *  -> Removed unused constructors.
+ *  -> Update field category to add multiple category for movie.
+ *  -> Added following fields : supports,
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
@@ -43,13 +46,13 @@ public class Movie {
     private String title;
 
     /**
-     * Category of the movie.
+     * List of all categories of the movie.
      *
      * @see MovieCategory
      * @since 1.0
      */
     @NotNull
-    private MovieCategory category;
+    private List<MovieCategory> categories;
 
     /**
      * Date of release.
@@ -82,6 +85,14 @@ public class Movie {
     private String mainActors;
 
     /**
+     * List of Support for the movie
+     *
+     * @see MovieSupport
+     * @since 1.1
+     */
+    private List<MovieSupport> supports;
+
+    /**
      * Empty constructor.
      *
      * @since 1.0
@@ -94,8 +105,8 @@ public class Movie {
      *
      * @param title
      *  Title of the movie.
-     * @param category
-     *  Category of the movie.
+     * @param categories
+     *  List of all category for the movie.
      * @param releaseDate
      *  Date of release of the movie.
      * @param duration
@@ -107,13 +118,14 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(String title, MovieCategory category, int releaseDate, int duration, String synopsis, String mainActors) {
+    public Movie(String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, String mainActors, List<MovieSupport> supports) {
         this.title       = title;
-        this.category    = category;
+        this.categories  = categories;
         this.releaseDate = releaseDate;
         this.duration    = duration;
         this.synopsis    = synopsis;
         this.mainActors  = mainActors;
+        this.supports    = supports;
     }
 
     /**
@@ -124,8 +136,8 @@ public class Movie {
      *  identifier of the movie.
      * @param title
      *  Title of the movie.
-     * @param category
-     *  Category of the movie.
+     * @param categories
+     *  List of all category of the movie.
      * @param releaseDate
      *  Date of release of the movie.
      * @param duration
@@ -137,14 +149,15 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, MovieCategory category, int releaseDate, int duration, String synopsis, String mainActors) {
+    public Movie(long id, String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, String mainActors, List<MovieSupport> supports) {
         this.id          = id;
         this.title       = title;
-        this.category    = category;
+        this.categories  = categories;
         this.releaseDate = releaseDate;
         this.duration    = duration;
         this.synopsis    = synopsis;
         this.mainActors  = mainActors;
+        this.supports    = supports;
     }
 
     /**
@@ -158,11 +171,12 @@ public class Movie {
     public Movie(Movie movie) {
         this.id          = movie.getId();
         this.title       = movie.getTitle();
-        this.category    = movie.getCategory();
+        this.categories  = movie.getCategories();
         this.releaseDate = movie.getReleaseDate();
         this.duration    = movie.getDuration();
         this.synopsis    = movie.getSynopsis();
         this.mainActors  = movie.getMainActors();
+        this.supports    = movie.getSupports();
     }
 
     /**
@@ -220,10 +234,10 @@ public class Movie {
      *  The category of the movie.
      * @see MovieCategory
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public MovieCategory getCategory() {
-        return category;
+    public List<MovieCategory> getCategories() {
+        return categories;
     }
 
     /**
@@ -232,10 +246,10 @@ public class Movie {
      * @param category
      *  New category.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public void setCategory(MovieCategory category) {
-        this.category = category;
+    public void setCategories(List<MovieCategory> category) {
+        this.categories = category;
     }
 
     /**
@@ -335,23 +349,66 @@ public class Movie {
     }
 
     /**
+     * Return all supports for the movie.
+     *
+     * @return
+     *  List of all supports.
+     * @since 1.0
+     * @version 1.0
+     */
+    public List<MovieSupport> getSupports() {
+        return supports;
+    }
+
+    /**
+     * Set the supports for the movie.
+     *
+     * @param supports
+     *  New Supports.
+     * @since 1.0
+     * @version 1.0
+     */
+    public void setSupports(List<MovieSupport> supports) {
+        this.supports = supports;
+    }
+
+    /**
      * Display Movie information.
      *
      * @return
      *  A short description of the content of the movie's attribute.
      * @since 1.1
-     * @version 1.0
+     * @version 1.1
      */
     @Override
     public String toString() {
+        // Build categories string.
+        StringBuilder categories = new StringBuilder();
+        for (int i = 0; i < this.categories.size(); ++i) {
+            categories.append(this.categories.get(i).name().toLowerCase());
+            if (i != this.categories.size() - 1) {
+                categories.append(", ");
+            }
+        }
+
+        // Build supports string.
+        StringBuilder supports = new StringBuilder();
+        for (int i = 0; i < this.supports.size(); ++i) {
+            categories.append(this.supports.get(i).name().toLowerCase());
+            if (i != this.supports.size() - 1) {
+                supports.append(", ");
+            }
+        }
+
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", category=" + category +
+                ", category=" + categories.toString() +
                 ", releaseDate=" + releaseDate +
                 ", duration=" + duration +
                 ", synopsis='" + synopsis + '\'' +
                 ", mainActors='" + mainActors + '\'' +
+                ", supports='" + supports.toString() +
                 '}';
     }
 }

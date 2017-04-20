@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.Exception;
+package fr.nicolasgille.medialibrary.exception;
 
 /**
  * Exception send at the client when a problem occurred during CRUD process.

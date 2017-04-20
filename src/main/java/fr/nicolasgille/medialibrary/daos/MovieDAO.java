@@ -1,6 +1,6 @@
 package fr.nicolasgille.medialibrary.daos;
 
-import fr.nicolasgille.medialibrary.models.Movie;
+import fr.nicolasgille.medialibrary.models.movie.Movie;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;

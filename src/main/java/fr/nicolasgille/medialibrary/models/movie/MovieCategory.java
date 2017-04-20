@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.models;
+package fr.nicolasgille.medialibrary.models.movie;
 
 /**
  * An enumeration who representing all movies category available in Media Library.

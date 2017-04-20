@@ -1,8 +1,8 @@
 package fr.nicolasgille.medialibrary.controllers;
 
-import fr.nicolasgille.medialibrary.Exception.MovieException;
+import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.daos.MovieDAO;
-import fr.nicolasgille.medialibrary.models.Movie;
+import fr.nicolasgille.medialibrary.models.movie.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
