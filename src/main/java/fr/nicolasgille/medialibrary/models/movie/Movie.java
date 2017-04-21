@@ -1,5 +1,7 @@
 package fr.nicolasgille.medialibrary.models.movie;
 
+import fr.nicolasgille.medialibrary.models.common.Actor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -70,11 +72,13 @@ public class Movie {
     private String synopsis;
 
     /**
-     * Main actors present on the movie, separate only by one comma.
+     * Main actors present on the movie.
      *
      * @since 1.0
      */
-    private String mainActors;
+    @NotNull
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Actor> mainActors;
 
     /**
      * List of all categories of the movie.
@@ -122,7 +126,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, String mainActors, List<MovieSupport> supports) {
+    public Movie(String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<MovieSupport> supports) {
         this.title       = title;
         this.categories  = categories;
         this.releaseDate = releaseDate;
@@ -153,7 +157,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, String mainActors, List<MovieSupport> supports) {
+    public Movie(long id, String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<MovieSupport> supports) {
         this.id          = id;
         this.title       = title;
         this.categories  = categories;
@@ -336,7 +340,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public String getMainActors() {
+    public List<Actor> getMainActors() {
         return mainActors;
     }
 
@@ -348,7 +352,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public void setMainActors(String mainActors) {
+    public void setMainActors(List<Actor> mainActors) {
         this.mainActors = mainActors;
     }
 
@@ -404,6 +408,15 @@ public class Movie {
             }
         }
 
+        // Build mainActor string.
+        StringBuilder mainActors = new StringBuilder();
+        for (int i = 0; i < this.mainActors.size(); ++i) {
+            mainActors.append(this.mainActors.get(i).toString());
+            if (i != this.mainActors.size() - 1) {
+                mainActors.append(", ");
+            }
+        }
+
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
@@ -411,7 +424,7 @@ public class Movie {
                 ", releaseDate=" + releaseDate +
                 ", duration=" + duration +
                 ", synopsis='" + synopsis + '\'' +
-                ", mainActors='" + mainActors + '\'' +
+                ", mainActors='" + mainActors.toString() + '\'' +
                 ", supports='" + supports.toString() +
                 '}';
     }

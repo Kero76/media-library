@@ -39,3 +39,4 @@ The statement is a representation of the current state of development of each me
 - Link about jpa query method nomenclature : [http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/#jpa.query-methods.query-creation](http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
 - Example of API Rest in Spring Boot : [http://websystique.com/spring-boot/spring-boot-rest-api-example/](http://websystique.com/spring-boot/spring-boot-rest-api-example/)
 - Problem about timezone of MySQL : [http://stackoverflow.com/questions/26515700/mysql-jdbc-driver-5-1-33-time-zone-issue](http://stackoverflow.com/questions/26515700/mysql-jdbc-driver-5-1-33-time-zone-issue)
+- JPA help about Enumeration and Collection : [https://en.wikibooks.org/wiki/Java_Persistence/ElementCollection](https://en.wikibooks.org/wiki/Java_Persistence/ElementCollection) 

@@ -1,7 +1,9 @@
 package fr.nicolasgille.medialibrary.controllers;
 
+import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.daos.MovieDAO;
+import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ import java.util.List;
  * In fact, it define CRUD method to interact with the model and the persistence model.
  * It can update in the future to add new methods like getXXX requests.
  *
+ * V2.1 :
+ *  -> Added Actor DAO to interact with Actor present on persistent system.
+ *
  * V2.0:
  *  -> Completely rewrite content of all methods to modernize methods.
  *  -> Added Logger object to see step of each method and help debugging.
@@ -34,12 +39,20 @@ import java.util.List;
 public class MovieController {
 
     /**
-     * DAO used to interact with the table movies present on Database.
+     * DAO used to interact with the table <code>movies</code> present on Database.
      *
      * @since 1.0
      */
     @Autowired
     private MovieDAO movieDao;
+
+    /**
+     * DAO used to interact with the table <code>common_table</code>.
+     *
+     * @since 2.1
+     */
+    @Autowired
+    private ActorDAO actorDAO;
 
     /**
      * Logger for debugging app.
@@ -120,6 +133,17 @@ public class MovieController {
             logger.error("Unable to create. The movie {} already exist", movie.getTitle());
             return new ResponseEntity<Object>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
         }
+
+        // Check if the actor are present on Database or not.
+        List<Actor> actorsOnMovie = movie.getMainActors();
+        for (Actor a : actorsOnMovie) {
+            Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+            // If the actor is not present on Database, it add on it.
+            if (actorExist == null) {
+                logger.info("Created actor : {}", a);
+                actorDAO.save(a);
+            }
+        }
         movieDao.save(movie);
 
         HttpHeaders header = new HttpHeaders();
@@ -152,6 +176,16 @@ public class MovieController {
         if (movieAtUpdate == null) {
             logger.error("Unable to update. Movie with id {} not found", id);
             return new ResponseEntity<Object>(new MovieException("Unable to update. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
+        }
+
+        // Check if the actor are present on Database or not.
+        List<Actor> actorsOnMovie = movie.getMainActors();
+        for (Actor a : actorsOnMovie) {
+            Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+            // If the actor is not present on Database, it add on it.
+            if (actorExist == null) {
+                actorDAO.save(a);
+            }
         }
 
         // Copy content of the movie receive on request body on the movie retrieve from the database.
