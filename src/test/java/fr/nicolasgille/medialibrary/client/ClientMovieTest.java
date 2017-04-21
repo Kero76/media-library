@@ -2,6 +2,7 @@ package fr.nicolasgille.medialibrary.client;
 
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import fr.nicolasgille.medialibrary.models.movie.MovieCategory;
+import fr.nicolasgille.medialibrary.models.movie.MovieSupport;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,11 +29,16 @@ public class ClientMovieTest {
     public void testSave() {
         List<MovieCategory> categories = new ArrayList<MovieCategory>();
         categories.add(MovieCategory.ACTION);
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.VIDEO_TAPE);
+        supports.add(MovieSupport.DVD);
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Batman return", categories, 1995, 95, "I'm Batman !!!", "Batman et Robin");
+        Movie movie = new Movie("Batman return", categories, 1995, 95, "I'm Batman !!!", "Batman et Robin", supports);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
-        movie = new Movie("Batman Dark Knight", categories, 2012, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", "Batman, Robin, Joker");
+
+        supports.remove(MovieSupport.VIDEO_TAPE);
+        movie = new Movie("Batman Dark Knight", categories, 2012, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", "Batman, Robin, Joker", supports);
         uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
@@ -77,8 +83,10 @@ public class ClientMovieTest {
         categories.add(MovieCategory.ACTION);
         categories.add(MovieCategory.COMEDY);
         categories.add(MovieCategory.ADVENTURE);
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(1,"Batman Forever", categories, 1995, 95, "I'm Batman !!!", "Batman et Robin");
+        Movie movie = new Movie(1,"Batman Forever", categories, 1995, 95, "I'm Batman !!!", "Batman et Robin", supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }
@@ -98,13 +106,15 @@ public class ClientMovieTest {
         RestTemplate restTemplate = new RestTemplate();
         List<MovieCategory> categories = new ArrayList<MovieCategory>();
         categories.add(MovieCategory.ACTION);
-        Movie movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", "Optimus Prime, Bumblebee, Megatron");
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", "Optimus Prime, Bumblebee, Megatron", supports);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         categories.add(MovieCategory.ACTION);
         categories.add(MovieCategory.ADVENTURE);
-        movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", "Optimus Prime, Bumblebee, Megatron");
+        movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", "Optimus Prime, Bumblebee, Megatron", supports);
         uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
@@ -113,8 +123,10 @@ public class ClientMovieTest {
     public void testUpdateMovieNotPresent() {
         List<MovieCategory> categories = new ArrayList<MovieCategory>();
         categories.add(MovieCategory.ACTION);
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(1,"Batman Fornever", categories, 1995, 95, "I'm Batman !!!", "Batman et Robin");
+        Movie movie = new Movie(1,"Batman Fornever", categories, 1995, 95, "I'm Batman !!!", "Batman et Robin", supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }

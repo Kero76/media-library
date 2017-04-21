@@ -16,6 +16,7 @@ import java.util.List;
  *  -> Added toString() method to see result on logger.
  *  -> Removed unused constructors.
  *  -> Update field category to add multiple category for movie.
+ *  -> Update constructors with new attributes.
  *  -> Added following fields : supports,
  *
  * @author Nicolas GILLE
@@ -44,15 +45,6 @@ public class Movie {
      */
     @NotNull
     private String title;
-
-    /**
-     * List of all categories of the movie.
-     *
-     * @see MovieCategory
-     * @since 1.0
-     */
-    @NotNull
-    private List<MovieCategory> categories;
 
     /**
      * Date of release.
@@ -85,11 +77,23 @@ public class Movie {
     private String mainActors;
 
     /**
+     * List of all categories of the movie.
+     *
+     * @see MovieCategory
+     * @since 1.0
+     */
+    @NotNull
+    @ElementCollection(targetClass = MovieCategory.class)
+    private List<MovieCategory> categories;
+
+    /**
      * List of Support for the movie
      *
      * @see MovieSupport
      * @since 1.1
      */
+    @NotNull
+    @ElementCollection(targetClass = MovieSupport.class)
     private List<MovieSupport> supports;
 
     /**
@@ -394,7 +398,7 @@ public class Movie {
         // Build supports string.
         StringBuilder supports = new StringBuilder();
         for (int i = 0; i < this.supports.size(); ++i) {
-            categories.append(this.supports.get(i).name().toLowerCase());
+            supports.append(this.supports.get(i).name().toLowerCase());
             if (i != this.supports.size() - 1) {
                 supports.append(", ");
             }
