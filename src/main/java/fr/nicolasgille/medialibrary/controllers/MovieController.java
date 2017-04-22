@@ -30,6 +30,8 @@ import java.util.List;
  * V2.0:
  *  -> Completely rewrite content of all methods to modernize methods.
  *  -> Added Logger object to see step of each method and help debugging.
+ *  -> Update CRUD method to add Actor registration on persistent system.
+ *
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
@@ -146,12 +148,11 @@ public class MovieController {
                 actorDAO.save(a);
                 mainActors.add(a);
             } else {
-                logger.info("Added actor {} already present on DB", actorExist);
+                logger.info("Added actor {} already present on persistent system", actorExist);
                 mainActors.add(actorExist);
             }
         }
         movie.setMainActors(mainActors);
-        logger.info("Actors {} : ", movie.getMainActors());
         movieDao.save(movie);
 
         HttpHeaders header = new HttpHeaders();
@@ -188,13 +189,20 @@ public class MovieController {
 
         // Check if the actor are present on Database or not.
         List<Actor> actorsOnMovie = movie.getMainActors();
+        List<Actor> mainActors = new ArrayList<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             // If the actor is not present on Database, it add on it.
             if (actorExist == null) {
+                logger.info("Created actor : {}", a);
                 actorDAO.save(a);
+                mainActors.add(a);
+            } else {
+                logger.info("Added actor {} already present on persistent system", actorExist);
+                mainActors.add(actorExist);
             }
         }
+        movie.setMainActors(mainActors);
 
         // Copy content of the movie receive on request body on the movie retrieve from the database.
         movieAtUpdate = new Movie(movie);

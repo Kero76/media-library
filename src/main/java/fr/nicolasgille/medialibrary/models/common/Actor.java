@@ -1,14 +1,18 @@
 package fr.nicolasgille.medialibrary.models.common;
 
-
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * Class Actor present on class Movie to representing main actor in a movie.
+ *
+ * V1.1 :
+ *  -> Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.
+ *  -> Updated constructor with new attribute on parameter.
+ *  -> Added corresponding getter and setter for attribute <code>movies</code>
+ *  -> Added <code>@ManyToMany</code> annotations new attribute <code>movies</code>.
  *
  * @see fr.nicolasgille.medialibrary.models.movie.Movie
  * @author Nicolas GILLE
@@ -87,7 +91,7 @@ public class Actor {
      * @param lastName
      *  Last name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Actor(long id, String firstName, String lastName, List<Movie> movies) {
         this.id = id;
@@ -168,11 +172,26 @@ public class Actor {
         this.lastName = lastName;
     }
 
-
+    /**
+     * List of movies where the actor played as main actor.
+     *
+     * @return
+     *  List of all movies where the actor played as main actor.
+     * @since 1.1
+     * @version 1.0
+     */
     public List<Movie> getMovies() {
         return movies;
     }
 
+    /**
+     * Set list of movies where actor played as main actor.
+     *
+     * @param movies
+     *  New list of movies.
+     * @since 1.1
+     * @version 1.0
+     */
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
@@ -183,7 +202,7 @@ public class Actor {
      * @return
      *  A simple representation of the Actor.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     @Override
     public String toString() {
