@@ -77,7 +77,12 @@ public class Movie {
      * @since 1.0
      */
     @NotNull
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="movies_main_actors",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "main_actors_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Actor.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Actor> mainActors;
 
     /**

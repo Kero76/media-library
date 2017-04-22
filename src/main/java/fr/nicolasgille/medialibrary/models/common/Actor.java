@@ -1,7 +1,11 @@
 package fr.nicolasgille.medialibrary.models.common;
 
 
+import fr.nicolasgille.medialibrary.models.movie.Movie;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Class Actor present on class Movie to representing main actor in a movie.
@@ -31,7 +35,7 @@ public class Actor {
      *
      * @since 1.0
      */
-    @Column(name = "fname")
+    @Column(name = "fname", unique = true)
     private String firstName;
 
     /**
@@ -39,8 +43,16 @@ public class Actor {
      *
      * @since 1.0
      */
-    @Column(name = "lname")
+    @Column(name = "lname", unique = true)
     private String lastName;
+
+    /**
+     * Main actors present on the movie.
+     *
+     * @since 1.0
+     */
+    @ManyToMany(targetEntity = Movie.class, fetch = FetchType.LAZY, mappedBy = "mainActors", cascade = CascadeType.ALL)
+    private List<Movie> movies;
 
     /**
      * Empty constructor.
@@ -77,10 +89,11 @@ public class Actor {
      * @since 1.0
      * @version 1.0
      */
-    public Actor(long id, String firstName, String lastName) {
+    public Actor(long id, String firstName, String lastName, List<Movie> movies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.movies = movies;
     }
 
     /**
@@ -155,6 +168,15 @@ public class Actor {
         this.lastName = lastName;
     }
 
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
     /**
      * Display content of the Actor.
      *
@@ -166,8 +188,10 @@ public class Actor {
     @Override
     public String toString() {
         return "Actor{" +
+                ", id=" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                "', movies='" + movies + '\'' +
                 '}';
     }
 }

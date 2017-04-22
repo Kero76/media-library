@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -136,14 +137,21 @@ public class MovieController {
 
         // Check if the actor are present on Database or not.
         List<Actor> actorsOnMovie = movie.getMainActors();
+        List<Actor> mainActors = new ArrayList<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             // If the actor is not present on Database, it add on it.
             if (actorExist == null) {
                 logger.info("Created actor : {}", a);
                 actorDAO.save(a);
+                mainActors.add(a);
+            } else {
+                logger.info("Added actor {} already present on DB", actorExist);
+                mainActors.add(actorExist);
             }
         }
+        movie.setMainActors(mainActors);
+        logger.info("Actors {} : ", movie.getMainActors());
         movieDao.save(movie);
 
         HttpHeaders header = new HttpHeaders();
