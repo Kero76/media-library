@@ -1,9 +1,11 @@
 package fr.nicolasgille.medialibrary.controllers;
 
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
+import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
 import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.daos.MovieDAO;
 import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +52,7 @@ public class MovieController {
     private MovieDAO movieDao;
 
     /**
-     * DAO used to interact with the table <code>common_table</code>.
+     * DAO used to interact with the table <code>common_actors</code>.
      *
      * @since 2.1
      */
@@ -58,11 +60,17 @@ public class MovieController {
     private ActorDAO actorDAO;
 
     /**
+     * DAO used to interact with the table <code>common_producers</code>.
+     */
+    @Autowired
+    private ProducerDAO producerDAO;
+
+    /**
      * Logger for debugging app.
      *
      * @since 2.0
      */
-    public static final Logger logger = LoggerFactory.getLogger(MovieController.class);
+    static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
     /**
      * Return all movies found on Database.
@@ -137,12 +145,12 @@ public class MovieController {
             return new ResponseEntity<Object>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
         }
 
-        // Check if the actor are present on Database or not.
+        // Check if the actors are present on Database or not.
         List<Actor> actorsOnMovie = movie.getMainActors();
         List<Actor> mainActors = new ArrayList<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
-            // If the actor is not present on Database, it add on it.
+            // If the actor is not present on Database, he add on it.
             if (actorExist == null) {
                 logger.info("Created actor : {}", a);
                 actorDAO.save(a);
@@ -153,6 +161,23 @@ public class MovieController {
             }
         }
         movie.setMainActors(mainActors);
+
+        // Check if the producers are present on Database or not.
+        List<Producer> producersOnMovie = movie.getProducers();
+        List<Producer> producers = new ArrayList<Producer>();
+        for (Producer p : producersOnMovie) {
+            Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
+            // If the producer is not present on Database, he add on it.
+            if (producerExist == null) {
+                logger.info("Created producer : {}", p);
+                producerDAO.save(p);
+                producers.add(p);
+            } else {
+                logger.info("Added producer {} already present on persistent system.", producerExist);
+                producers.add(producerExist);
+            }
+        }
+        movie.setProducers(producers);
         movieDao.save(movie);
 
         HttpHeaders header = new HttpHeaders();
@@ -203,6 +228,23 @@ public class MovieController {
             }
         }
         movie.setMainActors(mainActors);
+
+        // Check if the producers are present on Database or not.
+        List<Producer> producersOnMovie = movie.getProducers();
+        List<Producer> producers = new ArrayList<Producer>();
+        for (Producer p : producersOnMovie) {
+            Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
+            // If the producer is not present on Database, he add on it.
+            if (producerExist == null) {
+                logger.info("Created producer : {}", p);
+                producerDAO.save(p);
+                producers.add(p);
+            } else {
+                logger.info("Added producer {} already present on persistent system.", producerExist);
+                producers.add(producerExist);
+            }
+        }
+        movie.setProducers(producers);
 
         // Copy content of the movie receive on request body on the movie retrieve from the database.
         movieAtUpdate = new Movie(movie);

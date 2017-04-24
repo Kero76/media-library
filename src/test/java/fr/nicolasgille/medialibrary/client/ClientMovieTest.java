@@ -1,6 +1,7 @@
 package fr.nicolasgille.medialibrary.client;
 
 import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import fr.nicolasgille.medialibrary.models.movie.MovieCategory;
 import fr.nicolasgille.medialibrary.models.movie.MovieSupport;
@@ -40,15 +41,19 @@ public class ClientMovieTest {
         actors.add(new Actor("Bruce", "Wayne"));
         actors.add(new Actor("Clark", "Kent"));
 
+        List<Producer> producers = new ArrayList<Producer>();
+        producers.add(new Producer("Jacky", "LaFrite"));
+        producers.add(new Producer("Michel", "LaPoutre"));
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Batman return", categories, 1995, 95, "I'm Batman !!!", actors, supports);
+        Movie movie = new Movie("Batman return", categories, 1995, 95, "I'm Batman !!!", actors, producers, supports);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         supports.remove(MovieSupport.VIDEO_TAPE);
         actors.add(new Actor("Jocker", ""));
 
-        movie = new Movie("Batman Dark Knight", categories, 2012, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", actors, supports);
+        movie = new Movie("Batman Dark Knight", categories, 2012, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", actors, producers, supports);
         uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
@@ -102,8 +107,11 @@ public class ClientMovieTest {
         List<Actor> actors = new ArrayList<Actor>();
         actors.add(new Actor("Bruce", "Wayne"));
 
+        List<Producer> producers = new ArrayList<Producer>();
+        producers.add(new Producer("Jacky", "LaFrite"));
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(id,"Batman Forever", categories, 1995, 95, "I'm Batman !!!", actors, supports);
+        Movie movie = new Movie(id,"Batman Forever", categories, 1995, 95, "I'm Batman !!!", actors, producers, supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }
@@ -132,14 +140,17 @@ public class ClientMovieTest {
         actors.add(new Actor("Bumblebee", ""));
         actors.add(new Actor("Megatron", ""));
 
+        List<Producer> producers = new ArrayList<Producer>();
+        producers.add(new Producer("Michael", "Bay"));
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", actors, supports);
+        Movie movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, supports);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         categories.add(MovieCategory.ACTION);
         categories.add(MovieCategory.ADVENTURE);
-        movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", actors, supports);
+        movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, supports);
         uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
@@ -156,8 +167,11 @@ public class ClientMovieTest {
         List<Actor> actors = new ArrayList<Actor>();
         actors.add(new Actor("Bruce", "Wayne"));
 
+        List<Producer> producers = new ArrayList<Producer>();
+        producers.add(new Producer("Michael", "Bay"));
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(1,"Batman Fornever", categories, 1995, 95, "I'm Batman !!!", actors, supports);
+        Movie movie = new Movie(1,"Batman Fornever", categories, 1995, 95, "I'm Batman !!!", actors, producers, supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }

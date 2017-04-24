@@ -1,6 +1,9 @@
 package fr.nicolasgille.medialibrary.models.movie;
 
 import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.Producer;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -78,12 +81,28 @@ public class Movie {
      */
     @NotNull
     @JoinTable(
-            name="movies_main_actors",
+            name = "movies_main_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "main_actors_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Actor.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Actor.class, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Actor> mainActors;
+
+    /**
+     * List of Producer for the movie.
+     *
+     * @since 1.1
+     */
+    @NotNull
+    @JoinTable(
+            name = "movies_producers",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Producer.class, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Producer> producers;
 
     /**
      * List of all categories of the movie.
@@ -128,10 +147,14 @@ public class Movie {
      *  Synopsis of the movie.
      * @param mainActors
      *  Main actors of the movie.
+     * @param producers
+     *  List of all producers of the movie.
+     * @param supports
+     *  Supports present for the movie.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public Movie(String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<MovieSupport> supports) {
+    public Movie(String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<MovieSupport> supports) {
         this.title       = title;
         this.categories  = categories;
         this.releaseDate = releaseDate;
@@ -139,6 +162,7 @@ public class Movie {
         this.synopsis    = synopsis;
         this.mainActors  = mainActors;
         this.supports    = supports;
+        this.producers   = producers;
     }
 
     /**
@@ -159,10 +183,14 @@ public class Movie {
      *  Synopsis of the movie.
      * @param mainActors
      *  Main actors of the movie.
+     * @param producers
+     *  List of all producers of the movie.
+     * @param supports
+     *  Supports present for the movie.
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<MovieSupport> supports) {
+    public Movie(long id, String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<MovieSupport> supports) {
         this.id          = id;
         this.title       = title;
         this.categories  = categories;
@@ -170,6 +198,7 @@ public class Movie {
         this.duration    = duration;
         this.synopsis    = synopsis;
         this.mainActors  = mainActors;
+        this.producers   = producers;
         this.supports    = supports;
     }
 
@@ -189,6 +218,7 @@ public class Movie {
         this.duration    = movie.getDuration();
         this.synopsis    = movie.getSynopsis();
         this.mainActors  = movie.getMainActors();
+        this.producers   = movie.getProducers();
         this.supports    = movie.getSupports();
     }
 
@@ -386,6 +416,30 @@ public class Movie {
     }
 
     /**
+     * Return all producers for the movie.
+     *
+     * @return
+     *  List of all producer of the movie.
+     * @since 1.0
+     * @version 1.1
+     */
+    public List<Producer> getProducers() {
+        return producers;
+    }
+
+    /**
+     * Set the list of producers.
+     *
+     * @return
+     *  new List of producer.
+     * @since 1.0
+     * @version 1.1
+     */
+    public void setProducers(List<Producer> producers) {
+        this.producers = producers;
+    }
+
+    /**
      * Display Movie information.
      *
      * @return
@@ -422,6 +476,15 @@ public class Movie {
             }
         }
 
+        // Build producers string.
+        StringBuilder producers = new StringBuilder();
+        for (int i = 0; i < this.producers.size(); ++i) {
+            producers.append(this.producers.get(i).toString());
+            if (i != this.producers.size() - 1) {
+                producers.append(", ");
+            }
+        }
+
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
@@ -430,6 +493,7 @@ public class Movie {
                 ", duration=" + duration +
                 ", synopsis='" + synopsis + '\'' +
                 ", mainActors='" + mainActors.toString() + '\'' +
+                ", producers='" + producers.toString() + '\'' +
                 ", supports='" + supports.toString() +
                 '}';
     }
