@@ -1,6 +1,7 @@
 package fr.nicolasgille.medialibrary.client;
 
 import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import fr.nicolasgille.medialibrary.models.movie.MovieCategory;
@@ -9,9 +10,7 @@ import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Test persistence of the movie in Database MySQL / MariaDB.
@@ -45,15 +44,23 @@ public class ClientMovieTest {
         producers.add(new Producer("Jacky", "LaFrite"));
         producers.add(new Producer("Michel", "LaPoutre"));
 
+        List<Director> directors = new ArrayList<Director>();
+        directors.add(new Director("Director", "Sama"));
+
+        Calendar releasedDate = new GregorianCalendar();
+        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Batman return", categories, 1995, 95, "I'm Batman !!!", actors, producers, supports);
+        Movie movie = new Movie("Batman return", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         supports.remove(MovieSupport.VIDEO_TAPE);
         actors.add(new Actor("Jocker", ""));
 
-        movie = new Movie("Batman Dark Knight", categories, 2012, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", actors, producers, supports);
+        releasedDate.set(2012, Calendar.MAY, Calendar.JANUARY);
+
+        movie = new Movie("Batman Dark Knight", categories, releasedDate, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", actors, producers, directors, supports);
         uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
@@ -110,8 +117,14 @@ public class ClientMovieTest {
         List<Producer> producers = new ArrayList<Producer>();
         producers.add(new Producer("Jacky", "LaFrite"));
 
+        List<Director> directors = new ArrayList<Director>();
+        directors.add(new Director("Director", "Sama"));
+
+        Calendar releasedDate = new GregorianCalendar();
+        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(id,"Batman Forever", categories, 1995, 95, "I'm Batman !!!", actors, producers, supports);
+        Movie movie = new Movie(id,"Batman Forever", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }
@@ -143,14 +156,20 @@ public class ClientMovieTest {
         List<Producer> producers = new ArrayList<Producer>();
         producers.add(new Producer("Michael", "Bay"));
 
+        List<Director> directors = new ArrayList<Director>();
+        directors.add(new Director("Director", "Sama"));
+
+        Calendar releasedDate = new GregorianCalendar();
+        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, supports);
+        Movie movie = new Movie("Transformers", categories, releasedDate, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, directors, supports);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         categories.add(MovieCategory.ACTION);
         categories.add(MovieCategory.ADVENTURE);
-        movie = new Movie("Transformers", categories, 2010, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, supports);
+        movie = new Movie("Transformers", categories, releasedDate, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, directors, supports);
         uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
@@ -170,8 +189,14 @@ public class ClientMovieTest {
         List<Producer> producers = new ArrayList<Producer>();
         producers.add(new Producer("Michael", "Bay"));
 
+        List<Director> directors = new ArrayList<Director>();
+        directors.add(new Director("Director", "Sama"));
+
+        Calendar releasedDate = new GregorianCalendar();
+        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
+
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(1,"Batman Fornever", categories, 1995, 95, "I'm Batman !!!", actors, producers, supports);
+        Movie movie = new Movie(1,"Batman Fornever", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }

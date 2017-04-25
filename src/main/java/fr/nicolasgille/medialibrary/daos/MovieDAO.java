@@ -4,6 +4,7 @@ import fr.nicolasgille.medialibrary.models.movie.Movie;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 
 /**
  * An interface who specified method to interact with the movies table.
@@ -48,5 +49,5 @@ public interface MovieDAO extends CrudRepository<Movie, Long> {
      * @since 1.1
      * @version 1.0
      */
-    Movie findByTitleAndDurationAndReleaseDate(String title, int duration, int releaseDate);
+    Movie findByTitleAndDurationAndReleaseDate(String title, int duration, Calendar releaseDate);
 }

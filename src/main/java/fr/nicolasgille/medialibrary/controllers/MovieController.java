@@ -1,10 +1,12 @@
 package fr.nicolasgille.medialibrary.controllers;
 
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
+import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
 import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.daos.MovieDAO;
 import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import org.slf4j.Logger;
@@ -64,6 +66,12 @@ public class MovieController {
      */
     @Autowired
     private ProducerDAO producerDAO;
+
+    /**
+     * DAO used to interact with the table <code>common_director</code>.
+     */
+    @Autowired
+    private DirectorDAO directorDAO;
 
     /**
      * Logger for debugging app.
@@ -178,6 +186,23 @@ public class MovieController {
             }
         }
         movie.setProducers(producers);
+
+        // Check if the directors are present on Database or not.
+        List<Director> directorOnMovie = movie.getDirectors();
+        List<Director> directors = new ArrayList<Director>();
+        for (Director d : directorOnMovie) {
+            Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
+            // If the director is not present on Database, he add on it.
+            if (directorExist  == null) {
+                logger.info("Created director : {}", d);
+                directorDAO.save(d);
+                directors.add(d);
+            } else {
+                logger.info("Added director {} already present on persistent system.", directorExist );
+                directors.add(directorExist);
+            }
+        }
+        movie.setDirectors(directors);
         movieDao.save(movie);
 
         HttpHeaders header = new HttpHeaders();
@@ -245,6 +270,23 @@ public class MovieController {
             }
         }
         movie.setProducers(producers);
+
+        // Check if the directors are present on Database or not.
+        List<Director> directorOnMovie = movie.getDirectors();
+        List<Director> directors = new ArrayList<Director>();
+        for (Director d : directorOnMovie) {
+            Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
+            // If the director is not present on Database, he add on it.
+            if (directorExist  == null) {
+                logger.info("Created director : {}", d);
+                directorDAO.save(d);
+                directors.add(d);
+            } else {
+                logger.info("Added director {} already present on persistent system.", directorExist );
+                directors.add(directorExist);
+            }
+        }
+        movie.setDirectors(directors);
 
         // Copy content of the movie receive on request body on the movie retrieve from the database.
         movieAtUpdate = new Movie(movie);

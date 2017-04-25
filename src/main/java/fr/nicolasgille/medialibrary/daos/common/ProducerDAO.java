@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 
 /**
- * An interface who specified method to interact with the <code>common_actor</code> table.
+ * An interface who specified method to interact with the <code>common_producer</code> table.
  *
  * This interface can extends with many methods to request actors on Database.
  *
@@ -18,14 +18,14 @@ import javax.transaction.Transactional;
 public interface ProducerDAO extends CrudRepository<Producer, Long> {
 
     /**
-     * Search an Actor by his first name and last name.
+     * Search a Producer by his first name and last name.
      *
      * @param fname
      *  First name of the producer at search.
      * @param lname
      *  Last name of the producer at search.
      * @return
-     *  The actor is an occurrence was found on Database, or null.
+     *  The producer is an occurrence was found on Database, or null.
      * @since 1.0
      * @version 1.0
      */

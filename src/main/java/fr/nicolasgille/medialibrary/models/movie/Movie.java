@@ -1,12 +1,15 @@
 package fr.nicolasgille.medialibrary.models.movie;
 
 import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -57,7 +60,8 @@ public class Movie {
      * @since 1.0
      */
     @NotNull
-    private int releaseDate;
+    @Temporal(TemporalType.DATE)
+    private Calendar releaseDate;
 
     /**
      * Duration of the movies (in minutes).
@@ -105,6 +109,21 @@ public class Movie {
     private List<Producer> producers;
 
     /**
+     * List of Director for the movie.
+     *
+     * @since 1.1
+     */
+    @NotNull
+    @JoinTable(
+            name = "movies_directors",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Director.class, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Director> directors;
+
+    /**
      * List of all categories of the movie.
      *
      * @see MovieCategory
@@ -149,12 +168,14 @@ public class Movie {
      *  Main actors of the movie.
      * @param producers
      *  List of all producers of the movie.
+     * @param directors
+     *  List of all directors of the movie.
      * @param supports
      *  Supports present for the movie.
      * @since 1.0
      * @version 1.1
      */
-    public Movie(String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<MovieSupport> supports) {
+    public Movie(String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<Director> directors, List<MovieSupport> supports) {
         this.title       = title;
         this.categories  = categories;
         this.releaseDate = releaseDate;
@@ -162,6 +183,7 @@ public class Movie {
         this.synopsis    = synopsis;
         this.mainActors  = mainActors;
         this.supports    = supports;
+        this.directors   = directors;
         this.producers   = producers;
     }
 
@@ -185,12 +207,14 @@ public class Movie {
      *  Main actors of the movie.
      * @param producers
      *  List of all producers of the movie.
+     * @param directors
+     *  List of all directors of the movie.
      * @param supports
      *  Supports present for the movie.
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, List<MovieCategory> categories, int releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<MovieSupport> supports) {
+    public Movie(long id, String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<Director> directors, List<MovieSupport> supports) {
         this.id          = id;
         this.title       = title;
         this.categories  = categories;
@@ -199,6 +223,7 @@ public class Movie {
         this.synopsis    = synopsis;
         this.mainActors  = mainActors;
         this.producers   = producers;
+        this.directors   = directors;
         this.supports    = supports;
     }
 
@@ -219,6 +244,7 @@ public class Movie {
         this.synopsis    = movie.getSynopsis();
         this.mainActors  = movie.getMainActors();
         this.producers   = movie.getProducers();
+        this.directors   = movie.getDirectors();
         this.supports    = movie.getSupports();
     }
 
@@ -303,7 +329,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public int getReleaseDate() {
+    public Calendar getReleaseDate() {
         return releaseDate;
     }
 
@@ -315,7 +341,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public void setReleaseDate(int releaseDate) {
+    public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -431,12 +457,36 @@ public class Movie {
      * Set the list of producers.
      *
      * @return
-     *  new List of producer.
+     *  New List of producer.
      * @since 1.0
      * @version 1.1
      */
     public void setProducers(List<Producer> producers) {
         this.producers = producers;
+    }
+
+    /**
+     * Return all directors for the movie.
+     *
+     * @return
+     *  List of all directors of the movie.
+     * @since 1.0
+     * @version 1.1
+     */
+    public List<Director> getDirectors() {
+        return directors;
+    }
+
+    /**
+     * Set the list of directors.
+     *
+     * @return
+     *  New List of directors.
+     * @since 1.0
+     * @version 1.1
+     */
+    public void setDirectors(List<Director> directors) {
+        this.directors = directors;
     }
 
     /**
@@ -485,15 +535,25 @@ public class Movie {
             }
         }
 
+        // Build directors string.
+        StringBuilder directors = new StringBuilder();
+        for (int i = 0; i < this.directors.size(); ++i) {
+            directors.append(this.directors.get(i).toString());
+            if (i != this.directors.size() - 1) {
+                directors.append(", ");
+            }
+        }
+
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", category=" + categories.toString() +
-                ", releaseDate=" + releaseDate +
+                ", releaseDate=" + releaseDate.toString() +
                 ", duration=" + duration +
                 ", synopsis='" + synopsis + '\'' +
                 ", mainActors='" + mainActors.toString() + '\'' +
                 ", producers='" + producers.toString() + '\'' +
+                ", producers='" + directors.toString() + '\'' +
                 ", supports='" + supports.toString() +
                 '}';
     }
