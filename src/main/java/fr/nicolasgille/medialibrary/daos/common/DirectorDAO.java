@@ -1,6 +1,7 @@
 package fr.nicolasgille.medialibrary.daos.common;
 
 import fr.nicolasgille.medialibrary.models.common.Director;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
@@ -15,7 +16,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface DirectorDAO extends CrudRepository<Director, Long> {
+public interface DirectorDAO extends JpaRepository<Director, Long> {
 
     /**
      * Search an Director by his first name and last name.

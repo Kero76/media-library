@@ -4,6 +4,7 @@ import fr.nicolasgille.medialibrary.models.movie.Movie;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Class Producer present on class Movie to representing the producer of the movie.
@@ -49,8 +50,8 @@ public class Producer {
      *
      * @since 1.0
      */
-    @ManyToMany(targetEntity = Movie.class, fetch = FetchType.LAZY, mappedBy = "producers", cascade = CascadeType.ALL)
-    private List<Movie> movies;
+    @ManyToMany(targetEntity = Movie.class, mappedBy = "producers", cascade = CascadeType.ALL)
+    private Set<Movie> movies;
 
     /**
      * Empty constructor.
@@ -83,7 +84,7 @@ public class Producer {
      * @version 1.0
      * @since 1.0
      */
-    public Producer(long id, String firstName, String lastName, List<Movie> movies) {
+    public Producer(long id, String firstName, String lastName, Set<Movie> movies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -163,7 +164,7 @@ public class Producer {
      * @version 1.0
      * @since 1.0
      */
-    public List<Movie> getMovies() {
+    public Set<Movie> getMovies() {
         return movies;
     }
 
@@ -174,7 +175,7 @@ public class Producer {
      * @version 1.0
      * @since 1.0
      */
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
 

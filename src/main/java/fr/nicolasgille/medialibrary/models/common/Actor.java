@@ -4,6 +4,7 @@ import fr.nicolasgille.medialibrary.models.movie.Movie;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Class Actor present on class Movie to representing main actor in a movie.
@@ -55,8 +56,8 @@ public class Actor {
      *
      * @since 1.0
      */
-    @ManyToMany(targetEntity = Movie.class, fetch = FetchType.LAZY, mappedBy = "mainActors", cascade = CascadeType.ALL)
-    private List<Movie> movies;
+    @ManyToMany(targetEntity = Movie.class, mappedBy = "mainActors", cascade = CascadeType.ALL)
+    private Set<Movie> movies;
 
     /**
      * Empty constructor.
@@ -93,7 +94,7 @@ public class Actor {
      * @since 1.0
      * @version 1.1
      */
-    public Actor(long id, String firstName, String lastName, List<Movie> movies) {
+    public Actor(long id, String firstName, String lastName, Set<Movie> movies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -180,7 +181,7 @@ public class Actor {
      * @since 1.1
      * @version 1.0
      */
-    public List<Movie> getMovies() {
+    public Set<Movie> getMovies() {
         return movies;
     }
 
@@ -192,7 +193,7 @@ public class Actor {
      * @since 1.1
      * @version 1.0
      */
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
 

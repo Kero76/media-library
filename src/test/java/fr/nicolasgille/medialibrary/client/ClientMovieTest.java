@@ -7,6 +7,9 @@ import fr.nicolasgille.medialibrary.models.movie.Movie;
 import fr.nicolasgille.medialibrary.models.movie.MovieCategory;
 import fr.nicolasgille.medialibrary.models.movie.MovieSupport;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -36,15 +39,15 @@ public class ClientMovieTest {
         supports.add(MovieSupport.VIDEO_TAPE);
         supports.add(MovieSupport.DVD);
 
-        List<Actor> actors = new ArrayList<Actor>();
+        Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Bruce", "Wayne"));
         actors.add(new Actor("Clark", "Kent"));
 
-        List<Producer> producers = new ArrayList<Producer>();
+        Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Jacky", "LaFrite"));
         producers.add(new Producer("Michel", "LaPoutre"));
 
-        List<Director> directors = new ArrayList<Director>();
+        Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Director", "Sama"));
 
         Calendar releasedDate = new GregorianCalendar();
@@ -89,10 +92,18 @@ public class ClientMovieTest {
      *  GET    | /movies/search/title/{title} |  /
      */
     @Test
-    public void testMovie() {
+    public void testGetMovie() {
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = restTemplate.getForObject(REST_SERVICE_URI + "/movies/search/title/Batman return", Movie.class);
-        System.out.println(movie.toString());
+        try {
+            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/Batman return", Movie.class);
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                System.out.println(responseEntity.getBody().toString());
+            } else {
+                System.out.println("An error occurred and movie not found on Database.");
+            }
+        } catch (HttpMessageNotReadableException exception) {
+            System.out.println(exception.toString());
+        }
     }
 
     /**
@@ -111,13 +122,13 @@ public class ClientMovieTest {
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
 
-        List<Actor> actors = new ArrayList<Actor>();
+        Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Bruce", "Wayne"));
 
-        List<Producer> producers = new ArrayList<Producer>();
+        Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Jacky", "LaFrite"));
 
-        List<Director> directors = new ArrayList<Director>();
+        Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Director", "Sama"));
 
         Calendar releasedDate = new GregorianCalendar();
@@ -136,7 +147,7 @@ public class ClientMovieTest {
     @Test
     public void testDelete() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/1");
+        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/8");
     }
 
     @Test
@@ -148,15 +159,15 @@ public class ClientMovieTest {
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
 
-        List<Actor> actors = new ArrayList<Actor>();
+        Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Optimus", "Prime"));
         actors.add(new Actor("Bumblebee", ""));
         actors.add(new Actor("Megatron", ""));
 
-        List<Producer> producers = new ArrayList<Producer>();
+        Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Michael", "Bay"));
 
-        List<Director> directors = new ArrayList<Director>();
+        Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Director", "Sama"));
 
         Calendar releasedDate = new GregorianCalendar();
@@ -183,13 +194,13 @@ public class ClientMovieTest {
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
 
-        List<Actor> actors = new ArrayList<Actor>();
+        Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Bruce", "Wayne"));
 
-        List<Producer> producers = new ArrayList<Producer>();
+        Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Michael", "Bay"));
 
-        List<Director> directors = new ArrayList<Director>();
+        Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Director", "Sama"));
 
         Calendar releasedDate = new GregorianCalendar();

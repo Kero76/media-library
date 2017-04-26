@@ -1,6 +1,8 @@
 package fr.nicolasgille.medialibrary.daos;
 
 import fr.nicolasgille.medialibrary.models.movie.Movie;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
@@ -21,7 +23,7 @@ import java.util.Calendar;
  * @version 1.1
  */
 @Transactional
-public interface MovieDAO extends CrudRepository<Movie, Long> {
+public interface MovieDAO extends JpaRepository<Movie, Long> {
 
     /**
      * Find a movie by is name.

@@ -1,10 +1,10 @@
 package fr.nicolasgille.medialibrary.controllers;
 
+import fr.nicolasgille.medialibrary.daos.MovieDAO;
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
 import fr.nicolasgille.medialibrary.exception.MovieException;
-import fr.nicolasgille.medialibrary.daos.MovieDAO;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -14,12 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Controller of Movies models object.
@@ -42,7 +44,7 @@ import java.util.List;
  * @version 2.0
  */
 @RestController
-@RequestMapping("/media-library/movies")
+@RequestMapping(value = "/media-library/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
 
     /**
@@ -154,8 +156,8 @@ public class MovieController {
         }
 
         // Check if the actors are present on Database or not.
-        List<Actor> actorsOnMovie = movie.getMainActors();
-        List<Actor> mainActors = new ArrayList<Actor>();
+        Set<Actor> actorsOnMovie = movie.getMainActors();
+        Set<Actor> mainActors = new HashSet<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             // If the actor is not present on Database, he add on it.
@@ -171,8 +173,8 @@ public class MovieController {
         movie.setMainActors(mainActors);
 
         // Check if the producers are present on Database or not.
-        List<Producer> producersOnMovie = movie.getProducers();
-        List<Producer> producers = new ArrayList<Producer>();
+        Set<Producer> producersOnMovie = movie.getProducers();
+        Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnMovie) {
             Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
             // If the producer is not present on Database, he add on it.
@@ -188,8 +190,8 @@ public class MovieController {
         movie.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        List<Director> directorOnMovie = movie.getDirectors();
-        List<Director> directors = new ArrayList<Director>();
+        Set<Director> directorOnMovie = movie.getDirectors();
+        Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnMovie) {
             Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
@@ -238,8 +240,8 @@ public class MovieController {
         }
 
         // Check if the actor are present on Database or not.
-        List<Actor> actorsOnMovie = movie.getMainActors();
-        List<Actor> mainActors = new ArrayList<Actor>();
+        Set<Actor> actorsOnMovie = movie.getMainActors();
+        Set<Actor> mainActors = new HashSet<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             // If the actor is not present on Database, it add on it.
@@ -255,8 +257,8 @@ public class MovieController {
         movie.setMainActors(mainActors);
 
         // Check if the producers are present on Database or not.
-        List<Producer> producersOnMovie = movie.getProducers();
-        List<Producer> producers = new ArrayList<Producer>();
+        Set<Producer> producersOnMovie = movie.getProducers();
+        Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnMovie) {
             Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
             // If the producer is not present on Database, he add on it.
@@ -272,8 +274,8 @@ public class MovieController {
         movie.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        List<Director> directorOnMovie = movie.getDirectors();
-        List<Director> directors = new ArrayList<Director>();
+        Set<Director> directorOnMovie = movie.getDirectors();
+        Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnMovie) {
             Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.

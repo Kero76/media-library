@@ -9,8 +9,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Movie class.
@@ -25,7 +25,8 @@ import java.util.List;
  *  -> Removed unused constructors.
  *  -> Update field category to add multiple category for movie.
  *  -> Update constructors with new attributes.
- *  -> Added following fields : supports,
+ *  -> Added following fields : supports, directors, producers
+ *  -> Update <code>releaseDate</code> type by Calendar object.
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
@@ -69,7 +70,7 @@ public class Movie {
      * @since 1.0
      */
     @NotNull
-    private int duration;
+    private Integer duration;
 
     /**
      * Synopsis of the movie.
@@ -89,9 +90,9 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "main_actors_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Actor.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Actor.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Actor> mainActors;
+    private Set<Actor> mainActors;
 
     /**
      * List of Producer for the movie.
@@ -104,9 +105,9 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Producer.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Producer> producers;
+    private Set<Producer> producers;
 
     /**
      * List of Director for the movie.
@@ -119,9 +120,9 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Director.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Director> directors;
+    private Set<Director> directors;
 
     /**
      * List of all categories of the movie.
@@ -175,7 +176,7 @@ public class Movie {
      * @since 1.0
      * @version 1.1
      */
-    public Movie(String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<Director> directors, List<MovieSupport> supports) {
+    public Movie(String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports) {
         this.title       = title;
         this.categories  = categories;
         this.releaseDate = releaseDate;
@@ -214,7 +215,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, List<Actor> mainActors, List<Producer> producers, List<Director> directors, List<MovieSupport> supports) {
+    public Movie(long id, String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports) {
         this.id          = id;
         this.title       = title;
         this.categories  = categories;
@@ -401,7 +402,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public List<Actor> getMainActors() {
+    public Set<Actor> getMainActors() {
         return mainActors;
     }
 
@@ -413,7 +414,7 @@ public class Movie {
      * @since 1.0
      * @version 1.0
      */
-    public void setMainActors(List<Actor> mainActors) {
+    public void setMainActors(Set<Actor> mainActors) {
         this.mainActors = mainActors;
     }
 
@@ -449,7 +450,7 @@ public class Movie {
      * @since 1.0
      * @version 1.1
      */
-    public List<Producer> getProducers() {
+    public Set<Producer> getProducers() {
         return producers;
     }
 
@@ -461,7 +462,7 @@ public class Movie {
      * @since 1.0
      * @version 1.1
      */
-    public void setProducers(List<Producer> producers) {
+    public void setProducers(Set<Producer> producers) {
         this.producers = producers;
     }
 
@@ -473,7 +474,7 @@ public class Movie {
      * @since 1.0
      * @version 1.1
      */
-    public List<Director> getDirectors() {
+    public Set<Director> getDirectors() {
         return directors;
     }
 
@@ -485,7 +486,7 @@ public class Movie {
      * @since 1.0
      * @version 1.1
      */
-    public void setDirectors(List<Director> directors) {
+    public void setDirectors(Set<Director> directors) {
         this.directors = directors;
     }
 
@@ -518,31 +519,31 @@ public class Movie {
         }
 
         // Build mainActor string.
-        StringBuilder mainActors = new StringBuilder();
-        for (int i = 0; i < this.mainActors.size(); ++i) {
-            mainActors.append(this.mainActors.get(i).toString());
-            if (i != this.mainActors.size() - 1) {
-                mainActors.append(", ");
-            }
-        }
-
-        // Build producers string.
-        StringBuilder producers = new StringBuilder();
-        for (int i = 0; i < this.producers.size(); ++i) {
-            producers.append(this.producers.get(i).toString());
-            if (i != this.producers.size() - 1) {
-                producers.append(", ");
-            }
-        }
-
-        // Build directors string.
-        StringBuilder directors = new StringBuilder();
-        for (int i = 0; i < this.directors.size(); ++i) {
-            directors.append(this.directors.get(i).toString());
-            if (i != this.directors.size() - 1) {
-                directors.append(", ");
-            }
-        }
+//        StringBuilder mainActors = new StringBuilder();
+//        for (int i = 0; i < this.mainActors.size(); ++i) {
+//            mainActors.append(this.mainActors.get(i).toString());
+//            if (i != this.mainActors.size() - 1) {
+//                mainActors.append(", ");
+//            }
+//        }
+//
+//        // Build producers string.
+//        StringBuilder producers = new StringBuilder();
+//        for (int i = 0; i < this.producers.size(); ++i) {
+//            producers.append(this.producers.get(i).toString());
+//            if (i != this.producers.size() - 1) {
+//                producers.append(", ");
+//            }
+//        }
+//
+//        // Build directors string.
+//        StringBuilder directors = new StringBuilder();
+//        for (int i = 0; i < this.directors.size(); ++i) {
+//            directors.append(this.directors.get(i).toString());
+//            if (i != this.directors.size() - 1) {
+//                directors.append(", ");
+//            }
+//        }
 
         return "Movie{" +
                 "id=" + id +
