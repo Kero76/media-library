@@ -90,7 +90,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "main_actors_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Actor.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToMany(targetEntity = Actor.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Actor> mainActors;
 
@@ -105,7 +105,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Producer> producers;
 
@@ -120,7 +120,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Director> directors;
 
@@ -132,6 +132,7 @@ public class Movie {
      */
     @NotNull
     @ElementCollection(targetClass = MovieCategory.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<MovieCategory> categories;
 
     /**
@@ -142,6 +143,7 @@ public class Movie {
      */
     @NotNull
     @ElementCollection(targetClass = MovieSupport.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<MovieSupport> supports;
 
     /**
@@ -519,31 +521,43 @@ public class Movie {
         }
 
         // Build mainActor string.
-//        StringBuilder mainActors = new StringBuilder();
-//        for (int i = 0; i < this.mainActors.size(); ++i) {
-//            mainActors.append(this.mainActors.get(i).toString());
-//            if (i != this.mainActors.size() - 1) {
-//                mainActors.append(", ");
-//            }
-//        }
-//
-//        // Build producers string.
-//        StringBuilder producers = new StringBuilder();
-//        for (int i = 0; i < this.producers.size(); ++i) {
-//            producers.append(this.producers.get(i).toString());
-//            if (i != this.producers.size() - 1) {
-//                producers.append(", ");
-//            }
-//        }
-//
-//        // Build directors string.
-//        StringBuilder directors = new StringBuilder();
-//        for (int i = 0; i < this.directors.size(); ++i) {
-//            directors.append(this.directors.get(i).toString());
-//            if (i != this.directors.size() - 1) {
-//                directors.append(", ");
-//            }
-//        }
+        StringBuilder mainActors = new StringBuilder();
+        if (this.mainActors != null) {
+            for (int i = 0; i < this.mainActors.size(); ++i) {
+                mainActors.append(this.mainActors.toArray()[i].toString());
+                if (i != this.mainActors.size() - 1) {
+                    mainActors.append(", ");
+                }
+            }
+        } else {
+            mainActors.append("");
+        }
+
+        // Build producers string.
+        StringBuilder producers = new StringBuilder();
+        if (this.producers != null) {
+            for (int i = 0; i < this.producers.size(); ++i) {
+                producers.append(this.producers.toArray()[i].toString());
+                if (i != this.producers.size() - 1) {
+                    producers.append(", ");
+                }
+            }
+        } else {
+            producers.append("");
+        }
+
+        // Build directors string.
+        StringBuilder directors = new StringBuilder();
+        if (this.directors != null) {
+            for (int i = 0; i < this.directors.size(); ++i) {
+                directors.append(this.directors.toArray()[i].toString());
+                if (i != this.directors.size() - 1) {
+                    directors.append(", ");
+                }
+            }
+        } else {
+            directors.append("");
+        }
 
         return "Movie{" +
                 "id=" + id +

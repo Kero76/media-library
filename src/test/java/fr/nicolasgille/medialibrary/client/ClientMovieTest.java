@@ -113,7 +113,7 @@ public class ClientMovieTest {
     @Test
     public void testUpdate() {
         // Given - Instantiate category, support, actors
-        long id = 4;
+        long id = 1;
         List<MovieCategory> categories = new ArrayList<MovieCategory>();
         categories.add(MovieCategory.ACTION);
         categories.add(MovieCategory.COMEDY);
@@ -135,7 +135,7 @@ public class ClientMovieTest {
         releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
 
         RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(id,"Batman Forever", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
+        Movie movie = new Movie(id,"Batman Forever", categories, releasedDate, 195, "I'm Batman !!!", actors, producers, directors, supports);
         restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }
@@ -146,8 +146,9 @@ public class ClientMovieTest {
      */
     @Test
     public void testDelete() {
+        int id = 2;
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/8");
+        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/" + id);
     }
 
     @Test

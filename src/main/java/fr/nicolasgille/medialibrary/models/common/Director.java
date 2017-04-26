@@ -50,7 +50,7 @@ public class Director {
      *
      * @since 1.0
      */
-    @ManyToMany(targetEntity = Movie.class, mappedBy = "directors", cascade = CascadeType.ALL)
+    @Transient
     private Set<Movie> movies;
 
     /**
@@ -188,11 +188,21 @@ public class Director {
      */
     @Override
     public String toString() {
+        StringBuilder movies = new StringBuilder();
+        if (this.movies != null) {
+            for (Movie m : this.movies) {
+                movies.append(m.toString());
+                movies.append(";");
+            }
+        } else {
+            movies.append("");
+        }
+
         return "Director{" +
                 ", id=" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", movies='" + movies + '\'' +
+                ", movies='" + movies.toString() + '\'' +
                 '}';
     }
 }
