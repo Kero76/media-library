@@ -82,6 +82,7 @@ public class Movie {
     /**
      * Main actors present on the movie.
      *
+     * @see Actor
      * @since 1.0
      */
     @NotNull
@@ -97,6 +98,7 @@ public class Movie {
     /**
      * List of Producer for the movie.
      *
+     * @see Producer
      * @since 1.1
      */
     @NotNull
@@ -112,6 +114,7 @@ public class Movie {
     /**
      * List of Director for the movie.
      *
+     * @see Director
      * @since 1.1
      */
     @NotNull
@@ -215,7 +218,7 @@ public class Movie {
      * @param supports
      *  Supports present for the movie.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Movie(long id, String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports) {
         this.id          = id;
@@ -236,7 +239,7 @@ public class Movie {
      * @param movie
      *  New content of each attribute of this.
      * @since 1.1
-     * @version 1.0
+     * @version 1.1
      */
     public Movie(Movie movie) {
         this.id          = movie.getId();
@@ -330,7 +333,7 @@ public class Movie {
      * @return
      *  The release date.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Calendar getReleaseDate() {
         return releaseDate;
@@ -342,7 +345,7 @@ public class Movie {
      * @param releaseDate
      *  New date of release.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
@@ -397,12 +400,12 @@ public class Movie {
     }
 
     /**
-     * Return the main actors separate by comma.
+     * Return the set composed by main actors.
      *
      * @return
-     *  A string representation of the actor separated by comma.
+     *  Set of the main actors.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Set<Actor> getMainActors() {
         return mainActors;
@@ -414,7 +417,7 @@ public class Movie {
      * @param mainActors
      *  New mainActors.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public void setMainActors(Set<Actor> mainActors) {
         this.mainActors = mainActors;
@@ -448,8 +451,8 @@ public class Movie {
      * Return all producers for the movie.
      *
      * @return
-     *  List of all producer of the movie.
-     * @since 1.0
+     *  Set of all producer of the movie.
+     * @since 1.1
      * @version 1.1
      */
     public Set<Producer> getProducers() {
@@ -459,9 +462,9 @@ public class Movie {
     /**
      * Set the list of producers.
      *
-     * @return
-     *  New List of producer.
-     * @since 1.0
+     * @param producers
+     *  New Set of producer.
+     * @since 1.1
      * @version 1.1
      */
     public void setProducers(Set<Producer> producers) {
@@ -472,8 +475,8 @@ public class Movie {
      * Return all directors for the movie.
      *
      * @return
-     *  List of all directors of the movie.
-     * @since 1.0
+     *  Set of all directors of the movie.
+     * @since 1.1
      * @version 1.1
      */
     public Set<Director> getDirectors() {
@@ -483,9 +486,9 @@ public class Movie {
     /**
      * Set the list of directors.
      *
-     * @return
-     *  New List of directors.
-     * @since 1.0
+     * @param directors
+     *  New set of Director.
+     * @since 1.1
      * @version 1.1
      */
     public void setDirectors(Set<Director> directors) {
@@ -497,7 +500,7 @@ public class Movie {
      *
      * @return
      *  A short description of the content of the movie's attribute.
-     * @since 1.1
+     * @since 1.0
      * @version 1.1
      */
     @Override
@@ -520,45 +523,6 @@ public class Movie {
             }
         }
 
-        // Build mainActor string.
-        StringBuilder mainActors = new StringBuilder();
-        if (this.mainActors != null) {
-            for (int i = 0; i < this.mainActors.size(); ++i) {
-                mainActors.append(this.mainActors.toArray()[i].toString());
-                if (i != this.mainActors.size() - 1) {
-                    mainActors.append(", ");
-                }
-            }
-        } else {
-            mainActors.append("");
-        }
-
-        // Build producers string.
-        StringBuilder producers = new StringBuilder();
-        if (this.producers != null) {
-            for (int i = 0; i < this.producers.size(); ++i) {
-                producers.append(this.producers.toArray()[i].toString());
-                if (i != this.producers.size() - 1) {
-                    producers.append(", ");
-                }
-            }
-        } else {
-            producers.append("");
-        }
-
-        // Build directors string.
-        StringBuilder directors = new StringBuilder();
-        if (this.directors != null) {
-            for (int i = 0; i < this.directors.size(); ++i) {
-                directors.append(this.directors.toArray()[i].toString());
-                if (i != this.directors.size() - 1) {
-                    directors.append(", ");
-                }
-            }
-        } else {
-            directors.append("");
-        }
-
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
@@ -566,10 +530,36 @@ public class Movie {
                 ", releaseDate=" + releaseDate.toString() +
                 ", duration=" + duration +
                 ", synopsis='" + synopsis + '\'' +
-                ", mainActors='" + mainActors.toString() + '\'' +
-                ", producers='" + producers.toString() + '\'' +
-                ", producers='" + directors.toString() + '\'' +
+                ", mainActors='" + this.setStringBuilder(this.mainActors) + '\'' +
+                ", producers='" + this.setStringBuilder(this.producers) + '\'' +
+                ", directors='" + this.setStringBuilder(this.directors) + '\'' +
                 ", supports='" + supports.toString() +
                 '}';
+    }
+
+    /**
+     * Generate a String with content of Set.
+     *
+     * @param set
+     *  Set used to displayed element.
+     * @return
+     *  A string representation of the Set.
+     * @since 1.1
+     * @version 1.0
+     */
+    private String setStringBuilder(Set<?> set) {
+        // Build directors string.
+        StringBuilder str = new StringBuilder();
+        if (set != null) {
+            for (int i = 0; i < set.size(); ++i) {
+                str.append(set.toArray()[i].toString());
+                if (i != set.size() - 1) {
+                    str.append(", ");
+                }
+            }
+        } else {
+            str.append("");
+        }
+        return str.toString();
     }
 }

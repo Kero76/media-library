@@ -23,9 +23,9 @@ The statement is a representation of the current state of development of each me
 |:------:|--------------------------------------|-------|---------------------------------------------------------------------------------------|
 | GET    | /media-library/movies/               | /     | Retrieve all Movies from the persistent system.                                       |
 | GET    | /media-library/movies/search/{title} | /     | Search one movie by his title passed on parameter of the url.                         |
-| POST   | /media-library/movies/create         | Movie | Insert a new movie on persistent system.                                              |
-| PUT    | /media-library/movies/update/{id}    | Movie | Update a movie on persistent system in function on the id receive from the url.       |
-| DELETE | /media-library/movies/delete/{id}    | /     | Delete a movie from the persistent system in function of the id receive from the url. |
+| POST   | /media-library/movies/               | Movie | Insert a new movie on persistent system.                                              |
+| PUT    | /media-library/movies/{id}           | Movie | Update a movie on persistent system in function on the id receive from the url.       |
+| DELETE | /media-library/movies/{id}           | /     | Delete a movie from the persistent system in function of the id receive from the url. |
 
 ## Commands
 - `mvn spring-boot:run` : Deploy Media Library in localhost:8080/

@@ -7,7 +7,7 @@ package fr.nicolasgille.medialibrary.models.movie;
  *
  * V1.1 :
  *  -> Added constructor with <code>name</code> parameter.
- *  -> Added <<code>name</code> attributes and corresponding getter and setter.
+ *  -> Added <code>name</code> attributes and corresponding getter and setter.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1

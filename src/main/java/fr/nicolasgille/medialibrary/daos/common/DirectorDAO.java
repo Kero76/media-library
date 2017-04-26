@@ -2,14 +2,13 @@ package fr.nicolasgille.medialibrary.daos.common;
 
 import fr.nicolasgille.medialibrary.models.common.Director;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 
 /**
  * An interface who specified method to interact with the <code>common_director</code> table.
  *
- * This interface can extends with many methods to request actors on Database.
+ * This interface can extends with many methods to request directors on Database.
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0

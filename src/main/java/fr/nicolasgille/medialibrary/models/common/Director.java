@@ -3,13 +3,12 @@ package fr.nicolasgille.medialibrary.models.common;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Class Director present on class Movie to representing the director of the movie.
  *
- * @see fr.nicolasgille.medialibrary.models.movie.Movie
+ * @see Movie
  * @author Nicolas GILLE
  * @since Media-Library 1.0
  * @version 1.0
@@ -67,8 +66,8 @@ public class Director {
      *
      * @param firstName First name of the Director.
      * @param lastName  Last name of the Director.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public Director(String firstName, String lastName) {
         this.firstName = firstName;
@@ -81,8 +80,8 @@ public class Director {
      * @param id        Identifier stored on DB.
      * @param firstName First name.
      * @param lastName  Last name.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public Director(long id, String firstName, String lastName, Set<Movie> movies) {
         this.id = id;
@@ -95,8 +94,8 @@ public class Director {
      * Return id of the Director.
      *
      * @return Id of the Director.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public long getId() {
         return id;
@@ -106,8 +105,8 @@ public class Director {
      * Set id of the Director.
      *
      * @param id New id.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setId(long id) {
         this.id = id;
@@ -117,8 +116,8 @@ public class Director {
      * Return first name of the Director.
      *
      * @return First name of the Director.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public String getFirstName() {
         return firstName;
@@ -128,8 +127,8 @@ public class Director {
      * Set first name of the Director.
      *
      * @param firstName New first name.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -139,8 +138,8 @@ public class Director {
      * Return last name of the Director.
      *
      * @return Last name of the Director.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public String getLastName() {
         return lastName;
@@ -150,8 +149,8 @@ public class Director {
      * Set the last name of the Director.
      *
      * @param lastName New last name.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -161,8 +160,8 @@ public class Director {
      * List of movies where director directed the movie.
      *
      * @return List of all movies where director directed the movie.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public Set<Movie> getMovies() {
         return movies;
@@ -172,8 +171,8 @@ public class Director {
      * Set list of movies where director directed the movie.
      *
      * @param movies New list of movies.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
@@ -183,8 +182,8 @@ public class Director {
      * Display content of the Director.
      *
      * @return A simple representation of the Director.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     @Override
     public String toString() {

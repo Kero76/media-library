@@ -32,12 +32,14 @@ import java.util.Set;
  *
  * V2.1 :
  *  -> Added Actor DAO to interact with Actor present on persistent system.
+ *  -> Added Director DAO to interact with Director present on persistent system.
+ *  -> Added Producer DAO to interact with Producer present on persistent system.
+ *  -> Update Movie constructor with new parameters.
  *
  * V2.0:
  *  -> Completely rewrite content of all methods to modernize methods.
  *  -> Added Logger object to see step of each method and help debugging.
  *  -> Update CRUD method to add Actor registration on persistent system.
- *
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
@@ -65,12 +67,16 @@ public class MovieController {
 
     /**
      * DAO used to interact with the table <code>common_producers</code>.
+     *
+     * @since 2.1
      */
     @Autowired
     private ProducerDAO producerDAO;
 
     /**
      * DAO used to interact with the table <code>common_director</code>.
+     *
+     * @since 2.1
      */
     @Autowired
     private DirectorDAO directorDAO;
@@ -96,7 +102,7 @@ public class MovieController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Movie> movies = (List<Movie>) movieDao.findAll();
+        List<Movie> movies = movieDao.findAll();
         if (movies.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -144,7 +150,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.1
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Movie movie, UriComponentsBuilder uriBuilder) {
         logger.info("Created movie : {}", movie);
 
@@ -229,7 +235,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.0
      */
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Movie movie) {
         logger.info("Updating Movie with id {}", id);
 
@@ -311,7 +317,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.0
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Movie with id {}", id);
 

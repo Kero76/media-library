@@ -55,7 +55,7 @@ public class ClientMovieTest {
 
         RestTemplate restTemplate = new RestTemplate();
         Movie movie = new Movie("Batman return", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         supports.remove(MovieSupport.VIDEO_TAPE);
@@ -64,7 +64,7 @@ public class ClientMovieTest {
         releasedDate.set(2012, Calendar.MAY, Calendar.JANUARY);
 
         movie = new Movie("Batman Dark Knight", categories, releasedDate, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", actors, producers, directors, supports);
-        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
 
@@ -136,7 +136,7 @@ public class ClientMovieTest {
 
         RestTemplate restTemplate = new RestTemplate();
         Movie movie = new Movie(id,"Batman Forever", categories, releasedDate, 195, "I'm Batman !!!", actors, producers, directors, supports);
-        restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
+        restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }
 
@@ -148,7 +148,7 @@ public class ClientMovieTest {
     public void testDelete() {
         int id = 2;
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/" + id);
+        restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
     }
 
     @Test
@@ -176,13 +176,13 @@ public class ClientMovieTest {
 
         RestTemplate restTemplate = new RestTemplate();
         Movie movie = new Movie("Transformers", categories, releasedDate, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, directors, supports);
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
         System.out.println(uri.toASCIIString());
 
         categories.add(MovieCategory.ACTION);
         categories.add(MovieCategory.ADVENTURE);
         movie = new Movie("Transformers", categories, releasedDate, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, directors, supports);
-        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/create", movie, Movie.class);
+        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
         System.out.println(uri.toASCIIString());
     }
 
@@ -209,13 +209,13 @@ public class ClientMovieTest {
 
         RestTemplate restTemplate = new RestTemplate();
         Movie movie = new Movie(1,"Batman Fornever", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
-        restTemplate.put(REST_SERVICE_URI + "/movies/update/" + movie.getId(), movie);
+        restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie);
         System.out.println(movie.toString());
     }
 
     @Test
     public void testDeleteMovieNotPresent() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(REST_SERVICE_URI + "/movies/delete/666");
+        restTemplate.delete(REST_SERVICE_URI + "/movies/666");
     }
 }

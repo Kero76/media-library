@@ -3,7 +3,6 @@ package fr.nicolasgille.medialibrary.models.common;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Set;
  *  -> Added corresponding getter and setter for attribute <code>movies</code>
  *  -> Added <code>@ManyToMany</code> annotations new attribute <code>movies</code>.
  *
- * @see fr.nicolasgille.medialibrary.models.movie.Movie
+ * @see Movie
  * @author Nicolas GILLE
  * @since Media-Library 1.0
  * @version 1.1

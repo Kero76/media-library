@@ -3,13 +3,12 @@ package fr.nicolasgille.medialibrary.models.common;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Class Producer present on class Movie to representing the producer of the movie.
  *
- * @see fr.nicolasgille.medialibrary.models.movie.Movie
+ * @see Movie
  * @author Nicolas GILLE
  * @since Media-Library 1.0
  * @version 1.0
@@ -67,8 +66,8 @@ public class Producer {
      *
      * @param firstName First name of the Actor.
      * @param lastName  Last name of the Actor.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public Producer(String firstName, String lastName) {
         this.firstName = firstName;
@@ -81,8 +80,8 @@ public class Producer {
      * @param id        Identifier stored on DB.
      * @param firstName First name.
      * @param lastName  Last name.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public Producer(long id, String firstName, String lastName, Set<Movie> movies) {
         this.id = id;
@@ -95,8 +94,8 @@ public class Producer {
      * Return id of the Producer.
      *
      * @return Id of the Producer.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public long getId() {
         return id;
@@ -106,8 +105,8 @@ public class Producer {
      * Set id of the Producer.
      *
      * @param id New id.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setId(long id) {
         this.id = id;
@@ -117,8 +116,8 @@ public class Producer {
      * Return first name of the Producer.
      *
      * @return First name of the Producer.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public String getFirstName() {
         return firstName;
@@ -128,8 +127,8 @@ public class Producer {
      * Set first name of the Producer.
      *
      * @param firstName New first name.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -139,8 +138,8 @@ public class Producer {
      * Return last name of the Producer.
      *
      * @return Last name of the Producer.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public String getLastName() {
         return lastName;
@@ -150,19 +149,19 @@ public class Producer {
      * Set the last name of the Producer.
      *
      * @param lastName New last name.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     /**
-     * List of movies where the actor played as main actor.
+     * List of movies who the Producer produce the movie.
      *
-     * @return List of all movies where the actor played as main actor.
-     * @version 1.0
+     * @return List of all movies who the Producer produce the movie.
      * @since 1.0
+     * @version 1.0
      */
     public Set<Movie> getMovies() {
         return movies;
@@ -172,8 +171,8 @@ public class Producer {
      * Set list of movies where actor played as main actor.
      *
      * @param movies New list of movies.
-     * @version 1.0
      * @since 1.0
+     * @version 1.0
      */
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
@@ -183,8 +182,8 @@ public class Producer {
      * Display content of the Producer.
      *
      * @return A simple representation of the Producer.
-     * @version 1.1
      * @since 1.0
+     * @version 1.1
      */
     @Override
     public String toString() {
