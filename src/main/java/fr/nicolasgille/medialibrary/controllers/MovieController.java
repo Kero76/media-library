@@ -158,7 +158,7 @@ public class MovieController {
         Movie movieExist = movieDao.findByTitleAndDurationAndReleaseDate(movie.getTitle(), movie.getDuration(), movie.getReleaseDate());
         if (movieExist != null) {
             logger.error("Unable to create. The movie {} already exist", movie.getTitle());
-            return new ResponseEntity<Object>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
+            return new ResponseEntity<MovieException>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
         }
 
         // Check if the actors are present on Database or not.
@@ -214,7 +214,7 @@ public class MovieController {
         movieDao.save(movie);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/movies/search/title/{id}").buildAndExpand(movie.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/movies/search/title/{id}").buildAndExpand(movie.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 

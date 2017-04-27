@@ -1,29 +1,187 @@
 package fr.nicolasgille.medialibrary.client;
 
+import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
 import fr.nicolasgille.medialibrary.models.movie.MovieCategory;
 import fr.nicolasgille.medialibrary.models.movie.MovieSupport;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.RestTemplate;
+import static org.assertj.core.api.Assertions.*;
 
 import java.net.URI;
 import java.util.*;
 
 /**
- * Test persistence of the movie in Database MySQL / MariaDB.
+ * Unit class test used to test MovieController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
+ * @since Media-Library 1.0
  * @version 1.0
  */
 public class ClientMovieTest {
+    /**
+     * URI of the Rest service.
+     */
     private static final String REST_SERVICE_URI = "http://localhost:8080/media-library";
+
+    /**
+     * RestTemplate used to interact with Rest service.
+     */
+    private RestTemplate restTemplate;
+
+    @Before
+    public void setUp() {
+        this.restTemplate = new RestTemplate();
+    }
+
+    @Test
+    public void testDeleteWithEmptyPersistentSystem() {
+        // Given - Instantiate id at delete on persistent system.
+        int id = 666;
+        String messageExcepted = "404 null";
+
+        // When - Try to delete it.
+        try {
+            this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
+        } catch (Exception e) {
+            // Then - Exception throws give the expected message.
+            assertThat(e.getMessage()).isEqualTo(messageExcepted);
+        }
+    }
+
+    @Test
+    public void testUpdateWithEmptyPersistentSystem() {
+        // Given - Instantiate id at update and corresponding movie.
+        String messageExcepted = "404 null";
+        int id = 666;
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+
+        Movie movie = new Movie(id, "My title", categories, releaseDate, 120, "My Synopsis", actors, producers, directors, supports);
+
+        // When - Try to update movie.
+        try {
+            this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie);
+        } catch (Exception e) {
+            // Then - Exception throws is null.
+            assertThat(e.getMessage()).isEqualTo(messageExcepted);
+        }
+    }
+
+    @Test
+    public void testGetAllMoviesWithEmptyPersistentSystem() {
+        // Given / When - Get all movies from persistent system.
+        ResponseEntity<List> movies = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/", List.class);
+
+        // Then - Error HTTP.No_CONTENT was encounter.
+        assertThat(movies.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(movies.getBody()).isNull();
+    }
+
+    @Test
+    public void testGetMovieWithEmptyPersistentSystem() {
+        // Given - Instantiate title of movie.
+        String title = "Persistent System 2 : Return of the Empty Row";
+
+        // When - Get one movie from persistent system.
+        ResponseEntity<Movie> movie = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + title, Movie.class);
+
+        // Then - Error HTTP.No_CONTENT was encounter.
+        assertThat(movie.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(movie.getBody()).isNull();
+    }
+
+    @Test
+    public void testAddMovieOnPersistentSystem() {
+        // Given - Instantiate Movie at insert on persistent system.
+        HttpStatus httpStatusExpected = HttpStatus.CREATED;
+        int id = 1;
+        String uriExpected = "http://localhost:8080/media-library/movies/search/title/" + id;
+
+        String title = "Persistent System 2 : Return of the Empty Row";
+        String synopsis = "A developer fight the empty row present on the persistent system";
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
+
+        // When - Send movie to save it on persistent system.
+        ResponseEntity<Movie> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
+
+        // Then - Compare HTTP status and uri.
+        assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
+        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+    }
+
+    @Test
+    public void testAddMovieAlreadyPresentOnPersistentSystem() {
+        // Given - Instantiate Movie at insert on persistent system.
+        HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
+        String title = "Persistent System 2 : Return of the Empty Row";
+        String synopsis = "A developer fight the empty row present on the persistent system";
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
+
+        // When - Send movie to save it on persistent system.
+        ResponseEntity<MovieException> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, MovieException.class);
+
+        // Then - Compare HTTP status and uri.
+        assertThat(responseEntity.getBody()).isNull();
+        assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
+    }
+
 
     /**
      * METHOD  |        URL      | BODY

@@ -1,6 +1,6 @@
 # Media Library
 Media Library is an API RestFul used to request easily all medias available in a house.<br>
-In fact, we can considerate Media Library like a register of all medias present in the house.<br>
+In fact, we can considerate Media Library like a register for all medias present in the house.<br>
 The media manage by Media Library are :
 
 | Media  | Statement |
@@ -14,7 +14,7 @@ The media manage by Media Library are :
 The statement is a representation of the current state of development of each media :
 - `Forecast` mean the media not working and appear in the future released.
 - `Draft` mean the media is on "Work in Progress" statement and it's the object of the future released.
-- `Release` mean the media worked corectly on the project, and normally, the api don't change, except for fix some bugs.
+- `Release` mean the media worked correctly on the project, and normally, the api don't change, except for fix some bugs.
 
 ## Features
 ### About Movies
