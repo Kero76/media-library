@@ -1,6 +1,6 @@
 package fr.nicolasgille.medialibrary.client;
 
-import fr.nicolasgille.medialibrary.exception.MovieException;
+import fr.nicolasgille.medialibrary.exception.movie.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -12,10 +12,14 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import static org.assertj.core.api.Assertions.*;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -153,6 +157,8 @@ public class ClientMovieTest {
     public void testAddMovieAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
+        String httpClientExceptionExpected = "409 null";
+
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
@@ -174,57 +180,69 @@ public class ClientMovieTest {
         supports.add(MovieSupport.DVD);
         Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
 
+        ResponseEntity<MovieException> responseEntity = null;
         // When - Send movie to save it on persistent system.
-        ResponseEntity<MovieException> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, MovieException.class);
-
-        // Then - Compare HTTP status and uri.
-        assertThat(responseEntity.getBody()).isNull();
-        assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
+        try {
+            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, MovieException.class);
+         } catch (HttpClientErrorException httpClientErrorException) {
+            // Then - Compare HTTP code error and message.
+            assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
+            assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
+        }
     }
 
-
-    /**
-     * METHOD  |        URL      | BODY
-     * POST    | /movies/create  | movie.
-     */
     @Test
-    public void testSave() {
-        // Given - Instantiate category, support and actor.
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.ACTION);
+    public void testGetOneMovie() {
+        // Given - Instantiate Movie at insert on persistent system.
+        HttpStatus httpStatusExpected = HttpStatus.OK;
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.VIDEO_TAPE);
-        supports.add(MovieSupport.DVD);
+        String title = "Persistent System 2 : Return of the Empty Row";
+        String synopsis = "A developer fight the empty row present on the persistent system";
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
-        actors.add(new Actor("Bruce", "Wayne"));
-        actors.add(new Actor("Clark", "Kent"));
+        actors.add(new Actor("Nicolas", "Cage"));
 
         Set<Producer> producers = new HashSet<Producer>();
-        producers.add(new Producer("Jacky", "LaFrite"));
-        producers.add(new Producer("Michel", "LaPoutre"));
+        producers.add(new Producer("Steven", "Spielberg"));
 
         Set<Director> directors = new HashSet<Director>();
-        directors.add(new Director("Director", "Sama"));
+        directors.add(new Director("Ridley", "Scott"));
 
-        Calendar releasedDate = new GregorianCalendar();
-        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
 
-        RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Batman return", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
-        System.out.println(uri.toASCIIString());
+        // When - Get movie from persistent system.
+        ResponseEntity<Movie> responseEntity = null;
+        try {
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(movie.getTitle(), "UTF-8"), Movie.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        supports.remove(MovieSupport.VIDEO_TAPE);
-        actors.add(new Actor("Jocker", ""));
+        // Then - Compare Http code and movie retrieve.
+        assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
+        assertThat(responseEntity.getBody().getTitle()).isEqualTo(movie.getTitle());
+        assertThat(responseEntity.getBody().getReleaseDate()).isEqualTo(movie.getReleaseDate());
+        assertThat(responseEntity.getBody().getCategories()).isEqualTo(movie.getCategories());
+        assertThat(responseEntity.getBody().getDirectors()).isEqualTo(movie.getDirectors());
+        assertThat(responseEntity.getBody().getDuration()).isEqualTo(movie.getDuration());
+        assertThat(responseEntity.getBody().getMainActors()).isEqualTo(movie.getMainActors());
+        assertThat(responseEntity.getBody().getProducers()).isEqualTo(movie.getProducers());
+        assertThat(responseEntity.getBody().getSupports()).isEqualTo(movie.getSupports());
+        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(movie.getSynopsis());
 
-        releasedDate.set(2012, Calendar.MAY, Calendar.JANUARY);
-
-        movie = new Movie("Batman Dark Knight", categories, releasedDate, 137, "I'm a Darkness, i'm the Bat, I'm Batman !!!", actors, producers, directors, supports);
-        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
-        System.out.println(uri.toASCIIString());
     }
+
+
+    /********************************************************************/
+    /********************************************************************/
+    /********************************************************************/
 
     /**
      * METHOD  |        URL      | BODY
