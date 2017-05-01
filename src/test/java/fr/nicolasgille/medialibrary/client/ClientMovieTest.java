@@ -192,9 +192,10 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testGetOneMovie() {
+    public void testGetOneMovie() throws UnsupportedEncodingException {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
+        int sizeExpected = 1;
 
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
@@ -220,7 +221,7 @@ public class ClientMovieTest {
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(movie.getTitle(), "UTF-8"), Movie.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), "UTF-8"), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -228,59 +229,97 @@ public class ClientMovieTest {
         // Then - Compare Http code and movie retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
         assertThat(responseEntity.getBody().getTitle()).isEqualTo(movie.getTitle());
-        assertThat(responseEntity.getBody().getReleaseDate()).isEqualTo(movie.getReleaseDate());
+        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(movie.getReleaseDate().get(Calendar.YEAR));
         assertThat(responseEntity.getBody().getCategories()).isEqualTo(movie.getCategories());
-        assertThat(responseEntity.getBody().getDirectors()).isEqualTo(movie.getDirectors());
-        assertThat(responseEntity.getBody().getDuration()).isEqualTo(movie.getDuration());
-        assertThat(responseEntity.getBody().getMainActors()).isEqualTo(movie.getMainActors());
-        assertThat(responseEntity.getBody().getProducers()).isEqualTo(movie.getProducers());
         assertThat(responseEntity.getBody().getSupports()).isEqualTo(movie.getSupports());
         assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(movie.getSynopsis());
-
+        assertThat(responseEntity.getBody().getDuration()).isEqualTo(movie.getDuration());
+        assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody().getMainActors().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(sizeExpected);
     }
 
+    @Test
+    public void testGetMovieNotFoundOnPersistentSystem() {
+        // Given - Instantiate Movie at insert on persistent system.
+        HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
+        String httpClientExceptionExpected = "404 null";
 
-    /********************************************************************/
-    /********************************************************************/
-    /********************************************************************/
+        String title = "Persistent System 3 : A new Hope";
+        String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-    /**
-     * METHOD  |        URL      | BODY
-     *  GET    |     /movies/    |  /
-     */
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+
+        // When - Get movie from persistent system.
+        ResponseEntity<Movie> responseEntity = null;
+        try {
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), "UTF-8"), Movie.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (HttpClientErrorException httpClientErrorException) {
+            // Then - Compare HTTP code error and message.
+            assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
+            assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
+        }
+    }
+
     @Test
     public void testGetAllMovies() {
-        RestTemplate restTemplate = new RestTemplate();
-        List<LinkedHashMap<String, Object>> movies = restTemplate.getForObject(REST_SERVICE_URI + "/movies/", List.class);
+        // Given - Instantiate a movie to push on persistent system.
+        HttpStatus httpStatusExpected = HttpStatus.OK;
+        int sizeExpected = 2;
 
-        if (movies != null) {
-            for(LinkedHashMap<String, Object> map : movies){
-                for (String key : map.keySet()) {
-                    System.out.print(key + " : " + map.get(key) + " | ");
-                }
-                System.out.println();
-            }
-        }
+        String title = "Persistent System 3 : A new Hope";
+        String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+        this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
+
+        // When - Get all movies from persistent system.
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/", List.class);
+
+        // Then - Compare size of elements and http code.
+        assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
+        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
     }
 
-    /**
-     * METHOD  |                URL           | BODY
-     *  GET    | /movies/search/title/{title} |  /
-     */
-    @Test
-    public void testGetMovie() {
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            ResponseEntity<Movie> responseEntity = restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/Batman return", Movie.class);
-            if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                System.out.println(responseEntity.getBody().toString());
-            } else {
-                System.out.println("An error occurred and movie not found on Database.");
-            }
-        } catch (HttpMessageNotReadableException exception) {
-            System.out.println(exception.toString());
-        }
-    }
+
+    /********************************************************************/
+    /********************************************************************/
+    /********************************************************************/
+
 
     /**
      * METHOD  |        URL      | BODY

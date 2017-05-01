@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -116,7 +118,7 @@ public class MovieController {
      * If the database research don't retrieve the movie, this method return an HTTP error.
      * This method can call by GET request and take an path variable the title of the movie at research.
      *
-     * @param title
+     * @param titleEncoded
      *  Title of the movie to search on Database.
      * @return
      *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
@@ -124,7 +126,8 @@ public class MovieController {
      * @version 2.0
      */
     @RequestMapping(value = "/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String title) {
+    public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+        String title = URLDecoder.decode(titleEncoded, "UTF-8");
         logger.info("Fetching Movie with title {}", title);
         Movie movie = movieDao.findByTitleIgnoreCase(title);
         if (movie == null) {
