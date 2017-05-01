@@ -35,6 +35,9 @@ public class ClientMovieTest {
      */
     private static final String REST_SERVICE_URI = "http://localhost:8080/media-library";
 
+
+    private static final String URL_ENCODER = "UTF-8";
+
     /**
      * RestTemplate used to interact with Rest service.
      */
@@ -221,7 +224,7 @@ public class ClientMovieTest {
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), "UTF-8"), Movie.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -269,7 +272,7 @@ public class ClientMovieTest {
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), "UTF-8"), Movie.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -313,6 +316,75 @@ public class ClientMovieTest {
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
         assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+    }
+
+    @Test
+    public void updateMovie() throws UnsupportedEncodingException {
+        // Given - Instantiate a movie to update on persistent system.
+        int id = 2;
+        String title = "Persistent System 3 : A new Hope";
+        String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope ?";
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(id, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+        this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
+
+        // When - Get movie update and check if the difference appear.
+        ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
+
+        // Then - Compare synopsis.
+        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+    }
+
+    @Test
+    public void updateMovieNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+        // Given - Instantiate a movie to update on persistent system.
+        HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
+
+        int id = 666;
+        String title = "Persistent System 3 : A new Despair";
+        String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
+
+        List<MovieCategory> categories = new ArrayList<MovieCategory>();
+        categories.add(MovieCategory.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
+
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(new Actor("Nicolas", "Cage"));
+
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(new Producer("Steven", "Spielberg"));
+
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(new Director("Ridley", "Scott"));
+
+        List<MovieSupport> supports = new ArrayList<MovieSupport>();
+        supports.add(MovieSupport.DVD);
+        Movie movie = new Movie(id, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+
+        try {
+            // When - Try to update movie not present on persistent system.
+            this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
+        } catch (HttpClientErrorException httpClientErrorException) {
+            // Then - Compare http code error.
+            assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
+        }
     }
 
 
