@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.exception.movie;
+package fr.nicolasgille.medialibrary.exception;
 
 /**
  * Exception send at the client when a problem occurred during CRUD process.
@@ -23,7 +23,7 @@ public class MovieException extends Exception {
      * @param message
      *  Message at display when the error was throw.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public MovieException(String message) {
         super(message);

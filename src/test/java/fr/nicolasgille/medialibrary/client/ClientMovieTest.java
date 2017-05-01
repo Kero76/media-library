@@ -1,6 +1,6 @@
 package fr.nicolasgille.medialibrary.client;
 
-import fr.nicolasgille.medialibrary.exception.movie.MovieException;
+import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -11,15 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import static org.assertj.core.api.Assertions.*;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
 

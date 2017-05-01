@@ -508,7 +508,7 @@ public class Movie {
         // Build categories string.
         StringBuilder categories = new StringBuilder();
         for (int i = 0; i < this.categories.size(); ++i) {
-            categories.append(this.categories.get(i).name().toLowerCase());
+            categories.append(this.categories.get(i).getName());
             if (i != this.categories.size() - 1) {
                 categories.append(", ");
             }
@@ -517,7 +517,7 @@ public class Movie {
         // Build supports string.
         StringBuilder supports = new StringBuilder();
         for (int i = 0; i < this.supports.size(); ++i) {
-            supports.append(this.supports.get(i).name().toLowerCase());
+            supports.append(this.supports.get(i).getName());
             if (i != this.supports.size() - 1) {
                 supports.append(", ");
             }
@@ -526,7 +526,7 @@ public class Movie {
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", category=" + categories.toString() +
+                ", categories=" + categories.toString() +
                 ", releaseDate=" + releaseDate.toString() +
                 ", duration=" + duration +
                 ", synopsis='" + synopsis + '\'' +
@@ -548,7 +548,6 @@ public class Movie {
      * @version 1.0
      */
     private String setStringBuilder(Set<?> set) {
-        // Build directors string.
         StringBuilder str = new StringBuilder();
         if (set != null) {
             for (int i = 0; i < set.size(); ++i) {

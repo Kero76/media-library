@@ -4,7 +4,7 @@ import fr.nicolasgille.medialibrary.daos.MovieDAO;
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
-import fr.nicolasgille.medialibrary.exception.movie.MovieException;
+import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -37,6 +37,7 @@ import java.util.Set;
  *  -> Added Director DAO to interact with Director present on persistent system.
  *  -> Added Producer DAO to interact with Producer present on persistent system.
  *  -> Update Movie constructor with new parameters.
+ *  -> Added URLDecoder on method getMovieByTitle().
  *
  * V2.0:
  *  -> Completely rewrite content of all methods to modernize methods.
@@ -117,13 +118,14 @@ public class MovieController {
      * This method return a ResponseEntity with the movie retrieve from the Database.
      * If the database research don't retrieve the movie, this method return an HTTP error.
      * This method can call by GET request and take an path variable the title of the movie at research.
+     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search movie on Database.
      *
      * @param titleEncoded
-     *  Title of the movie to search on Database.
+     *  Title of the movie encoded to search on Database.
      * @return
      *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
-     * @version 2.0
+     * @version 2.1
      */
     @RequestMapping(value = "/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {

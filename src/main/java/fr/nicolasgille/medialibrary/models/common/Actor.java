@@ -12,7 +12,7 @@ import java.util.Set;
  *  -> Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.
  *  -> Updated constructor with new attribute on parameter.
  *  -> Added corresponding getter and setter for attribute <code>movies</code>
- *  -> Added <code>@ManyToMany</code> annotations new attribute <code>movies</code>.
+ *  -> Added <code>@Transient</code> annotations on new attribute <code>movies</code>.
  *
  * @see Movie
  * @author Nicolas GILLE
