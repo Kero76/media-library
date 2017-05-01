@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
@@ -387,122 +388,42 @@ public class ClientMovieTest {
         }
     }
 
-
-    /********************************************************************/
-    /********************************************************************/
-    /********************************************************************/
-
-
-    /**
-     * METHOD  |        URL      | BODY
-     *  GET    | /movies/update  | movie.
-     */
     @Test
-    public void testUpdate() {
-        // Given - Instantiate category, support, actors
-        long id = 1;
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.ACTION);
-        categories.add(MovieCategory.COMEDY);
-        categories.add(MovieCategory.ADVENTURE);
-
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
-
-        Set<Actor> actors = new HashSet<Actor>();
-        actors.add(new Actor("Bruce", "Wayne"));
-
-        Set<Producer> producers = new HashSet<Producer>();
-        producers.add(new Producer("Jacky", "LaFrite"));
-
-        Set<Director> directors = new HashSet<Director>();
-        directors.add(new Director("Director", "Sama"));
-
-        Calendar releasedDate = new GregorianCalendar();
-        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
-
-        RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(id,"Batman Forever", categories, releasedDate, 195, "I'm Batman !!!", actors, producers, directors, supports);
-        restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie);
-        System.out.println(movie.toString());
-    }
-
-    /**
-     * METHOD  |        URL      | BODY
-     * DELETE  | /movies/delete  |  /
-     */
-    @Test
-    public void testDelete() {
+    public void deleteMovie() {
+        // Given - id of movie at delete and all elements expected.
         int id = 2;
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
+        String title = "Persistent System 3 : A new Hope";
+        HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
+        String httpClientExceptionExpected = "404 null";
+
+        // When - Delete movie
+        this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
+
+        try {
+            ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (HttpClientErrorException httpClientErrorException) {
+            // Then - Compare HTTP code error and message.
+            assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
+            assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
+        }
     }
 
     @Test
-    public void testInsertMovieAlreadyPresent() {
-        // Given - Instantiate category, support, actors
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.ACTION);
+    public void deleteMovieNotFoundOnPersistentSystem() {
+        // Given - id of movie at delete and all elements expected.
+        int id = 2;
+        HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
+        String httpClientExceptionExpected = "404 null";
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
-
-        Set<Actor> actors = new HashSet<Actor>();
-        actors.add(new Actor("Optimus", "Prime"));
-        actors.add(new Actor("Bumblebee", ""));
-        actors.add(new Actor("Megatron", ""));
-
-        Set<Producer> producers = new HashSet<Producer>();
-        producers.add(new Producer("Michael", "Bay"));
-
-        Set<Director> directors = new HashSet<Director>();
-        directors.add(new Director("Director", "Sama"));
-
-        Calendar releasedDate = new GregorianCalendar();
-        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
-
-        RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie("Transformers", categories, releasedDate, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, directors, supports);
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
-        System.out.println(uri.toASCIIString());
-
-        categories.add(MovieCategory.ACTION);
-        categories.add(MovieCategory.ADVENTURE);
-        movie = new Movie("Transformers", categories, releasedDate, 123, "BOUM PAF PAN PAN BOUM ", actors, producers, directors, supports);
-        uri = restTemplate.postForLocation(REST_SERVICE_URI + "/movies/", movie, Movie.class);
-        System.out.println(uri.toASCIIString());
-    }
-
-    @Test
-    public void testUpdateMovieNotPresent() {
-        // Given - Instantiate category, support, actors
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.ACTION);
-
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
-
-        Set<Actor> actors = new HashSet<Actor>();
-        actors.add(new Actor("Bruce", "Wayne"));
-
-        Set<Producer> producers = new HashSet<Producer>();
-        producers.add(new Producer("Michael", "Bay"));
-
-        Set<Director> directors = new HashSet<Director>();
-        directors.add(new Director("Director", "Sama"));
-
-        Calendar releasedDate = new GregorianCalendar();
-        releasedDate.set(1999, Calendar.MAY, Calendar.JANUARY);
-
-        RestTemplate restTemplate = new RestTemplate();
-        Movie movie = new Movie(1,"Batman Fornever", categories, releasedDate, 95, "I'm Batman !!!", actors, producers, directors, supports);
-        restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie);
-        System.out.println(movie.toString());
-    }
-
-    @Test
-    public void testDeleteMovieNotPresent() {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(REST_SERVICE_URI + "/movies/666");
+        try {
+            // When - Delete movie
+            this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
+        } catch (HttpClientErrorException httpClientErrorException) {
+            // Then - Compare HTTP code error and message.
+            assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
+            assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
+        }
     }
 }

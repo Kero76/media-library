@@ -316,7 +316,7 @@ public class MovieController {
      * @param id
      *  Id of the movie at delete.
      * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 409 : CONFLICT..
+     *  A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT_FOUND.
      * @since 1.0
      * @version 2.0
      */
