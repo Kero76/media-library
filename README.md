@@ -1,7 +1,7 @@
-# Media Library
-Media Library is an API RestFul used to request easily all medias available in a house.<br>
-In fact, we can considerate Media Library like a register for all medias present in the house.<br>
-The media manage by Media Library are :
+# Media-Library
+Media-Library is a RESTFUL API used to request easily all medias available in a house.<br>
+It can be considerate as a *register* to check presence of movie, CD, book, ... on the house.<br>
+Media manages by Media Library are :
 
 | Media  | Statement |
 | :-----:|-----------|
@@ -29,34 +29,33 @@ The statement is a representation of the current state of development of each me
 | DELETE | /media-library/movies/{id}           | /     | Delete a Movie from the persistent system in function of the id receive from the url. |
 
 #### Movies attributes
-[x] id : Identifier of the Movie with the following format `[0-9]*`.
-[x] title : Title of the Movie.
-[x] releaseDate : Date of release of the Movie. 
-[x] duration : Duration of the Movie in minute.
-[x] synopsis : Synopsis of the Movie.
-[x] main Actors : List of main actors of the Movie.
-[x] producers : List of producers of the Movie.
-[x] directors : List of directors of the Movie.
-[x] categories : List of genre of the Movie.
-[x] supports : List of support available for the Movie. Video Tape, DVD, Blu-Ray.
-[ ] poster : Poster of the Movie.
-[ ] spoken languages : List of languages spoken available on the Movie. 
-[ ] subtitle languages : List of languages subtitled available on the Movie.
+- [x] id : Identifier of the Movie with the following format `[0-9]*`.
+- [x] title : Title of the Movie.
+- [x] releaseDate : Date of release of the Movie. 
+- [x] duration : Duration of the Movie in minute.
+- [x] synopsis : Synopsis of the Movie.
+- [x] main Actors : List of main actors of the Movie.
+- [x] producers : List of producers of the Movie.
+- [x] directors : List of directors of the Movie.
+- [x] categories : List of genre of the Movie.
+- [x] supports : List of support available for the Movie. Video Tape, DVD, Blu-Ray.
+- [ ] poster : Poster of the Movie.
+- [x] spoken languages : List of languages spoken available on the Movie. 
+- [x] subtitle languages : List of languages subtitled available on the Movie.
+- [x] Original title : Original title of the movie (For example _Ghostbusters_ is renamed _SOS Fantômes_ in French).
  
 ## Commands
 - `mvn spring-boot:run` : Deploy Media Library in localhost:8080/
+
+## License 
+This software is under GPLv3 license.
 
 ## Authors
 - Nicolas GILLE <nic.gille@gmail.com>
 
 ## Resources
-### Useful links about Spring Boot 
-- Tutorial about jpa and hibernate : [http://blog.netgloo.com/2014/10/27/using-mysql-in-spring-boot-via-spring-data-jpa-and-hibernate/](http://blog.netgloo.com/2014/10/27/using-mysql-in-spring-boot-via-spring-data-jpa-and-hibernate/)
-- Link about jpa query method nomenclature : [http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/#jpa.query-methods.query-creation](http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
-- Example of API Rest in Spring Boot : [http://websystique.com/spring-boot/spring-boot-rest-api-example/](http://websystique.com/spring-boot/spring-boot-rest-api-example/)
-- Problem about timezone of MySQL : [http://stackoverflow.com/questions/26515700/mysql-jdbc-driver-5-1-33-time-zone-issue](http://stackoverflow.com/questions/26515700/mysql-jdbc-driver-5-1-33-time-zone-issue)
-- JPA help about Enumeration and Collection : [https://en.wikibooks.org/wiki/Java_Persistence/ElementCollection](https://en.wikibooks.org/wiki/Java_Persistence/ElementCollection) 
-- Help about Exception in RESTFUL Service : [https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc)
-
-### Services used
+### Services used (in a future to get poster)
 - The Movie DB API : [https://www.themoviedb.org/](https://www.themoviedb.org/)
+
+### External libraries used
+- Libraries about [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) : [https://github.com/TakahikoKawasaki/nv-i18n](https://github.com/TakahikoKawasaki/nv-i18n)
