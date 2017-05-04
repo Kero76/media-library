@@ -160,7 +160,7 @@ public class MovieController {
         logger.info("Created movie : {}", movie);
 
         // Check if the movie already exist on database.
-        Movie movieExist = movieDao.findByTitleAndDurationAndReleaseDate(movie.getTitle(), movie.getDuration(), movie.getReleaseDate());
+        Movie movieExist = movieDao.findByTitleAndRuntimeAndReleaseDate(movie.getTitle(), movie.getRuntime(), movie.getReleaseDate());
         if (movieExist != null) {
             logger.error("Unable to create. The movie {} already exist", movie.getTitle());
             return new ResponseEntity<MovieException>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);

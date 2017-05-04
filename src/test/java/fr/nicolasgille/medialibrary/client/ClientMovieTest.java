@@ -1,11 +1,12 @@
 package fr.nicolasgille.medialibrary.client;
 
+import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.movie.Movie;
-import fr.nicolasgille.medialibrary.models.movie.MovieCategory;
+import fr.nicolasgille.medialibrary.models.movie.MovieGenre;
 import fr.nicolasgille.medialibrary.models.movie.MovieSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,8 +67,8 @@ public class ClientMovieTest {
         String messageExcepted = "404 null";
         int id = 666;
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -83,7 +84,18 @@ public class ClientMovieTest {
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
 
-        Movie movie = new Movie(id, "My title", categories, releaseDate, 120, "My Synopsis", actors, producers, directors, supports);
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+
+        Movie movie = new Movie(id,  "My title", "My original title", categories, releaseDate, 120, "My Synopsis", actors, producers, directors, supports, languageSpoken, subtitles);
 
         // When - Try to update movie.
         try {
@@ -127,8 +139,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -143,7 +155,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(title, title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
 
         // When - Send movie to save it on persistent system.
         ResponseEntity<Movie> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
@@ -162,8 +185,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -178,7 +201,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(title, title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
 
         ResponseEntity<MovieException> responseEntity = null;
         // When - Send movie to save it on persistent system.
@@ -200,8 +234,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -216,7 +250,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(title, title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
 
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
@@ -230,13 +275,14 @@ public class ClientMovieTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
         assertThat(responseEntity.getBody().getTitle()).isEqualTo(movie.getTitle());
         assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(movie.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getCategories()).isEqualTo(movie.getCategories());
+        assertThat(responseEntity.getBody().getGenres()).isEqualTo(movie.getGenres());
         assertThat(responseEntity.getBody().getSupports()).isEqualTo(movie.getSupports());
         assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(movie.getSynopsis());
-        assertThat(responseEntity.getBody().getDuration()).isEqualTo(movie.getDuration());
+        assertThat(responseEntity.getBody().getRuntime()).isEqualTo(movie.getRuntime());
         assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
         assertThat(responseEntity.getBody().getMainActors().size()).isEqualTo(sizeExpected);
         assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(sizeExpected);
+        System.out.println(responseEntity.getBody().toString());
     }
 
     @Test
@@ -248,8 +294,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -264,7 +310,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
 
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
@@ -288,8 +345,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -304,7 +361,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
 
         // When - Get all movies from persistent system.
@@ -322,8 +390,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope ?";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -338,7 +406,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(id, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(id, title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
         this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
 
         // When - Get movie update and check if the difference appear.
@@ -357,8 +436,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Despair";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
-        List<MovieCategory> categories = new ArrayList<MovieCategory>();
-        categories.add(MovieCategory.FANTASY);
+        List<MovieGenre> categories = new ArrayList<MovieGenre>();
+        categories.add(MovieGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -373,7 +452,18 @@ public class ClientMovieTest {
 
         List<MovieSupport> supports = new ArrayList<MovieSupport>();
         supports.add(MovieSupport.DVD);
-        Movie movie = new Movie(id, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports);
+
+        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
+        languageSpoken.add(LanguageCode.fr);
+        languageSpoken.add(LanguageCode.en);
+
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+        subtitles.add(LanguageCode.de);
+        subtitles.add(LanguageCode.it);
+        Movie movie = new Movie(id, title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
 
         try {
             // When - Try to update movie not present on persistent system.

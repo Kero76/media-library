@@ -1,5 +1,6 @@
 package fr.nicolasgille.medialibrary.models.movie;
 
+import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -16,8 +17,8 @@ import java.util.Set;
  * Movie class.
  *
  * This class is a model of the movie object stored in persistent system.
- * If you would add new attribute on the Database, you just add new attribute on this class
- * to regenerate new Database with new row.
+ * If you would add new attribute on the Database, you just add new attributes on this class
+ * to regenerate new Database with new corresponding rows.
  *
  * V 1.1 :
  *  -> Added constructor Movie(Movie movie) use to copy a movie into another movie. (see MovieController for more information).
@@ -25,7 +26,7 @@ import java.util.Set;
  *  -> Removed unused constructors.
  *  -> Update field category to add multiple category for movie.
  *  -> Update constructors with new attributes.
- *  -> Added following fields : supports, directors, producers
+ *  -> Added following fields : supports, directors, producers, languagesSpoken, subtitleLanguage, originalTitle
  *  -> Update <code>releaseDate</code> type by Calendar object.
  *
  * @author Nicolas GILLE
@@ -56,6 +57,13 @@ public class Movie {
     private String title;
 
     /**
+     * Original title of the movie.
+     *
+     * @since 1.1
+     */
+    private String originalTitle;
+
+    /**
      * Date of release.
      *
      * @since 1.0
@@ -65,12 +73,12 @@ public class Movie {
     private Calendar releaseDate;
 
     /**
-     * Duration of the movies (in minutes).
+     * Runtime of the movies (in minutes).
      *
      * @since 1.0
      */
     @NotNull
-    private Integer duration;
+    private Integer runtime;
 
     /**
      * Synopsis of the movie.
@@ -130,13 +138,13 @@ public class Movie {
     /**
      * List of all categories of the movie.
      *
-     * @see MovieCategory
+     * @see MovieGenre
      * @since 1.0
      */
     @NotNull
-    @ElementCollection(targetClass = MovieCategory.class)
+    @ElementCollection(targetClass = MovieGenre.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<MovieCategory> categories;
+    private List<MovieGenre> genres;
 
     /**
      * List of Support for the movie
@@ -148,6 +156,28 @@ public class Movie {
     @ElementCollection(targetClass = MovieSupport.class)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<MovieSupport> supports;
+
+    /**
+     * List of language spoken available on the movie.
+     *
+     * @see LanguageCode
+     * @since 1.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = LanguageCode.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<LanguageCode> languagesSpoken;
+
+    /**
+     * List of language present as subtitle available on the movie.
+     *
+     * @see LanguageCode
+     * @since 1.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = LanguageCode.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<LanguageCode> subtitles;
 
     /**
      * Empty constructor.
@@ -162,11 +192,13 @@ public class Movie {
      *
      * @param title
      *  Title of the movie.
-     * @param categories
-     *  List of all category for the movie.
+     * @param originalTitle
+     *  Original title of the movie.
+     * @param genres
+     *  List of all genres for the movie.
      * @param releaseDate
      *  Date of release of the movie.
-     * @param duration
+     * @param runtime
      *  Duration of the movie in minute.
      * @param synopsis
      *  Synopsis of the movie.
@@ -178,19 +210,28 @@ public class Movie {
      *  List of all directors of the movie.
      * @param supports
      *  Supports present for the movie.
+     * @param languagesSpoken
+     *  List of languages spoken available on movie.
+     * @param subtitles
+     *  List of subtitle languages available on movie.
      * @since 1.0
      * @version 1.1
      */
-    public Movie(String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports) {
-        this.title       = title;
-        this.categories  = categories;
-        this.releaseDate = releaseDate;
-        this.duration    = duration;
-        this.synopsis    = synopsis;
-        this.mainActors  = mainActors;
-        this.supports    = supports;
-        this.directors   = directors;
-        this.producers   = producers;
+    public Movie(String title, String originalTitle, List<MovieGenre> genres, Calendar releaseDate, int runtime, String synopsis,
+                 Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports,
+                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles) {
+        this.title         = title;
+        this.originalTitle = originalTitle;
+        this.genres        = genres;
+        this.releaseDate   = releaseDate;
+        this.runtime       = runtime;
+        this.synopsis      = synopsis;
+        this.mainActors    = mainActors;
+        this.supports      = supports;
+        this.directors     = directors;
+        this.producers     = producers;
+        this.subtitles     = subtitles;
+        this.languagesSpoken = languagesSpoken;
     }
 
     /**
@@ -201,11 +242,11 @@ public class Movie {
      *  identifier of the movie.
      * @param title
      *  Title of the movie.
-     * @param categories
-     *  List of all category of the movie.
+     * @param genres
+     *  List of all genres of the movie.
      * @param releaseDate
      *  Date of release of the movie.
-     * @param duration
+     * @param runtime
      *  Duration of the movie in minute.
      * @param synopsis
      *  Synopsis of the movie.
@@ -217,20 +258,29 @@ public class Movie {
      *  List of all directors of the movie.
      * @param supports
      *  Supports present for the movie.
+     * @param languagesSpoken
+     *  List of languages spoken available on movie.
+     * @param subtitles
+     *  List of subtitle languages available on movie.
      * @since 1.0
      * @version 1.1
      */
-    public Movie(long id, String title, List<MovieCategory> categories, Calendar releaseDate, int duration, String synopsis, Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports) {
-        this.id          = id;
-        this.title       = title;
-        this.categories  = categories;
-        this.releaseDate = releaseDate;
-        this.duration    = duration;
-        this.synopsis    = synopsis;
-        this.mainActors  = mainActors;
-        this.producers   = producers;
-        this.directors   = directors;
-        this.supports    = supports;
+    public Movie(long id, String title, String originalTitle, List<MovieGenre> genres, Calendar releaseDate, int runtime, String synopsis,
+                 Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<MovieSupport> supports,
+                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles) {
+        this.id            = id;
+        this.title         = title;
+        this.originalTitle = originalTitle;
+        this.genres        = genres;
+        this.releaseDate   = releaseDate;
+        this.runtime       = runtime;
+        this.synopsis      = synopsis;
+        this.mainActors    = mainActors;
+        this.producers     = producers;
+        this.directors     = directors;
+        this.supports      = supports;
+        this.subtitles     = subtitles;
+        this.languagesSpoken = languagesSpoken;
     }
 
     /**
@@ -242,16 +292,19 @@ public class Movie {
      * @version 1.1
      */
     public Movie(Movie movie) {
-        this.id          = movie.getId();
-        this.title       = movie.getTitle();
-        this.categories  = movie.getCategories();
-        this.releaseDate = movie.getReleaseDate();
-        this.duration    = movie.getDuration();
-        this.synopsis    = movie.getSynopsis();
-        this.mainActors  = movie.getMainActors();
-        this.producers   = movie.getProducers();
-        this.directors   = movie.getDirectors();
-        this.supports    = movie.getSupports();
+        this.id            = movie.getId();
+        this.title         = movie.getTitle();
+        this.originalTitle = movie.getOriginalTitle();
+        this.genres        = movie.getGenres();
+        this.releaseDate   = movie.getReleaseDate();
+        this.runtime       = movie.getRuntime();
+        this.synopsis      = movie.getSynopsis();
+        this.mainActors    = movie.getMainActors();
+        this.producers     = movie.getProducers();
+        this.directors     = movie.getDirectors();
+        this.supports      = movie.getSupports();
+        this.subtitles     = movie.getSubtitles();
+        this.languagesSpoken = movie.getLanguagesSpoken();
     }
 
     /**
@@ -303,28 +356,52 @@ public class Movie {
     }
 
     /**
-     * Return the category.
+     * Return the original title.
      *
      * @return
-     *  The category of the movie.
-     * @see MovieCategory
-     * @since 1.0
-     * @version 1.1
+     *  The origianl title of the movie.
+     * @since 1.1
+     * @version 1.0
      */
-    public List<MovieCategory> getCategories() {
-        return categories;
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
     /**
-     * Set movieCategory.
+     * Set original title.
      *
-     * @param category
-     *  New category.
-     * @since 1.0
-     * @version 1.1
+     * @param originalTitle
+     *  New title.
+     * @since 1.1
+     * @version 1.0
      */
-    public void setCategories(List<MovieCategory> category) {
-        this.categories = category;
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    /**
+     * Return the genres.
+     *
+     * @return
+     *  The genres of the movie.
+     * @see MovieGenre
+     * @since 1.0
+     * @version 1.2
+     */
+    public List<MovieGenre> getGenres() {
+        return genres;
+    }
+
+    /**
+     * Set genres of Movie.
+     *
+     * @param genres
+     *  New genres.
+     * @since 1.0
+     * @version 1.2
+     */
+    public void setGenres(List<MovieGenre> genres) {
+        this.genres = genres;
     }
 
     /**
@@ -352,27 +429,27 @@ public class Movie {
     }
 
     /**
-     * Return the duration of the movie in minute.
+     * Return the runtime of the movie in minute.
      *
      * @return
-     *  The duration in minute.
+     *  The runtime in minute.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public int getDuration() {
-        return duration;
+    public int getRuntime() {
+        return runtime;
     }
 
     /**
-     * Set duration in minute.
+     * Set runtime in minute.
      *
-     * @param duration
-     *  New duration in minute.
+     * @param runtime
+     *  New runtime in minute.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
     }
 
     /**
@@ -496,6 +573,54 @@ public class Movie {
     }
 
     /**
+     * Get the list of languages spoken.
+     *
+     * @return
+     *  A list of languages spoken.
+     * @since 1.1
+     * @version 1.0
+     */
+    public List<LanguageCode> getLanguagesSpoken() {
+        return languagesSpoken;
+    }
+
+    /**
+     * Set the list of languages spoken available on the movie.
+     *
+     * @param languagesSpoken
+     *  New list of languages spoken.
+     * @since 1.1
+     * @version 1.0
+     */
+    public void setLanguagesSpoken(List<LanguageCode> languagesSpoken) {
+        this.languagesSpoken = languagesSpoken;
+    }
+
+    /**
+     * Get the list of subtitle  languages.
+     *
+     * @return
+     *  A list of subtitle languages.
+     * @since 1.1
+     * @version 1.1
+     */
+    public List<LanguageCode> getSubtitles() {
+        return subtitles;
+    }
+
+    /**
+     * Set the list of subtitle languages available on the movie.
+     *
+     * @param subtitles
+     *  New list of subtitle languages.
+     * @since 1.1
+     * @version 1.1
+     */
+    public void setSubtitles(List<LanguageCode> subtitles) {
+        this.subtitles = subtitles;
+    }
+
+    /**
      * Display Movie information.
      *
      * @return
@@ -506,11 +631,11 @@ public class Movie {
     @Override
     public String toString() {
         // Build categories string.
-        StringBuilder categories = new StringBuilder();
-        for (int i = 0; i < this.categories.size(); ++i) {
-            categories.append(this.categories.get(i).getName());
-            if (i != this.categories.size() - 1) {
-                categories.append(", ");
+        StringBuilder genres = new StringBuilder();
+        for (int i = 0; i < this.genres.size(); ++i) {
+            genres.append(this.genres.get(i).getName());
+            if (i != this.genres.size() - 1) {
+                genres.append(", ");
             }
         }
 
@@ -523,17 +648,38 @@ public class Movie {
             }
         }
 
+        // Build language spoken string.
+        StringBuilder languagesSpoken = new StringBuilder();
+        for (int i = 0; i < this.languagesSpoken.size(); ++i) {
+            languagesSpoken.append(this.languagesSpoken.get(i).getName());
+            if (i != this.languagesSpoken.size() - 1) {
+                languagesSpoken.append(", ");
+            }
+        }
+
+        // Build subtitle language string.
+        StringBuilder subtitles = new StringBuilder();
+        for (int i = 0; i < this.subtitles.size(); ++i) {
+            subtitles.append(this.subtitles.get(i).getName());
+            if (i != this.subtitles.size() - 1) {
+                subtitles.append(", ");
+            }
+        }
+
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", categories=" + categories.toString() +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", categories=" + genres.toString() +
                 ", releaseDate=" + releaseDate.toString() +
-                ", duration=" + duration +
+                ", runtime=" + runtime +
                 ", synopsis='" + synopsis + '\'' +
                 ", mainActors='" + this.setStringBuilder(this.mainActors) + '\'' +
                 ", producers='" + this.setStringBuilder(this.producers) + '\'' +
                 ", directors='" + this.setStringBuilder(this.directors) + '\'' +
                 ", supports='" + supports.toString() +
+                ", languageSpoken='" + languagesSpoken.toString() +
+                ", subtitles='" + subtitles.toString() +
                 '}';
     }
 

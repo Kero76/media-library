@@ -40,14 +40,14 @@ public interface MovieDAO extends JpaRepository<Movie, Long> {
      *
      * @param title
      *  Title of the movie.
-     * @param duration
-     *  Duration of the movie.
+     * @param runtime
+     *  Runtime of the movie.
      * @param releaseDate
      *  Date of release of the movie search.
      * @return
      *  An instance of movie search by title, duration and releaseDate.
      * @since 1.1
-     * @version 1.0
+     * @version 1.1
      */
-    Movie findByTitleAndDurationAndReleaseDate(String title, int duration, Calendar releaseDate);
+    Movie findByTitleAndRuntimeAndReleaseDate(String title, int runtime, Calendar releaseDate);
 }

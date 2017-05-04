@@ -13,7 +13,7 @@ package fr.nicolasgille.medialibrary.models.movie;
  * @since Media-Library 0.1
  * @version 1.1
  */
-public enum MovieCategory {
+public enum MovieGenre {
     ACTION("Action"),
     ADVENTURE("Adventure"),
     ANIMATED("Animated"),
@@ -47,7 +47,7 @@ public enum MovieCategory {
      * @since 1.1
      * @version 1.0
      */
-    private MovieCategory(String name) {
+    private MovieGenre(String name) {
         this.name = name;
     }
 
