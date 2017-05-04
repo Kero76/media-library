@@ -22,8 +22,10 @@ package fr.nicolasgille.medialibrary.models.movie;
  * It can be update in a future and a short description of each theme must write in a future.
  *
  * V1.1 :
- *  -> Added constructor with <code>name</code> parameter.
- *  -> Added <code>name</code> attributes and corresponding getter and setter.
+ * <ul>
+ *     <li>Added constructor with <code>name</code> parameter.</li>
+ *     <li>Added <<code>name</code> attributes and corresponding getter and setter.</li>
+ * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1

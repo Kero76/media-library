@@ -5,7 +5,7 @@ Media manages by Media Library are :
 
 | Media  | Statement |
 | :-----:|-----------|
-| Movies | Draft     |
+| Movies | Release   |
 | Musics | Forecast  |
 | Games  | Forecast  |
 | Books  | Forecast  |

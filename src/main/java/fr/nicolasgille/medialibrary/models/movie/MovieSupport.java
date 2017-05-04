@@ -19,13 +19,17 @@ package fr.nicolasgille.medialibrary.models.movie;
 /**
  * An enumeration who representing all movies support available on Media Library.
  * This enumeration are composed by :
- *  - VIDEO_TAPE : For old movies.
- *  - DVD : Current support available.
- *  - BLU_RAY : New support available.
+ * <ul>
+ *     <li>VIDEO_TAPE : For old movies.</li>
+ *     <li>DVD : Current support available.</li>
+ *     <li>BLU_RAY : New support available.</li>
+ * </ul>
  *
  * V1.1 :
- *  -> Added constructor with <code>name</code> parameter.
- *  -> Added <<code>name</code> attributes and corresponding getter and setter.
+ * <ul>
+ *     <li>Added constructor with <code>name</code> parameter.</li>
+ *     <li>Added <<code>name</code> attributes and corresponding getter and setter.</li>
+ * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1

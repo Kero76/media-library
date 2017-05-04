@@ -49,24 +49,35 @@ import java.util.Set;
  * It can update in the future to add new methods like getXXX requests.
  *
  * V2.1 :
- *  -> Added Actor DAO to interact with Actor present on persistent system.
- *  -> Added Director DAO to interact with Director present on persistent system.
- *  -> Added Producer DAO to interact with Producer present on persistent system.
- *  -> Update Movie constructor with new parameters.
- *  -> Added URLDecoder on method getMovieByTitle().
+ * <ul>
+ *     <li>Added Actor DAO to interact with Actor present on persistent system.</li>
+ *     <li>Added Director DAO to interact with Director present on persistent system.</li>
+ *     <li>Added Producer DAO to interact with Producer present on persistent system.</li>
+ *     <li>Update Movie constructor with new parameters.</li>
+ *     <li>Added URLDecoder on method getMovieByTitle() and class attribute <code>ENCODING</code>.</li>
+ * </ul>
  *
- * V2.0:
- *  -> Completely rewrite content of all methods to modernize methods.
- *  -> Added Logger object to see step of each method and help debugging.
- *  -> Update CRUD method to add Actor registration on persistent system.
+ * V2.0 :
+ * <ul>
+ *     <li>Completely rewrite content of all methods to modernize methods.</li>
+ *     <li>Added Logger object to see step of each method and help debugging.</li>
+ *     <li>Update CRUD method to add Actor registration on persistent system.</li>
+ * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
- * @version 2.0
+ * @version 2.1
  */
 @RestController
 @RequestMapping(value = "/media-library/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
+
+    /**
+     * Constant used to specified URL encoding.
+     *
+     * @since 1.0
+     */
+    private final static String ENCODING = "UTF-8";
 
     /**
      * DAO used to interact with the table <code>movies</code> present on Database.
@@ -145,7 +156,7 @@ public class MovieController {
      */
     @RequestMapping(value = "/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
-        String title = URLDecoder.decode(titleEncoded, "UTF-8");
+        String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
         logger.info("Fetching Movie with title {}", title);
         Movie movie = movieDao.findByTitleIgnoreCase(title);
         if (movie == null) {

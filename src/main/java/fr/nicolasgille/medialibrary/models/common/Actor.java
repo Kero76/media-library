@@ -25,10 +25,12 @@ import java.util.Set;
  * Class Actor present on class Movie to representing main actor in a movie.
  *
  * V1.1 :
- *  -> Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.
- *  -> Updated constructor with new attribute on parameter.
- *  -> Added corresponding getter and setter for attribute <code>movies</code>
- *  -> Added <code>@Transient</code> annotations on new attribute <code>movies</code>.
+ * <ul>
+ *     <li>Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.</li>
+ *     <li>Updated constructor with new attribute on parameter.</li>
+ *     <li>Added corresponding getter and setter for attribute <code>movies</code></li>
+ *     <li>Added <code>@Transient</code> annotations on new attribute <code>movies</code>.</li>
+ * </ul>
  *
  * @see Movie
  * @author Nicolas GILLE

@@ -49,7 +49,9 @@ public class ClientMovieTest {
      */
     private static final String REST_SERVICE_URI = "http://localhost:8080/media-library";
 
-
+    /**
+     * Encoding used to encoded URL.
+     */
     private static final String URL_ENCODER = "UTF-8";
 
     /**

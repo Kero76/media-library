@@ -30,7 +30,9 @@ import java.util.Calendar;
  * Then, we add in the future much method to interact with the table "movies", in particular getXXXX methods.
  *
  * V1.1 :
- *  -> Added method findByTitleAndDurationAndReleaseDate()
+ * <ul>
+ *     <li>Added method findByTitleAndDurationAndReleaseDate()</li>
+ * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0

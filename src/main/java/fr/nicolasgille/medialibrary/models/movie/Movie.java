@@ -37,13 +37,24 @@ import java.util.Set;
  * to regenerate new Database with new corresponding rows.
  *
  * V 1.1 :
- *  -> Added constructor Movie(Movie movie) use to copy a movie into another movie. (see MovieController for more information).
- *  -> Added toString() method to see result on logger.
- *  -> Removed unused constructors.
- *  -> Update field category to add multiple category for movie.
- *  -> Update constructors with new attributes.
- *  -> Added following fields : supports, directors, producers, languagesSpoken, subtitleLanguage, originalTitle
- *  -> Update <code>releaseDate</code> type by Calendar object.
+ * <ul>
+ *     <li>Added constructor Movie(Movie movie) use to copy a movie into another movie. (see MovieController for more information).</li>
+ *     <li>Added toString() method to see result on logger.</li>
+ *     <li>Removed unused constructors.</li>
+ *     <li>Update field category to add multiple category for movie.</li>
+ *     <li>Update constructors with new attributes.</li>
+ *     <li>Added following fields :
+ *          <ul>
+ *              <li>supports</li>
+ *              <li>directors</li>
+ *              <li>producers</li>
+ *              <li>languagesSpoken</li>
+ *              <li>subtitleLanguage</li>
+ *              <li>originalTitle</li>
+ *          </ul>
+ *     </li>
+ *     <li>Update <code>releaseDate</code> type by Calendar object.</li>
+ * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
@@ -664,7 +675,7 @@ public class Movie {
             }
         }
 
-        // Build language spoken string.
+        // Build languages spoken string.
         StringBuilder languagesSpoken = new StringBuilder();
         for (int i = 0; i < this.languagesSpoken.size(); ++i) {
             languagesSpoken.append(this.languagesSpoken.get(i).getName());
@@ -673,7 +684,7 @@ public class Movie {
             }
         }
 
-        // Build subtitle language string.
+        // Build subtitles languages string.
         StringBuilder subtitles = new StringBuilder();
         for (int i = 0; i < this.subtitles.size(); ++i) {
             subtitles.append(this.subtitles.get(i).getName());
