@@ -18,16 +18,33 @@ package fr.nicolasgille.medialibrary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
  * Main controller of the MediaLibrary app.
  *
  * @author Nicolas GILLE
  * @since Media-Library 1.0
- * @version 1.0
+ * @version 1.1
  */
 @SpringBootApplication
-public class MediaLibraryConfiguration {
+public class MediaLibraryConfiguration extends SpringBootServletInitializer {
+
+    /**
+     * Configure the servlet to start this class as main class of the project.
+     *
+     * @param builder
+     * @return
+     *  An instance of springApplicationBuilder used to configure application.
+     * @since 1.1
+     * @version 1.0
+     */
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(MediaLibraryConfiguration.class);
+    }
+
     /**
      * Main of the application used to start app.
      *

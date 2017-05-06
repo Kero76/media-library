@@ -46,6 +46,8 @@ The statement is a representation of the current state of development of each me
  
 ## Commands
 - `mvn spring-boot:run` : Deploy Media Library in localhost:8080/
+- `mvn package` : Compile and generate .war.
+- `mvn package` : Clean project.
 
 ## License 
 This software is under GPLv3 license.
