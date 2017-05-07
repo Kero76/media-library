@@ -17,17 +17,23 @@ The statement is a representation of the current state of development of each me
 - `Release` mean the media worked correctly on the project, and normally, the api don't change, except for fix some bugs.
 
 ## Features
+### Path to call service
+
+| Method | URL                                                  | BODY  | Description                                                                           |
+|:------:|------------------------------------------------------|-------|---------------------------------------------------------------------------------------|
+| GET    | /media-library/movies/                               | /     | Get all Movies from the persistent system.                                            |
+| POST   | /media-library/movies/                               | Movie | Insert a new Movie on persistent system.                                              |
+| PUT    | /media-library/movies/{id}                           | Movie | Update a Movie on persistent system thanks to the id receive from the url.            |
+| DELETE | /media-library/movies/{id}                           | /     | Delete a Movie from the persistent system thanks to the id receive from the url.      |
+| GET    | /media-library/actors/                               | /     | Get all Actors from the persistent system.                                            |
+| GET    | /media-library/directors/                            | /     | Get all Directors from the persistent system.                                         |
+| GET    | /media-library/producers/                            | /     | Get all Producers from the persistent system.                                         |
+| GET    | /media-library/search/title/{title}                  | /     | Search one Movie by his title.                                                        |
+| GET    | /media-library/search/actor?fname=XXX&lname=YYY      | /     | Search one Actor by his first and last name.                                          |
+| GET    | /media-library/search/director?fname=XXX&lname=YYY   | /     | Search one Director by his first and last name.                                       |
+| GET    | /media-library/search/producer?fname=XXX&lname=YYY   | /     | Search one Producer by his first and last name.                                       |
+
 ### Movies
-#### Movies Features
-
-| Method | URL                                  | BODY  | Description                                                                           |
-|:------:|--------------------------------------|-------|---------------------------------------------------------------------------------------|
-| GET    | /media-library/movies/               | /     | Retrieve all Movies from the persistent system.                                       |
-| GET    | /media-library/movies/search/{title} | /     | Search one Movie by his title passed on parameter of the url.                         |
-| POST   | /media-library/movies/               | Movie | Insert a new Movie on persistent system.                                              |
-| PUT    | /media-library/movies/{id}           | Movie | Update a Movie on persistent system in function on the id receive from the url.       |
-| DELETE | /media-library/movies/{id}           | /     | Delete a Movie from the persistent system in function of the id receive from the url. |
-
 #### Movies attributes
 - [x] id : Identifier of the Movie with the following format `[0-9]*`.
 - [x] title : Title of the Movie.

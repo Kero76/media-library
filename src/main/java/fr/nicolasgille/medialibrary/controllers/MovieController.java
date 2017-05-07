@@ -69,13 +69,13 @@ import java.util.Set;
  * @version 2.1
  */
 @RestController
-@RequestMapping(value = "/media-library/movies", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
 
     /**
      * Constant used to specified URL encoding.
      *
-     * @since 1.0
+     * @since 2.1
      */
     private final static String ENCODING = "UTF-8";
 
@@ -130,7 +130,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.0
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<Movie> movies = movieDao.findAll();
         if (movies.isEmpty()) {
@@ -182,7 +182,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.1
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/movies/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Movie movie, UriComponentsBuilder uriBuilder) {
         logger.info("Created movie : {}", movie);
 
@@ -267,7 +267,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.0
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/movies/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Movie movie) {
         logger.info("Updating Movie with id {}", id);
 
@@ -349,7 +349,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.0
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Movie with id {}", id);
 
