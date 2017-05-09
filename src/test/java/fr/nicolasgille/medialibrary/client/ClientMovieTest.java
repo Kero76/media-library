@@ -20,21 +20,22 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
+import fr.nicolasgille.medialibrary.models.common.Genre;
 import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.movie.Movie;
-import fr.nicolasgille.medialibrary.models.movie.MovieGenre;
-import fr.nicolasgille.medialibrary.models.movie.MovieSupport;
+import fr.nicolasgille.medialibrary.models.video.Movie;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import static org.assertj.core.api.Assertions.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit class test used to test MovieController class.
@@ -85,8 +86,8 @@ public class ClientMovieTest {
         String messageExcepted = "404 null";
         int id = 666;
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -99,8 +100,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -157,8 +158,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -171,8 +172,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -203,8 +204,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -217,8 +218,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -252,8 +253,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -266,8 +267,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -312,8 +313,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -326,8 +327,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -363,8 +364,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -377,8 +378,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -408,8 +409,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope ?";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -422,8 +423,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -454,8 +455,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Despair";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
-        List<MovieGenre> categories = new ArrayList<MovieGenre>();
-        categories.add(MovieGenre.FANTASY);
+        List<Genre> categories = new ArrayList<Genre>();
+        categories.add(Genre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -468,8 +469,8 @@ public class ClientMovieTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<MovieSupport> supports = new ArrayList<MovieSupport>();
-        supports.add(MovieSupport.DVD);
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);

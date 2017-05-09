@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.models.common;
 
-import fr.nicolasgille.medialibrary.models.movie.Movie;
+import fr.nicolasgille.medialibrary.models.video.Movie;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -34,7 +34,7 @@ import java.util.Set;
  *
  * @see Movie
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since IMedia-Library 0.1
  * @version 1.1
  */
 @Entity

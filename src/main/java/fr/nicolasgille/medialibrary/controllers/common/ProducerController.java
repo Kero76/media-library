@@ -42,7 +42,7 @@ import java.util.List;
  * It can update in the future to add new methods like getXXX requests.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since Media-Library 0.1
  * @version 1.0
  */
 @RestController

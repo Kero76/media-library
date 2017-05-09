@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.movie;
+package fr.nicolasgille.medialibrary.models.video.utils;
 
 /**
- * An enumeration who representing all movies support available on Media Library.
+ * An enumeration who representing all movies support available on Media-Library.
  * This enumeration are composed by :
  * <ul>
  *     <li>VIDEO_TAPE : For old movies.</li>
@@ -35,7 +35,7 @@ package fr.nicolasgille.medialibrary.models.movie;
  * @since Media-Library 0.1
  * @version 1.1
  */
-public enum MovieSupport {
+public enum VideoSupport {
     VIDEO_TAPE("Video Tape"),
     DVD("DVD"),
     BLU_RAY("Blu Ray");
@@ -55,7 +55,7 @@ public enum MovieSupport {
      * @since 1.1
      * @version 1.0
      */
-    MovieSupport(String name) {
+    VideoSupport(String name) {
         this.name = name;
     }
 

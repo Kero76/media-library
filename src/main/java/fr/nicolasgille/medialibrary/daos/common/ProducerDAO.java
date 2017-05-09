@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
  * This interface can extends with many methods to request producers on Database.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since Media-Library 0.1
  * @version 1.0
  */
 @Transactional

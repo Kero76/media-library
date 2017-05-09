@@ -20,7 +20,7 @@ package fr.nicolasgille.medialibrary.exception.common;
  * Exception send at the client when a problem occurred during CRUD process.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since Media-Library 0.1.1
  * @see fr.nicolasgille.medialibrary.controllers.MovieController
  * @version 1.0
  */

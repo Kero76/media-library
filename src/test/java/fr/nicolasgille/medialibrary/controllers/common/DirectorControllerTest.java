@@ -16,7 +16,6 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common;
 
-import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import org.junit.Before;
 import org.junit.Test;

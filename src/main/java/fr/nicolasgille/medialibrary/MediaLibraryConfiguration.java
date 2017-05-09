@@ -25,7 +25,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  * Main controller of the MediaLibrary app.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since IMedia-Library 1.0
  * @version 1.1
  */
 @SpringBootApplication

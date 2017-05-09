@@ -24,7 +24,7 @@ import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.movie.Movie;
+import fr.nicolasgille.medialibrary.models.video.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ import java.util.Set;
  * </ul>
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since IMedia-Library 0.1
  * @version 2.1
  */
 @RestController

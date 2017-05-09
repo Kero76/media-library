@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.daos;
 
-import fr.nicolasgille.medialibrary.models.movie.Movie;
+import fr.nicolasgille.medialibrary.models.video.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
@@ -35,7 +35,7 @@ import java.util.Calendar;
  * </ul>
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since Media-Library 0.1
  * @version 1.1
  */
 @Transactional
