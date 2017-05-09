@@ -37,7 +37,7 @@ import java.util.Set;
  * It extends the class Video to get all main attributes for video type.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
+ * @since Media-Library 0.2
  * @version 1.0
  */
 @Entity

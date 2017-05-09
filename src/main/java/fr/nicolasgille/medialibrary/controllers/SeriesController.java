@@ -16,15 +16,17 @@
  */
 package fr.nicolasgille.medialibrary.controllers;
 
-import fr.nicolasgille.medialibrary.daos.MovieDAO;
+import fr.nicolasgille.medialibrary.daos.SeriesDAO;
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
 import fr.nicolasgille.medialibrary.exception.MovieException;
+import fr.nicolasgille.medialibrary.exception.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.video.Movie;
+import fr.nicolasgille.medialibrary.models.video.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,40 +44,24 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Controller of Movie model object.
+ * Controller of Series model object.
  *
- * This class control the access of the movie on the project.
+ * This class control the access of the series on the project.
  * In fact, it define CRUD method to interact with the model and the persistence system.
  * It can update in the future to add new methods like getXXX requests.
  *
- * V2.1 :
- * <ul>
- *     <li>Added Actor DAO to interact with Actor present on persistent system.</li>
- *     <li>Added Director DAO to interact with Director present on persistent system.</li>
- *     <li>Added Producer DAO to interact with Producer present on persistent system.</li>
- *     <li>Update Movie constructor with new parameters.</li>
- *     <li>Added URLDecoder on method getMovieByTitle() and class attribute <code>ENCODING</code>.</li>
- * </ul>
- *
- * V2.0 :
- * <ul>
- *     <li>Completely rewrite content of all methods to modernize methods.</li>
- *     <li>Added Logger object to see step of each method and help debugging.</li>
- *     <li>Update CRUD method to add Actor registration on persistent system.</li>
- * </ul>
- *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
- * @version 2.1
+ * @since Media-Library 0.2
+ * @version 1.0
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MovieController {
+public class SeriesController {
 
     /**
      * Constant used to specified URL encoding.
      *
-     * @since 2.1
+     * @since 1.0
      */
     private final static String ENCODING = "UTF-8";
 
@@ -85,12 +71,12 @@ public class MovieController {
      * @since 1.0
      */
     @Autowired
-    private MovieDAO movieDao;
+    private SeriesDAO seriesDAO;
 
     /**
      * DAO used to interact with the table <code>common_actors</code>.
      *
-     * @since 2.1
+     * @since 1.0
      */
     @Autowired
     private ActorDAO actorDAO;
@@ -98,7 +84,7 @@ public class MovieController {
     /**
      * DAO used to interact with the table <code>common_producers</code>.
      *
-     * @since 2.1
+     * @since 1.0
      */
     @Autowired
     private ProducerDAO producerDAO;
@@ -106,7 +92,7 @@ public class MovieController {
     /**
      * DAO used to interact with the table <code>common_director</code>.
      *
-     * @since 2.1
+     * @since 1.0
      */
     @Autowired
     private DirectorDAO directorDAO;
@@ -114,87 +100,88 @@ public class MovieController {
     /**
      * Logger for debugging app.
      *
-     * @since 2.0
+     * @since 1.0
      */
-    static final Logger logger = LoggerFactory.getLogger(MovieController.class);
+    static final Logger logger = LoggerFactory.getLogger(SeriesController.class);
+
 
     /**
-     * Return all movies found on Database.
+     * Return all series found on Database.
      *
-     * This method return a ResponseEntity object who contains a list of movies found on the Database.
+     * This method return a ResponseEntity object who contains a list of series found on the Database.
      * If the database is empty, this method return an error HTTP 204 : No Content.
      * This method can call only by GET request and take nothing parameter to work.
      *
      * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 204 : No Content.
+     *  A ResponseEntity with all series found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
-     * @version 2.0
+     * @version 1.0
      */
-    @RequestMapping(value = "/movies/", method = RequestMethod.GET)
+    @RequestMapping(value = "/series/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Movie> movies = movieDao.findAll();
-        if (movies.isEmpty()) {
+        List<Series> series = seriesDAO.findAll();
+        if (series.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Movie>>(movies, HttpStatus.OK);
+        return new ResponseEntity<List<Series>>(series, HttpStatus.OK);
     }
 
     /**
-     * Return a movie by is title.
+     * Return a series by is title.
      *
-     * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the movie, this method return an HTTP error.
-     * This method can call by GET request and take an path variable the title of the movie at research.
-     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search movie on Database.
+     * This method return a ResponseEntity with the series retrieve from the Database.
+     * If the database research don't retrieve the series, this method return an HTTP error.
+     * This method can call by GET request and take an path variable the title of the series at research.
+     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search series on Database.
      *
      * @param titleEncoded
-     *  Title of the movie encoded to search on Database.
+     *  Title of the series encoded to search on Database.
      * @return
-     *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
+     *  A ResponseEntity with the series found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
-     * @version 2.1
+     * @version 1.0
      */
     @RequestMapping(value = "/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
-        String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
-        logger.info("Fetching Movie with title {}", title);
-        Movie movie = movieDao.findByTitleIgnoreCase(title);
-        if (movie == null) {
-            logger.error("Movie with title {} not found.", title);
-            return new ResponseEntity<Object>(new MovieException("Movie with title " + title + " not found."), HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> getSeriesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+        String title = URLDecoder.decode(titleEncoded, SeriesController.ENCODING);
+        logger.info("Fetching Series with title {}", title);
+        Series series = seriesDAO.findByTitleIgnoreCase(title);
+        if (series == null) {
+            logger.error("Series with title {} not found.", title);
+            return new ResponseEntity<Object>(new MovieException("Series with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Movie>(movie, HttpStatus.OK);
+        return new ResponseEntity<Series>(series, HttpStatus.OK);
     }
 
     /**
-     * Add a movie on the Database.
+     * Add a series on the Database.
      *
-     * Before added the movie on database, it check if the movie is already present on the database.
-     * And if the movie is present, the method return an error HTTP 409 : CONFLICT.
-     * This method can call only by a POST request and take on BODY the movie at insert on Database.
+     * Before added the series on database, it check if the series is already present on the database.
+     * And if the series is present, the method return an error HTTP 409 : CONFLICT.
+     * This method can call only by a POST request and take on BODY the series at insert on Database.
      *
-     * @param movie
-     *  Movie at insert on Database.
+     * @param series
+     *  Series at insert on Database.
      * @param uriBuilder
-     *  UrlComponentsBuilder use to redirect user on movie page.
+     *  UrlComponentsBuilder use to redirect user on series page.
      * @return
-     *  A ResponseEntity with the movie added, or an error HTTP 409 : CONFLICT.
+     *  A ResponseEntity with the series added, or an error HTTP 409 : CONFLICT.
      * @since 1.0
-     * @version 2.1
+     * @version 1.0
      */
-    @RequestMapping(value = "/movies/", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody Movie movie, UriComponentsBuilder uriBuilder) {
-        logger.info("Created movie : {}", movie);
+    @RequestMapping(value = "/series/", method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestBody Series series, UriComponentsBuilder uriBuilder) {
+        logger.info("Created series : {}", series);
 
-        // Check if the movie already exist on database.
-        Movie movieExist = movieDao.findByTitleAndRuntimeAndReleaseDate(movie.getTitle(), movie.getRuntime(), movie.getReleaseDate());
-        if (movieExist != null) {
-            logger.error("Unable to create. The movie {} already exist", movie.getTitle());
-            return new ResponseEntity<MovieException>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
+        // Check if the series already exist on database.
+        Series seriesExist = seriesDAO.findByTitleIgnoreCase(series.getTitle());
+        if (series != null) {
+            logger.error("Unable to create. The series {} already exist", series.getTitle());
+            return new ResponseEntity<SeriesException>(new SeriesException("Unable to create. The series " + series.getTitle() + " already exist"), HttpStatus.CONFLICT);
         }
 
         // Check if the actors are present on Database or not.
-        Set<Actor> actorsOnMovie = movie.getMainActors();
+        Set<Actor> actorsOnMovie = series.getMainActors();
         Set<Actor> mainActors = new HashSet<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
@@ -208,10 +195,10 @@ public class MovieController {
                 mainActors.add(actorExist);
             }
         }
-        movie.setMainActors(mainActors);
+        series.setMainActors(mainActors);
 
         // Check if the producers are present on Database or not.
-        Set<Producer> producersOnMovie = movie.getProducers();
+        Set<Producer> producersOnMovie = series.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnMovie) {
             Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
@@ -225,10 +212,10 @@ public class MovieController {
                 producers.add(producerExist);
             }
         }
-        movie.setProducers(producers);
+        series.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        Set<Director> directorOnMovie = movie.getDirectors();
+        Set<Director> directorOnMovie = series.getDirectors();
         Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnMovie) {
             Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
@@ -242,43 +229,43 @@ public class MovieController {
                 directors.add(directorExist);
             }
         }
-        movie.setDirectors(directors);
-        movieDao.save(movie);
+        series.setDirectors(directors);
+        seriesDAO.save(series);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/movies/search/title/{id}").buildAndExpand(movie.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/series/search/title/{id}").buildAndExpand(series.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
-     * Update a movie present on the Database.
+     * Update a series present on the Database.
      *
-     * This method update a movie present on database only if this movie is present on it.
+     * This method update a series present on database only if this series is present on it.
      * In other case, this method return a HTTP error 404 : Not Found.
-     * This method can call only by PUT method and take the id of the movie at update on path variable
-     * and the object movie with the new content on BODY.
+     * This method can call only by PUT method and take the id of the series at update on path variable
+     * and the object series with the new content on BODY.
      *
      * @param id
-     *  Id of the movie on Database.
-     * @param movie
-     *  Movie with new content at update.
+     *  Id of the series on Database.
+     * @param series
+     *  Series with new content at update.
      * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT FOUND.
+     *  A ResponseEntity with all series found on Database, or an error HTTP 404 : NOT FOUND.
      * @since 1.0
-     * @version 2.0
+     * @version 1.0
      */
-    @RequestMapping(value = "/movies/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Movie movie) {
-        logger.info("Updating Movie with id {}", id);
+    @RequestMapping(value = "/series/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Series series) {
+        logger.info("Updating Series with id {}", id);
 
-        Movie movieAtUpdate = movieDao.findOne(id);
-        if (movieAtUpdate == null) {
-            logger.error("Unable to update. Movie with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to update. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
+        Series seriesAtUpdate = seriesDAO.findOne(id);
+        if (seriesAtUpdate == null) {
+            logger.error("Unable to update. Series with id {} not found", id);
+            return new ResponseEntity<Object>(new MovieException("Unable to update. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         // Check if the actor are present on Database or not.
-        Set<Actor> actorsOnMovie = movie.getMainActors();
+        Set<Actor> actorsOnMovie = series.getMainActors();
         Set<Actor> mainActors = new HashSet<Actor>();
         for (Actor a : actorsOnMovie) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
@@ -292,10 +279,10 @@ public class MovieController {
                 mainActors.add(actorExist);
             }
         }
-        movie.setMainActors(mainActors);
+        series.setMainActors(mainActors);
 
         // Check if the producers are present on Database or not.
-        Set<Producer> producersOnMovie = movie.getProducers();
+        Set<Producer> producersOnMovie = series.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnMovie) {
             Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
@@ -309,10 +296,10 @@ public class MovieController {
                 producers.add(producerExist);
             }
         }
-        movie.setProducers(producers);
+        series.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        Set<Director> directorOnMovie = movie.getDirectors();
+        Set<Director> directorOnMovie = series.getDirectors();
         Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnMovie) {
             Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
@@ -326,40 +313,40 @@ public class MovieController {
                 directors.add(directorExist);
             }
         }
-        movie.setDirectors(directors);
+        series.setDirectors(directors);
 
-        // Copy content of the movie receive on request body on the movie retrieve from the database.
-        movieAtUpdate = new Movie(movie);
-        movieDao.save(movieAtUpdate);
-        return new ResponseEntity<Object>(movieAtUpdate, HttpStatus.OK);
+        // Copy content of the series receive on request body on the series retrieve from the database.
+        seriesAtUpdate = new Series(series);
+        seriesDAO.save(seriesAtUpdate);
+        return new ResponseEntity<Object>(seriesAtUpdate, HttpStatus.OK);
     }
 
     /**
-     * Removed a movie from the Database.
+     * Removed a series from the Database.
      *
-     * This method remove a movie from the database only if the movie is present on the Database.
-     * It return an error HTTP 404 : NOT FOUND if the movie at deleted isn't present on the database.
-     * To call this method, you can pass on the url the id of the movie at remove
+     * This method remove a series from the database only if the series is present on the Database.
+     * It return an error HTTP 404 : NOT FOUND if the series at deleted isn't present on the database.
+     * To call this method, you can pass on the url the id of the series at remove
      * and this method can call only with DELETE request.
      *
      * @param id
-     *  Id of the movie at delete.
+     *  Id of the series at delete.
      * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT_FOUND.
+     *  A ResponseEntity with all series found on Database, or an error HTTP 404 : NOT_FOUND.
      * @since 1.0
      * @version 2.0
      */
-    @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/series/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        logger.info("Deleting Movie with id {}", id);
+        logger.info("Deleting Series with id {}", id);
 
-        Movie movie = movieDao.findOne(id);
-        if (movie == null) {
-            logger.error("Unable to delete. Movie with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to delete. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
+        Series series = seriesDAO.findOne(id);
+        if (series == null) {
+            logger.error("Unable to delete. Series with id {} not found", id);
+            return new ResponseEntity<Object>(new MovieException("Unable to delete. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        movieDao.delete(movie);
-        return new ResponseEntity<Object>(movie, HttpStatus.OK);
+        seriesDAO.delete(series);
+        return new ResponseEntity<Object>(series, HttpStatus.OK);
     }
 }
