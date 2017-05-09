@@ -6,10 +6,13 @@ Media manages by Media Library are :
 | Media  | Statement |
 | :-----:|-----------|
 | Movies | Release   |
+| Series | Draft     |
+| Anime  | Forecast  |
 | Musics | Forecast  |
 | Games  | Forecast  |
 | Books  | Forecast  |
 | Comics | Forecast  |
+| Mangas | Forecast  |
 
 The statement is a representation of the current state of development of each media :
 - `Forecast` mean the media not working and appear in the future released.
@@ -33,22 +36,41 @@ The statement is a representation of the current state of development of each me
 | GET    | /media-library/search/director?fname=XXX&lname=YYY   | /     | Search one Director by his first and last name.                                       |
 | GET    | /media-library/search/producer?fname=XXX&lname=YYY   | /     | Search one Producer by his first and last name.                                       |
 
-### Movies
-#### Movies attributes
+### Medias
+#### Movies content
 - [x] id : Identifier of the Movie with the following format `[0-9]*`.
 - [x] title : Title of the Movie.
+- [x] Original title : Original title of the movie (For example _Ghostbusters_ is renamed _SOS Fantômes_ in French).
 - [x] releaseDate : Date of release of the Movie. 
 - [x] duration : Duration of the Movie in minute.
 - [x] synopsis : Synopsis of the Movie.
 - [x] main Actors : List of main actors of the Movie.
 - [x] producers : List of producers of the Movie.
 - [x] directors : List of directors of the Movie.
-- [x] categories : List of genre of the Movie.
+- [x] genres : List of genre of the Movie.
 - [x] supports : List of support available for the Movie. Video Tape, DVD, Blu-Ray.
 - [ ] poster : Poster of the Movie.
 - [x] spoken languages : List of languages spoken available on the Movie. 
 - [x] subtitle languages : List of languages subtitled available on the Movie.
-- [x] Original title : Original title of the movie (For example _Ghostbusters_ is renamed _SOS Fantômes_ in French).
+
+#### Series content
+- [ ] id : Identifier of the Series with the following format `[0-9]*`.
+- [ ] title : Title of the Series.
+- [ ] Original title : Original title of the movie (For example _Ghostbusters_ is renamed _SOS Fantômes_ in French).
+- [ ] synopsis : Synopsis of the Series.
+- [ ] main Actors : List of main actors of the Series.
+- [ ] producers : List of producers of the Series.
+- [ ] directors : List of directors of the Series.
+- [ ] genres : List of genre of the Series.
+- [ ] supports : List of support available for the Series. Video Tape, DVD, Blu-Ray.
+- [ ] spoken languages : List of languages spoken available on the Series. 
+- [ ] subtitle languages : List of languages subtitled available on the Series.
+- [ ] numberOfSeasons : Number of seasons for the series.
+- [ ] currentSeason : Current season of the series.
+- [ ] numberOfEpisode : Number of episode available during the season.
+- [ ] averageEpisodeRuntime : Average runtime for episodes on series (in minutes).
+- [ ] startDate : Date of first release of the series.
+- [ ] endDate : Date of the end of the series.
  
 ## Commands
 - `mvn spring-boot:run` : Deploy Media Library in localhost:8080/
