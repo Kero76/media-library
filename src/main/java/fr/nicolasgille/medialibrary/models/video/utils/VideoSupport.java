@@ -17,12 +17,18 @@
 package fr.nicolasgille.medialibrary.models.video.utils;
 
 /**
- * An enumeration who representing all movies support available on Media-Library.
+ * An enumeration who representing all videos support available on Media-Library.
  * This enumeration are composed by :
  * <ul>
- *     <li>VIDEO_TAPE : For old movies.</li>
- *     <li>DVD : Current support available.</li>
- *     <li>BLU_RAY : New support available.</li>
+ *     <li>VIDEO_TAPE : For old medias.</li>
+ *     <li>DVD : DVD support.</li>
+ *     <li>BLU_RAY : Blu Ray support.</li>
+ *     <li>DIGITAL : Digital version (on computer).</li>
+ * </ul>
+ *
+ * V1.2 :
+ * <ul>
+ *     <li>Added <code>DIGITAL</code> value of enumerator.</li>
  * </ul>
  *
  * V1.1 :
@@ -38,7 +44,8 @@ package fr.nicolasgille.medialibrary.models.video.utils;
 public enum VideoSupport {
     VIDEO_TAPE("Video Tape"),
     DVD("DVD"),
-    BLU_RAY("Blu Ray");
+    BLU_RAY("Blu Ray"),
+    DIGITAL("Digital");
 
     /**
      * Name of the element.

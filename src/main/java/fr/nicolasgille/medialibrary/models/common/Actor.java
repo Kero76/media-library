@@ -16,13 +16,20 @@
  */
 package fr.nicolasgille.medialibrary.models.common;
 
-import fr.nicolasgille.medialibrary.models.video.Movie;
+import fr.nicolasgille.medialibrary.models.video.Video;
 
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Class Actor present on class Movie to representing main actor in a movie.
+ * Class Actor present on class Movie or Series to representing main actor in a movie or series.
+ *
+ * V2.0 :
+ * <ul>
+ *     <li>Inherit abstract class <code>Person</code></li>
+ *     <li>Removed all attributes excepted <code>movies</code> who he's renamed videos and became a <code>Set<Video></code></li>
+ *     <li>Modified getter and setter for attribute Video.</li>
+ * </ul>
  *
  * V1.1 :
  * <ul>
@@ -32,49 +39,23 @@ import java.util.Set;
  *     <li>Added <code>@Transient</code> annotations on new attribute <code>movies</code>.</li>
  * </ul>
  *
- * @see Movie
+ * @see Person
+ * @see Video
  * @author Nicolas GILLE
- * @since IMedia-Library 0.1
- * @version 1.1
+ * @since Media-Library 0.1
+ * @version 2.0
  */
 @Entity
-@Table(name = "common_actors")
-public class Actor {
+@DiscriminatorValue(value = "actor")
+public class Actor extends Person {
 
     /**
-     * Identifier of the movie.
-     * It auto-increment to avoid same identifier for 2 movies.
-     *
-     * @since 1.0
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
-
-    /**
-     * First name of the Actor.
-     *
-     * @since 1.0
-     */
-    @Column(name = "fname", unique = true)
-    private String firstName;
-
-    /**
-     * Last name of the actor.
-     *
-     * @since 1.0
-     */
-    @Column(name = "lname", unique = true)
-    private String lastName;
-
-    /**
-     * Main actors present on the movie.
+     * Videos where the actor played.
      *
      * @since 1.0
      */
     @Transient
-    private Set<Movie> movies;
+    private Set<Video> videos;
 
     /**
      * Empty constructor.
@@ -95,123 +76,53 @@ public class Actor {
      * @version 1.0
      */
     public Actor(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super.firstName = firstName;
+        super.lastName = lastName;
     }
 
     /**
      * Constructor with all parameters.
      *
      * @param id
-     *  Identifier stored on DB.
+     *  Identifier stored on database.
      * @param firstName
      *  First name.
      * @param lastName
      *  Last name.
+     * @param videos
+     *  Videos where the actor played as main actor.
      * @since 1.0
+     * @version 1.2
+     */
+    public Actor(long id, String firstName, String lastName, Set<Video> videos) {
+        super.id = id;
+        super.firstName = firstName;
+        super.lastName = lastName;
+        this.videos = videos;
+    }
+
+    /**
+     * List of videos where the actor played as main actor.
+     *
+     * @return
+     *  List of all videos where the actor played as main actor.
+     * @since 1.1
      * @version 1.1
      */
-    public Actor(long id, String firstName, String lastName, Set<Movie> movies) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.movies = movies;
+    public Set<Video> getVideos() {
+        return videos;
     }
 
     /**
-     * Return id of the Actor.
+     * Set list of videos where actor played as main actor.
      *
-     * @return
-     *  Id of the Actor.
-     * @since 1.0
-     * @version 1.0
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Set id of the Actor.
-     *
-     * @param id
-     *  New id.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Return first name of the Actor.
-     *
-     * @return
-     *  First name of the Actor.
-     * @since 1.0
-     * @version 1.0
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Set first name of the Actor.
-     *
-     * @param firstName
-     *  New first name.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * Return last name of the Actor.
-     *
-     * @return
-     *  Last name of the Actor.
-     * @since 1.0
-     * @version 1.0
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Set the last name of the Actor.
-     *
-     * @param lastName
-     *  New last name.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * List of movies where the actor played as main actor.
-     *
-     * @return
-     *  List of all movies where the actor played as main actor.
+     * @param videos
+     *  New list of videos.
      * @since 1.1
      * @version 1.0
      */
-    public Set<Movie> getMovies() {
-        return movies;
-    }
-
-    /**
-     * Set list of movies where actor played as main actor.
-     *
-     * @param movies
-     *  New list of movies.
-     * @since 1.1
-     * @version 1.0
-     */
-    public void setMovies(Set<Movie> movies) {
-        this.movies = movies;
+    public void setVideos(Set<Video> videos) {
+        this.videos = videos;
     }
 
     /**
@@ -224,21 +135,21 @@ public class Actor {
      */
     @Override
     public String toString() {
-        StringBuilder movies = new StringBuilder();
-        if (this.movies != null) {
-            for (Movie m : this.movies) {
-                movies.append(m.toString());
-                movies.append(";");
+        StringBuilder videos = new StringBuilder();
+        if (this.videos != null) {
+            for (Video v : this.videos) {
+                videos.append(v.toString());
+                videos.append(";");
             }
         } else {
-            movies.append("");
+            videos.append("");
         }
 
         return "Actor{" +
-                ", id=" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                "', movies='" + movies.toString() + '\'' +
+                ", id=" + super.id + '\'' +
+                ", firstName='" + super.firstName + '\'' +
+                ", lastName='" + super.lastName + '\'' +
+                "', videos='" + videos.toString() + '\'' +
                 '}';
     }
 }

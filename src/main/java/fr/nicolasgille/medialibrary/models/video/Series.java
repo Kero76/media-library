@@ -151,25 +151,25 @@ public class Series extends Video {
      * Constructor of the series object.
      *
      * @param title
-     *  Title of the movie.
+     *  Title of the series.
      * @param originalTitle
-     *  Original title of the movie.
+     *  Original title of the series.
      * @param genres
-     *  List of all genres for the movie.
+     *  List of all genres for the series.
      * @param synopsis
-     *  Synopsis of the movie.
+     *  Synopsis of the series.
      * @param mainActors
-     *  Main actors of the movie.
+     *  Main actors of the series.
      * @param producers
-     *  List of all producers of the movie.
+     *  List of all producers of the series.
      * @param directors
-     *  List of all directors of the movie.
+     *  List of all directors of the series.
      * @param supports
-     *  Supports present for the movie.
+     *  Supports present for the series.
      * @param languagesSpoken
-     *  List of languages spoken available on movie.
+     *  List of languages spoken available on series.
      * @param subtitles
-     *  List of subtitle languages available on movie.
+     *  List of subtitle languages available on series.
      * @param numberOfSeasons
      *  Number of seasons who composed the series.
      * @param currentSeason
@@ -213,25 +213,25 @@ public class Series extends Video {
      * @param id
      *  Identifier of the series.
      * @param title
-     *  Title of the movie.
+     *  Title of the series.
      * @param originalTitle
-     *  Original title of the movie.
+     *  Original title of the series.
      * @param genres
-     *  List of all genres for the movie.
+     *  List of all genres for the series.
      * @param synopsis
-     *  Synopsis of the movie.
+     *  Synopsis of the series.
      * @param mainActors
-     *  Main actors of the movie.
+     *  Main actors of the series.
      * @param producers
-     *  List of all producers of the movie.
+     *  List of all producers of the series.
      * @param directors
-     *  List of all directors of the movie.
+     *  List of all directors of the series.
      * @param supports
-     *  Supports present for the movie.
+     *  Supports present for the series.
      * @param languagesSpoken
-     *  List of languages spoken available on movie.
+     *  List of languages spoken available on series.
      * @param subtitles
-     *  List of subtitle languages available on movie.
+     *  List of subtitle languages available on series.
      * @param numberOfSeasons
      *  Number of seasons who composed the series.
      * @param currentSeason
@@ -271,7 +271,7 @@ public class Series extends Video {
     }
 
     /**
-     * Constructor use to update attribute of the current series by the movie passed on parameter.
+     * Constructor use to update attribute of the current series by the series passed on parameter.
      *
      * @param series
      *  New content of each attribute of this.
@@ -325,10 +325,10 @@ public class Series extends Video {
 
 
     /**
-     * Return all producers for the movie.
+     * Return all producers for the series.
      *
      * @return
-     *  Set of all producer of the movie.
+     *  Set of all producer of the series.
      * @since 1.0
      * @version 1.0
      */
@@ -349,10 +349,10 @@ public class Series extends Video {
     }
 
     /**
-     * Return all directors for the movie.
+     * Return all directors for the series.
      *
      * @return
-     *  Set of all directors of the movie.
+     *  Set of all directors of the series.
      * @since 1.0
      * @version 1.0
      */

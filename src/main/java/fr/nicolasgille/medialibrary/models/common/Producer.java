@@ -16,57 +16,38 @@
  */
 package fr.nicolasgille.medialibrary.models.common;
 
-import fr.nicolasgille.medialibrary.models.video.Movie;
+import fr.nicolasgille.medialibrary.models.video.Video;
 
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Class Producer present on class Movie to representing the producer of the movie.
+ * Class Producer present on class Movie or Series to representing producer of a movie or series.
  *
- * @see Movie
+ * V2.0 :
+ * <ul>
+ *     <li>Inherit abstract class <code>Person</code></li>
+ *     <li>Removed all attributes excepted <code>movies</code> who he's renamed videos and became a <code>Set<Video></code></li>
+ *     <li>Modified getter and setter for attribute Video.</li>
+ * </ul>
+ *
+ * @see Person
+ * @see Video
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.0
+ * @version 2.0
  */
 @Entity
-@Table(name = "common_producers")
-public class Producer {
+@DiscriminatorValue(value = "producer")
+public class Producer extends Person {
 
     /**
-     * Identifier of the movie.
-     * It auto-increment to avoid same identifier for 2 movies.
-     *
-     * @since 1.0
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
-
-    /**
-     * First name of the Actor.
-     *
-     * @since 1.0
-     */
-    @Column(name = "fname", unique = true)
-    private String firstName;
-
-    /**
-     * Last name of the actor.
-     *
-     * @since 1.0
-     */
-    @Column(name = "lname", unique = true)
-    private String lastName;
-
-    /**
-     * Producer who produce movie.
+     * Producer who produce videos.
      *
      * @since 1.0
      */
     @Transient
-    private Set<Movie> movies;
+    private Set<Video> videos;
 
     /**
      * Empty constructor.
@@ -96,102 +77,37 @@ public class Producer {
      * @param id        Identifier stored on DB.
      * @param firstName First name.
      * @param lastName  Last name.
+     * @param videos    Video where the guy participate as Producer.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public Producer(long id, String firstName, String lastName, Set<Movie> movies) {
+    public Producer(long id, String firstName, String lastName, Set<Video> videos) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.movies = movies;
+        this.videos = videos;
     }
 
     /**
-     * Return id of the Producer.
+     * List of videos who the Producer produce the video.
      *
-     * @return Id of the Producer.
+     * @return List of all videos who the Producer produce the video.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public long getId() {
-        return id;
+    public Set<Video> getVideos() {
+        return videos;
     }
 
     /**
-     * Set id of the Producer.
+     * Set list of videos who guy produce the video.
      *
-     * @param id New id.
+     * @param videos New list of videos.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Return first name of the Producer.
-     *
-     * @return First name of the Producer.
-     * @since 1.0
-     * @version 1.0
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Set first name of the Producer.
-     *
-     * @param firstName New first name.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * Return last name of the Producer.
-     *
-     * @return Last name of the Producer.
-     * @since 1.0
-     * @version 1.0
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Set the last name of the Producer.
-     *
-     * @param lastName New last name.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * List of movies who the Producer produce the movie.
-     *
-     * @return List of all movies who the Producer produce the movie.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Movie> getMovies() {
-        return movies;
-    }
-
-    /**
-     * Set list of movies where actor played as main actor.
-     *
-     * @param movies New list of movies.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setMovies(Set<Movie> movies) {
-        this.movies = movies;
+    public void setVideos(Set<Video> videos) {
+        this.videos = videos;
     }
 
     /**
@@ -203,21 +119,21 @@ public class Producer {
      */
     @Override
     public String toString() {
-        StringBuilder movies = new StringBuilder();
-        if (this.movies != null) {
-            for (Movie m : this.movies) {
-                movies.append(m.toString());
-                movies.append(";");
+        StringBuilder videos = new StringBuilder();
+        if (this.videos != null) {
+            for (Video v : this.videos) {
+                videos.append(v.toString());
+                videos.append(";");
             }
         } else {
-            movies.append("");
+            videos.append("");
         }
 
         return "Producer{" +
                 ", id=" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", movies='" + movies.toString() + '\'' +
+                ", videos='" + videos.toString() + '\'' +
                 '}';
     }
 }
