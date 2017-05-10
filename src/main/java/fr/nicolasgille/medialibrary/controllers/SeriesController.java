@@ -25,7 +25,6 @@ import fr.nicolasgille.medialibrary.exception.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.video.Movie;
 import fr.nicolasgille.medialibrary.models.video.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,7 +140,7 @@ public class SeriesController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/series/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getSeriesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, SeriesController.ENCODING);
         logger.info("Fetching Series with title {}", title);
@@ -175,7 +174,7 @@ public class SeriesController {
 
         // Check if the series already exist on database.
         Series seriesExist = seriesDAO.findByTitleIgnoreCase(series.getTitle());
-        if (series != null) {
+        if (seriesExist != null) {
             logger.error("Unable to create. The series {} already exist", series.getTitle());
             return new ResponseEntity<SeriesException>(new SeriesException("Unable to create. The series " + series.getTitle() + " already exist"), HttpStatus.CONFLICT);
         }

@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.models.common.Genre;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -69,9 +69,10 @@ public abstract class Media implements IMedia {
     protected String synopsis;
 
     @NotNull
-    @ElementCollection(targetClass = Genre.class)
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = VideoGenre.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<Genre> genres;
+    protected List<VideoGenre> genres;
 
     /**
      * Return the id.
@@ -167,11 +168,11 @@ public abstract class Media implements IMedia {
      * Return the genres.
      *
      * @return The genres of the media.
-     * @see Genre
+     * @see VideoGenre
      * @since 1.0
      * @version 1.0
      */
-    public List<Genre> getGenres() {
+    public List<VideoGenre> getGenres() {
         return this.genres;
     }
 
@@ -182,7 +183,7 @@ public abstract class Media implements IMedia {
      * @since 1.0
      * @version 1.0
      */
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(List<VideoGenre> genres) {
         this.genres = genres;
     }
 }

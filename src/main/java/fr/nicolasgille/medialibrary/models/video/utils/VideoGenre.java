@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.common;
+package fr.nicolasgille.medialibrary.models.video.utils;
 
 /**
  * An enumeration who representing all movies category available in Media Library.
@@ -31,7 +31,7 @@ package fr.nicolasgille.medialibrary.models.common;
  * @since Media-Library 0.1
  * @version 1.1
  */
-public enum Genre {
+public enum VideoGenre {
     ACTION("Action"),
     ADVENTURE("Adventure"),
     COMEDY("Comedy"),
@@ -64,7 +64,7 @@ public enum Genre {
      * @since 1.1
      * @version 1.0
      */
-    private Genre(String name) {
+    private VideoGenre(String name) {
         this.name = name;
     }
 

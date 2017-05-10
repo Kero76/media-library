@@ -19,7 +19,7 @@ package fr.nicolasgille.medialibrary.models.video;
 import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.common.Genre;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 import org.hibernate.annotations.LazyCollection;
@@ -185,9 +185,9 @@ public class Series extends Video {
      * @since 1.0
      * @version 1.0
      */
-    public Series(String title, String originalTitle, List<Genre> genres, String synopsis,
-                 Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
-                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles, int numberOfSeasons, int currentSeason,
+    public Series(String title, String originalTitle, List<VideoGenre> genres, String synopsis,
+                  Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
+                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles, int numberOfSeasons, int currentSeason,
                   Calendar startDate, Calendar endDate, int averageEpisodeRuntime, int numberOfEpisode) {
         super.title = title;
         super.originalTitle = originalTitle;
@@ -247,9 +247,9 @@ public class Series extends Video {
      * @since 1.0
      * @version 1.0
      */
-    public Series(long id, String title, String originalTitle, List<Genre> genres, String synopsis,
-                 Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
-                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles, int numberOfSeasons, int currentSeason,
+    public Series(long id, String title, String originalTitle, List<VideoGenre> genres, String synopsis,
+                  Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
+                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles, int numberOfSeasons, int currentSeason,
                   Calendar startDate, Calendar endDate, int averageEpisodeRuntime, int numberOfEpisode) {
         super.id = id;
         super.title = title;

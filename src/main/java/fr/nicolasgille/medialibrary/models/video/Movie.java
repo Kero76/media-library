@@ -20,7 +20,7 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.common.Genre;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -147,7 +147,7 @@ public class Movie extends Video {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(String title, String originalTitle, List<Genre> genres, Calendar releaseDate, int runtime, String synopsis,
+    public Movie(String title, String originalTitle, List<VideoGenre> genres, Calendar releaseDate, int runtime, String synopsis,
                  Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles) {
         super.title         = title;
@@ -195,7 +195,7 @@ public class Movie extends Video {
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, String originalTitle, List<Genre> genres, Calendar releaseDate, int runtime, String synopsis,
+    public Movie(long id, String title, String originalTitle, List<VideoGenre> genres, Calendar releaseDate, int runtime, String synopsis,
                  Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles) {
         super.id            = id;

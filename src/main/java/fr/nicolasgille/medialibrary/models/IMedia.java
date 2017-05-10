@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.models.common.Genre;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 
 import java.util.List;
 
@@ -114,11 +114,11 @@ public interface IMedia {
      *
      * @return
      *  The genres of the movie.
-     * @see Genre
+     * @see VideoGenre
      * @since 1.0
      * @version 1.0
      */
-    List<Genre> getGenres();
+    List<VideoGenre> getGenres();
 
     /**
      * Set genres of Movie.
@@ -128,5 +128,5 @@ public interface IMedia {
      * @since 1.0
      * @version 1.0
      */
-    void setGenres(List<Genre> genres);
+    void setGenres(List<VideoGenre> genres);
 }

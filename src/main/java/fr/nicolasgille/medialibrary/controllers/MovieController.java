@@ -154,7 +154,7 @@ public class MovieController {
      * @since 1.0
      * @version 2.1
      */
-    @RequestMapping(value = "/search/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
         logger.info("Fetching Movie with title {}", title);

@@ -44,6 +44,7 @@ public abstract class Video extends Media {
      * @since 1.0
      */
     @NotNull
+    @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = VideoSupport.class)
     @LazyCollection(LazyCollectionOption.FALSE)
     protected List<VideoSupport> supports;

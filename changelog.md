@@ -1,5 +1,14 @@
 # Changelog 
 
+## V0.2 : Refactoring Update - Released May 10, 2017
+Refactor all code to improve media extensibility.
+
+### Features
+- Refactor project to improve extensibility of future media.
+- Manage Series.
+
+---
+
 ## V0.1.1 : Deployment Update - Released May 08, 2017
 Fix bug about deployment on Tomcat instance.
 

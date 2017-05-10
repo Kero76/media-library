@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test ActorController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
+ * @since Media-Library 0.1.1
  * @version 1.0
  */
 public class ActorControllerTest {
