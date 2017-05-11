@@ -1,3 +1,19 @@
+/*
+ * This file is part of Media-Library.
+ *
+ * Media-Library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Media-Library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ */
 package fr.nicolasgille.medialibrary.utils;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -81,11 +97,35 @@ public class DataUtils {
      * @since 1.0
      * @version 1.0
      */
-    public DataUtils getInstance() {
+    public static DataUtils getInstance() {
         if (DataUtils.instance == null) {
             DataUtils.instance = new DataUtils();
         }
         return DataUtils.instance;
+    }
+
+    /**
+     * Get movies instantiate.
+     *
+     * @return
+     *  Map of all movies can get by their titles as key.
+     * @since 1.0
+     * @version 1.0
+     */
+    public Map<String, Movie> getMovies() {
+        return movies;
+    }
+
+    /**
+     * Get series instantiate.
+     *
+     * @return
+     *  Map of all series can get by their titles as key.
+     * @since 1.0
+     * @version 1.0
+     */
+    public Map<String, Series> getSeries() {
+        return series;
     }
 
     /**
@@ -97,22 +137,38 @@ public class DataUtils {
     private void initActors() {
         this.actors = new HashMap<String, Actor>();
 
-        // Star Wars - A New Hope | The Empire Strikes Back | Return of the Jedi
+        // Movie - Star Wars - A New Hope | The Empire Strikes Back | Return of the Jedi
         this.actors.put("Mark Hamill", new Actor("Mark", "Hamill"));
         this.actors.put("Harrison Ford", new Actor("Harrison", "Ford"));
         this.actors.put("Carrie Fisher", new Actor("Carrie", "Fisher"));
 
-        // Star Wars - New Hope
+        // Movie - Star Wars - New Hope
         this.actors.put("Peter Cushing", new Actor("Peter", "Cushing"));
         this.actors.put("Alec Guinness", new Actor("Alec", "Guinness"));
 
-        // Star Wars - The Empire Strikes Back | Return of the Jedi
+        // Movie - Star Wars - The Empire Strikes Back | Return of the Jedi
         this.actors.put("Billy Dee Williams", new Actor("Billy Dee", "Williams"));
         this.actors.put("Anthony Daniels", new Actor("Anthony", "Daniels"));
         this.actors.put("David Prowse", new Actor("David", "Prowse"));
         this.actors.put("Kenny Baker", new Actor("Kenny", "Baker"));
         this.actors.put("Peter Mayhew", new Actor("Peter", "Mayhew"));
         this.actors.put("Frank Oz", new Actor("Frank", "Oz"));
+
+        // Series - Falling Skies
+        this.actors.put("Noah Wyle", new Actor("Noah", "Wyle"));
+        this.actors.put("Moon Bloodgood", new Actor("Moon", "Bloodgood"));
+        this.actors.put("Drew Roy", new Actor("Drew", "Roy"));
+        this.actors.put("Jessy Schram", new Actor("Jessy", "Schram"));
+        this.actors.put("Sarah Carter", new Actor("Sarah", "Carter"));
+        this.actors.put("Maxim Knight", new Actor("Maxim", "Knight"));
+        this.actors.put("Seychelle Gabriel", new Actor("Seychelle", "Gabriel"));
+        this.actors.put("Peter Shinkoda", new Actor("Peter", "Shinkoda"));
+        this.actors.put("Connor Jessup", new Actor("Connor", "Jessup"));
+        this.actors.put("Mpho Koaho", new Actor("Mpho", "Koaho"));
+        this.actors.put("Colin Cunningham", new Actor("", "Cunningham"));
+        this.actors.put("Will Patton", new Actor("Will", "Patton"));
+        this.actors.put("Doug Jones", new Actor("Doug", "Jones"));
+        this.actors.put("Scarlett Byrne", new Actor("Scarlett", "Byrne"));
     }
 
     /**
@@ -124,14 +180,17 @@ public class DataUtils {
     private void initDirectors() {
         this.directors = new HashMap<String, Director>();
 
-        // Star Wars - A New Hope
+        // Movie - Star Wars - A New Hope
         this.directors.put("George Lucas", new Director("George", "Lucas"));
 
-        // Star Wars - The Empire Strikes Back
+        // Movie - Star Wars - The Empire Strikes Back
         this.directors.put("Irvin Kershner", new Director("Irvin", "Kershner"));
 
-        // Star Wars - Return of the Jedi
+        // Movie - Star Wars - Return of the Jedi
         this.directors.put("Richard Marquand", new Director("Richard", "Marquand"));
+
+        // Series - Falling Skies
+        this.directors.put("Robert Rodat", new Director("Robert",  "Rodat"));
     }
 
     /**
@@ -143,11 +202,25 @@ public class DataUtils {
     private void initProducers() {
         this.producers = new HashMap<String, Producer>();
 
-        // Star Wars - A New Hope | The Empire Strikes Back
+        // Movie - Star Wars - A New Hope | The Empire Strikes Back
         this.producers.put("Gary Kurtz", new Producer("Gary", "Kurtz"));
 
-        // Star Wars - Return of the Jedi
+        // Movie - Star Wars - Return of the Jedi
         this.producers.put("Howard Kazanjian", new Producer("Howard", "Kazanjian"));
+
+        // Series - Falling Skies
+        this.producers.put("Steven Spielberg", new Producer("Steven", "Spielberg"));
+        this.producers.put("Darryl Frank", new Producer("Darryl", "Frank"));
+        this.producers.put("Justin Falvey", new Producer("Justin", "Falvey"));
+        this.producers.put("Robert Rodat", new Producer("Robert", "Rodat"));
+        this.producers.put("Graham Yost", new Producer("Graham", "Yost"));
+        this.producers.put("Greg Beeman", new Producer("Greg", "Beeman"));
+        this.producers.put("Remi Aubuchon", new Producer("Remi", "Aubuchon"));
+        this.producers.put("David Eick", new Producer("David", "Eick"));
+        this.producers.put("John Ryan", new Producer("John", "Ryan"));
+        this.producers.put("Noah Wyle", new Producer("Noah", "Wyle"));
+        this.producers.put("Darren King", new Producer("Darren", "King"));
+        this.producers.put("Grace Gilroy", new Producer("Grace", "Gilroy"));
     }
 
     /**
@@ -258,5 +331,77 @@ public class DataUtils {
     private void initSeries() {
         this.series = new HashMap<String, Series>();
 
+        // Genres - Falling Skies
+        List<VideoGenre> fallingSkiesGenre = new ArrayList<VideoGenre>();
+        fallingSkiesGenre.add(VideoGenre.ACTION);
+        fallingSkiesGenre.add(VideoGenre.ADVENTURE);
+        fallingSkiesGenre.add(VideoGenre.DRAMA);
+        fallingSkiesGenre.add(VideoGenre.SCIENCE_FICTION);
+        fallingSkiesGenre.add(VideoGenre.THRILLER);
+
+        // Supports - Falling Skies
+        List<VideoSupport> supports = new ArrayList<VideoSupport>();
+        supports.add(VideoSupport.DVD);
+
+        // Languages Spoken - Falling Skies
+        List<LanguageCode> languagesSpoken = new ArrayList<LanguageCode>();
+        languagesSpoken.add(LanguageCode.fr);
+        languagesSpoken.add(LanguageCode.en);
+        languagesSpoken.add(LanguageCode.de);
+        languagesSpoken.add(LanguageCode.es);
+
+        // Subtitles - Falling Skies
+        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
+        subtitles.add(LanguageCode.fr);
+        subtitles.add(LanguageCode.es);
+        subtitles.add(LanguageCode.en);
+        subtitles.add(LanguageCode.nl);
+
+        /*
+         * Falling Skies
+         */
+        // Main Actors
+        Set<Actor> actors = new HashSet<Actor>();
+        actors.add(this.actors.get("Noah Wyle"));
+        actors.add(this.actors.get("Moon Bloodgood"));
+        actors.add(this.actors.get("Drew Roy"));
+        actors.add(this.actors.get("Jessy Schram"));
+        actors.add(this.actors.get("Sarah Carter"));
+        actors.add(this.actors.get("Maxim Knight"));
+        actors.add(this.actors.get("Seychelle Gabriel"));
+        actors.add(this.actors.get("Peter Shinkoda"));
+        actors.add(this.actors.get("Connor Jessup"));
+        actors.add(this.actors.get("Mpho Koaho"));
+        actors.add(this.actors.get("Colin Cunningham"));
+        actors.add(this.actors.get("Will Patton"));
+        actors.add(this.actors.get("Doug Jones"));
+        actors.add(this.actors.get("Scarlett Byrne"));
+
+        // Producers
+        Set<Producer> producers = new HashSet<Producer>();
+        producers.add(this.producers.get("Steven Spielberg"));
+        producers.add(this.producers.get("Darryl Frank"));
+        producers.add(this.producers.get("Justin Falvey"));
+        producers.add(this.producers.get("Robert Rodat"));
+        producers.add(this.producers.get("Graham Yost"));
+        producers.add(this.producers.get("Greg Beeman"));
+        producers.add(this.producers.get("Remi Aubuchon"));
+        producers.add(this.producers.get("David Eick"));
+        producers.add(this.producers.get("John Ryan"));
+        producers.add(this.producers.get("Noah Wyle"));
+        producers.add(this.producers.get("Darren King"));
+        producers.add(this.producers.get("Grace Gilroy"));
+
+        // Directors
+        Set<Director> directors = new HashSet<Director>();
+        directors.add(this.directors.get("Robert Rodat"));
+
+        // Add Falling Skies.
+        this.series.put("Falling Skies", new Series(
+                "Falling Skies", "Falling Skies", fallingSkiesGenre,
+                "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
+                actors, producers, directors, supports, languagesSpoken, subtitles, 5,
+                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30), 45, 5
+        ));
     }
 }

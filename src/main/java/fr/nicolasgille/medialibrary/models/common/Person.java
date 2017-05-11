@@ -53,7 +53,7 @@ abstract class Person implements IPerson {
      *
      * @since 1.0
      */
-    @Column(name = "fname", unique = true)
+    @Column(name = "fname")
     protected String firstName;
 
     /**
@@ -61,7 +61,7 @@ abstract class Person implements IPerson {
      *
      * @since 1.0
      */
-    @Column(name = "lname", unique = true)
+    @Column(name = "lname")
     protected String lastName;
 
     /**

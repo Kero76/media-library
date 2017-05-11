@@ -66,6 +66,7 @@ public abstract class Media implements IMedia {
      *
      * @since 1.0
      */
+    @Column(columnDefinition = "TEXT")
     protected String synopsis;
 
     @NotNull
