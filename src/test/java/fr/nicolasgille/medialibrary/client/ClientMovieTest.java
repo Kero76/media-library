@@ -86,8 +86,8 @@ public class ClientMovieTest {
         String messageExcepted = "404 null";
         int id = 666;
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -114,7 +114,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
 
-        Movie movie = new Movie(id,  "My title", "My original title", categories, releaseDate, 120, "My Synopsis", actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                id,  "My title", "My original title", "My Synopsis",
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
+        );
 
         // When - Try to update movie.
         try {
@@ -158,8 +162,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -185,7 +189,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(title, title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
+        );
 
         // When - Send movie to save it on persistent system.
         ResponseEntity<Movie> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
@@ -204,8 +212,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -231,7 +239,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(title, title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
+        );
 
         ResponseEntity<MovieException> responseEntity = null;
         // When - Send movie to save it on persistent system.
@@ -253,8 +265,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -280,7 +292,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(title, title, categories, releaseDate, 120, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
+        );
 
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
@@ -313,8 +329,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -340,7 +356,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
+        );
 
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
@@ -364,8 +384,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -391,7 +411,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
+        );
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
 
         // When - Get all movies from persistent system.
@@ -409,8 +433,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope ?";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -436,7 +460,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(id, title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
+        );
         this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
 
         // When - Get movie update and check if the difference appear.
@@ -455,8 +483,8 @@ public class ClientMovieTest {
         String title = "Persistent System 3 : A new Despair";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -482,7 +510,11 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-        Movie movie = new Movie(id, title, title, categories, releaseDate, 126, synopsis, actors, producers, directors, supports, languageSpoken, subtitles);
+        Movie movie = new Movie(
+                title, title, synopsis,
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
+        );
 
         try {
             // When - Try to update movie not present on persistent system.

@@ -124,93 +124,97 @@ public class Movie extends Video {
      *  Title of the movie.
      * @param originalTitle
      *  Original title of the movie.
-     * @param genres
-     *  List of all genres for the movie.
-     * @param releaseDate
-     *  Date of release of the movie.
-     * @param runtime
-     *  Duration of the movie in minute.
      * @param synopsis
      *  Synopsis of the movie.
      * @param mainActors
      *  Main actors of the movie.
-     * @param producers
-     *  List of all producers of the movie.
      * @param directors
      *  List of all directors of the movie.
+     * @param producers
+     *  List of all producers of the movie.
+     * @param genres
+     *  List of all genres for the movie.
      * @param supports
      *  Supports present for the movie.
      * @param languagesSpoken
      *  List of languages spoken available on movie.
      * @param subtitles
      *  List of subtitle languages available on movie.
+     * @param releaseDate
+     *  Date of release of the movie.
+     * @param runtime
+     *  Duration of the movie in minute.
      * @since 1.0
      * @version 1.0
      */
-    public Movie(String title, String originalTitle, List<VideoGenre> genres, Calendar releaseDate, int runtime, String synopsis,
-                 Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
-                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles) {
-        super.title         = title;
+    public Movie(String title, String originalTitle, String synopsis,
+                 Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
+                 List<VideoGenre> genres, List<VideoSupport> supports,
+                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
+                 Calendar releaseDate, int runtime) {
+        super.title = title;
         super.originalTitle = originalTitle;
-        super.genres        = genres;
-        this.releaseDate    = releaseDate;
-        this.runtime        = runtime;
-        super.synopsis      = synopsis;
-        this.mainActors     = mainActors;
-        super.supports      = supports;
-        this.directors      = directors;
-        this.producers      = producers;
-        super.subtitles     = subtitles;
+        super.synopsis = synopsis;
+        this.mainActors = mainActors;
+        this.directors = directors;
+        this.producers = producers;
+        super.genres = genres;
+        super.supports = supports;
         super.languagesSpoken = languagesSpoken;
+        super.subtitles = subtitles;
+        this.releaseDate = releaseDate;
+        this.runtime = runtime;
     }
 
     /**
      * Constructor of the movie object.
      * This constructor is used to stored information retrieve from the persistent system.
      *
-     * @param id
-     *  identifier of the movie.
      * @param title
      *  Title of the movie.
-     * @param genres
-     *  List of all genres of the movie.
-     * @param releaseDate
-     *  Date of release of the movie.
-     * @param runtime
-     *  Duration of the movie in minute.
+     * @param originalTitle
+     *  Original title of the movie.
      * @param synopsis
      *  Synopsis of the movie.
      * @param mainActors
      *  Main actors of the movie.
-     * @param producers
-     *  List of all producers of the movie.
      * @param directors
      *  List of all directors of the movie.
+     * @param producers
+     *  List of all producers of the movie.
+     * @param genres
+     *  List of all genres for the movie.
      * @param supports
      *  Supports present for the movie.
      * @param languagesSpoken
      *  List of languages spoken available on movie.
      * @param subtitles
      *  List of subtitle languages available on movie.
+     * @param releaseDate
+     *  Date of release of the movie.
+     * @param runtime
+     *  Duration of the movie in minute.
      * @since 1.0
      * @version 1.0
      */
-    public Movie(long id, String title, String originalTitle, List<VideoGenre> genres, Calendar releaseDate, int runtime, String synopsis,
-                 Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
-                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles) {
-        super.id            = id;
-        super.title         = title;
+    public Movie(long id, String title, String originalTitle, String synopsis,
+                 Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
+                 List<VideoGenre> genres, List<VideoSupport> supports,
+                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
+                 Calendar releaseDate, int runtime) {
+        super.id = id;
+        super.title = title;
         super.originalTitle = originalTitle;
-        super.genres        = genres;
-        this.releaseDate    = releaseDate;
-        this.runtime        = runtime;
-        super.synopsis      = synopsis;
-        this.mainActors     = mainActors;
-        super.supports      = supports;
-        this.directors      = directors;
-        this.producers      = producers;
-        super.subtitles     = subtitles;
+        super.synopsis = synopsis;
+        this.mainActors = mainActors;
+        this.directors = directors;
+        this.producers = producers;
+        super.genres = genres;
+        super.supports = supports;
         super.languagesSpoken = languagesSpoken;
+        super.subtitles = subtitles;
+        this.releaseDate = releaseDate;
+        this.runtime = runtime;
     }
 
     /**
@@ -222,19 +226,19 @@ public class Movie extends Video {
      * @version 1.0
      */
     public Movie(Movie movie) {
-        super.id            = movie.getId();
-        super.title         = movie.getTitle();
+        super.id = movie.getId();
+        super.title = movie.getTitle();
         super.originalTitle = movie.getOriginalTitle();
-        super.genres        = movie.getGenres();
-        this.releaseDate    = movie.getReleaseDate();
-        this.runtime        = movie.getRuntime();
-        super.synopsis      = movie.getSynopsis();
-        this.mainActors     = movie.getMainActors();
-        super.supports      = movie.getSupports();
-        this.directors      = movie.getDirectors();
-        this.producers      = movie.getProducers();
-        super.subtitles     = movie.getSubtitles();
+        super.synopsis = movie.getSynopsis();
+        this.mainActors = movie.getMainActors();
+        super.genres = movie.getGenres();
+        super.supports = movie.getSupports();
+        this.directors = movie.getDirectors();
+        this.producers = movie.getProducers();
         super.languagesSpoken = movie.getLanguagesSpoken();
+        super.subtitles = movie.getSubtitles();
+        this.releaseDate = movie.getReleaseDate();
+        this.runtime = movie.getRuntime();
     }
 
     /**

@@ -233,8 +233,8 @@ public class DataUtils {
         this.movies = new HashMap<String, Movie>();
 
         // Genres - Star Wars
-        List<VideoGenre> starWarsGenres = new ArrayList<VideoGenre>();
-        starWarsGenres.add(VideoGenre.SCIENCE_FICTION);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.SCIENCE_FICTION);
 
         // Supports - Star Wars
         List<VideoSupport> supports = new ArrayList<VideoSupport>();
@@ -272,9 +272,8 @@ public class DataUtils {
         directors.add(this.directors.get("George Lucas"));
 
         this.movies.put("Star Wars IV", new Movie(
-                "Star Wars : Un Nouvel Espoir", "Star Wars : A New Hope", starWarsGenres, new GregorianCalendar(1977, Calendar.MAY, 25),121,
-                "The Imperial Forces, under orders from cruel Darth Vader, hold Princess Leia hostage in their efforts to quell the rebellion against the Galactic Empire. Luke Skywalker and Han Solo, captain of the Millennium Falcon, work together with the companionable droid duo R2-D2 and C-3PO to rescue the beautiful princess, help the Rebel Alliance and restore freedom and justice to the Galaxy.",
-                actors, producers, directors, supports, languagesSpoken, subtitles
+                "Star Wars : Un Nouvel Espoir", "Star Wars : A New Hope", "The Imperial Forces, under orders from cruel Darth Vader, hold Princess Leia hostage in their efforts to quell the rebellion against the Galactic Empire. Luke Skywalker and Han Solo, captain of the Millennium Falcon, work together with the companionable droid duo R2-D2 and C-3PO to rescue the beautiful princess, help the Rebel Alliance and restore freedom and justice to the Galaxy.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles, new GregorianCalendar(1977, Calendar.MAY, 25),121
         ));
 
 
@@ -298,9 +297,8 @@ public class DataUtils {
         directors.add(this.directors.get("Irvin Kershner"));
 
         this.movies.put("Star Wars V", new Movie(
-                "Star Wars : L'Empire Contre Attaque", "Star Wars : The Empire Strikes Back", starWarsGenres, new GregorianCalendar(1980, Calendar.MAY, 17),124,
-                "Luke Skywalker, Han Solo, Princess Leia and Chewbacca face attack by the Imperial forces and its AT-AT walkers on the ice planet Hoth. While Han and Leia escape in the Millennium Falcon, Luke travels to Dagobah in search of Yoda. Only with the Jedi master's help will Luke survive when the dark side of the Force beckons him into the ultimate duel with Darth Vader.",
-                actors, producers, directors, supports, languagesSpoken, subtitles
+                "Star Wars : L'Empire Contre Attaque", "Star Wars : The Empire Strikes Back", "Luke Skywalker, Han Solo, Princess Leia and Chewbacca face attack by the Imperial forces and its AT-AT walkers on the ice planet Hoth. While Han and Leia escape in the Millennium Falcon, Luke travels to Dagobah in search of Yoda. Only with the Jedi master's help will Luke survive when the dark side of the Force beckons him into the ultimate duel with Darth Vader.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles, new GregorianCalendar(1980, Calendar.MAY, 17),124
         ));
 
 
@@ -316,9 +314,8 @@ public class DataUtils {
         directors.add(this.directors.get("Richard Marquand"));
 
         this.movies.put("Star Wars VI", new Movie(
-                "Star Wars : Le Retour du Jedi", "Star Wars : Return of the Jedi", starWarsGenres, new GregorianCalendar(1983, Calendar.MAY, 25),131,
-                "Darth Vader and the Empire are building a new, indestructible Death Star. Meanwhile, Han Solo has been imprisoned, and Luke Skywalker has sent R2-D2 and C-3PO to try and free him. Princess Leia - disguised as a bounty hunter - and Chewbacca go along as well. The final battle takes place on the moon of Endor, with its natural inhabitants, the Ewoks, lending a hand to the Rebels. Will Darth Vader and the Dark Side overcome the Rebels and take over the universe ?",
-                actors, producers, directors, supports, languagesSpoken, subtitles
+                "Star Wars : Le Retour du Jedi", "Star Wars : Return of the Jedi", "Darth Vader and the Empire are building a new, indestructible Death Star. Meanwhile, Han Solo has been imprisoned, and Luke Skywalker has sent R2-D2 and C-3PO to try and free him. Princess Leia - disguised as a bounty hunter - and Chewbacca go along as well. The final battle takes place on the moon of Endor, with its natural inhabitants, the Ewoks, lending a hand to the Rebels. Will Darth Vader and the Dark Side overcome the Rebels and take over the universe ?",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles, new GregorianCalendar(1983, Calendar.MAY, 25),131
         ));
     }
 
@@ -332,12 +329,12 @@ public class DataUtils {
         this.series = new HashMap<String, Series>();
 
         // Genres - Falling Skies
-        List<VideoGenre> fallingSkiesGenre = new ArrayList<VideoGenre>();
-        fallingSkiesGenre.add(VideoGenre.ACTION);
-        fallingSkiesGenre.add(VideoGenre.ADVENTURE);
-        fallingSkiesGenre.add(VideoGenre.DRAMA);
-        fallingSkiesGenre.add(VideoGenre.SCIENCE_FICTION);
-        fallingSkiesGenre.add(VideoGenre.THRILLER);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.ACTION);
+        genres.add(VideoGenre.ADVENTURE);
+        genres.add(VideoGenre.DRAMA);
+        genres.add(VideoGenre.SCIENCE_FICTION);
+        genres.add(VideoGenre.THRILLER);
 
         // Supports - Falling Skies
         List<VideoSupport> supports = new ArrayList<VideoSupport>();
@@ -397,11 +394,35 @@ public class DataUtils {
         directors.add(this.directors.get("Robert Rodat"));
 
         // Add Falling Skies.
-        this.series.put("Falling Skies", new Series(
-                "Falling Skies", "Falling Skies", fallingSkiesGenre,
-                "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
-                actors, producers, directors, supports, languagesSpoken, subtitles, 5,
-                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30), 45, 5
+        this.series.put("Falling Skies 1", new Series(
+                "Falling Skies", "Falling Skies", "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles,
+                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30),
+                5, 1, 52, 10, 42
+        ));
+        this.series.put("Falling Skies 2", new Series(
+                "Falling Skies", "Falling Skies", "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles,
+                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30),
+                5, 2, 52, 10, 42
+        ));
+        this.series.put("Falling Skies 3", new Series(
+                "Falling Skies", "Falling Skies", "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles,
+                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30),
+                5, 3, 52, 10, 42
+        ));
+        this.series.put("Falling Skies 4", new Series(
+                "Falling Skies", "Falling Skies", "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles,
+                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30),
+                5, 4, 52, 12, 42
+        ));
+        this.series.put("Falling Skies 5", new Series(
+                "Falling Skies", "Falling Skies", "The chaotic aftermath of an alien attack has left most of the world completely incapacitated. In the six months since the initial invasion, the few survivors have banded together outside major cities to begin the difficult task of fighting back. Each day is a test of survival as citizen soldiers work to protect the people in their care while also engaging in an insurgency campaign against the occupying alien force.",
+                actors, directors, producers, genres, supports, languagesSpoken, subtitles,
+                new GregorianCalendar(2011, Calendar.JUNE, 19), new GregorianCalendar(2015, Calendar.AUGUST, 30),
+                5, 5, 52, 10, 42
         ));
     }
 }

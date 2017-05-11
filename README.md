@@ -3,16 +3,17 @@ Media-Library is a RESTFUL API used to request easily all medias available in a 
 It can be considerate as a *register* to check presence of movie, CD, book, ... on the house.<br>
 Media manages by Media Library are :
 
-| Media  | Statement |
-| :-----:|-----------|
-| Movies | Release   |
-| Series | Release   |
-| Anime  | Forecast  |
-| Musics | Forecast  |
-| Games  | Forecast  |
-| Books  | Forecast  |
-| Comics | Forecast  |
-| Mangas | Forecast  |
+| Media    | Statement |
+| :-------:|-----------|
+| Movies   | Release   |
+| Series   | Release   |
+| Cartoon  | Forecast  |
+| Anime    | Forecast  |
+| Musics   | Forecast  |
+| Games    | Forecast  |
+| Books    | Forecast  |
+| Comics   | Forecast  |
+| Mangas   | Forecast  |
 
 The statement is a representation of the current state of development of each media :
 - `Forecast` mean the media not working and appear in the future released.
@@ -54,9 +55,9 @@ The statement is a representation of the current state of development of each me
 - [x] directors : List of directors of the Movie.
 - [x] genres : List of genre of the Movie.
 - [x] supports : List of support available for the Movie. Video Tape, DVD, Blu-Ray.
-- [ ] poster : Poster of the Movie.
 - [x] spoken languages : List of languages spoken available on the Movie. 
 - [x] subtitle languages : List of languages subtitled available on the Movie.
+- [ ] poster : Poster of the Movie.
 
 #### Series content
 - [x] id : Identifier of the Series with the following format `[0-9]*`.
@@ -71,7 +72,7 @@ The statement is a representation of the current state of development of each me
 - [x] spoken languages : List of languages spoken available on the Series. 
 - [x] subtitle languages : List of languages subtitled available on the Series.
 - [x] numberOfSeasons : Number of seasons for the series.
-- [x] currentSeason : Current season of the series.
+- [x] maxEpisodes : Number of episode available for all seasons of the series.
 - [x] numberOfEpisode : Number of episode available during the season.
 - [x] averageEpisodeRuntime : Average runtime for episodes on series (in minutes).
 - [x] startDate : Date of first release of the series.
@@ -84,7 +85,7 @@ The statement is a representation of the current state of development of each me
 - `mvn package` : Clean project.
 
 ## License 
-This software is under GPLv3 license.
+Media-Library is under GPLv3 license.
 
 ## Authors
 - Nicolas GILLE <nic.gille@gmail.com>

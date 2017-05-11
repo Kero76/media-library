@@ -1,5 +1,18 @@
 # Changelog 
 
+## V0.2.1 : Person Update - Released May 11, 2017
+
+### Features
+- Add Interface `IPerson` and abstract class `Person` to manage _Human_ present on Media-Library like Actor, Director, Producer, ...
+- Refactor constructors of classes `Movies` and `Series` to change parameters order and regroup them by specific theme.
+- Add `Digital` value on `VideoSupport`.
+- Update class `Series` with new attribute : `maxEpisodes`.
+
+### Bug Fixed
+- Fix bug about same first name or same last name for Person can't saved in Database. 
+
+---
+
 ## V0.2 : Refactoring Update - Released May 10, 2017
 Refactor all code to improve media extensibility.
 

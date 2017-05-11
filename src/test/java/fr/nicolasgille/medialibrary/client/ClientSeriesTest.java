@@ -115,8 +115,11 @@ public class ClientSeriesTest {
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(id,  "Star Gate SG1", "Star Gate SG1", categories,"My Synopsis",
-                actors, producers, directors, supports, languageSpoken, subtitles, 10, startDate, endDate, 40, 26);
+        Series series = new Series(
+                id, "Star Gate SG1", "Star Gate SG1", "My Synopsis",
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, 10, 2, 226, 22, 42
+        );
 
         // When - Try to update series.
         try {
@@ -188,13 +191,18 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
+        int currentSeason   = 2;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
 
         // When - Send series to save it on persistent system.
         ResponseEntity<Series> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
@@ -240,14 +248,19 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.it);
 
         int numberOfSeasons = 10;
+        int currentSeason = 2;
         int averageEpisodeRuntime = 44;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
 
         ResponseEntity<SeriesException> responseEntity = null;
         // When - Send series to save it on persistent system.
@@ -297,13 +310,18 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
+        int currentSeason   = 2;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
 
         // When - Get series from persistent system.
         ResponseEntity<Series> responseEntity = null;
@@ -322,6 +340,7 @@ public class ClientSeriesTest {
         assertThat(responseEntity.getBody().getSupports()).isEqualTo(series.getSupports());
         assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(series.getSynopsis());
         assertThat(responseEntity.getBody().getAverageEpisodeRuntime()).isEqualTo(series.getAverageEpisodeRuntime());
+        assertThat(responseEntity.getBody().getCurrentSeason()).isEqualTo(series.getCurrentSeason());
         assertThat(responseEntity.getBody().getNumberOfSeasons()).isEqualTo(series.getNumberOfSeasons());
         assertThat(responseEntity.getBody().getNumberOfEpisode()).isEqualTo(series.getNumberOfEpisode());
         assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
@@ -368,13 +387,18 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
+        int currentSeason   = 2;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
 
         // When - Get series from persistent system.
         ResponseEntity<Series> responseEntity = null;
@@ -426,13 +450,18 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
+        int currentSeason   = 2;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
 
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
 
@@ -479,13 +508,18 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
+        int currentSeason   = 2;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(id, title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
         this.restTemplate.put(REST_SERVICE_URI + "/series/" + series.getId(), series, Series.class);
 
         // When - Get series update and check if the difference appear.
@@ -532,13 +566,18 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
+        int currentSeason   = 2;
         int numberOfEpisode = 22;
+        int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
-        Series series = new Series(id, title, title, categories,synopsis, actors, producers, directors, supports, languageSpoken, subtitles,
-                numberOfSeasons, startDate, endDate, averageEpisodeRuntime, numberOfEpisode);
+        Series series = new Series(
+                title, title, synopsis,
+                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+        );
 
         try {
             // When - Try to update series not present on persistent system.

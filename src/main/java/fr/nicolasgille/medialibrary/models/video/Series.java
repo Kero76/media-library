@@ -36,9 +36,15 @@ import java.util.Set;
  *
  * It extends the class Video to get all main attributes for video type.
  *
+ *
+ * V1.1 :
+ * <ul>
+ *     <li>Added attribute <code>maxEpisodes</code> who represent the number of episode for all seasons of the series.</li>
+ * </ul>
+ *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @DiscriminatorValue(value = "series")
@@ -101,6 +107,14 @@ public class Series extends Video {
     private int numberOfSeasons;
 
     /**
+     * Current season of the series.
+     *
+     * @since 1.0
+     */
+    @NotNull
+    private int currentSeason;
+
+    /**
      * Date of released of the series.
      *
      * @since 1.0
@@ -129,7 +143,16 @@ public class Series extends Video {
      *
      * @since 1.0
      */
+    @NotNull
     private int numberOfEpisode;
+
+    /**
+     * Number of episodes for the series.
+     *
+     * @since 1.1
+     */
+    @NotNull
+    private int maxEpisodes;
 
     /**
      * Empty constructor.
@@ -146,8 +169,6 @@ public class Series extends Video {
      *  Title of the series.
      * @param originalTitle
      *  Original title of the series.
-     * @param genres
-     *  List of all genres for the series.
      * @param synopsis
      *  Synopsis of the series.
      * @param mainActors
@@ -156,6 +177,8 @@ public class Series extends Video {
      *  List of all producers of the series.
      * @param directors
      *  List of all directors of the series.
+     * @param genres
+     *  List of all genres for the series.
      * @param supports
      *  Supports present for the series.
      * @param languagesSpoken
@@ -164,34 +187,43 @@ public class Series extends Video {
      *  List of subtitle languages available on series.
      * @param numberOfSeasons
      *  Number of seasons who composed the series.
+     * @param currentSeason
+     *  Current season of the series.
      * @param startDate
      *  Release date of the series.
      * @param endDate
      *  End date of the release.
-     * @param averageEpisodeRuntime
-     *  Average time of episode in minute.
+     * @param maxEpisodes
+     *  Number of episode during the series.
      * @param numberOfEpisode
+     *  Average time of episode in minute.
+     * @param averageEpisodeRuntime
      *  Number of episode available on the season.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public Series(String title, String originalTitle, List<VideoGenre> genres, String synopsis,
-                  Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
-                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles, int numberOfSeasons,
-                  Calendar startDate, Calendar endDate, int averageEpisodeRuntime, int numberOfEpisode) {
+    public Series(String title, String originalTitle, String synopsis,
+                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
+                  List<VideoGenre> genres, List<VideoSupport> supports,
+                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
+                  Calendar startDate, Calendar endDate,
+                  int numberOfSeasons, int currentSeason,
+                  int maxEpisodes, int numberOfEpisode, int averageEpisodeRuntime) {
         super.title = title;
         super.originalTitle = originalTitle;
-        super.genres = genres;
         super.synopsis = synopsis;
         this.mainActors = mainActors;
         this.directors = directors;
         this.producers = producers;
+        super.genres = genres;
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.numberOfSeasons = numberOfSeasons;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.numberOfSeasons = numberOfSeasons;
+        this.currentSeason = currentSeason;
+        this.maxEpisodes = maxEpisodes;
         this.numberOfEpisode = numberOfEpisode;
         this.averageEpisodeRuntime = averageEpisodeRuntime;
     }
@@ -205,8 +237,6 @@ public class Series extends Video {
      *  Title of the series.
      * @param originalTitle
      *  Original title of the series.
-     * @param genres
-     *  List of all genres for the series.
      * @param synopsis
      *  Synopsis of the series.
      * @param mainActors
@@ -215,6 +245,8 @@ public class Series extends Video {
      *  List of all producers of the series.
      * @param directors
      *  List of all directors of the series.
+     * @param genres
+     *  List of all genres for the series.
      * @param supports
      *  Supports present for the series.
      * @param languagesSpoken
@@ -223,35 +255,44 @@ public class Series extends Video {
      *  List of subtitle languages available on series.
      * @param numberOfSeasons
      *  Number of seasons who composed the series.
+     * @param currentSeason
+     *  Current season of the series.
      * @param startDate
      *  Release date of the series.
      * @param endDate
      *  End date of the release.
-     * @param averageEpisodeRuntime
-     *  Average time of episode in minute.
+     * @param maxEpisodes
+     *  Number of episode during the series.
      * @param numberOfEpisode
+     *  Average time of episode in minute.
+     * @param averageEpisodeRuntime
      *  Number of episode available on the season.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    public Series(long id, String title, String originalTitle, List<VideoGenre> genres, String synopsis,
-                  Set<Actor> mainActors, Set<Producer> producers, Set<Director> directors, List<VideoSupport> supports,
-                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles, int numberOfSeasons,
-                  Calendar startDate, Calendar endDate, int averageEpisodeRuntime, int numberOfEpisode) {
+    public Series(long id, String title, String originalTitle, String synopsis,
+                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
+                  List<VideoGenre> genres, List<VideoSupport> supports,
+                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
+                  Calendar startDate, Calendar endDate,
+                  int numberOfSeasons, int currentSeason,
+                  int maxEpisodes, int numberOfEpisode, int averageEpisodeRuntime) {
         super.id = id;
         super.title = title;
         super.originalTitle = originalTitle;
-        super.genres = genres;
         super.synopsis = synopsis;
         this.mainActors = mainActors;
-        super.supports = supports;
         this.directors = directors;
         this.producers = producers;
-        super.subtitles = subtitles;
+        super.genres = genres;
+        super.supports = supports;
         super.languagesSpoken = languagesSpoken;
-        this.numberOfSeasons = numberOfSeasons;
+        super.subtitles = subtitles;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.numberOfSeasons = numberOfSeasons;
+        this.currentSeason = currentSeason;
+        this.maxEpisodes = maxEpisodes;
         this.numberOfEpisode = numberOfEpisode;
         this.averageEpisodeRuntime = averageEpisodeRuntime;
     }
@@ -277,10 +318,12 @@ public class Series extends Video {
         super.subtitles     = series.getSubtitles();
         super.languagesSpoken = series.getLanguagesSpoken();
         this.numberOfSeasons = series.getNumberOfSeasons();
+        this.currentSeason = series.getCurrentSeason();
         this.startDate = series.getStartDate();
         this.endDate = series.getEndDate();
         this.numberOfEpisode = series.getNumberOfEpisode();
         this.averageEpisodeRuntime = series.getAverageEpisodeRuntime();
+        this.maxEpisodes = series.getMaxEpisodes();
     }
 
 
@@ -382,6 +425,30 @@ public class Series extends Video {
     }
 
     /**
+     * Get the current season number.
+     *
+     * @return
+     *  The current number.
+     * @since 1.0
+     * @version 1.0
+     */
+    public int getCurrentSeason() {
+        return currentSeason;
+    }
+
+    /**
+     * Set the current number of seasons.
+     *
+     * @param currentSeason
+     *  Current season number.
+     * @since 1.0
+     * @version 1.0
+     */
+    public void setCurrentSeason(int currentSeason) {
+        this.currentSeason = currentSeason;
+    }
+
+    /**
      * Return the release date of the series.
      *
      * @return
@@ -478,12 +545,36 @@ public class Series extends Video {
     }
 
     /**
+     * Get the number of episodes available on the series.
+     *
+     * @return
+     *  The number of episodes for the series.
+     * @since 1.1
+     * @version 1.0
+     */
+    public int getMaxEpisodes() {
+        return maxEpisodes;
+    }
+
+    /**
+     * Set the number of episodes available on the series.
+     *
+     * @param maxEpisodes
+     *  The new number of episodes for the series.
+     * @since 1.1
+     * @version 1.0
+     */
+    public void setMaxEpisodes(int maxEpisodes) {
+        this.maxEpisodes = maxEpisodes;
+    }
+
+    /**
      * Display Series information.
      *
      * @return
      *  A short description of the content of the series's attribute.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     @Override
     public String toString() {
@@ -536,10 +627,12 @@ public class Series extends Video {
                 ", languageSpoken='" + languagesSpoken.toString() +
                 ", subtitles='" + subtitles.toString() +
                 ", numberOfSeasons=" + numberOfSeasons +
+                ", currentSeason=" + currentSeason +
                 ", startDate=" + startDate.toString() +
                 ", endDate=" + endDate.toString() +
                 ", averageEpisodeRuntime=" + averageEpisodeRuntime +
                 ", numberOfEpisode=" + numberOfEpisode +
+                ", maxepisodes=" + maxEpisodes +
                 '}';
     }
 }

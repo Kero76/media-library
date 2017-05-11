@@ -62,6 +62,7 @@ public class MediaControllerTest {
     @Test
     public void testInsertion() {
         // Given - Instantiate a List of all keys used for the movie and the series stored on DataUtils object.
+        int fallingSkiesIndex = 1;
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
 
         // Movies key
@@ -86,7 +87,7 @@ public class MediaControllerTest {
         }
 
         for (String key : seriesKey) {
-            responseEntitiesSeries.add(this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", DataUtils.getInstance().getSeries().get(key), Series.class));
+            responseEntitiesSeries.add(this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", DataUtils.getInstance().getSeries().get(key + " " + fallingSkiesIndex++), Series.class));
         }
 
         // Then - Compare HTTP status and uri.
