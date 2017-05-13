@@ -177,6 +177,9 @@ public class DataUtils {
         k.add("Le Smoking");
         k.add("Le Médaillon");
         k.add("Contre-attaque");
+        k.add("Rush Hour");
+        k.add("Rush Hour 2");
+        k.add("Rush Hour 3");
 
         this.keys.put("movies", k);
         ////////////////////////////////////////////
@@ -221,6 +224,9 @@ public class DataUtils {
         this.titles.put("Le Smoking", "Le Smoking");
         this.titles.put("Le Médaillon", "Le Médaillon");
         this.titles.put("Contre-attaque", "Contre-Attaque");
+        this.titles.put("Rush Hour", "Rush Hour");
+        this.titles.put("Rush Hour 2", "Rush Hour 2");
+        this.titles.put("Rush Hour 3", "Rush Hour 3");
 
 
         ////////////////////////////////////////////
@@ -263,6 +269,9 @@ public class DataUtils {
         this.originalTitles.put("Le Smoking", "The tuxedo");
         this.originalTitles.put("Le Médaillon", "The Medallion");
         this.originalTitles.put("Contre-attaque", "Police Story 4 : First Strike");
+        this.originalTitles.put("Rush Hour", "Rush Hour");
+        this.originalTitles.put("Rush Hour 2", "Rush Hour 2");
+        this.originalTitles.put("Rush Hour 3", "Rush Hour 3");
 
 
         ////////////////////////////////////////////
@@ -305,6 +314,9 @@ public class DataUtils {
         this.synopsis.put("Le Smoking", "");
         this.synopsis.put("Le Médaillon", "");
         this.synopsis.put("Contre-attaque", "");
+        this.synopsis.put("Rush Hour", "");
+        this.synopsis.put("Rush Hour 2", "");
+        this.synopsis.put("Rush Hour 3", "");
 
 
         ////////////////////////////////////////////
@@ -372,27 +384,56 @@ public class DataUtils {
 
         // Shanghai Kid 2
         g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.COMEDY);
         this.genres.put("Shanghai Kid 2", g);
 
         // Le tour du monde en 80
         g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.ADVENTURE);
+        g.add(VideoGenre.COMEDY);
         this.genres.put("Le Tour du Monde en 80 Jours", g);
 
         // Espion Amateur
         g.clear();
+        g.add(VideoGenre.ACTION);
         this.genres.put("Espion Amateur", g);
 
         // Le Smoking
         g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.COMEDY);
         this.genres.put("Le Smoking", g);
 
         // Le medaillon
         g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.COMEDY);
         this.genres.put("Le Médaillon", g);
 
         // Contre Attaque
         g.clear();
+        g.add(VideoGenre.ACTION);
         this.genres.put("Contre-attaque", g);
+
+        // Rush Hour
+        g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.COMEDY);
+        this.genres.put("Rush Hour", g);
+
+        // Rush Hour 2
+        g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.COMEDY);
+        this.genres.put("Rush Hour 2", g);
+
+        // Rush Hour 3
+        g.clear();
+        g.add(VideoGenre.ACTION);
+        g.add(VideoGenre.COMEDY);
+        this.genres.put("Rush Hour 3", g);
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
@@ -444,6 +485,9 @@ public class DataUtils {
         this.supports.put("Le Smoking", s);
         this.supports.put("Le Médaillon", s);
         this.supports.put("Contre-attaque", s);
+        this.supports.put("Rush Hour", s);
+        this.supports.put("Rush Hour 2", s);
+        this.supports.put("Rush Hour 3", s);
 
 
         ////////////////////////////////////////////
@@ -485,6 +529,9 @@ public class DataUtils {
         this.spokens.put("Espion Amateur", l);
         this.spokens.put("Le Médaillon", l);
         this.spokens.put("Contre-attaque", l);
+        this.spokens.put("Rush Hour", l);
+        this.spokens.put("Rush Hour 2", l);
+        this.spokens.put("Rush Hour 3", l);
 
         // French | English | Italian | Spanish
         l.clear();
@@ -558,6 +605,9 @@ public class DataUtils {
         this.subtitles.put("Espion Amateur", s);
         this.subtitles.put("Le Médaillon", s);
         this.subtitles.put("Contre-attaque", s);
+        this.subtitles.put("Rush Hour", s);
+        this.subtitles.put("Rush Hour 2", s);
+        this.subtitles.put("Rush Hour 3", s);
 
         // French | English | Arab
         s.clear();
@@ -667,6 +717,9 @@ public class DataUtils {
         this.runtimes.put("Le Smoking", 95);
         this.runtimes.put("Le Médaillon", 88);
         this.runtimes.put("Contre-attaque", 80);
+        this.runtimes.put("Rush Hour", 93);
+        this.runtimes.put("Rush Hour 2", 93);
+        this.runtimes.put("Rush Hour 3", 87);
     }
 
     /**
@@ -695,6 +748,9 @@ public class DataUtils {
         this.releasedDates.put("Le Smoking", new GregorianCalendar(2002, Calendar.SEPTEMBER, 27));
         this.releasedDates.put("Le Médaillon", new GregorianCalendar(2003, Calendar.AUGUST, 15));
         this.releasedDates.put("Contre-attaque", new GregorianCalendar(1996, Calendar.FEBRUARY, 10));
+        this.releasedDates.put("Rush Hour", new GregorianCalendar(1998, Calendar.SEPTEMBER, 18));
+        this.releasedDates.put("Rush Hour 2", new GregorianCalendar(2001, Calendar.AUGUST, 03));
+        this.releasedDates.put("Rush Hour 3", new GregorianCalendar(2007, Calendar.JULY, 30));
     }
 
     /**
@@ -857,6 +913,35 @@ public class DataUtils {
         a.add(new Actor("Jackson", "Lou"));
         this.actors.put("Contre-attaque", a);
 
+        // Rush Hour
+        a.clear();
+        a.add(new Actor("Jackie", "Chan"));
+        a.add(new Actor("Chris", "Tucker"));
+        a.add(new Actor("Tom", "Wilkinson"));
+        a.add(new Actor("Chris", "Penn"));
+        a.add(new Actor("Elizabeth", "Peña"));
+        this.actors.put("Rush Hour", a);
+
+        // Rush Hour 2
+        a.clear();
+        a.add(new Actor("Jackie", "Chan"));
+        a.add(new Actor("Chris", "Tucker"));
+        a.add(new Actor("John", "Lone"));
+        a.add(new Actor("Alan", "King"));
+        a.add(new Actor("Roselyn", "Sánchez"));
+        a.add(new Actor("Harris", "Yulin"));
+        a.add(new Actor("Zhang", "Ziyi"));
+        this.actors.put("Rush Hour 2", a);
+
+        // Rush Hour 3
+        a.clear();
+        a.add(new Actor("Jackie", "Chan"));
+        a.add(new Actor("Chris", "Tucker"));
+        a.add(new Actor("Hiroyuki", "Sanada"));
+        a.add(new Actor("Youki", "Kudoh"));
+        a.add(new Actor("Max", "von Sydow"));
+        this.actors.put("Rush Hour 3", a);
+
         ////////////////////////////////////////////
         ///                 SERIES              ////
         ////////////////////////////////////////////
@@ -984,6 +1069,20 @@ public class DataUtils {
         d.add(new Director("Stanley", "Tong"));
         this.directors.put("Contre-attaque", d);
 
+        // Rush Hour
+        d.clear();
+        d.add(new Director("Brett", "Ratner"));
+        this.directors.put("Rush Hour", d);
+
+        // Rush Hour 2
+        d.clear();
+        d.add(new Director("Brett", "Ratner"));
+        this.directors.put("Rush Hour 2", d);
+
+        // Rush Hour 3
+        d.clear();
+        d.add(new Director("Brett", "Ratner"));
+        this.directors.put("Rush Hour 3", d);
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
@@ -1108,6 +1207,25 @@ public class DataUtils {
         p.add(new Producer("Barbie", "Tung"));
         this.producers.put("Contre-attaque", p);
 
+        // Rush Hour
+        p.clear();
+        p.add(new Producer("Roger", "Birnbaum"));
+        p.add(new Producer("Jonathan", "Glickman"));
+        p.add(new Producer("Arthur", "Sarkissian"));
+        this.producers.put("Rush Hour", p);
+
+        // Rush Hour 2
+        p.clear();
+        p.add(new Producer("Arthur", "Sarkissian"));
+        this.producers.put("Rush Hour 2", p);
+
+        // Rush Hour 3
+        p.clear();
+        p.add(new Producer("Roger", "Birnbaum"));
+        p.add(new Producer("Michael", "Poryes"));
+        p.add(new Producer("Jonathan", "Glickman"));
+        p.add(new Producer("Jay", "Stern"));
+        this.producers.put("Rush Hour 3", p);
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
