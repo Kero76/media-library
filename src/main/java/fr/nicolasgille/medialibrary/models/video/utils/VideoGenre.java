@@ -41,6 +41,7 @@ public enum VideoGenre {
     HORROR("Horror"),
     MUSICAL("Musical"),
     MYSTERY("Mystery"),
+    ROMANTIC("Romantic"),
     SCIENCE_FICTION("Science Fiction"),
     SPORT("Sport"),
     SPY("Spy"),
