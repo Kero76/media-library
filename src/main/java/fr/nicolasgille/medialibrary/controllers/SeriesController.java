@@ -166,14 +166,14 @@ public class SeriesController {
      * @return
      *  A ResponseEntity with the series added, or an error HTTP 409 : CONFLICT.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     @RequestMapping(value = "/series/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Series series, UriComponentsBuilder uriBuilder) {
         logger.info("Created series : {}", series);
 
         // Check if the series already exist on database.
-        Series seriesExist = seriesDAO.findByTitleIgnoreCase(series.getTitle());
+        Series seriesExist = seriesDAO.findByTitleAndCurrentSeason(series.getTitle(), series.getCurrentSeason());
         if (seriesExist != null) {
             logger.error("Unable to create. The series {} already exist", series.getTitle());
             return new ResponseEntity<SeriesException>(new SeriesException("Unable to create. The series " + series.getTitle() + " already exist"), HttpStatus.CONFLICT);

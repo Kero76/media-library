@@ -30,13 +30,13 @@ import javax.transaction.Transactional;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.0
+ * @version 1.1
  */
 @Transactional
 public interface SeriesDAO extends JpaRepository<Series, Long> {
 
     /**
-     * Find a movie by his name.
+     * Find a series by his name.
      *
      * @param title
      *  Title of the series at search on Database.
@@ -46,4 +46,18 @@ public interface SeriesDAO extends JpaRepository<Series, Long> {
      * @version 1.0
      */
     Series findByTitleIgnoreCase(String title);
+
+    /**
+     * Find a series by his name and his current season.
+     *
+     * @param title
+     *  The title of the series search on database.
+     * @param currentSeason
+     *  The current season of the series.
+     * @return
+     *  An instance of series if found on database or null if series not found.
+     * @since 1.1
+     * @version 1.0
+     */
+    Series findByTitleAndCurrentSeason(String title, int currentSeason);
 }
