@@ -62,18 +62,7 @@ public class MediaControllerTest {
     @Test
     public void testInsertion() {
         // Given - Instantiate a List of all keys used for the movie and the series stored on DataUtils object.
-        int fallingSkiesIndex = 1;
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
-
-        // Movies key
-        List<String> movieKey = new ArrayList<String>();
-        movieKey.add("Star Wars IV");
-        movieKey.add("Star Wars V");
-        movieKey.add("Star Wars VI");
-
-        // Series key
-        List<String> seriesKey = new ArrayList<String>();
-        seriesKey.add("Falling Skies");
 
         // Stored all responseEntity for each movie.
         List<ResponseEntity<Movie>> responseEntitiesMovies = new ArrayList<ResponseEntity<Movie>>();
@@ -81,13 +70,13 @@ public class MediaControllerTest {
         // Stored all responseEntity for each series.
         List<ResponseEntity<Series>> responseEntitiesSeries = new ArrayList<ResponseEntity<Series>>();
 
-        // When - Send all movies and series to save their on persistent system.
-        for (String key : movieKey) {
+        // When - Send all medias to save them on persistent system.
+        for (String key : DataUtils.getInstance().getKeys().get("movies")) {
             responseEntitiesMovies.add(this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", DataUtils.getInstance().getMovies().get(key), Movie.class));
         }
 
-        for (String key : seriesKey) {
-            responseEntitiesSeries.add(this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", DataUtils.getInstance().getSeries().get(key + " " + fallingSkiesIndex++), Series.class));
+        for (String key : DataUtils.getInstance().getKeys().get("series")) {
+            responseEntitiesSeries.add(this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", DataUtils.getInstance().getSeries().get(key), Series.class));
         }
 
         // Then - Compare HTTP status and uri.

@@ -45,9 +45,9 @@ public class DataUtils {
     private Map<String, List<LanguageCode>> subtitles;
     private Map<String, Calendar> releasedDates;
     private Map<String, Integer> runtimes;
-    private Map<String, List<Actor>> actors;
-    private Map<String, List<Director>> directors;
-    private Map<String, List<Producer>> producers;
+    private Map<String, Set<Actor>> actors;
+    private Map<String, Set<Director>> directors;
+    private Map<String, Set<Producer>> producers;
     private Map<String, Movie> movies;
     private Map<String, Series> series;
     private Map<String, Calendar> startDates;
@@ -59,14 +59,17 @@ public class DataUtils {
     private Map<String, Integer> averageRuntimes;
 
 
+    /**
+     * List of all keys used for Medias.
+     * @since 1.0
+     */
     private Map<String, List<String>> keys;
-
 
     /**
      * Unique instance of DataUtils instantiate at null.
      * @since 1.0
      */
-    private static DataUtils instance = null;
+    private static DataUtils INSTANCE = null;
 
     /**
      * Constructor of the class DataUtils.
@@ -92,6 +95,7 @@ public class DataUtils {
         this.initCurrentSeasons();
         this.initNumberOfSeasons();
         this.initMaxEpisodes();
+        this.initNumberOfEpisodes();
         this.initAverageRuntimes();
         this.initStartDates();
         this.initEndDates();
@@ -115,10 +119,10 @@ public class DataUtils {
      * @version 1.0
      */
     public static DataUtils getInstance() {
-        if (DataUtils.instance == null) {
-            DataUtils.instance = new DataUtils();
+        if (DataUtils.INSTANCE == null) {
+            DataUtils.INSTANCE = new DataUtils();
         }
-        return DataUtils.instance;
+        return DataUtils.INSTANCE;
     }
 
     /**
@@ -145,6 +149,17 @@ public class DataUtils {
         return series;
     }
 
+    /**
+     * Get all keys.
+     *
+     * @return
+     *  Map with all keys at insert on Database.
+     * @since 1.0
+     * @version 1.0
+     */
+    public Map<String, List<String>> getKeys() {
+        return keys;
+    }
 
     /**
      * Instantiate all keys used to stored media on Database.
@@ -185,12 +200,13 @@ public class DataUtils {
         ////////////////////////////////////////////
         ///                 SERIES              ////
         ////////////////////////////////////////////
-        k.clear();
+        k = new ArrayList<String>();
         k.add("Falling Skies 1");
         k.add("Falling Skies 2");
         k.add("Falling Skies 3");
         k.add("Falling Skies 4");
         k.add("Falling Skies 5");
+
         this.keys.put("series", k);
     }
 
@@ -246,7 +262,7 @@ public class DataUtils {
      * @version 1.0
      */
     private void initOriginalTitle() {
-        this.titles = new HashMap<String, String>();
+        this.originalTitles = new HashMap<String, String>();
 
         ////////////////////////////////////////////
         ///                 MOVIES              ////
@@ -349,24 +365,24 @@ public class DataUtils {
         this.genres.put("Star Wars VI", g);
 
         // Johnny English
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         g.add(VideoGenre.SPY);
         this.genres.put("Johnny English", g);
 
         // Bienvenue dans la Jungle
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         this.genres.put("Bienvenue dans la Jungle", g);
 
         // Un Prince a New-York
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         g.add(VideoGenre.ROMANTIC);
         this.genres.put("Un Prince a New-York", g);
 
         // Maman, je m'occupe des méchants !
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         this.genres.put("Maman, je m'occupe des méchants !", g);
 
@@ -376,61 +392,61 @@ public class DataUtils {
         this.genres.put("Sister Act 2", g);
 
         // Y a-t-il un pilote dans l'avion ? | Hot Shots 1 & 2 |
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         this.genres.put("Y a-t-il un pilote dans l'avion ?", g);
         this.genres.put("Hot Shots", g);
         this.genres.put("Hot Shots 2", g);
 
         // Shanghai Kid 2
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Shanghai Kid 2", g);
 
         // Le tour du monde en 80
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.ADVENTURE);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Le Tour du Monde en 80 Jours", g);
 
         // Espion Amateur
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         this.genres.put("Espion Amateur", g);
 
         // Le Smoking
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Le Smoking", g);
 
         // Le medaillon
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Le Médaillon", g);
 
         // Contre Attaque
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         this.genres.put("Contre-attaque", g);
 
         // Rush Hour
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Rush Hour", g);
 
         // Rush Hour 2
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Rush Hour 2", g);
 
         // Rush Hour 3
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
         this.genres.put("Rush Hour 3", g);
@@ -439,7 +455,7 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Falling Skies
-        g.clear();
+        g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.ADVENTURE);
         g.add(VideoGenre.DRAMA);
@@ -534,7 +550,7 @@ public class DataUtils {
         this.spokens.put("Rush Hour 3", l);
 
         // French | English | Italian | Spanish
-        l.clear();
+        l = new ArrayList<LanguageCode>();
         l.add(LanguageCode.fr);
         l.add(LanguageCode.en);
         l.add(LanguageCode.it);
@@ -542,7 +558,7 @@ public class DataUtils {
         this.spokens.put("Un Prince a New-York", l);
 
         // French | English | Italian
-        l.clear();
+        l = new ArrayList<LanguageCode>();
         l.add(LanguageCode.fr);
         l.add(LanguageCode.en);
         l.add(LanguageCode.it);
@@ -551,7 +567,7 @@ public class DataUtils {
         this.spokens.put("Shanghai Kid 2", l);
 
         // French | English | Deutsh
-        l.clear();
+        l = new ArrayList<LanguageCode>();
         l.add(LanguageCode.fr);
         l.add(LanguageCode.en);
         l.add(LanguageCode.de);
@@ -563,7 +579,7 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Falling Skies
-        l.clear();
+        l = new ArrayList<LanguageCode>();
         l.add(LanguageCode.fr);
         l.add(LanguageCode.en);
         l.add(LanguageCode.de);
@@ -598,7 +614,7 @@ public class DataUtils {
         this.subtitles.put("Star Wars VI", s);
 
         // French
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.fr);
         this.subtitles.put("Johnny English", s);
         this.subtitles.put("Le Tour du Monde en 80 Jours", s);
@@ -610,14 +626,14 @@ public class DataUtils {
         this.subtitles.put("Rush Hour 3", s);
 
         // French | English | Arab
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.en);
         s.add(LanguageCode.fr);
         s.add(LanguageCode.ar);
         this.subtitles.put("Bienvenue dans la Jungle", s);
 
         // English | Croatian | Spanish | French | Greek | Hebrew | Italian | Portugues
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.en);
         s.add(LanguageCode.hr);
         s.add(LanguageCode.es);
@@ -629,7 +645,7 @@ public class DataUtils {
         this.subtitles.put("Un Prince a New-York", s);
 
         // English | French | Italian | Greek | Dutch
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.en);
         s.add(LanguageCode.fr);
         s.add(LanguageCode.it);
@@ -638,7 +654,7 @@ public class DataUtils {
         this.subtitles.put("Maman, je m'occupe des méchants !", s);
 
         // French | English
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.fr);
         s.add(LanguageCode.en);
         this.subtitles.put("Sister Act", s);
@@ -647,7 +663,7 @@ public class DataUtils {
         this.subtitles.put("Hot Shots 2", s);
 
         // French | English | Italian | Spanish
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.fr);
         s.add(LanguageCode.en);
         s.add(LanguageCode.it);
@@ -655,7 +671,7 @@ public class DataUtils {
         this.subtitles.put("Y a-t-il un pilote dans l'avion ?", s);
 
         // French | English | Italian | Portuguese
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.fr);
         s.add(LanguageCode.en);
         s.add(LanguageCode.it);
@@ -663,7 +679,7 @@ public class DataUtils {
         this.subtitles.put("Shanghai Kid 2", s);
 
         // French | English | Bosch | Dutch | Bulgarian | Arab
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.fr);
         s.add(LanguageCode.en);
         s.add(LanguageCode.de);
@@ -676,7 +692,7 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Falling Skies
-        s.clear();
+        s = new ArrayList<LanguageCode>();
         s.add(LanguageCode.fr);
         s.add(LanguageCode.es);
         s.add(LanguageCode.en);
@@ -741,7 +757,9 @@ public class DataUtils {
         this.releasedDates.put("Maman, je m'occupe des méchants !", new GregorianCalendar(1997, Calendar.DECEMBER, 12));
         this.releasedDates.put("Sister Act", new GregorianCalendar(1992, Calendar.MAY, 29));
         this.releasedDates.put("Sister Act 2", new GregorianCalendar(1993, Calendar.DECEMBER, 10));
-        this.releasedDates.put("Y a-t-il un pilote dans l'avion ?", new GregorianCalendar(1980, Calendar.JULY, 02));
+        this.releasedDates.put("Y a-t-il un pilote dans l'avion ?", new GregorianCalendar(1980, Calendar.JULY, 2));
+        this.releasedDates.put("Hot Shots", new GregorianCalendar(1991, Calendar.JULY, 31));
+        this.releasedDates.put("Hot Shots 2", new GregorianCalendar(1993, Calendar.MAY, 21));
         this.releasedDates.put("Shanghai Kid 2", new GregorianCalendar(2003, Calendar.FEBRUARY, 7));
         this.releasedDates.put("Le Tour du Monde en 80 Jours", new GregorianCalendar(2004, Calendar.JUNE, 13));
         this.releasedDates.put("Espion Amateur", new GregorianCalendar(2001, Calendar.JANUARY, 18));
@@ -749,7 +767,7 @@ public class DataUtils {
         this.releasedDates.put("Le Médaillon", new GregorianCalendar(2003, Calendar.AUGUST, 15));
         this.releasedDates.put("Contre-attaque", new GregorianCalendar(1996, Calendar.FEBRUARY, 10));
         this.releasedDates.put("Rush Hour", new GregorianCalendar(1998, Calendar.SEPTEMBER, 18));
-        this.releasedDates.put("Rush Hour 2", new GregorianCalendar(2001, Calendar.AUGUST, 03));
+        this.releasedDates.put("Rush Hour 2", new GregorianCalendar(2001, Calendar.AUGUST, 3));
         this.releasedDates.put("Rush Hour 3", new GregorianCalendar(2007, Calendar.JULY, 30));
     }
 
@@ -760,13 +778,13 @@ public class DataUtils {
      * @version 1.0
      */
     private void initActors() {
-        this.actors = new HashMap<String, List<Actor>>();
+        this.actors = new HashMap<String, Set<Actor>>();
 
         ////////////////////////////////////////////
         ///                 MOVIES              ////
         ////////////////////////////////////////////
         // Star Wars : A New Hope
-        List<Actor> a = new ArrayList<Actor>();
+        Set<Actor> a = new HashSet<Actor>();
         a.add(new Actor("Mark", "Hamill"));
         a.add(new Actor("Harrison", "Ford"));
         a.add(new Actor("Carrie", "Fisher"));
@@ -775,7 +793,7 @@ public class DataUtils {
         this.actors.put("Star Wars IV", a);
 
         // Star Wars : The Empire Strikes Back & Star Wats : Return of the Jedi
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Mark", "Hamill"));
         a.add(new Actor("Harrison", "Ford"));
         a.add(new Actor("Carrie", "Fisher"));
@@ -789,7 +807,7 @@ public class DataUtils {
         this.actors.put("Star Wars VI", a);
 
         // Johnny English
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Rowan", "Atkinson"));
         a.add(new Actor("Natalie", "Imbruglia"));
         a.add(new Actor("Ben", "Miller"));
@@ -797,7 +815,7 @@ public class DataUtils {
         this.actors.put("Johnny English", a);
 
         // Bienvenue dans la Jungle
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Dwayne", "Johnson"));
         a.add(new Actor("Seann William", "Scott"));
         a.add(new Actor("Christopher", "Walken"));
@@ -807,7 +825,7 @@ public class DataUtils {
         this.actors.put("Bienvenue dans la Jungle", a);
 
         // Un Prince a New-York
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Eddie", "Murphy"));
         a.add(new Actor("Arsenio", "Hall"));
         a.add(new Actor("James Earl", "Jones"));
@@ -817,20 +835,20 @@ public class DataUtils {
         this.actors.put("Un Prince a New-York", a);
 
         // Maman, je m'occupe des méchants !
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Alex D.", "Linz"));
         a.add(new Actor("Haviland", "Morris"));
         this.actors.put("Maman, je m'occupe des méchants !", a);
 
         // Sister Act
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Whoopi", "Goldberg"));
         a.add(new Actor("Maggie", "Smith"));
         a.add(new Actor("Harvey", "Keitel"));
         this.actors.put("Sister Act", a);
 
         // Sister Act 2
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Whoopi", "Goldberg"));
         a.add(new Actor("Kathy", "Najimy"));
         a.add(new Actor("James", "Coburn"));
@@ -838,13 +856,13 @@ public class DataUtils {
         this.actors.put("Sister Act 2", a);
 
         // Y a-t-il un pilote dans l'avion ?
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Robert", "Hays"));
         a.add(new Actor("Julie", "Hagerty"));
         this.actors.put("Y a-t-il un pilote dans l'avion ?", a);
 
         // Hot Shots
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Charlie", "Sheen"));
         a.add(new Actor("Cary", "Elwes"));
         a.add(new Actor("Valeria", "Golino"));
@@ -855,7 +873,7 @@ public class DataUtils {
         this.actors.put("Hot Shots", a);
 
         // Hot Shots 2
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Charlie", "Sheen"));
         a.add(new Actor("Lloyd", "Bridges"));
         a.add(new Actor("Valeria", "Golino"));
@@ -864,7 +882,7 @@ public class DataUtils {
         this.actors.put("Hot Shots 2", a);
 
         // Shanghai Kid 2
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Owen", "Wilson"));
         a.add(new Actor("Donnie", "Yen"));
@@ -875,7 +893,7 @@ public class DataUtils {
         this.actors.put("Shanghai Kid 2", a);
 
         // Le tour du monde en 80 jours
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Steve", "Coogan"));
         a.add(new Actor("Cécile", "de France"));
@@ -885,7 +903,7 @@ public class DataUtils {
         this.actors.put("Le Tour du Monde en 80 Jours", a);
 
         // Espion Amateur
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Eric", "Tsang"));
         a.add(new Actor("Vivian", "Hsu"));
@@ -893,13 +911,13 @@ public class DataUtils {
         this.actors.put("Espion Amateur", a);
 
         // Le Smoking
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Jennifer", "Love Hewitt"));
         this.actors.put("Le Smoking", a);
 
         // Le medaillon
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Lee", "Evans"));
         a.add(new Actor("Claire", "Forlani"));
@@ -907,14 +925,14 @@ public class DataUtils {
         this.actors.put("Le Médaillon", a);
 
         // Contre Attaque
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Wu", "Chen-chun"));
         a.add(new Actor("Jackson", "Lou"));
         this.actors.put("Contre-attaque", a);
 
         // Rush Hour
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Chris", "Tucker"));
         a.add(new Actor("Tom", "Wilkinson"));
@@ -923,7 +941,7 @@ public class DataUtils {
         this.actors.put("Rush Hour", a);
 
         // Rush Hour 2
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Chris", "Tucker"));
         a.add(new Actor("John", "Lone"));
@@ -934,7 +952,7 @@ public class DataUtils {
         this.actors.put("Rush Hour 2", a);
 
         // Rush Hour 3
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Jackie", "Chan"));
         a.add(new Actor("Chris", "Tucker"));
         a.add(new Actor("Hiroyuki", "Sanada"));
@@ -946,7 +964,7 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Series - Falling Skies
-        a.clear();
+        a = new HashSet<Actor>();
         a.add(new Actor("Noah", "Wyle"));
         a.add(new Actor("Moon", "Bloodgood"));
         a.add(new Actor("Drew", "Roy"));
@@ -976,111 +994,111 @@ public class DataUtils {
      * @version 1.0
      */
     private void initDirectors() {
-        this.directors = new HashMap<String, List<Director>>();
+        this.directors = new HashMap<String, Set<Director>>();
 
         ////////////////////////////////////////////
         ///                 MOVIES              ////
         ////////////////////////////////////////////
         // Star Wars : A New Hope
-        List<Director> d = new ArrayList<Director>();
+        Set<Director> d = new HashSet<Director>();
         d.add(new Director("George", "Lucas"));
         this.directors.put("Star Wars IV", d);
 
         // Star Wars : The Empire Strikes Back
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Irvin", "Kershner"));
         this.directors.put("Star Wars V", d);
 
         // Star Wats : Return of the Jedi
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Richard", "Marquand"));
         this.directors.put("Star Wars VI", d);
 
         // Johnny English
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Peter", "Howitt"));
         this.directors.put("Johnny English", d);
 
         // Bienvenue dans la Jungle
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Peter", "Berg"));
         this.directors.put("Bienvenue dans la Jungle", d);
 
         // Un Prince a New-York
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("John", "Landis"));
         this.directors.put("Un Prince a New-York", d);
 
         // Maman, je m'occupe des méchants !
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Raja", "Gosnell"));
         this.directors.put("Maman, je m'occupe des méchants !", d);
 
         // Sister Act
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Emile", "Ardolino"));
         this.directors.put("Sister Act", d);
 
         // Sister Act 2
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Bill", "Duke"));
         this.directors.put("Sister Act 2", d);
 
         // Y a-t-il un pilote dans l'avion ?
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Jim", "Abrahams"));
         d.add(new Director("David", "Zucker"));
         d.add(new Director("Jerry", "Zucker"));
         this.directors.put("Y a-t-il un pilote dans l'avion ?", d);
 
         // Hot Shots 1 & 2
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Jim", "Abrahams"));
         this.directors.put("Hot Shots", d);
         this.directors.put("Hot Shots 2", d);
 
         // Shanghai Kid 2
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("David", "Dobkin"));
         this.directors.put("Shanghai Kid 2", d);
 
         // Le tour du monde en 80 jours
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Frank", "Coraci"));
         this.directors.put("Le Tour du Monde en 80 Jours", d);
 
         // Espion Amateur
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Teddy", "Chan"));
         this.directors.put("Espion Amateur", d);
 
         // Le Smoking
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Kevin", "Donovan"));
         this.directors.put("Le Smoking", d);
 
         // Le medaillon
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Gordon", "Chan"));
         this.directors.put("Le Médaillon", d);
 
         // Contre Attaque
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Stanley", "Tong"));
         this.directors.put("Contre-attaque", d);
 
         // Rush Hour
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour", d);
 
         // Rush Hour 2
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour 2", d);
 
         // Rush Hour 3
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour 3", d);
 
@@ -1088,7 +1106,7 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Falling Skies
-        d.clear();
+        d = new HashSet<Director>();
         d.add(new Director("Robert",  "Rodat"));
         this.directors.put("Falling Skies 1", d);
         this.directors.put("Falling Skies 2", d);
@@ -1105,31 +1123,31 @@ public class DataUtils {
      * @version 1.0
      */
     private void initProducers() {
-        this.producers = new HashMap<String, List<Producer>>();
+        this.producers = new HashMap<String, Set<Producer>>();
 
         ////////////////////////////////////////////
         ///                 MOVIES              ////
         ////////////////////////////////////////////
         // Star Wars - A New Hope | The Empire Strikes Back
-        List<Producer> p = new ArrayList<Producer>();
+        Set<Producer> p = new HashSet<Producer>();
         p.add(new Producer("Gary", "Kurtz"));
         this.producers.put("Star Wars IV", p);
         this.producers.put("Star Wars V", p);
 
         // Star Wars - Return of the Jedi
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Howard", "Kazanjian"));
         this.producers.put("Star Wars VI", p);
 
         // Johnny English
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Tim", "Bevan"));
         p.add(new Producer("Eric", "Fellner"));
         p.add(new Producer("Mark", "Huffam"));
         this.producers.put("Johnny English", p);
 
         // Bienvenue dans la Jungle
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Marc", "Abraham"));
         p.add(new Producer("Bill", "Corless"));
         p.add(new Producer("Karen", "Glasser"));
@@ -1137,90 +1155,90 @@ public class DataUtils {
         this.producers.put("Bienvenue dans la Jungle", p);
 
         // Un Prince a New-York
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("George", "Folsey, Jr."));
         p.add(new Producer("Robert D.", "Wachs"));
         this.producers.put("Un Prince a New-York", p);
 
         // Maman, je m'occupe des méchants !
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("John", "Hughes"));
         p.add(new Producer("Hilton", "Green"));
         this.producers.put("Maman, je m'occupe des méchants !", p);
 
         // Sister Act
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Scott", "Rudin"));
         p.add(new Producer("Teri", "Schwartz"));
         this.producers.put("Sister Act", p);
 
         // Sister Act 2
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Scott", "Rudin"));
         p.add(new Producer("Dawn", "Steel"));
         this.producers.put("Sister Act 2", p);
 
         // Y a-t-il un pilote dans l'avion ?
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Jon", "Davison"));
         this.producers.put("Y a-t-il un pilote dans l'avion ?", p);
 
         // Hot Shots
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Jim", "Abrahams"));
         p.add(new Producer("Pat", "Proft"));
         this.producers.put("Hot Shots", p);
         this.producers.put("Hot Shots 2", p);
 
         // Shanghai Kid 2
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Roger", "Birnbaum"));
         p.add(new Producer("Gary", "Barber"));
         p.add(new Producer("Jonathan", "Glickman"));
         this.producers.put("Shanghai Kid 2", p);
 
         // Le tour du monde en 80 jours
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Bill", "Badalato"));
         p.add(new Producer("Hal", "Lieberman"));
         this.producers.put("Le Tour du Monde en 80 Jours", p);
 
         // Espion Amateur
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Jackie", "Chan"));
         p.add(new Producer("Raymond", "Chow"));
         this.producers.put("Espion Amateur", p);
 
         // Le Smoking
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Adam", "Schroeder"));
         p.add(new Producer("John", "H. Williams"));
         this.producers.put("Le Smoking", p);
 
         // Le medaillon
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Alfred", "Cheung"));
         this.producers.put("Le Médaillon", p);
 
         // Contre Attaque
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Barbie", "Tung"));
         this.producers.put("Contre-attaque", p);
 
         // Rush Hour
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Roger", "Birnbaum"));
         p.add(new Producer("Jonathan", "Glickman"));
         p.add(new Producer("Arthur", "Sarkissian"));
         this.producers.put("Rush Hour", p);
 
         // Rush Hour 2
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Arthur", "Sarkissian"));
         this.producers.put("Rush Hour 2", p);
 
         // Rush Hour 3
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Roger", "Birnbaum"));
         p.add(new Producer("Michael", "Poryes"));
         p.add(new Producer("Jonathan", "Glickman"));
@@ -1231,7 +1249,7 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Falling Skies
-        p.clear();
+        p = new HashSet<Producer>();
         p.add(new Producer("Steven", "Spielberg"));
         p.add(new Producer("Darryl", "Frank"));
         p.add(new Producer("Justin", "Falvey"));
@@ -1260,6 +1278,24 @@ public class DataUtils {
      */
     private void initMovies() {
         this.movies = new HashMap<String, Movie>();
+
+        // Loop on each title of movie.
+        for (String key : this.keys.get("movies")) {
+            this.movies.put(key, new Movie(
+                this.titles.get(key),
+                this.originalTitles.get(key),
+                this.synopsis.get(key),
+                this.actors.get(key),
+                this.directors.get(key),
+                this.producers.get(key),
+                this.genres.get(key),
+                this.supports.get(key),
+                this.spokens.get(key),
+                this.subtitles.get(key),
+                this.releasedDates.get(key),
+                this.runtimes.get(key)
+            ));
+        }
     }
 
     /**
@@ -1398,5 +1434,27 @@ public class DataUtils {
     private void initSeries() {
         this.series = new HashMap<String, Series>();
 
+        // Loop on each title of series.
+        for (String key : this.keys.get("series")) {
+            this.series.put(key, new Series(
+                    this.titles.get(key),
+                    this.originalTitles.get(key),
+                    this.synopsis.get(key),
+                    this.actors.get(key),
+                    this.directors.get(key),
+                    this.producers.get(key),
+                    this.genres.get(key),
+                    this.supports.get(key),
+                    this.spokens.get(key),
+                    this.subtitles.get(key),
+                    this.startDates.get(key),
+                    this.endDates.get(key),
+                    this.numberOfSeasons.get(key),
+                    this.currentSeasons.get(key),
+                    this.maxEpisodes.get(key),
+                    this.numberOfEpisodes.get(key),
+                    this.averageRuntimes.get(key)
+            ));
+        }
     }
 }
