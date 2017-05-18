@@ -140,7 +140,7 @@ public class MovieController {
     }
 
     /**
-     * Return a movie by is title.
+     * Return a movie by his title.
      *
      * This method return a ResponseEntity with the movie retrieve from the Database.
      * If the database research don't retrieve the movie, this method return an HTTP error.

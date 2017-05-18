@@ -17,6 +17,7 @@
 package fr.nicolasgille.medialibrary.daos;
 
 import fr.nicolasgille.medialibrary.models.video.Cartoon;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Calendar;
 
@@ -31,7 +32,7 @@ import java.util.Calendar;
  * @since Media-Library 0.3
  * @version 1.0
  */
-public interface CartoonDAO {
+public interface CartoonDAO extends JpaRepository<Cartoon, Long> {
     /**
      * Find a cartoon by his name.
      *

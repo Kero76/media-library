@@ -20,7 +20,6 @@ import fr.nicolasgille.medialibrary.daos.SeriesDAO;
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
-import fr.nicolasgille.medialibrary.exception.MovieException;
 import fr.nicolasgille.medialibrary.exception.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
@@ -126,7 +125,7 @@ public class SeriesController {
     }
 
     /**
-     * Return a series by is title.
+     * Return a series by his title.
      *
      * This method return a ResponseEntity with the series retrieve from the Database.
      * If the database research don't retrieve the series, this method return an HTTP error.
@@ -147,7 +146,7 @@ public class SeriesController {
         Series series = seriesDAO.findByTitleIgnoreCase(title);
         if (series == null) {
             logger.error("Series with title {} not found.", title);
-            return new ResponseEntity<Object>(new MovieException("Series with title " + title + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new SeriesException("Series with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Series>(series, HttpStatus.OK);
     }
@@ -180,9 +179,9 @@ public class SeriesController {
         }
 
         // Check if the actors are present on Database or not.
-        Set<Actor> actorsOnMovie = series.getMainActors();
+        Set<Actor> actorsOnSeries = series.getMainActors();
         Set<Actor> mainActors = new HashSet<Actor>();
-        for (Actor a : actorsOnMovie) {
+        for (Actor a : actorsOnSeries) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             // If the actor is not present on Database, he add on it.
             if (actorExist == null) {
@@ -197,9 +196,9 @@ public class SeriesController {
         series.setMainActors(mainActors);
 
         // Check if the producers are present on Database or not.
-        Set<Producer> producersOnMovie = series.getProducers();
+        Set<Producer> producersOnSeries = series.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
-        for (Producer p : producersOnMovie) {
+        for (Producer p : producersOnSeries) {
             Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
             // If the producer is not present on Database, he add on it.
             if (producerExist == null) {
@@ -214,9 +213,9 @@ public class SeriesController {
         series.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        Set<Director> directorOnMovie = series.getDirectors();
+        Set<Director> directorOnSeries = series.getDirectors();
         Set<Director> directors = new HashSet<Director>();
-        for (Director d : directorOnMovie) {
+        for (Director d : directorOnSeries) {
             Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
             if (directorExist  == null) {
@@ -260,13 +259,13 @@ public class SeriesController {
         Series seriesAtUpdate = seriesDAO.findOne(id);
         if (seriesAtUpdate == null) {
             logger.error("Unable to update. Series with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to update. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(new SeriesException("Unable to update. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         // Check if the actor are present on Database or not.
-        Set<Actor> actorsOnMovie = series.getMainActors();
+        Set<Actor> actorsOnSeries = series.getMainActors();
         Set<Actor> mainActors = new HashSet<Actor>();
-        for (Actor a : actorsOnMovie) {
+        for (Actor a : actorsOnSeries) {
             Actor actorExist = actorDAO.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             // If the actor is not present on Database, it add on it.
             if (actorExist == null) {
@@ -281,9 +280,9 @@ public class SeriesController {
         series.setMainActors(mainActors);
 
         // Check if the producers are present on Database or not.
-        Set<Producer> producersOnMovie = series.getProducers();
+        Set<Producer> producersOnSeries = series.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
-        for (Producer p : producersOnMovie) {
+        for (Producer p : producersOnSeries) {
             Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
             // If the producer is not present on Database, he add on it.
             if (producerExist == null) {
@@ -298,9 +297,9 @@ public class SeriesController {
         series.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        Set<Director> directorOnMovie = series.getDirectors();
+        Set<Director> directorOnSeries = series.getDirectors();
         Set<Director> directors = new HashSet<Director>();
-        for (Director d : directorOnMovie) {
+        for (Director d : directorOnSeries) {
             Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
             if (directorExist  == null) {
@@ -342,7 +341,7 @@ public class SeriesController {
         Series series = seriesDAO.findOne(id);
         if (series == null) {
             logger.error("Unable to delete. Series with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to delete. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(new SeriesException("Unable to delete. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         seriesDAO.delete(series);
