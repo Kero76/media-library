@@ -1,5 +1,18 @@
 # Changelog 
 
+## V0.3 : Cartoon Release - Released May 18, 2017
+
+### Features
+- Add media _Cartoon_ to manage Cartoon on app.
+- Add `ROMANTIC` on enum `VideoGenre`.
+- Add new method to search Series on `SeriesRepository`
+- Add many data on class `DataUtils` to test Media-Library.
+
+### Bug Fixed
+- Fix bug when you try to add new Series on Media-Library.
+
+---
+
 ## V0.2.1 : Person Update - Released May 11, 2017
 
 ### Features

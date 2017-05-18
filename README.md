@@ -103,6 +103,7 @@ The statement is a representation of the current state of development of each me
 Media-Library is under GPLv3 license.
 
 ## Changelog 
+- V0.3 : Cartoon Release - Released May 18, 2017
 - V0.2.1 : Person Update - Released May 11, 2017
 - V0.2 : Refactoring Release - Released May 10, 2017
 - V0.1.1 : Deployment Update - Released May 08, 2017
