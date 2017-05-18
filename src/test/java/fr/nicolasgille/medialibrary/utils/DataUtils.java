@@ -195,6 +195,13 @@ public class DataUtils {
         k.add("Rush Hour");
         k.add("Rush Hour 2");
         k.add("Rush Hour 3");
+        k.add("Police Academy");
+        k.add("Police Academy 2");
+        k.add("Police Academy 3");
+        k.add("Police Academy 4");
+        k.add("Police Academy 5");
+        k.add("Police Academy 6");
+        k.add("Police Academy 7");
 
         this.keys.put("movies", k);
         ////////////////////////////////////////////
@@ -243,6 +250,13 @@ public class DataUtils {
         this.titles.put("Rush Hour", "Rush Hour");
         this.titles.put("Rush Hour 2", "Rush Hour 2");
         this.titles.put("Rush Hour 3", "Rush Hour 3");
+        this.titles.put("Police Academy", "Police Academy");
+        this.titles.put("Police Academy 2", "Police Academy 2 : Au Boulot !");
+        this.titles.put("Police Academy 3", "Police Academy 3 : Instructeurs de Choc");
+        this.titles.put("Police Academy 4", "Police Academy 4 : Aux Armes Citoyens");
+        this.titles.put("Police Academy 5", "Police Academy 5 : Débarquement à Miami Beach");
+        this.titles.put("Police Academy 6", "Police Academy 6 : S.O.S Ville en état de Choc");
+        this.titles.put("Police Academy 7", "Police Academy 7 : Mission à Moscou");
 
 
         ////////////////////////////////////////////
@@ -288,6 +302,13 @@ public class DataUtils {
         this.originalTitles.put("Rush Hour", "Rush Hour");
         this.originalTitles.put("Rush Hour 2", "Rush Hour 2");
         this.originalTitles.put("Rush Hour 3", "Rush Hour 3");
+        this.originalTitles.put("Police Academy", "Police Academy");
+        this.originalTitles.put("Police Academy 2", "Police Academy 2 : Their First Assignment");
+        this.originalTitles.put("Police Academy 3", "Police Academy 3 : Back in Training");
+        this.originalTitles.put("Police Academy 4", "Police Academy 4 : Citizens on Patrol");
+        this.originalTitles.put("Police Academy 5", "Police Academy 5 : Assignment Miami Beach");
+        this.originalTitles.put("Police Academy 6", "Police Academy 6 : City Under Siege");
+        this.originalTitles.put("Police Academy 7", "Police Academy 7 : Mission to Moscow");
 
 
         ////////////////////////////////////////////
@@ -319,7 +340,7 @@ public class DataUtils {
         this.synopsis.put("Bienvenue dans la Jungle", "");
         this.synopsis.put("Un Prince a New-York", "");
         this.synopsis.put("Maman, je m'occupe des méchants !", "");
-        this.synopsis.put("Sister Act !", "");
+        this.synopsis.put("Sister Act", "");
         this.synopsis.put("Sister Act 2", "");
         this.synopsis.put("Y a-t-il un pilote dans l'avion ?", "");
         this.synopsis.put("Hot Shots", "");
@@ -333,16 +354,23 @@ public class DataUtils {
         this.synopsis.put("Rush Hour", "");
         this.synopsis.put("Rush Hour 2", "");
         this.synopsis.put("Rush Hour 3", "");
+        this.synopsis.put("Police Academy", "");
+        this.synopsis.put("Police Academy 2", "");
+        this.synopsis.put("Police Academy 3", "");
+        this.synopsis.put("Police Academy 4", "");
+        this.synopsis.put("Police Academy 5", "");
+        this.synopsis.put("Police Academy 6", "");
+        this.synopsis.put("Police Academy 7", "");
 
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
         ////////////////////////////////////////////
-        this.titles.put("Falling Skies 1", "Falling Skies");
-        this.titles.put("Falling Skies 2", "Falling Skies");
-        this.titles.put("Falling Skies 3", "Falling Skies");
-        this.titles.put("Falling Skies 4", "Falling Skies");
-        this.titles.put("Falling Skies 5", "Falling Skies");
+        this.synopsis.put("Falling Skies 1", "");
+        this.synopsis.put("Falling Skies 2", "");
+        this.synopsis.put("Falling Skies 3", "");
+        this.synopsis.put("Falling Skies 4", "");
+        this.synopsis.put("Falling Skies 5", "");
     }
 
     /**
@@ -385,6 +413,13 @@ public class DataUtils {
         g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         this.genres.put("Maman, je m'occupe des méchants !", g);
+        this.genres.put("Police Academy", g);
+        this.genres.put("Police Academy 2", g);
+        this.genres.put("Police Academy 3", g);
+        this.genres.put("Police Academy 4", g);
+        this.genres.put("Police Academy 5", g);
+        this.genres.put("Police Academy 6", g);
+        this.genres.put("Police Academy 7", g);
 
         // Sister Act & Sister Act 2
         g.add(VideoGenre.MUSICAL);
@@ -504,6 +539,13 @@ public class DataUtils {
         this.supports.put("Rush Hour", s);
         this.supports.put("Rush Hour 2", s);
         this.supports.put("Rush Hour 3", s);
+        this.supports.put("Police Academy", s);
+        this.supports.put("Police Academy 2", s);
+        this.supports.put("Police Academy 3", s);
+        this.supports.put("Police Academy 4", s);
+        this.supports.put("Police Academy 5", s);
+        this.supports.put("Police Academy 6", s);
+        this.supports.put("Police Academy 7", s);
 
 
         ////////////////////////////////////////////
@@ -565,6 +607,13 @@ public class DataUtils {
         this.spokens.put("Maman, je m'occupe des méchants !", l);
         this.spokens.put("Y a-t-il un pilote dans l'avion ?", l);
         this.spokens.put("Shanghai Kid 2", l);
+        this.spokens.put("Police Academy", l);
+        this.spokens.put("Police Academy 2", l);
+        this.spokens.put("Police Academy 3", l);
+        this.spokens.put("Police Academy 4", l);
+        this.spokens.put("Police Academy 5", l);
+        this.spokens.put("Police Academy 6", l);
+        this.spokens.put("Police Academy 7", l);
 
         // French | English | Deutsh
         l = new ArrayList<LanguageCode>();
@@ -572,8 +621,6 @@ public class DataUtils {
         l.add(LanguageCode.en);
         l.add(LanguageCode.de);
         this.spokens.put("Le Smoking", l);
-
-
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
@@ -688,6 +735,25 @@ public class DataUtils {
         s.add(LanguageCode.ar);
         this.subtitles.put("Le Smoking", s);
 
+        // French / English / Italian / Bosch / Spanish / Arab / Bulgarian / Romanian / Dutch
+        s = new ArrayList<LanguageCode>();
+        s.add(LanguageCode.fr);
+        s.add(LanguageCode.en);
+        s.add(LanguageCode.it);
+        s.add(LanguageCode.de);
+        s.add(LanguageCode.es);
+        s.add(LanguageCode.ar);
+        s.add(LanguageCode.bg);
+        s.add(LanguageCode.ro);
+        s.add(LanguageCode.nl);
+        this.subtitles.put("Police Academy", s);
+        this.subtitles.put("Police Academy 2", s);
+        this.subtitles.put("Police Academy 3", s);
+        this.subtitles.put("Police Academy 4", s);
+        this.subtitles.put("Police Academy 5", s);
+        this.subtitles.put("Police Academy 6", s);
+        this.subtitles.put("Police Academy 7", s);
+
         ////////////////////////////////////////////
         ///                 SERIES              ////
         ////////////////////////////////////////////
@@ -736,6 +802,13 @@ public class DataUtils {
         this.runtimes.put("Rush Hour", 93);
         this.runtimes.put("Rush Hour 2", 93);
         this.runtimes.put("Rush Hour 3", 87);
+        this.runtimes.put("Police Academy", 92);
+        this.runtimes.put("Police Academy 2", 83);
+        this.runtimes.put("Police Academy 3", 80);
+        this.runtimes.put("Police Academy 4", 84);
+        this.runtimes.put("Police Academy 5", 86);
+        this.runtimes.put("Police Academy 6", 80);
+        this.runtimes.put("Police Academy 7", 79);
     }
 
     /**
@@ -769,6 +842,13 @@ public class DataUtils {
         this.releasedDates.put("Rush Hour", new GregorianCalendar(1998, Calendar.SEPTEMBER, 18));
         this.releasedDates.put("Rush Hour 2", new GregorianCalendar(2001, Calendar.AUGUST, 3));
         this.releasedDates.put("Rush Hour 3", new GregorianCalendar(2007, Calendar.JULY, 30));
+        this.releasedDates.put("Police Academy", new GregorianCalendar(1984, Calendar.MARCH, 3));
+        this.releasedDates.put("Police Academy 2", new GregorianCalendar(1985, Calendar.MARCH, 29));
+        this.releasedDates.put("Police Academy 3", new GregorianCalendar(1986, Calendar.MARCH, 21));
+        this.releasedDates.put("Police Academy 4", new GregorianCalendar(1987, Calendar.APRIL, 3));
+        this.releasedDates.put("Police Academy 5", new GregorianCalendar(1988, Calendar.MARCH, 18));
+        this.releasedDates.put("Police Academy 6", new GregorianCalendar(1989, Calendar.MARCH, 10));
+        this.releasedDates.put("Police Academy 7", new GregorianCalendar(1994, Calendar.AUGUST, 26));
     }
 
     /**
@@ -960,6 +1040,99 @@ public class DataUtils {
         a.add(new Actor("Max", "von Sydow"));
         this.actors.put("Rush Hour 3", a);
 
+        // Police Academy
+        a = new HashSet<Actor>();
+        a.add(new Actor("Steve", "Guttenberg"));
+        a.add(new Actor("Kim", "Cattrall"));
+        a.add(new Actor("Bubba", "Smith"));
+        a.add(new Actor("George", "Gaynes"));
+        this.actors.put("Police Academy", a);
+
+        // Police Academy 2
+        a = new HashSet<Actor>();
+        a.add(new Actor("Steve", "Guttenberg"));
+        a.add(new Actor("Bubba", "Smith"));
+        a.add(new Actor("David", "Graf"));
+        a.add(new Actor("Michael", "Winslow"));
+        a.add(new Actor("Bruce", "Mahler"));
+        a.add(new Actor("Colleen", "Camp"));
+        a.add(new Actor("Art", "Metrano"));
+        a.add(new Actor("Marion", "Ramsey"));
+        a.add(new Actor("Howard", "Hesseman"));
+        a.add(new Actor("George", "Gaynes"));
+        this.actors.put("Police Academy 2", a);
+
+        // Police Academy 3
+        a = new HashSet<Actor>();
+        a.add(new Actor("Steve", "Guttenberg"));
+        a.add(new Actor("Bubba", "Smith"));
+        a.add(new Actor("David", "Graf"));
+        a.add(new Actor("Michael", "Winslow"));
+        a.add(new Actor("Marion", "Ramsey"));
+        a.add(new Actor("Leslie", "Easterbrook"));
+        a.add(new Actor("Art", "Metrano"));
+        a.add(new Actor("Tim", "Kazurinsky"));
+        a.add(new Actor("Bobcat", "Goldthwait"));
+        this.actors.put("Police Academy 3", a);
+
+        // Police Academy 4
+        a = new HashSet<Actor>();
+        a.add(new Actor("Steve", "Guttenberg"));
+        a.add(new Actor("Bubba", "Smith"));
+        a.add(new Actor("Michael", "Winslow"));
+        a.add(new Actor("David", "Graf"));
+        a.add(new Actor("Tim", "Kazurinsky"));
+        a.add(new Actor("Sharon", "Stone"));
+        a.add(new Actor("Marion", "Ramsey"));
+        a.add(new Actor("Lance", "Kinsey"));
+        a.add(new Actor("Leslie", "Easterbrook"));
+        a.add(new Actor("Colleen", "Camp"));
+        a.add(new Actor("G. W.", "Bailey"));
+        a.add(new Actor("Bobcat", "Goldthwait"));
+        this.actors.put("Police Academy 4", a);
+
+        // Police Academy 5
+        a = new HashSet<Actor>();
+        a.add(new Actor("Bubba", "Smith"));
+        a.add(new Actor("David", "Graf"));
+        a.add(new Actor("Michael", "Winslow"));
+        a.add(new Actor("Leslie", "Easterbrook"));
+        a.add(new Actor("Marion", "Ramsey"));
+        a.add(new Actor("Janet", "Jones"));
+        a.add(new Actor("Lance", "Kinsey"));
+        a.add(new Actor("Matt", "McCoy"));
+        a.add(new Actor("G. W.", "Bailey"));
+        a.add(new Actor("George", "Gaynes"));
+        this.actors.put("Police Academy 5", a);
+
+        // Police Academy 6
+        a = new HashSet<Actor>();
+        a.add(new Actor("Bubba", "Smith"));
+        a.add(new Actor("Michael", "Winslow"));
+        a.add(new Actor("David", "Graf"));
+        a.add(new Actor("Marion", "Ramsey"));
+        a.add(new Actor("Leslie", "Easterbrook"));
+        a.add(new Actor("Lance", "Kinsey"));
+        a.add(new Actor("Bruce", "Mahler"));
+        a.add(new Actor("Kenneth", "Mars"));
+        a.add(new Actor("Matt", "McCoy"));
+        a.add(new Actor("G. W.", "Bailey"));
+        a.add(new Actor("George", "Gaynes"));
+        this.actors.put("Police Academy 6", a);
+
+        // Police Academy 7
+        a = new HashSet<Actor>();
+        a.add(new Actor("George", "Gaynes"));
+        a.add(new Actor("Michael", "Winslow"));
+        a.add(new Actor("David", "Graf"));
+        a.add(new Actor("Leslie", "Easterbrook"));
+        a.add(new Actor("Claire", "Forlani"));
+        a.add(new Actor("Ron", "Perlman"));
+        a.add(new Actor("Christopher", "Lee"));
+        a.add(new Actor("Charlie", "Schlatter"));
+        a.add(new Actor("G. W.", "Bailey"));
+        this.actors.put("Police Academy 7", a);
+
         ////////////////////////////////////////////
         ///                 SERIES              ////
         ////////////////////////////////////////////
@@ -1101,6 +1274,37 @@ public class DataUtils {
         d = new HashSet<Director>();
         d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour 3", d);
+
+        // Police Academy
+        d = new HashSet<Director>();
+        d.add(new Director("Hugh", "Wilson"));
+        this.directors.put("Police Academy", d);
+
+        // Police Academy 2
+        d = new HashSet<Director>();
+        d.add(new Director("Jerry", "Paris"));
+        this.directors.put("Police Academy 2", d);
+        this.directors.put("Police Academy 3", d);
+
+        // Police Academy 4
+        d = new HashSet<Director>();
+        d.add(new Director("Jim", "Drake"));
+        this.directors.put("Police Academy 4", d);
+
+        // Police Academy 5
+        d = new HashSet<Director>();
+        d.add(new Director("Alan", "Myerson"));
+        this.directors.put("Police Academy 5", d);
+
+        // Police Academy 6
+        d = new HashSet<Director>();
+        d.add(new Director("Peter", "Bonerz"));
+        this.directors.put("Police Academy 6", d);
+
+        // Police Academy 7
+        d = new HashSet<Director>();
+        d.add(new Director("Alan", "Metter"));
+        this.directors.put("Police Academy 7", d);
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
@@ -1244,6 +1448,31 @@ public class DataUtils {
         p.add(new Producer("Jonathan", "Glickman"));
         p.add(new Producer("Jay", "Stern"));
         this.producers.put("Rush Hour 3", p);
+
+        // Police Academy
+        p = new HashSet<Producer>();
+        p.add(new Producer("Paul", "Maslansky"));
+        this.producers.put("Police Academy", p);
+
+        // Police Academy 2
+        p = new HashSet<Producer>();
+        p.add(new Producer("Paul", "Maslansky"));
+        p.add(new Producer("Leonard", "Croll"));
+        this.producers.put("Police Academy 2", p);
+
+        // Police Academy 3
+        p = new HashSet<Producer>();
+        p.add(new Producer("Paul", "Maslansky"));
+        p.add(new Producer("West", "Donald"));
+        this.producers.put("Police Academy 3", p);
+        this.producers.put("Police Academy 4", p);
+        this.producers.put("Police Academy 5", p);
+        this.producers.put("Police Academy 6", p);
+
+        // Police Academy 7
+        p = new HashSet<Producer>();
+        p.add(new Producer("Paul", "Maslansky"));
+        this.producers.put("Police Academy 7", p);
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
