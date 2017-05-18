@@ -282,7 +282,7 @@ public class DataUtils {
         ///                 MOVIES              ////
         ////////////////////////////////////////////
         this.originalTitles.put("Star Wars IV", "Star Wars : A New Hope");
-        this.originalTitles.put("Star Wars V","Star Wars V : The Empire Strikes Back");
+        this.originalTitles.put("Star Wars V", "Star Wars : The Empire Strikes Back");
         this.originalTitles.put("Star Wars VI", "Star Wars : Return of the Jedi");
         this.originalTitles.put("Johnny English", "Johnny English");
         this.originalTitles.put("Bienvenue dans la Jungle", "The Rundown");
@@ -296,7 +296,7 @@ public class DataUtils {
         this.originalTitles.put("Shanghai Kid 2", "Shanghai Knights");
         this.originalTitles.put("Le Tour du Monde en 80 Jours", "Around the World in 80 Days");
         this.originalTitles.put("Espion Amateur", "The Accidental Spy");
-        this.originalTitles.put("Le Smoking", "The tuxedo");
+        this.originalTitles.put("Le Smoking", "The Tuxedo");
         this.originalTitles.put("Le Médaillon", "The Medallion");
         this.originalTitles.put("Contre-attaque", "Police Story 4 : First Strike");
         this.originalTitles.put("Rush Hour", "Rush Hour");
@@ -385,31 +385,38 @@ public class DataUtils {
         ////////////////////////////////////////////
         ///                 MOVIES              ////
         ////////////////////////////////////////////
-        // Star Wars
+        // Science Fiction
         List<VideoGenre> g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.SCIENCE_FICTION);
         this.genres.put("Star Wars IV", g);
         this.genres.put("Star Wars V", g);
         this.genres.put("Star Wars VI", g);
 
-        // Johnny English
+        // Comedy / Spy
         g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         g.add(VideoGenre.SPY);
         this.genres.put("Johnny English", g);
 
-        // Bienvenue dans la Jungle
+        // Action
         g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         this.genres.put("Bienvenue dans la Jungle", g);
+        this.genres.put("Espion Amateur", g);
+        this.genres.put("Contre-attaque", g);
 
-        // Un Prince a New-York
+        // Comedy / Romantic
         g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         g.add(VideoGenre.ROMANTIC);
         this.genres.put("Un Prince a New-York", g);
 
-        // Maman, je m'occupe des méchants !
+        // Musical
+        g.add(VideoGenre.MUSICAL);
+        this.genres.put("Sister Act", g);
+        this.genres.put("Sister Act 2", g);
+
+        // Comedy
         g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.COMEDY);
         this.genres.put("Maman, je m'occupe des méchants !", g);
@@ -420,24 +427,9 @@ public class DataUtils {
         this.genres.put("Police Academy 5", g);
         this.genres.put("Police Academy 6", g);
         this.genres.put("Police Academy 7", g);
-
-        // Sister Act & Sister Act 2
-        g.add(VideoGenre.MUSICAL);
-        this.genres.put("Sister Act", g);
-        this.genres.put("Sister Act 2", g);
-
-        // Y a-t-il un pilote dans l'avion ? | Hot Shots 1 & 2 |
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.COMEDY);
         this.genres.put("Y a-t-il un pilote dans l'avion ?", g);
         this.genres.put("Hot Shots", g);
         this.genres.put("Hot Shots 2", g);
-
-        // Shanghai Kid 2
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.COMEDY);
-        this.genres.put("Shanghai Kid 2", g);
 
         // Le tour du monde en 80
         g = new ArrayList<VideoGenre>();
@@ -446,44 +438,15 @@ public class DataUtils {
         g.add(VideoGenre.COMEDY);
         this.genres.put("Le Tour du Monde en 80 Jours", g);
 
-        // Espion Amateur
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        this.genres.put("Espion Amateur", g);
-
-        // Le Smoking
+        // Action / Comedy
         g = new ArrayList<VideoGenre>();
         g.add(VideoGenre.ACTION);
         g.add(VideoGenre.COMEDY);
+        this.genres.put("Shanghai Kid 2", g);
         this.genres.put("Le Smoking", g);
-
-        // Le medaillon
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.COMEDY);
         this.genres.put("Le Médaillon", g);
-
-        // Contre Attaque
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        this.genres.put("Contre-attaque", g);
-
-        // Rush Hour
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.COMEDY);
         this.genres.put("Rush Hour", g);
-
-        // Rush Hour 2
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.COMEDY);
         this.genres.put("Rush Hour 2", g);
-
-        // Rush Hour 3
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.COMEDY);
         this.genres.put("Rush Hour 3", g);
 
         ////////////////////////////////////////////
@@ -1264,15 +1227,7 @@ public class DataUtils {
         d = new HashSet<Director>();
         d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour", d);
-
-        // Rush Hour 2
-        d = new HashSet<Director>();
-        d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour 2", d);
-
-        // Rush Hour 3
-        d = new HashSet<Director>();
-        d.add(new Director("Brett", "Ratner"));
         this.directors.put("Rush Hour 3", d);
 
         // Police Academy
@@ -1453,6 +1408,7 @@ public class DataUtils {
         p = new HashSet<Producer>();
         p.add(new Producer("Paul", "Maslansky"));
         this.producers.put("Police Academy", p);
+        this.producers.put("Police Academy 7", p);
 
         // Police Academy 2
         p = new HashSet<Producer>();
@@ -1468,11 +1424,6 @@ public class DataUtils {
         this.producers.put("Police Academy 4", p);
         this.producers.put("Police Academy 5", p);
         this.producers.put("Police Academy 6", p);
-
-        // Police Academy 7
-        p = new HashSet<Producer>();
-        p.add(new Producer("Paul", "Maslansky"));
-        this.producers.put("Police Academy 7", p);
 
         ////////////////////////////////////////////
         ///                 SERIES              ////
