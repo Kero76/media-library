@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.daos;
+package fr.nicolasgille.medialibrary.daos.video;
 
 import fr.nicolasgille.medialibrary.models.video.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,7 +33,7 @@ import javax.transaction.Transactional;
  * @version 1.1
  */
 @Transactional
-public interface SeriesDAO extends JpaRepository<Series, Long> {
+public interface SeriesRepository extends JpaRepository<Series, Long> {
 
     /**
      * Find a series by his name.

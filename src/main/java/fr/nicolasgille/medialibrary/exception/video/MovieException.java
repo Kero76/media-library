@@ -14,49 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.exception;
+package fr.nicolasgille.medialibrary.exception.video;
+
+import fr.nicolasgille.medialibrary.controllers.video.MovieController;
+import fr.nicolasgille.medialibrary.exception.MediaException;
 
 /**
  * Exception send at the client when a problem occurred during CRUD process.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @see fr.nicolasgille.medialibrary.controllers.MovieController
- * @version 1.0
+ * @see MovieController
+ * @version 2.0
  */
-public class MovieException extends Exception {
-
-    /**
-     * Message at display when the exception was throw.
-     *
-     * @since 1.0
-     */
-    private String message;
+public class MovieException extends MediaException {
 
     /**
      * Constructor of the exception.
      *
-     * @param message
-     *  Message at display when the error was throw.
+     * @param message Message at display when the error was throw.
+     * @version 1.0
      * @since 1.0
-     * @version 1.1
      */
     public MovieException(String message) {
         super(message);
-        this.message = message;
-    }
-
-    /**
-     * Message at display when the exception was throw.
-     *
-     * @return
-     *  The message at display.
-     * @since 1.0
-     * @version 1.0
-     */
-    @Override
-    public String toString() {
-        return this.message;
     }
 }
 

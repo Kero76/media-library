@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.client;
+package fr.nicolasgille.medialibrary.controllers;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.exception.SeriesException;
+import fr.nicolasgille.medialibrary.exception.video.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.video.Series;
+import fr.nicolasgille.medialibrary.models.video.Movie;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,13 +38,13 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit class test used to test SeriesController class.
+ * Unit class test used to test MovieController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.2
+ * @since Media-Library 0.1
  * @version 1.0
  */
-public class ClientSeriesTest {
+public class ClientMovieTest {
     /**
      * URI of the Rest service.
      */
@@ -73,7 +73,7 @@ public class ClientSeriesTest {
 
         // When - Try to delete it.
         try {
-            this.restTemplate.delete(REST_SERVICE_URI + "/series/" + id);
+            this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
         } catch (Exception e) {
             // Then - Exception throws give the expected message.
             assertThat(e.getMessage()).isEqualTo(messageExcepted);
@@ -82,12 +82,14 @@ public class ClientSeriesTest {
 
     @Test
     public void testUpdateWithEmptyPersistentSystem() {
-        // Given - Instantiate id at update and corresponding series.
+        // Given - Instantiate id at update and corresponding movie.
         String messageExcepted = "404 null";
         int id = 666;
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -112,18 +114,15 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
 
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
-                id, "Star Gate SG1", "Star Gate SG1", "My Synopsis",
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, 10, 2, 226, 22, 42
+        Movie movie = new Movie(
+                id,  "My title", "My original title", "My Synopsis",
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
         );
 
-        // When - Try to update series.
+        // When - Try to update movie.
         try {
-            this.restTemplate.put(REST_SERVICE_URI + "/series/" + series.getId(), series);
+            this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie);
         } catch (Exception e) {
             // Then - Exception throws is null.
             assertThat(e.getMessage()).isEqualTo(messageExcepted);
@@ -131,40 +130,42 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetAllSeriesWithEmptyPersistentSystem() {
-        // Given / When - Get all series from persistent system.
-        ResponseEntity<List> series = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/", List.class);
+    public void testGetAllMoviesWithEmptyPersistentSystem() {
+        // Given / When - Get all movies from persistent system.
+        ResponseEntity<List> movies = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/", List.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
-        assertThat(series.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        assertThat(series.getBody()).isNull();
+        assertThat(movies.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(movies.getBody()).isNull();
     }
 
     @Test
-    public void testGetSeriesWithEmptyPersistentSystem() {
-        // Given - Instantiate title of series.
+    public void testGetMovieWithEmptyPersistentSystem() {
+        // Given - Instantiate title of movie.
         String title = "Persistent System 2 : Return of the Empty Row";
 
-        // When - Get one series from persistent system.
-        ResponseEntity<Series> series = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + title, Series.class);
+        // When - Get one movie from persistent system.
+        ResponseEntity<Movie> movie = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + title, Movie.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
-        assertThat(series.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        assertThat(series.getBody()).isNull();
+        assertThat(movie.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(movie.getBody()).isNull();
     }
 
     @Test
-    public void testAddSeriesOnPersistentSystem() {
-        // Given - Instantiate Series at insert on persistent system.
+    public void testAddMovieOnPersistentSystem() {
+        // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
-        int id = 3;
-        String uriExpected = "http://localhost:8080/media-library/series/search/title/" + id;
+        int id = 1;
+        String uriExpected = "http://localhost:8080/media-library/movies/search/title/" + id;
 
-        String title = "Star Gate SG1";
-        String synopsis = "Star Gate SG1 is awesome !";
+        String title = "Persistent System 2 : Return of the Empty Row";
+        String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -188,24 +189,14 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int averageEpisodeRuntime = 44;
-        int numberOfSeasons = 10;
-        int currentSeason   = 2;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
         );
 
-        // When - Send series to save it on persistent system.
-        ResponseEntity<Series> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
+        // When - Send movie to save it on persistent system.
+        ResponseEntity<Movie> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -213,16 +204,18 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testAddSeriesAlreadyPresentOnPersistentSystem() {
-        // Given - Instantiate Series at insert on persistent system.
+    public void testAddMovieAlreadyPresentOnPersistentSystem() {
+        // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
 
-        String title = "Star Gate SG1";
-        String synopsis = "Star Gate SG1 is awesome !";
+        String title = "Persistent System 2 : Return of the Empty Row";
+        String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -246,27 +239,17 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int numberOfSeasons = 10;
-        int currentSeason = 2;
-        int averageEpisodeRuntime = 44;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
         );
 
-        ResponseEntity<SeriesException> responseEntity = null;
-        // When - Send series to save it on persistent system.
+        ResponseEntity<MovieException> responseEntity = null;
+        // When - Send movie to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, SeriesException.class);
-        } catch (HttpClientErrorException httpClientErrorException) {
+            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, MovieException.class);
+         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
             assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -274,16 +257,18 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetOneSeries() throws UnsupportedEncodingException {
-        // Given - Instantiate Series at insert on persistent system.
+    public void testGetOneMovie() throws UnsupportedEncodingException {
+        // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
 
-        String title = "Star Gate SG1";
-        String synopsis = "Star Gate SG1 is awesome !";
+        String title = "Persistent System 2 : Return of the Empty Row";
+        String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -307,60 +292,47 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int averageEpisodeRuntime = 44;
-        int numberOfSeasons = 10;
-        int currentSeason   = 2;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 120
         );
 
-        // When - Get series from persistent system.
-        ResponseEntity<Series> responseEntity = null;
+        // When - Get movie from persistent system.
+        ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER), Series.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        // Then - Compare Http code and series retrieve.
+        // Then - Compare Http code and movie retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(series.getTitle());
-        assertThat(responseEntity.getBody().getStartDate().get(Calendar.YEAR)).isEqualTo(series.getStartDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getEndDate().get(Calendar.YEAR)).isEqualTo(series.getEndDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(series.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(series.getSupports());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(series.getSynopsis());
-        assertThat(responseEntity.getBody().getAverageEpisodeRuntime()).isEqualTo(series.getAverageEpisodeRuntime());
-        assertThat(responseEntity.getBody().getCurrentSeason()).isEqualTo(series.getCurrentSeason());
-        assertThat(responseEntity.getBody().getNumberOfSeasons()).isEqualTo(series.getNumberOfSeasons());
-        assertThat(responseEntity.getBody().getNumberOfEpisode()).isEqualTo(series.getNumberOfEpisode());
+        assertThat(responseEntity.getBody().getTitle()).isEqualTo(movie.getTitle());
+        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(movie.getReleaseDate().get(Calendar.YEAR));
+        assertThat(responseEntity.getBody().getGenres()).isEqualTo(movie.getGenres());
+        assertThat(responseEntity.getBody().getSupports()).isEqualTo(movie.getSupports());
+        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(movie.getSynopsis());
+        assertThat(responseEntity.getBody().getRuntime()).isEqualTo(movie.getRuntime());
         assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
         assertThat(responseEntity.getBody().getMainActors().size()).isEqualTo(sizeExpected);
         assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(sizeExpected);
-
         System.out.println(responseEntity.getBody().toString());
     }
 
     @Test
-    public void testGetSeriesNotFoundOnPersistentSystem() {
-        // Given - Instantiate Series at insert on persistent system.
+    public void testGetMovieNotFoundOnPersistentSystem() {
+        // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
 
-        String title = "Star Gate SG2";
-        String synopsis = "Star Gate SG2 is awesome !";
+        String title = "Persistent System 3 : A new Hope";
+        String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -384,26 +356,16 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int averageEpisodeRuntime = 44;
-        int numberOfSeasons = 10;
-        int currentSeason   = 2;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
         );
 
-        // When - Get series from persistent system.
-        ResponseEntity<Series> responseEntity = null;
+        // When - Get movie from persistent system.
+        ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER), Series.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -414,16 +376,18 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetAllSeries() {
-        // Given - Instantiate a series to push on persistent system.
+    public void testGetAllMovies() {
+        // Given - Instantiate a movie to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
 
-        String title = "Star Gate SG2";
-        String synopsis = "Star Gate SG2 is awesome !";
+        String title = "Persistent System 3 : A new Hope";
+        String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -447,26 +411,15 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int averageEpisodeRuntime = 44;
-        int numberOfSeasons = 10;
-        int currentSeason   = 2;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
         );
+        this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
 
-        this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
-
-        // When - Get all seriess from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/", List.class);
+        // When - Get all movies from persistent system.
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -474,14 +427,16 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void updateSeries() throws UnsupportedEncodingException {
-        // Given - Instantiate a series to update on persistent system.
-        int id = 4;
-        String title = "Star Gate SG2";
-        String synopsis = "Star Gate SG2 is amazing !";
+    public void updateMovie() throws UnsupportedEncodingException {
+        // Given - Instantiate a movie to update on persistent system.
+        int id = 2;
+        String title = "Persistent System 3 : A new Hope";
+        String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope ?";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -505,41 +460,33 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int averageEpisodeRuntime = 44;
-        int numberOfSeasons = 10;
-        int currentSeason   = 2;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
         );
-        this.restTemplate.put(REST_SERVICE_URI + "/series/" + series.getId(), series, Series.class);
+        this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
 
-        // When - Get series update and check if the difference appear.
-        ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER), Series.class);
+        // When - Get movie update and check if the difference appear.
+        ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
 
         // Then - Compare synopsis.
         assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
-    public void updateSeriesNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
-        // Given - Instantiate a series to update on persistent system.
+    public void updateMovieNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+        // Given - Instantiate a movie to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
         int id = 666;
-        String title = "Star Gate SG2";
-        String synopsis = "Star Gate SG2 is awesome !";
+        String title = "Persistent System 3 : A new Despair";
+        String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
+
+        Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -563,25 +510,15 @@ public class ClientSeriesTest {
         subtitles.add(LanguageCode.nl);
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
-
-        int averageEpisodeRuntime = 44;
-        int numberOfSeasons = 10;
-        int currentSeason   = 2;
-        int numberOfEpisode = 22;
-        int maxEpisodes = 226;
-
-        Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-
-        Series series = new Series(
+        Movie movie = new Movie(
                 title, title, synopsis,
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
-                startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
+                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                releaseDate, 126
         );
 
         try {
-            // When - Try to update series not present on persistent system.
-            this.restTemplate.put(REST_SERVICE_URI + "/series/" + series.getId(), series, Series.class);
+            // When - Try to update movie not present on persistent system.
+            this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare http code error.
             assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -589,18 +526,18 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void deleteSeries() {
-        // Given - id of series at delete and all elements expected.
-        int id = 4;
-        String title = "Star Gate SG2";
+    public void deleteMovie() {
+        // Given - id of movie at delete and all elements expected.
+        int id = 2;
+        String title = "Persistent System 3 : A new Hope";
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
 
-        // When - Delete series
-        this.restTemplate.delete(REST_SERVICE_URI + "/series/" + id);
+        // When - Delete movie
+        this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
 
         try {
-            ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER), Series.class);
+            ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -611,15 +548,15 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void deleteSeriesNotFoundOnPersistentSystem() {
-        // Given - id of series at delete and all elements expected.
+    public void deleteMovieNotFoundOnPersistentSystem() {
+        // Given - id of movie at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
 
         try {
-            // When - Delete series
-            this.restTemplate.delete(REST_SERVICE_URI + "/series/" + id);
+            // When - Delete movie
+            this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers;
+package fr.nicolasgille.medialibrary.controllers.video;
 
-import fr.nicolasgille.medialibrary.daos.MovieDAO;
+import fr.nicolasgille.medialibrary.daos.video.MovieRepository;
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
-import fr.nicolasgille.medialibrary.exception.MovieException;
+import fr.nicolasgille.medialibrary.exception.video.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -85,7 +85,7 @@ public class MovieController {
      * @since 1.0
      */
     @Autowired
-    private MovieDAO movieDao;
+    private MovieRepository movieRepository;
 
     /**
      * DAO used to interact with the table <code>common_actors</code>.
@@ -132,7 +132,7 @@ public class MovieController {
      */
     @RequestMapping(value = "/movies/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Movie> movies = movieDao.findAll();
+        List<Movie> movies = movieRepository.findAll();
         if (movies.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -158,7 +158,7 @@ public class MovieController {
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
         logger.info("Fetching Movie with title {}", title);
-        Movie movie = movieDao.findByTitleIgnoreCase(title);
+        Movie movie = movieRepository.findByTitleIgnoreCase(title);
         if (movie == null) {
             logger.error("Movie with title {} not found.", title);
             return new ResponseEntity<Object>(new MovieException("Movie with title " + title + " not found."), HttpStatus.NO_CONTENT);
@@ -187,7 +187,7 @@ public class MovieController {
         logger.info("Created movie : {}", movie);
 
         // Check if the movie already exist on database.
-        Movie movieExist = movieDao.findByTitleAndRuntimeAndReleaseDate(movie.getTitle(), movie.getRuntime(), movie.getReleaseDate());
+        Movie movieExist = movieRepository.findByTitleAndRuntimeAndReleaseDate(movie.getTitle(), movie.getRuntime(), movie.getReleaseDate());
         if (movieExist != null) {
             logger.error("Unable to create. The movie {} already exist", movie.getTitle());
             return new ResponseEntity<MovieException>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
@@ -243,7 +243,7 @@ public class MovieController {
             }
         }
         movie.setDirectors(directors);
-        movieDao.save(movie);
+        movieRepository.save(movie);
 
         HttpHeaders header = new HttpHeaders();
         header.setLocation(uriBuilder.path("/media-library/movies/search/title/{id}").buildAndExpand(movie.getId()).toUri());
@@ -271,7 +271,7 @@ public class MovieController {
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Movie movie) {
         logger.info("Updating Movie with id {}", id);
 
-        Movie movieAtUpdate = movieDao.findOne(id);
+        Movie movieAtUpdate = movieRepository.findOne(id);
         if (movieAtUpdate == null) {
             logger.error("Unable to update. Movie with id {} not found", id);
             return new ResponseEntity<Object>(new MovieException("Unable to update. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
@@ -330,7 +330,7 @@ public class MovieController {
 
         // Copy content of the movie receive on request body on the movie retrieve from the database.
         movieAtUpdate = new Movie(movie);
-        movieDao.save(movieAtUpdate);
+        movieRepository.save(movieAtUpdate);
         return new ResponseEntity<Object>(movieAtUpdate, HttpStatus.OK);
     }
 
@@ -353,13 +353,13 @@ public class MovieController {
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Movie with id {}", id);
 
-        Movie movie = movieDao.findOne(id);
+        Movie movie = movieRepository.findOne(id);
         if (movie == null) {
             logger.error("Unable to delete. Movie with id {} not found", id);
             return new ResponseEntity<Object>(new MovieException("Unable to delete. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        movieDao.delete(movie);
+        movieRepository.delete(movie);
         return new ResponseEntity<Object>(movie, HttpStatus.OK);
     }
 }

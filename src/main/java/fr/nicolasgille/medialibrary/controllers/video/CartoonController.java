@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers;
+package fr.nicolasgille.medialibrary.controllers.video;
 
-import fr.nicolasgille.medialibrary.daos.CartoonDAO;
+import fr.nicolasgille.medialibrary.daos.video.CartoonRepository;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
-import fr.nicolasgille.medialibrary.exception.CartoonException;
-import fr.nicolasgille.medialibrary.exception.MovieException;
+import fr.nicolasgille.medialibrary.exception.video.CartoonException;
+import fr.nicolasgille.medialibrary.exception.video.MovieException;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.video.Cartoon;
@@ -67,7 +67,7 @@ public class CartoonController {
      * @since 1.0
      */
     @Autowired
-    private CartoonDAO cartoonDAO;
+    private CartoonRepository cartoonRepository;
 
     /**
      * DAO used to interact with the table <code>common_producers</code>.
@@ -107,7 +107,7 @@ public class CartoonController {
      */
     @RequestMapping(value = "/cartoons/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Cartoon> cartoons = cartoonDAO.findAll();
+        List<Cartoon> cartoons = cartoonRepository.findAll();
         if (cartoons.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -133,7 +133,7 @@ public class CartoonController {
     public ResponseEntity<?> getCartoonByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, CartoonController.ENCODING);
         logger.info("Fetching Cartoon with title {}", title);
-        Cartoon cartoon = cartoonDAO.findByTitleIgnoreCase(title);
+        Cartoon cartoon = cartoonRepository.findByTitleIgnoreCase(title);
         if (cartoon == null) {
             logger.error("Cartoon with title {} not found.", title);
             return new ResponseEntity<Object>(new MovieException("Cartoon with title " + title + " not found."), HttpStatus.NO_CONTENT);
@@ -157,12 +157,12 @@ public class CartoonController {
      * @since 1.0
      * @version 1.1
      */
-    @RequestMapping(value = "/cartoon/", method = RequestMethod.POST)
+    @RequestMapping(value = "/cartoons/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Cartoon cartoon, UriComponentsBuilder uriBuilder) {
         logger.info("Created series : {}", cartoon);
 
         // Check if the series already exist on database.
-        Cartoon cartoonExist = cartoonDAO.findByTitleIgnoreCase(cartoon.getTitle());
+        Cartoon cartoonExist = cartoonRepository.findByTitleIgnoreCase(cartoon.getTitle());
         if (cartoonExist!= null) {
             logger.error("Unable to create. The cartoon {} already exist", cartoon.getTitle());
             return new ResponseEntity<CartoonException>(new CartoonException("Unable to create. The cartoon " + cartoon.getTitle() + " already exist"), HttpStatus.CONFLICT);
@@ -201,7 +201,7 @@ public class CartoonController {
             }
         }
         cartoon.setDirectors(directors);
-        cartoonDAO.save(cartoon);
+        cartoonRepository.save(cartoon);
 
         HttpHeaders header = new HttpHeaders();
         header.setLocation(uriBuilder.path("/media-library/cartoons/search/title/{id}").buildAndExpand(cartoon.getId()).toUri());
@@ -229,7 +229,7 @@ public class CartoonController {
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Cartoon cartoon) {
         logger.info("Updating Cartoon with id {}", id);
 
-        Cartoon cartoonAtUpdate = cartoonDAO.findOne(id);
+        Cartoon cartoonAtUpdate = cartoonRepository.findOne(id);
         if (cartoonAtUpdate == null) {
             logger.error("Unable to update. Cartoon with id {} not found", id);
             return new ResponseEntity<Object>(new MovieException("Unable to update. Cartoon with id " + id + " not found"), HttpStatus.NOT_FOUND);
@@ -271,7 +271,7 @@ public class CartoonController {
 
         // Copy content of the cartoon receive on request body on the cartoon retrieve from the database.
         cartoonAtUpdate = new Cartoon(cartoon);
-        cartoonDAO.save(cartoonAtUpdate);
+        cartoonRepository.save(cartoonAtUpdate);
         return new ResponseEntity<Object>(cartoonAtUpdate, HttpStatus.OK);
     }
 
@@ -294,13 +294,13 @@ public class CartoonController {
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Cartoon with id {}", id);
 
-        Cartoon cartoon = cartoonDAO.findOne(id);
+        Cartoon cartoon = cartoonRepository.findOne(id);
         if (cartoon == null) {
             logger.error("Unable to delete. Cartoon with id {} not found", id);
             return new ResponseEntity<Object>(new MovieException("Unable to delete. Cartoon with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        cartoonDAO.delete(cartoon);
+        cartoonRepository.delete(cartoon);
         return new ResponseEntity<Object>(cartoon, HttpStatus.OK);
     }
 }

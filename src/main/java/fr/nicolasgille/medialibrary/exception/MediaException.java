@@ -14,19 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.exception.common;
-
-import fr.nicolasgille.medialibrary.controllers.video.MovieController;
+package fr.nicolasgille.medialibrary.exception;
 
 /**
  * Exception send at the client when a problem occurred during CRUD process.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1.1
- * @see MovieController
+ * @since Media-Library 0.3
  * @version 1.0
  */
-public class DirectorException extends Exception {
+public class MediaException extends Exception {
 
     /**
      * Message at display when the exception was throw.
@@ -43,7 +40,7 @@ public class DirectorException extends Exception {
      * @since 1.0
      * @version 1.0
      */
-    public DirectorException(String message) {
+    public MediaException(String message) {
         super(message);
         this.message = message;
     }

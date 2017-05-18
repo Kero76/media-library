@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers;
+package fr.nicolasgille.medialibrary.controllers.video;
 
-import fr.nicolasgille.medialibrary.daos.SeriesDAO;
+import fr.nicolasgille.medialibrary.daos.video.SeriesRepository;
 import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
-import fr.nicolasgille.medialibrary.exception.SeriesException;
+import fr.nicolasgille.medialibrary.exception.video.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
@@ -69,7 +69,7 @@ public class SeriesController {
      * @since 1.0
      */
     @Autowired
-    private SeriesDAO seriesDAO;
+    private SeriesRepository seriesRepository;
 
     /**
      * DAO used to interact with the table <code>common_actors</code>.
@@ -117,7 +117,7 @@ public class SeriesController {
      */
     @RequestMapping(value = "/series/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Series> series = seriesDAO.findAll();
+        List<Series> series = seriesRepository.findAll();
         if (series.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -143,7 +143,7 @@ public class SeriesController {
     public ResponseEntity<?> getSeriesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, SeriesController.ENCODING);
         logger.info("Fetching Series with title {}", title);
-        Series series = seriesDAO.findByTitleIgnoreCase(title);
+        Series series = seriesRepository.findByTitleIgnoreCase(title);
         if (series == null) {
             logger.error("Series with title {} not found.", title);
             return new ResponseEntity<Object>(new SeriesException("Series with title " + title + " not found."), HttpStatus.NO_CONTENT);
@@ -172,7 +172,7 @@ public class SeriesController {
         logger.info("Created series : {}", series);
 
         // Check if the series already exist on database.
-        Series seriesExist = seriesDAO.findByTitleAndCurrentSeason(series.getTitle(), series.getCurrentSeason());
+        Series seriesExist = seriesRepository.findByTitleAndCurrentSeason(series.getTitle(), series.getCurrentSeason());
         if (seriesExist != null) {
             logger.error("Unable to create. The series {} already exist", series.getTitle());
             return new ResponseEntity<SeriesException>(new SeriesException("Unable to create. The series " + series.getTitle() + " already exist"), HttpStatus.CONFLICT);
@@ -228,7 +228,7 @@ public class SeriesController {
             }
         }
         series.setDirectors(directors);
-        seriesDAO.save(series);
+        seriesRepository.save(series);
 
         HttpHeaders header = new HttpHeaders();
         header.setLocation(uriBuilder.path("/media-library/series/search/title/{id}").buildAndExpand(series.getId()).toUri());
@@ -256,7 +256,7 @@ public class SeriesController {
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Series series) {
         logger.info("Updating Series with id {}", id);
 
-        Series seriesAtUpdate = seriesDAO.findOne(id);
+        Series seriesAtUpdate = seriesRepository.findOne(id);
         if (seriesAtUpdate == null) {
             logger.error("Unable to update. Series with id {} not found", id);
             return new ResponseEntity<Object>(new SeriesException("Unable to update. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
@@ -315,7 +315,7 @@ public class SeriesController {
 
         // Copy content of the series receive on request body on the series retrieve from the database.
         seriesAtUpdate = new Series(series);
-        seriesDAO.save(seriesAtUpdate);
+        seriesRepository.save(seriesAtUpdate);
         return new ResponseEntity<Object>(seriesAtUpdate, HttpStatus.OK);
     }
 
@@ -338,13 +338,13 @@ public class SeriesController {
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Series with id {}", id);
 
-        Series series = seriesDAO.findOne(id);
+        Series series = seriesRepository.findOne(id);
         if (series == null) {
             logger.error("Unable to delete. Series with id {} not found", id);
             return new ResponseEntity<Object>(new SeriesException("Unable to delete. Series with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        seriesDAO.delete(series);
+        seriesRepository.delete(series);
         return new ResponseEntity<Object>(series, HttpStatus.OK);
     }
 }

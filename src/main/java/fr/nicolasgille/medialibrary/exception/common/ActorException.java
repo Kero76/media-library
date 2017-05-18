@@ -16,12 +16,14 @@
  */
 package fr.nicolasgille.medialibrary.exception.common;
 
+import fr.nicolasgille.medialibrary.controllers.video.MovieController;
+
 /**
  * Exception send at the client when a problem occurred during CRUD process.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1.1
- * @see fr.nicolasgille.medialibrary.controllers.MovieController
+ * @see MovieController
  * @version 1.0
  */
 public class ActorException extends Exception {

@@ -14,58 +14,51 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.daos;
+package fr.nicolasgille.medialibrary.daos.video;
 
-import fr.nicolasgille.medialibrary.models.video.Movie;
+import fr.nicolasgille.medialibrary.models.video.Cartoon;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.transaction.Transactional;
 import java.util.Calendar;
 
 /**
- * An interface who specified method to interact with the movies.
+ * An interface who specified method to interact with the cartoon.
  *
  * In fact, hsqldb can generate corresponding source code in function of the nomenclature of the method.
  * So, this interface don't implements to use method present on it.
- * Then, we add in the future much method to interact with "movies", in particular find methods.
- *
- * V1.1 :
- * <ul>
- *     <li>Added method findByTitleAndDurationAndReleaseDate()</li>
- * </ul>
+ * Then, we add in the future much method to interact with "cartoon", in particular find methods.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
- * @version 1.1
+ * @since Media-Library 0.3
+ * @version 1.0
  */
-@Transactional
-public interface MovieDAO extends JpaRepository<Movie, Long> {
+public interface CartoonRepository extends JpaRepository<Cartoon, Long> {
 
     /**
-     * Find a movie by his name.
+     * Find a cartoon by his name.
      *
      * @param title
-     *  Title of the movie at search on Database.
+     *  Title of the cartoon at search on Database.
      * @return
-     *  An instance of movie search by the name.
+     *  An instance of cartoon search by the name.
      * @since 1.0
      * @version 1.0
      */
-    Movie findByTitleIgnoreCase(String title);
+    Cartoon findByTitleIgnoreCase(String title);
 
     /**
-     * Find a movie by his name, his duration and date of release.
+     * Find a cartoon by his name, his duration and date of release.
      *
      * @param title
-     *  Title of the movie.
+     *  Title of the cartoon.
      * @param runtime
-     *  Runtime of the movie.
+     *  Runtime of the cartoon.
      * @param releaseDate
-     *  Date of release of the movie search.
+     *  Date of release of the cartoon search.
      * @return
-     *  An instance of movie search by title, duration and releaseDate.
-     * @since 1.1
-     * @version 1.1
+     *  An instance of cartoon search by title, duration and releaseDate.
+     * @since 1.0
+     * @version 1.0
      */
-    Movie findByTitleAndRuntimeAndReleaseDate(String title, int runtime, Calendar releaseDate);
+    Cartoon findByTitleAndRuntimeAndReleaseDate(String title, int runtime, Calendar releaseDate);
 }
