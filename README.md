@@ -44,40 +44,55 @@ The statement is a representation of the current state of development of each me
 
 ### Medias
 #### Movies content
-- [x] id : Identifier of the Movie with the following format `[0-9]*`.
-- [x] title : Title of the Movie.
-- [x] Original title : Original title of the movie (For example _Ghostbusters_ is renamed _SOS Fantômes_ in French).
-- [x] releaseDate : Date of release of the Movie. 
-- [x] duration : Duration of the Movie in minute.
-- [x] synopsis : Synopsis of the Movie.
-- [x] main Actors : List of main actors of the Movie.
-- [x] producers : List of producers of the Movie.
-- [x] directors : List of directors of the Movie.
-- [x] genres : List of genre of the Movie.
-- [x] supports : List of support available for the Movie. Video Tape, DVD, Blu-Ray.
-- [x] spoken languages : List of languages spoken available on the Movie. 
-- [x] subtitle languages : List of languages subtitled available on the Movie.
-- [ ] poster : Poster of the Movie.
+- id : long
+- title : String
+- originalTitle : String
+- synopsis : String
+- mainActors : array<actor>
+- directors : array<director>
+- producers : array<producer>
+- genres : array<String>
+- supports : array<String>
+- spokenLanguages : array<String>
+- subtitles : array<String>
+- releaseDate : date
+- duration : int
+- poster : path
+
+#### Cartoon content
+- id : long
+- title : String
+- originalTitle : String
+- synopsis : String
+- directors : array<director>
+- producers : array<producer>
+- genres : array<String>
+- supports : array<String>
+- spokenLanguages : array<String>
+- subtitles : array<String>
+- releaseDate : date
+- duration : int
+- poster : path
 
 #### Series content
-- [x] id : Identifier of the Series with the following format `[0-9]*`.
-- [x] title : Title of the Series.
-- [x] Original title : Original title of the movie (For example _Ghostbusters_ is renamed _SOS Fantômes_ in French).
-- [x] synopsis : Synopsis of the Series.
-- [x] main Actors : List of main actors of the Series.
-- [x] producers : List of producers of the Series.
-- [x] directors : List of directors of the Series.
-- [x] genres : List of genre of the Series.
-- [x] supports : List of support available for the Series. Video Tape, DVD, Blu-Ray.
-- [x] spoken languages : List of languages spoken available on the Series. 
-- [x] subtitle languages : List of languages subtitled available on the Series.
-- [x] numberOfSeasons : Number of seasons for the series.
-- [x] maxEpisodes : Number of episode available for all seasons of the series.
-- [x] numberOfEpisode : Number of episode available during the season.
-- [x] averageEpisodeRuntime : Average runtime for episodes on series (in minutes).
-- [x] startDate : Date of first release of the series.
-- [x] endDate : Date of the end of the series.
-- [ ] poster : Poster of the Series.
+- id : long
+- title : String
+- originalTitle : String
+- synopsis : String
+- mainActors : array<actor>
+- directors : array<director>
+- producers : array<producer>
+- genres : array<String>
+- supports : array<String>
+- spokenLanguages : array<String>
+- subtitles : array<String>
+- numberOfSeasons : int
+- maxEpisodes : int
+- numberOfEpisodes : int
+- averageEpisodeRuntime : int
+- startDate : date
+- endDate : date
+- poster : path
  
 ## Commands
 - `mvn spring-boot:run` : Deploy Media Library in localhost:8080/
@@ -86,6 +101,12 @@ The statement is a representation of the current state of development of each me
 
 ## License 
 Media-Library is under GPLv3 license.
+
+## Changelog 
+- V0.2.1 : Person Update - Released May 11, 2017
+- V0.2 : Refactoring Release - Released May 10, 2017
+- V0.1.1 : Deployment Update - Released May 08, 2017
+- V0.1 : Movie's Release - Released May 04, 2017
 
 ## Authors
 - Nicolas GILLE <nic.gille@gmail.com>

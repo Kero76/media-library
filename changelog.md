@@ -13,7 +13,7 @@
 
 ---
 
-## V0.2 : Refactoring Update - Released May 10, 2017
+## V0.2 : Refactoring Release - Released May 10, 2017
 Refactor all code to improve media extensibility.
 
 ### Features
