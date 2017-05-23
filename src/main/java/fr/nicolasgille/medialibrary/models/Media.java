@@ -16,20 +16,17 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Set;
 
 /**
  * Abstract class at inherit by all subclasses of media type.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.0
+ * @version 2.0
  */
 @Entity
 @Table(name = "media")
@@ -55,25 +52,13 @@ public abstract class Media implements IMedia {
     protected String title;
 
     /**
-     * Original title of the media.
+     * Date of release for the media.
      *
-     * @since 1.0
+     * @since 2.0
      */
-    protected String originalTitle;
-
-    /**
-     * Synopsis of the media.
-     *
-     * @since 1.0
-     */
-    @Column(columnDefinition = "TEXT")
-    protected String synopsis;
-
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = VideoGenre.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<VideoGenre> genres;
+    @Temporal(TemporalType.DATE)
+    protected Calendar releaseDate;
 
     /**
      * Return the id.
@@ -120,71 +105,52 @@ public abstract class Media implements IMedia {
     public void setTitle(String title) {
         this.title = title;
     }
-
     /**
-     * Return the original title.
+     * Return the release date.
      *
-     * @return The original title of the media.
-     * @since 1.0
+     * @return
+     *  The release date.
+     * @since 2.0
      * @version 1.0
      */
-    public String getOriginalTitle() {
-        return this.originalTitle;
+    public Calendar getReleaseDate() {
+        return releaseDate;
     }
 
     /**
-     * Set original title.
+     * Set releaseDate.
      *
-     * @param originalTitle New title.
-     * @since 1.0
+     * @param releaseDate
+     *  New date of release.
+     * @since 2.0
      * @version 1.0
      */
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+    public void setReleaseDate(Calendar releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     /**
-     * Return the synopsis.
+     * Generate a String with content of Set.
      *
-     * @return The synopsis.
+     * @param set
+     *  Set used to displayed element.
+     * @return
+     *  A string representation of the Set.
      * @since 1.0
      * @version 1.0
      */
-    public String getSynopsis() {
-        return this.synopsis;
-    }
-
-    /**
-     * Set synopsis.
-     *
-     * @param synopsis New synopsis.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
-
-    /**
-     * Return the genres.
-     *
-     * @return The genres of the media.
-     * @see VideoGenre
-     * @since 1.0
-     * @version 1.0
-     */
-    public List<VideoGenre> getGenres() {
-        return this.genres;
-    }
-
-    /**
-     * Set genres of Media.
-     *
-     * @param genres New genres.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setGenres(List<VideoGenre> genres) {
-        this.genres = genres;
+    protected String setStringBuilder(Set<?> set) {
+        StringBuilder str = new StringBuilder();
+        if (set != null) {
+            for (int i = 0; i < set.size(); ++i) {
+                str.append(set.toArray()[i].toString());
+                if (i != set.size() - 1) {
+                    str.append(", ");
+                }
+            }
+        } else {
+            str.append("");
+        }
+        return str.toString();
     }
 }

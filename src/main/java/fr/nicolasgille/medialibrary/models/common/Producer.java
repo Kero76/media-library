@@ -18,7 +18,9 @@ package fr.nicolasgille.medialibrary.models.common;
 
 import fr.nicolasgille.medialibrary.models.video.Video;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.Set;
 
 /**

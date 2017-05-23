@@ -19,8 +19,8 @@ package fr.nicolasgille.medialibrary.models.video;
 import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.Actor;
 import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.common.Producer;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -35,16 +35,20 @@ import java.util.Set;
  * Model class for Series instance.
  *
  * It extends the class Video to get all main attributes for video type.
- *
- *
- * V1.1 :
+ * The attributes added on the media are :
  * <ul>
- *     <li>Added attribute <code>maxEpisodes</code> who represent the number of episode for all seasons of the series.</li>
+ *     <li>The List of main actors of the movie</li>
+ *     <li>The number of seasons for the series.</li>
+ *     <li>The current season of the series.</li>
+ *     <li>The average time for the episode of the series.</li>
+ *     <li>The number of episode for the current season.</li>
+ *     <li>The number of episode for all seasons of the seasons.</li>
+ *     <li></li>
  * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.1
+ * @version 2.0
  */
 @Entity
 @DiscriminatorValue(value = "series")
@@ -67,38 +71,6 @@ public class Series extends Video {
     private Set<Actor> mainActors;
 
     /**
-     * List of Producer for the series.
-     *
-     * @see Producer
-     * @since 1.0
-     */
-    @NotNull
-    @JoinTable(
-            name = "video_producers",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
-    )
-    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Producer> producers;
-
-    /**
-     * List of Director for the series.
-     *
-     * @see Director
-     * @since 1.0
-     */
-    @NotNull
-    @JoinTable(
-            name = "video_directors",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
-    )
-    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Director> directors;
-
-    /**
      * Number of seasons for the series.
      *
      * @since 1.0
@@ -113,14 +85,6 @@ public class Series extends Video {
      */
     @NotNull
     private int currentSeason;
-
-    /**
-     * Date of released of the series.
-     *
-     * @since 1.0
-     */
-    @Temporal(TemporalType.DATE)
-    private Calendar startDate;
 
     /**
      * Date of the end of the series.
@@ -200,7 +164,7 @@ public class Series extends Video {
      * @param averageEpisodeRuntime
      *  Number of episode available on the season.
      * @since 1.0
-     * @version 1.1
+     * @version 1.2
      */
     public Series(String title, String originalTitle, String synopsis,
                   Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -219,7 +183,7 @@ public class Series extends Video {
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.startDate = startDate;
+        super.releaseDate = startDate;
         this.endDate = endDate;
         this.numberOfSeasons = numberOfSeasons;
         this.currentSeason = currentSeason;
@@ -268,7 +232,7 @@ public class Series extends Video {
      * @param averageEpisodeRuntime
      *  Number of episode available on the season.
      * @since 1.0
-     * @version 1.1
+     * @version 1.2
      */
     public Series(long id, String title, String originalTitle, String synopsis,
                   Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -288,7 +252,7 @@ public class Series extends Video {
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.startDate = startDate;
+        super.releaseDate = startDate;
         this.endDate = endDate;
         this.numberOfSeasons = numberOfSeasons;
         this.currentSeason = currentSeason;
@@ -303,29 +267,28 @@ public class Series extends Video {
      * @param series
      *  New content of each attribute of this.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Series(Series series) {
-        super.id            = series.getId();
-        super.title         = series.getTitle();
+        super.id = series.getId();
+        super.title = series.getTitle();
         super.originalTitle = series.getOriginalTitle();
-        super.genres        = series.getGenres();
-        super.synopsis      = series.getSynopsis();
-        this.mainActors     = series.getMainActors();
-        super.supports      = series.getSupports();
-        this.directors      = series.getDirectors();
-        this.producers      = series.getProducers();
-        super.subtitles     = series.getSubtitles();
+        super.genres = series.getGenres();
+        super.synopsis = series.getSynopsis();
+        this.mainActors = series.getMainActors();
+        super.supports = series.getSupports();
+        super.directors = series.getDirectors();
+        super.producers = series.getProducers();
+        super.subtitles = series.getSubtitles();
         super.languagesSpoken = series.getLanguagesSpoken();
         this.numberOfSeasons = series.getNumberOfSeasons();
         this.currentSeason = series.getCurrentSeason();
-        this.startDate = series.getStartDate();
+        super.releaseDate = series.getReleaseDate();
         this.endDate = series.getEndDate();
         this.numberOfEpisode = series.getNumberOfEpisode();
         this.averageEpisodeRuntime = series.getAverageEpisodeRuntime();
         this.maxEpisodes = series.getMaxEpisodes();
     }
-
 
     /**
      * Return the set composed by main actors.
@@ -349,55 +312,6 @@ public class Series extends Video {
      */
     public void setMainActors(Set<Actor> mainActors) {
         this.mainActors = mainActors;
-    }
-
-
-    /**
-     * Return all producers for the series.
-     *
-     * @return
-     *  Set of all producer of the series.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Producer> getProducers() {
-        return producers;
-    }
-
-    /**
-     * Set the list of producers.
-     *
-     * @param producers
-     *  New Set of producer.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setProducers(Set<Producer> producers) {
-        this.producers = producers;
-    }
-
-    /**
-     * Return all directors for the series.
-     *
-     * @return
-     *  Set of all directors of the series.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Director> getDirectors() {
-        return directors;
-    }
-
-    /**
-     * Set the list of directors.
-     *
-     * @param directors
-     *  New set of Director.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setDirectors(Set<Director> directors) {
-        this.directors = directors;
     }
 
     /**
@@ -446,30 +360,6 @@ public class Series extends Video {
      */
     public void setCurrentSeason(int currentSeason) {
         this.currentSeason = currentSeason;
-    }
-
-    /**
-     * Return the release date of the series.
-     *
-     * @return
-     *  The date of release of the series.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Calendar getStartDate() {
-        return startDate;
-    }
-
-    /**
-     * Set the date of release of the series.
-     *
-     * @param startDate
-     *  New release date of the series.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setStartDate(Calendar startDate) {
-        this.startDate = startDate;
     }
 
     /**
@@ -574,7 +464,7 @@ public class Series extends Video {
      * @return
      *  A short description of the content of the series's attribute.
      * @since 1.0
-     * @version 1.1
+     * @version 2.0
      */
     @Override
     public String toString() {
@@ -621,14 +511,14 @@ public class Series extends Video {
                 ", categories=" + genres.toString() +
                 ", synopsis='" + super.synopsis + '\'' +
                 ", mainActors='" + super.setStringBuilder(this.mainActors) + '\'' +
-                ", producers='" + super.setStringBuilder(this.producers) + '\'' +
-                ", directors='" + super.setStringBuilder(this.directors) + '\'' +
+                ", producers='" + super.setStringBuilder(super.producers) + '\'' +
+                ", directors='" + super.setStringBuilder(super.directors) + '\'' +
                 ", supports='" + supports.toString() +
                 ", languageSpoken='" + languagesSpoken.toString() +
                 ", subtitles='" + subtitles.toString() +
                 ", numberOfSeasons=" + numberOfSeasons +
                 ", currentSeason=" + currentSeason +
-                ", startDate=" + startDate.toString() +
+                ", startDate=" + super.releaseDate.toString() +
                 ", endDate=" + endDate.toString() +
                 ", averageEpisodeRuntime=" + averageEpisodeRuntime +
                 ", numberOfEpisode=" + numberOfEpisode +
@@ -636,4 +526,3 @@ public class Series extends Video {
                 '}';
     }
 }
-

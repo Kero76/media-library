@@ -16,16 +16,14 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-
-import java.util.List;
+import java.util.Calendar;
 
 /**
  * Main interface must implement by all media available on Media-Library.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.0
+ * @version 2.0
  */
 public interface IMedia {
 
@@ -70,63 +68,22 @@ public interface IMedia {
     void setTitle(String title);
 
     /**
-     * Return the original title.
+     * Return the release date.
      *
      * @return
-     *  The original title of the movie.
-     * @since 1.0
+     *  The release date.
+     * @since 2.0
      * @version 1.0
      */
-    String getOriginalTitle();
+    Calendar getReleaseDate();
 
     /**
-     * Set original title.
+     * Set releaseDate.
      *
-     * @param originalTitle
-     *  New title.
-     * @since 1.0
+     * @param releaseDate
+     *  New date of release.
+     * @since 2.0
      * @version 1.0
      */
-    void setOriginalTitle(String originalTitle);
-
-    /**
-     * Return the synopsis.
-     *
-     * @return
-     *  The synopsis.
-     * @since 1.0
-     * @version 1.0
-     */
-    String getSynopsis();
-
-    /**
-     * Set synopsis.
-     *
-     * @param synopsis
-     *  New synopsis.
-     * @since 1.0
-     * @version 1.0
-     */
-    void setSynopsis(String synopsis);
-
-    /**
-     * Return the genres.
-     *
-     * @return
-     *  The genres of the movie.
-     * @see VideoGenre
-     * @since 1.0
-     * @version 1.0
-     */
-    List<VideoGenre> getGenres();
-
-    /**
-     * Set genres of Movie.
-     *
-     * @param genres
-     *  New genres.
-     * @since 1.0
-     * @version 1.0
-     */
-    void setGenres(List<VideoGenre> genres);
+    void setReleaseDate(Calendar releaseDate);
 }

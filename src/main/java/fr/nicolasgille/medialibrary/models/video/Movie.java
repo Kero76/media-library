@@ -35,23 +35,19 @@ import java.util.Set;
  * Model class for Movie instance.
  *
  * It extends the class Video to get all main attributes for video type.
+ * The attributes added on the media are :
+ * <ul>
+ *     <li>The <code>runtime</code> of the movie.</li>
+ *     <li>The List of main actors of the movie</li>
+ * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.0
+ * @version 2.0
  */
 @Entity
 @DiscriminatorValue(value = "movie")
 public class Movie extends Video {
-
-    /**
-     * Date of release.
-     *
-     * @since 1.0
-     */
-    @NotNull
-    @Temporal(TemporalType.DATE)
-    private Calendar releaseDate;
 
     /**
      * Runtime of the movies (in minutes).
@@ -76,38 +72,6 @@ public class Movie extends Video {
     @ManyToMany(targetEntity = Actor.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Actor> mainActors;
-
-    /**
-     * List of Producer for the movie.
-     *
-     * @see Producer
-     * @since 1.0
-     */
-    @NotNull
-    @JoinTable(
-            name = "video_producers",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
-    )
-    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Producer> producers;
-
-    /**
-     * List of Director for the movie.
-     *
-     * @see Director
-     * @since 1.0
-     */
-    @NotNull
-    @JoinTable(
-            name = "video_directors",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
-    )
-    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Director> directors;
 
     /**
      * Empty constructor.
@@ -145,7 +109,7 @@ public class Movie extends Video {
      * @param runtime
      *  Duration of the movie in minute.
      * @since 1.0
-     * @version 1.0
+     * @version 2.0
      */
     public Movie(String title, String originalTitle, String synopsis,
                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -156,13 +120,13 @@ public class Movie extends Video {
         super.originalTitle = originalTitle;
         super.synopsis = synopsis;
         this.mainActors = mainActors;
-        this.directors = directors;
-        this.producers = producers;
+        super.directors = directors;
+        super.producers = producers;
         super.genres = genres;
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.releaseDate = releaseDate;
+        super.releaseDate = releaseDate;
         this.runtime = runtime;
     }
 
@@ -195,7 +159,7 @@ public class Movie extends Video {
      * @param runtime
      *  Duration of the movie in minute.
      * @since 1.0
-     * @version 1.0
+     * @version 2.0
      */
     public Movie(long id, String title, String originalTitle, String synopsis,
                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -207,13 +171,13 @@ public class Movie extends Video {
         super.originalTitle = originalTitle;
         super.synopsis = synopsis;
         this.mainActors = mainActors;
-        this.directors = directors;
-        this.producers = producers;
+        super.directors = directors;
+        super.producers = producers;
         super.genres = genres;
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.releaseDate = releaseDate;
+        super.releaseDate = releaseDate;
         this.runtime = runtime;
     }
 
@@ -223,7 +187,7 @@ public class Movie extends Video {
      * @param movie
      *  New content of each attribute of this.
      * @since 1.0
-     * @version 1.0
+     * @version 2.0
      */
     public Movie(Movie movie) {
         super.id = movie.getId();
@@ -239,30 +203,6 @@ public class Movie extends Video {
         super.subtitles = movie.getSubtitles();
         this.releaseDate = movie.getReleaseDate();
         this.runtime = movie.getRuntime();
-    }
-
-    /**
-     * Return the release date.
-     *
-     * @return
-     *  The release date.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Calendar getReleaseDate() {
-        return releaseDate;
-    }
-
-    /**
-     * Set releaseDate.
-     *
-     * @param releaseDate
-     *  New date of release.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setReleaseDate(Calendar releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
     /**
@@ -311,55 +251,6 @@ public class Movie extends Video {
      */
     public void setMainActors(Set<Actor> mainActors) {
         this.mainActors = mainActors;
-    }
-
-
-    /**
-     * Return all producers for the movie.
-     *
-     * @return
-     *  Set of all producer of the movie.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Producer> getProducers() {
-        return producers;
-    }
-
-    /**
-     * Set the list of producers.
-     *
-     * @param producers
-     *  New Set of producer.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setProducers(Set<Producer> producers) {
-        this.producers = producers;
-    }
-
-    /**
-     * Return all directors for the movie.
-     *
-     * @return
-     *  Set of all directors of the movie.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Director> getDirectors() {
-        return directors;
-    }
-
-    /**
-     * Set the list of directors.
-     *
-     * @param directors
-     *  New set of Director.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setDirectors(Set<Director> directors) {
-        this.directors = directors;
     }
 
     /**
@@ -413,12 +304,12 @@ public class Movie extends Video {
                 ", title='" + super.title + '\'' +
                 ", originalTitle='" + super.originalTitle + '\'' +
                 ", categories=" + genres.toString() +
-                ", releaseDate=" + this.releaseDate.toString() +
+                ", releaseDate=" + super.releaseDate.toString() +
                 ", runtime=" + this.runtime +
                 ", synopsis='" + super.synopsis + '\'' +
                 ", mainActors='" + super.setStringBuilder(this.mainActors) + '\'' +
-                ", producers='" + super.setStringBuilder(this.producers) + '\'' +
-                ", directors='" + super.setStringBuilder(this.directors) + '\'' +
+                ", producers='" + super.setStringBuilder(super.producers) + '\'' +
+                ", directors='" + super.setStringBuilder(super.directors) + '\'' +
                 ", supports='" + supports.toString() +
                 ", languageSpoken='" + languagesSpoken.toString() +
                 ", subtitles='" + subtitles.toString() +

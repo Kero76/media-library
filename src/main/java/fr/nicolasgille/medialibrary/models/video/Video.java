@@ -18,6 +18,9 @@ package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.Media;
+import fr.nicolasgille.medialibrary.models.common.Director;
+import fr.nicolasgille.medialibrary.models.common.Producer;
+import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -30,18 +33,48 @@ import java.util.Set;
 /**
  * Main class of the Video media type.
  *
+ * If you would add new video subtype, you must extends <code>Video</code> class
+ * to get all attributes available on Video type.
+ *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.0
+ * @version 2.0
  */
 @MappedSuperclass
 public abstract class Video extends Media {
 
     /**
+     * Original title of the video.
+     *
+     * @since 2.0
+     */
+    protected String originalTitle;
+
+    /**
+     * Synopsis of the video.
+     *
+     * @since 2.0
+     */
+    @Column(columnDefinition = "TEXT")
+    protected String synopsis;
+
+    /**
+     * Genre of the video.
+     *
+     * @see VideoGenre
+     * @since 2.0
+     */
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = VideoGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<VideoGenre> genres;
+
+    /**
      * List of Support for the video.
      *
      * @see VideoSupport
-     * @since 1.0
+     * @since 2.0
      */
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -53,7 +86,7 @@ public abstract class Video extends Media {
      * List of language spoken available on the video.
      *
      * @see LanguageCode
-     * @since 1.0
+     * @since 2.0
      */
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = LanguageCode.class)
@@ -64,7 +97,7 @@ public abstract class Video extends Media {
      * List of language present as subtitle available on the video.
      *
      * @see LanguageCode
-     * @since 1.0
+     * @since 2.0
      */
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = LanguageCode.class)
@@ -72,11 +105,111 @@ public abstract class Video extends Media {
     protected List<LanguageCode> subtitles;
 
     /**
-     * Return all supports for the movie.
+     * List of Producer for the video.
+     *
+     * @see Producer
+     * @since 2.0
+     */
+    @NotNull
+    @JoinTable(
+            name = "video_producers",
+            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected Set<Producer> producers;
+
+    /**
+     * List of Director for the video.
+     *
+     * @see Director
+     * @since 2.0
+     */
+    @NotNull
+    @JoinTable(
+            name = "video_directors",
+            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected Set<Director> directors;
+
+    /**
+     * Return the original title.
+     *
+     * @return The original title of the media.
+     * @since 2.0
+     * @version 1.0
+     */
+    public String getOriginalTitle() {
+        return this.originalTitle;
+    }
+
+    /**
+     * Set original title.
+     *
+     * @param originalTitle New title.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    /**
+     * Return the synopsis.
+     *
+     * @return The synopsis.
+     * @since 2.0
+     * @version 1.0
+     */
+    public String getSynopsis() {
+        return this.synopsis;
+    }
+
+    /**
+     * Set synopsis.
+     *
+     * @param synopsis New synopsis.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    /**
+     * Return the genres.
+     *
+     * @return The genres of the media.
+     * @see VideoGenre
+     * @since 2.0
+     * @version 1.0
+     */
+    public List<VideoGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
+     * Set genres of Media.
+     *
+     * @param genres New genres.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setGenres(List<VideoGenre> genres) {
+        this.genres = genres;
+    }
+
+
+    /**
+     * Return all supports for the video.
      *
      * @return
      *  List of all supports.
-     * @since 1.0
+     * @since 2.0
      * @version 1.0
      */
     public List<VideoSupport> getSupports() {
@@ -84,11 +217,11 @@ public abstract class Video extends Media {
     }
 
     /**
-     * Set the supports for the movie.
+     * Set the supports for the video.
      *
      * @param supports
      *  New Supports.
-     * @since 1.0
+     * @since 2.0
      * @version 1.0
      */
     public void setSupports(List<VideoSupport> supports) {
@@ -100,7 +233,7 @@ public abstract class Video extends Media {
      *
      * @return
      *  A list of languages spoken.
-     * @since 1.0
+     * @since 2.0
      * @version 1.0
      */
     public List<LanguageCode> getLanguagesSpoken() {
@@ -112,7 +245,7 @@ public abstract class Video extends Media {
      *
      * @param languagesSpoken
      *  New list of languages spoken.
-     * @since 1.0
+     * @since 2.0
      * @version 1.0
      */
     public void setLanguagesSpoken(List<LanguageCode> languagesSpoken) {
@@ -124,7 +257,7 @@ public abstract class Video extends Media {
      *
      * @return
      *  A list of subtitle languages.
-     * @since 1.0
+     * @since 2.0
      * @version 1.0
      */
     public List<LanguageCode> getSubtitles() {
@@ -136,7 +269,7 @@ public abstract class Video extends Media {
      *
      * @param subtitles
      *  New list of subtitle languages.
-     * @since 1.0
+     * @since 2.0
      * @version 1.0
      */
     public void setSubtitles(List<LanguageCode> subtitles) {
@@ -144,27 +277,50 @@ public abstract class Video extends Media {
     }
 
     /**
-     * Generate a String with content of Set.
+     * Return all producers for the movie.
      *
-     * @param set
-     *  Set used to displayed element.
      * @return
-     *  A string representation of the Set.
-     * @since 1.0
+     *  Set of all producer of the movie.
+     * @since 2.0
      * @version 1.0
      */
-    protected String setStringBuilder(Set<?> set) {
-        StringBuilder str = new StringBuilder();
-        if (set != null) {
-            for (int i = 0; i < set.size(); ++i) {
-                str.append(set.toArray()[i].toString());
-                if (i != set.size() - 1) {
-                    str.append(", ");
-                }
-            }
-        } else {
-            str.append("");
-        }
-        return str.toString();
+    public Set<Producer> getProducers() {
+        return producers;
+    }
+
+    /**
+     * Set the list of producers.
+     *
+     * @param producers
+     *  New Set of producer.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setProducers(Set<Producer> producers) {
+        this.producers = producers;
+    }
+
+    /**
+     * Return all directors for the movie.
+     *
+     * @return
+     *  Set of all directors of the movie.
+     * @since 2.0
+     * @version 1.0
+     */
+    public Set<Director> getDirectors() {
+        return directors;
+    }
+
+    /**
+     * Set the list of directors.
+     *
+     * @param directors
+     *  New set of Director.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setDirectors(Set<Director> directors) {
+        this.directors = directors;
     }
 }

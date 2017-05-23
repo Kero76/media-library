@@ -21,10 +21,9 @@ import fr.nicolasgille.medialibrary.models.common.Director;
 import fr.nicolasgille.medialibrary.models.common.Producer;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
@@ -34,23 +33,18 @@ import java.util.Set;
  * Model class for Cartoon instance.
  *
  * It extends the class Video to get all main attributes for video type.
+ * The attribute added on the media is :
+ * <ul>
+ *     <li>The <code>runtime</code> of the movie.</li>
+ * </ul>
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.3
- * @version 1.0
+ * @since Media-Library 0.1
+ * @version 2.0
  */
 @Entity
 @DiscriminatorValue(value = "cartoon")
 public class Cartoon extends Video {
-
-    /**
-     * Date of release.
-     *
-     * @since 1.0
-     */
-    @NotNull
-    @Temporal(TemporalType.DATE)
-    private Calendar releaseDate;
 
     /**
      * Runtime of the cartoons (in minutes).
@@ -59,39 +53,6 @@ public class Cartoon extends Video {
      */
     @NotNull
     private Integer runtime;
-
-    /**
-     * List of Producer for the cartoon.
-     *
-     * @see Producer
-     * @since 1.0
-     */
-    @NotNull
-    @JoinTable(
-            name = "video_producers",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
-    )
-    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Producer> producers;
-
-    /**
-     * List of Director for the cartoon.
-     *
-     * @see Director
-     * @since 1.0
-     */
-    @NotNull
-    @JoinTable(
-            name = "video_directors",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
-    )
-    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Director> directors;
-
 
     /**
      * Empty constructor.
@@ -127,7 +88,7 @@ public class Cartoon extends Video {
      * @param runtime
      *  Duration of the cartoon in minute.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Cartoon(String title, String originalTitle, String synopsis,
                    Set<Director> directors, Set<Producer> producers,
@@ -137,13 +98,13 @@ public class Cartoon extends Video {
         super.title = title;
         super.originalTitle = originalTitle;
         super.synopsis = synopsis;
-        this.directors = directors;
-        this.producers = producers;
+        super.directors = directors;
+        super.producers = producers;
         super.genres = genres;
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.releaseDate = releaseDate;
+        super.releaseDate = releaseDate;
         this.runtime = runtime;
     }
 
@@ -174,24 +135,24 @@ public class Cartoon extends Video {
      * @param runtime
      *  Duration of the cartoon in minute.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Cartoon(long id, String title, String originalTitle, String synopsis,
-                 Set<Director> directors, Set<Producer> producers,
-                 List<VideoGenre> genres, List<VideoSupport> supports,
-                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
-                 Calendar releaseDate, int runtime) {
+                   Set<Director> directors, Set<Producer> producers,
+                   List<VideoGenre> genres, List<VideoSupport> supports,
+                   List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
+                   Calendar releaseDate, int runtime) {
         super.id = id;
         super.title = title;
         super.originalTitle = originalTitle;
         super.synopsis = synopsis;
-        this.directors = directors;
-        this.producers = producers;
+        super.directors = directors;
+        super.producers = producers;
         super.genres = genres;
         super.supports = supports;
         super.languagesSpoken = languagesSpoken;
         super.subtitles = subtitles;
-        this.releaseDate = releaseDate;
+        super.releaseDate = releaseDate;
         this.runtime = runtime;
     }
 
@@ -201,7 +162,7 @@ public class Cartoon extends Video {
      * @param cartoon
      *  New content of each attribute of this.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     public Cartoon(Cartoon cartoon) {
         super.id = cartoon.getId();
@@ -216,30 +177,6 @@ public class Cartoon extends Video {
         super.subtitles = cartoon.getSubtitles();
         this.releaseDate = cartoon.getReleaseDate();
         this.runtime = cartoon.getRuntime();
-    }
-
-    /**
-     * Return the release date.
-     *
-     * @return
-     *  The release date.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Calendar getReleaseDate() {
-        return releaseDate;
-    }
-
-    /**
-     * Set releaseDate.
-     *
-     * @param releaseDate
-     *  New date of release.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setReleaseDate(Calendar releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
     /**
@@ -266,62 +203,13 @@ public class Cartoon extends Video {
         this.runtime = runtime;
     }
 
-
     /**
-     * Return all producers for the cartoon.
-     *
-     * @return
-     *  Set of all producer of the cartoon.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Producer> getProducers() {
-        return producers;
-    }
-
-    /**
-     * Set the list of producers.
-     *
-     * @param producers
-     *  New Set of producer.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setProducers(Set<Producer> producers) {
-        this.producers = producers;
-    }
-
-    /**
-     * Return all directors for the cartoon.
-     *
-     * @return
-     *  Set of all directors of the cartoon.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Director> getDirectors() {
-        return directors;
-    }
-
-    /**
-     * Set the list of directors.
-     *
-     * @param directors
-     *  New set of Director.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setDirectors(Set<Director> directors) {
-        this.directors = directors;
-    }
-
-    /**
-     * Display Cartoon information.
+     * Display Movie information.
      *
      * @return
      *  A short description of the content of the cartoon's attribute.
      * @since 1.0
-     * @version 1.0
+     * @version 2.0
      */
     @Override
     public String toString() {
@@ -366,11 +254,11 @@ public class Cartoon extends Video {
                 ", title='" + super.title + '\'' +
                 ", originalTitle='" + super.originalTitle + '\'' +
                 ", categories=" + genres.toString() +
-                ", releaseDate=" + this.releaseDate.toString() +
+                ", releaseDate=" + super.releaseDate.toString() +
                 ", runtime=" + this.runtime +
                 ", synopsis='" + super.synopsis + '\'' +
-                ", producers='" + super.setStringBuilder(this.producers) + '\'' +
-                ", directors='" + super.setStringBuilder(this.directors) + '\'' +
+                ", producers='" + super.setStringBuilder(super.producers) + '\'' +
+                ", directors='" + super.setStringBuilder(super.directors) + '\'' +
                 ", supports='" + supports.toString() +
                 ", languageSpoken='" + languagesSpoken.toString() +
                 ", subtitles='" + subtitles.toString() +

@@ -16,6 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.daos.video;
 
+
 import fr.nicolasgille.medialibrary.models.video.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
 

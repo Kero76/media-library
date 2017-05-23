@@ -334,7 +334,7 @@ public class ClientSeriesTest {
         // Then - Compare Http code and series retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
         assertThat(responseEntity.getBody().getTitle()).isEqualTo(series.getTitle());
-        assertThat(responseEntity.getBody().getStartDate().get(Calendar.YEAR)).isEqualTo(series.getStartDate().get(Calendar.YEAR));
+        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(series.getReleaseDate().get(Calendar.YEAR));
         assertThat(responseEntity.getBody().getEndDate().get(Calendar.YEAR)).isEqualTo(series.getEndDate().get(Calendar.YEAR));
         assertThat(responseEntity.getBody().getGenres()).isEqualTo(series.getGenres());
         assertThat(responseEntity.getBody().getSupports()).isEqualTo(series.getSupports());
