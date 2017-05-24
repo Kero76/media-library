@@ -18,12 +18,12 @@ package fr.nicolasgille.medialibrary.controllers;
 
 import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exception.video.SeriesException;
-import fr.nicolasgille.medialibrary.models.common.Actor;
-import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.common.Producer;
+import fr.nicolasgille.medialibrary.models.common.person.Actor;
+import fr.nicolasgille.medialibrary.models.common.person.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Series;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
+import fr.nicolasgille.medialibrary.utils.MediaGenre;
+import fr.nicolasgille.medialibrary.utils.MediaSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -86,8 +86,8 @@ public class ClientSeriesTest {
         String messageExcepted = "404 null";
         int id = 666;
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -98,8 +98,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -163,8 +163,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -175,8 +175,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -221,8 +221,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -233,8 +233,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -282,8 +282,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -294,8 +294,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -359,8 +359,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is awesome !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -371,8 +371,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -422,8 +422,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is awesome !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -434,8 +434,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -480,8 +480,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is amazing !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -492,8 +492,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);
@@ -538,8 +538,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is awesome !";
 
-        List<VideoGenre> categories = new ArrayList<VideoGenre>();
-        categories.add(VideoGenre.FANTASY);
+        List<MediaGenre> categories = new ArrayList<MediaGenre>();
+        categories.add(MediaGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -550,8 +550,8 @@ public class ClientSeriesTest {
         Set<Director> directors = new HashSet<Director>();
         directors.add(new Director("Ridley", "Scott"));
 
-        List<VideoSupport> supports = new ArrayList<VideoSupport>();
-        supports.add(VideoSupport.DVD);
+        List<MediaSupport> supports = new ArrayList<MediaSupport>();
+        supports.add(MediaSupport.DVD);
 
         List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
         languageSpoken.add(LanguageCode.fr);

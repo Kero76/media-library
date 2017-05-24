@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.common;
+package fr.nicolasgille.medialibrary.models.common.person;
 
 import fr.nicolasgille.medialibrary.models.video.Video;
 
@@ -24,21 +24,13 @@ import javax.persistence.Transient;
 import java.util.Set;
 
 /**
- * Class Actor present on class Movie or Series to representing main actor in a movie or series.
+ * Class Director present on class Movie or Series to representing director of a movie or series.
  *
  * V2.0 :
  * <ul>
  *     <li>Inherit abstract class <code>Person</code></li>
  *     <li>Removed all attributes excepted <code>movies</code> who he's renamed videos and became a <code>Set<Video></code></li>
  *     <li>Modified getter and setter for attribute Video.</li>
- * </ul>
- *
- * V1.1 :
- * <ul>
- *     <li>Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.</li>
- *     <li>Updated constructor with new attribute on parameter.</li>
- *     <li>Added corresponding getter and setter for attribute <code>movies</code></li>
- *     <li>Added <code>@Transient</code> annotations on new attribute <code>movies</code>.</li>
  * </ul>
  *
  * @see Person
@@ -48,11 +40,11 @@ import java.util.Set;
  * @version 2.0
  */
 @Entity
-@DiscriminatorValue(value = "actor")
-public class Actor extends Person {
+@DiscriminatorValue(value = "director")
+public class Director extends Person {
 
     /**
-     * Videos where the actor played.
+     * Director who directed movie.
      *
      * @since 1.0
      */
@@ -65,50 +57,44 @@ public class Actor extends Person {
      * @since 1.0
      * @version 1.0
      */
-    public Actor() {}
+    public Director() {
+    }
 
     /**
-     * Constructor used to create Actor on Database.
+     * Constructor used to create Director on Database.
      *
-     * @param firstName
-     *  First name of the Actor.
-     * @param lastName
-     *  Last name of the Actor.
+     * @param firstName First name of the Director.
+     * @param lastName  Last name of the Director.
      * @since 1.0
      * @version 1.0
      */
-    public Actor(String firstName, String lastName) {
-        super.firstName = firstName;
-        super.lastName  = lastName;
+    public Director(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     /**
      * Constructor with all parameters.
      *
-     * @param id
-     *  Identifier stored on database.
-     * @param firstName
-     *  First name.
-     * @param lastName
-     *  Last name.
-     * @param videos
-     *  Videos where the actor played as main actor.
+     * @param id        Identifier stored on database.
+     * @param firstName First name.
+     * @param lastName  Last name.
+     * @param videos    Video where the guy participate as Director.
      * @since 1.0
-     * @version 1.2
+     * @version 1.1
      */
-    public Actor(long id, String firstName, String lastName, Set<Video> videos) {
-        super.id = id;
-        super.firstName = firstName;
-        super.lastName = lastName;
+    public Director(long id, String firstName, String lastName, Set<Video> videos) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.videos = videos;
     }
 
     /**
-     * List of videos where the actor played as main actor.
+     * List of videos where director directed the movie.
      *
-     * @return
-     *  List of all videos where the actor played as main actor.
-     * @since 1.1
+     * @return List of all videos where director directed the movie.
+     * @since 1.0
      * @version 1.1
      */
     public Set<Video> getVideos() {
@@ -116,22 +102,20 @@ public class Actor extends Person {
     }
 
     /**
-     * Set list of videos where actor played as main actor.
+     * Set list of videos where director directed the movie.
      *
-     * @param videos
-     *  New list of videos.
-     * @since 1.1
-     * @version 1.0
+     * @param videos New list of videos.
+     * @since 1.0
+     * @version 1.1
      */
     public void setVideos(Set<Video> videos) {
         this.videos = videos;
     }
 
     /**
-     * Display content of the Actor.
+     * Display content of the Director.
      *
-     * @return
-     *  A simple representation of the Actor.
+     * @return A simple representation of the Director.
      * @since 1.0
      * @version 1.1
      */
@@ -147,12 +131,11 @@ public class Actor extends Person {
             videos.append("");
         }
 
-        return "Actor{" +
-                ", id=" + super.id + '\'' +
-                ", firstName='" + super.firstName + '\'' +
-                ", lastName='" + super.lastName + '\'' +
-                "', videos='" + videos.toString() + '\'' +
+        return "Director{" +
+                ", id=" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", videos='" + videos.toString() + '\'' +
                 '}';
     }
 }
-

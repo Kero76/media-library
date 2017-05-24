@@ -14,12 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.video.utils;
+package fr.nicolasgille.medialibrary.utils;
 
 /**
- * An enumeration who representing all movies category available in Media Library.
- * This enumeration is present in order to force users at respect the syntax establish by Media Library.
- * It can be update in a future and a short description of each theme must write in a future.
+ * An enumeration who representing all media support available on Media-Library.
+ * This enumeration are composed by :
+ * <ul>
+ *     <li>VIDEO_TAPE : For old medias.</li>
+ *     <li>DVD : DVD support.</li>
+ *     <li>BLU_RAY : Blu Ray support.</li>
+ *     <li>PAPER : Paper support for book.</li>
+ *     <li>DIGITAL : Digital version (on computer).</li>
+ * </ul>
+ *
+ * V1.2 :
+ * <ul>
+ *     <li>Added <code>DIGITAL</code> value of enumerator.</li>
+ *     <li>Added <code>PAPER</code> value of enumerator.</li>
+ * </ul>
  *
  * V1.1 :
  * <ul>
@@ -29,29 +41,22 @@ package fr.nicolasgille.medialibrary.models.video.utils;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.1
+ * @version 1.2
  */
-public enum VideoGenre {
-    ACTION("Action"),
-    ADVENTURE("Adventure"),
-    COMEDY("Comedy"),
-    CRIME("Crime"),
-    DRAMA("Drama"),
-    FANTASY("Fantasy"),
-    HORROR("Horror"),
-    MUSICAL("Musical"),
-    MYSTERY("Mystery"),
-    ROMANTIC("Romantic"),
-    SCIENCE_FICTION("Science Fiction"),
-    SPORT("Sport"),
-    SPY("Spy"),
-    TEEN("Teen"),
-    THEATER("Theater"),
-    THRILLER("Thriller"),
-    WESTERN("Western");
+public enum MediaSupport {
+    // Video support
+    VIDEO_TAPE("Video Tape"),
+    DVD("DVD"),
+    BLU_RAY("Blu Ray"),
+
+    // Book support
+    PAPER("Paper"),
+
+    // For all media
+    DIGITAL("Digital");
 
     /**
-     * Name stored in database.
+     * Name of the element.
      *
      * @since 1.1
      */
@@ -65,7 +70,7 @@ public enum VideoGenre {
      * @since 1.1
      * @version 1.0
      */
-    private VideoGenre(String name) {
+    MediaSupport(String name) {
         this.name = name;
     }
 

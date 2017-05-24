@@ -17,13 +17,11 @@
 package fr.nicolasgille.medialibrary.utils;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.models.common.Actor;
-import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.common.Producer;
+import fr.nicolasgille.medialibrary.models.common.person.Actor;
+import fr.nicolasgille.medialibrary.models.common.person.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Movie;
 import fr.nicolasgille.medialibrary.models.video.Series;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
 
 import java.util.*;
 
@@ -39,8 +37,8 @@ public class DataUtils {
     private Map<String, String> titles;
     private Map<String, String> originalTitles;
     private Map<String, String> synopsis;
-    private Map<String, List<VideoGenre>> genres;
-    private Map<String, List<VideoSupport>> supports;
+    private Map<String, List<MediaGenre>> genres;
+    private Map<String, List<MediaSupport>> supports;
     private Map<String, List<LanguageCode>> spokens;
     private Map<String, List<LanguageCode>> subtitles;
     private Map<String, Calendar> releasedDates;
@@ -380,45 +378,45 @@ public class DataUtils {
      * @version 1.0
      */
     private void initGenres() {
-        this.genres = new HashMap<String, List<VideoGenre>>();
+        this.genres = new HashMap<String, List<MediaGenre>>();
 
         ////////////////////////////////////////////
         ///                 MOVIES              ////
         ////////////////////////////////////////////
         // Science Fiction
-        List<VideoGenre> g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.SCIENCE_FICTION);
+        List<MediaGenre> g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.SCIENCE_FICTION);
         this.genres.put("Star Wars IV", g);
         this.genres.put("Star Wars V", g);
         this.genres.put("Star Wars VI", g);
 
         // Comedy / Spy
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.COMEDY);
-        g.add(VideoGenre.SPY);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.COMEDY);
+        g.add(MediaGenre.SPY);
         this.genres.put("Johnny English", g);
 
         // Action
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.ACTION);
         this.genres.put("Bienvenue dans la Jungle", g);
         this.genres.put("Espion Amateur", g);
         this.genres.put("Contre-attaque", g);
 
         // Comedy / Romantic
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.COMEDY);
-        g.add(VideoGenre.ROMANTIC);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.COMEDY);
+        g.add(MediaGenre.ROMANTIC);
         this.genres.put("Un Prince a New-York", g);
 
         // Musical
-        g.add(VideoGenre.MUSICAL);
+        g.add(MediaGenre.MUSICAL);
         this.genres.put("Sister Act", g);
         this.genres.put("Sister Act 2", g);
 
         // Comedy
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.COMEDY);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.COMEDY);
         this.genres.put("Maman, je m'occupe des méchants !", g);
         this.genres.put("Police Academy", g);
         this.genres.put("Police Academy 2", g);
@@ -432,16 +430,16 @@ public class DataUtils {
         this.genres.put("Hot Shots 2", g);
 
         // Le tour du monde en 80
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.ADVENTURE);
-        g.add(VideoGenre.COMEDY);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.ACTION);
+        g.add(MediaGenre.ADVENTURE);
+        g.add(MediaGenre.COMEDY);
         this.genres.put("Le Tour du Monde en 80 Jours", g);
 
         // Action / Comedy
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.COMEDY);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.ACTION);
+        g.add(MediaGenre.COMEDY);
         this.genres.put("Shanghai Kid 2", g);
         this.genres.put("Le Smoking", g);
         this.genres.put("Le Médaillon", g);
@@ -453,12 +451,12 @@ public class DataUtils {
         ///                 SERIES              ////
         ////////////////////////////////////////////
         // Falling Skies
-        g = new ArrayList<VideoGenre>();
-        g.add(VideoGenre.ACTION);
-        g.add(VideoGenre.ADVENTURE);
-        g.add(VideoGenre.DRAMA);
-        g.add(VideoGenre.SCIENCE_FICTION);
-        g.add(VideoGenre.THRILLER);
+        g = new ArrayList<MediaGenre>();
+        g.add(MediaGenre.ACTION);
+        g.add(MediaGenre.ADVENTURE);
+        g.add(MediaGenre.DRAMA);
+        g.add(MediaGenre.SCIENCE_FICTION);
+        g.add(MediaGenre.THRILLER);
         this.genres.put("Falling Skies 1", g);
         this.genres.put("Falling Skies 2", g);
         this.genres.put("Falling Skies 3", g);
@@ -473,14 +471,14 @@ public class DataUtils {
      * @version 1.0
      */
     private void initSupport() {
-        this.supports = new HashMap<String, List<VideoSupport>>();
+        this.supports = new HashMap<String, List<MediaSupport>>();
 
         ////////////////////////////////////////////
         ///                 MOVIES              ////
         ////////////////////////////////////////////
         // Movies
-        List<VideoSupport> s = new ArrayList<VideoSupport>();
-        s.add(VideoSupport.DVD);
+        List<MediaSupport> s = new ArrayList<MediaSupport>();
+        s.add(MediaSupport.DVD);
         this.supports.put("Star Wars IV", s);
         this.supports.put("Star Wars V", s);
         this.supports.put("Star Wars VI", s);

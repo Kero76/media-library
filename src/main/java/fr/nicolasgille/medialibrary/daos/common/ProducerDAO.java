@@ -1,6 +1,6 @@
 package fr.nicolasgille.medialibrary.daos.common;
 
-import fr.nicolasgille.medialibrary.models.common.Producer;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;

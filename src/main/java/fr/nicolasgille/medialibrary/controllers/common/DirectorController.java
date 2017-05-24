@@ -18,7 +18,7 @@ package fr.nicolasgille.medialibrary.controllers.common;
 
 import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
 import fr.nicolasgille.medialibrary.exception.common.DirectorException;
-import fr.nicolasgille.medialibrary.models.common.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Director;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

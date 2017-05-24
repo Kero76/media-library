@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common;
 
-import fr.nicolasgille.medialibrary.models.common.Actor;
+import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;

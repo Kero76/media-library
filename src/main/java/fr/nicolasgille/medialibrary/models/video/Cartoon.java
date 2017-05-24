@@ -17,10 +17,10 @@
 package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
+import fr.nicolasgille.medialibrary.models.common.person.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.utils.MediaGenre;
+import fr.nicolasgille.medialibrary.utils.MediaSupport;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -92,7 +92,7 @@ public class Cartoon extends Video {
      */
     public Cartoon(String title, String originalTitle, String synopsis,
                    Set<Director> directors, Set<Producer> producers,
-                   List<VideoGenre> genres, List<VideoSupport> supports,
+                   List<MediaGenre> genres, List<MediaSupport> supports,
                    List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
                    Calendar releaseDate, int runtime) {
         super.title = title;
@@ -139,7 +139,7 @@ public class Cartoon extends Video {
      */
     public Cartoon(long id, String title, String originalTitle, String synopsis,
                    Set<Director> directors, Set<Producer> producers,
-                   List<VideoGenre> genres, List<VideoSupport> supports,
+                   List<MediaGenre> genres, List<MediaSupport> supports,
                    List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
                    Calendar releaseDate, int runtime) {
         super.id = id;

@@ -17,11 +17,11 @@
 package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.models.common.Actor;
-import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
+import fr.nicolasgille.medialibrary.models.common.person.Actor;
+import fr.nicolasgille.medialibrary.models.common.person.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.utils.MediaGenre;
+import fr.nicolasgille.medialibrary.utils.MediaSupport;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -113,7 +113,7 @@ public class Movie extends Video {
      */
     public Movie(String title, String originalTitle, String synopsis,
                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
-                 List<VideoGenre> genres, List<VideoSupport> supports,
+                 List<MediaGenre> genres, List<MediaSupport> supports,
                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
                  Calendar releaseDate, int runtime) {
         super.title = title;
@@ -163,7 +163,7 @@ public class Movie extends Video {
      */
     public Movie(long id, String title, String originalTitle, String synopsis,
                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
-                 List<VideoGenre> genres, List<VideoSupport> supports,
+                 List<MediaGenre> genres, List<MediaSupport> supports,
                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
                  Calendar releaseDate, int runtime) {
         super.id = id;

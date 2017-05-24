@@ -18,10 +18,8 @@ package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.Media;
-import fr.nicolasgille.medialibrary.models.common.Director;
-import fr.nicolasgille.medialibrary.models.common.Producer;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoGenre;
-import fr.nicolasgille.medialibrary.models.video.utils.VideoSupport;
+import fr.nicolasgille.medialibrary.models.common.person.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -57,30 +55,6 @@ public abstract class Video extends Media {
      */
     @Column(columnDefinition = "TEXT")
     protected String synopsis;
-
-    /**
-     * Genre of the video.
-     *
-     * @see VideoGenre
-     * @since 2.0
-     */
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = VideoGenre.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<VideoGenre> genres;
-
-    /**
-     * List of Support for the video.
-     *
-     * @see VideoSupport
-     * @since 2.0
-     */
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = VideoSupport.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<VideoSupport> supports;
 
     /**
      * List of language spoken available on the video.
@@ -178,54 +152,6 @@ public abstract class Video extends Media {
      */
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
-    }
-
-    /**
-     * Return the genres.
-     *
-     * @return The genres of the media.
-     * @see VideoGenre
-     * @since 2.0
-     * @version 1.0
-     */
-    public List<VideoGenre> getGenres() {
-        return this.genres;
-    }
-
-    /**
-     * Set genres of Media.
-     *
-     * @param genres New genres.
-     * @since 2.0
-     * @version 1.0
-     */
-    public void setGenres(List<VideoGenre> genres) {
-        this.genres = genres;
-    }
-
-
-    /**
-     * Return all supports for the video.
-     *
-     * @return
-     *  List of all supports.
-     * @since 2.0
-     * @version 1.0
-     */
-    public List<VideoSupport> getSupports() {
-        return supports;
-    }
-
-    /**
-     * Set the supports for the video.
-     *
-     * @param supports
-     *  New Supports.
-     * @since 2.0
-     * @version 1.0
-     */
-    public void setSupports(List<VideoSupport> supports) {
-        this.supports = supports;
     }
 
     /**

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.common;
+package fr.nicolasgille.medialibrary.models.common.person;
 
 import fr.nicolasgille.medialibrary.models.video.Video;
 
@@ -24,7 +24,7 @@ import javax.persistence.Transient;
 import java.util.Set;
 
 /**
- * Class Director present on class Movie or Series to representing director of a movie or series.
+ * Class Producer present on class Movie or Series to representing producer of a movie or series.
  *
  * V2.0 :
  * <ul>
@@ -40,11 +40,11 @@ import java.util.Set;
  * @version 2.0
  */
 @Entity
-@DiscriminatorValue(value = "director")
-public class Director extends Person {
+@DiscriminatorValue(value = "producer")
+public class Producer extends Person {
 
     /**
-     * Director who directed movie.
+     * Producer who produce videos.
      *
      * @since 1.0
      */
@@ -57,18 +57,18 @@ public class Director extends Person {
      * @since 1.0
      * @version 1.0
      */
-    public Director() {
+    public Producer() {
     }
 
     /**
-     * Constructor used to create Director on Database.
+     * Constructor used to create Producer on Database.
      *
-     * @param firstName First name of the Director.
-     * @param lastName  Last name of the Director.
+     * @param firstName First name of the Actor.
+     * @param lastName  Last name of the Actor.
      * @since 1.0
      * @version 1.0
      */
-    public Director(String firstName, String lastName) {
+    public Producer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -76,14 +76,14 @@ public class Director extends Person {
     /**
      * Constructor with all parameters.
      *
-     * @param id        Identifier stored on database.
+     * @param id        Identifier stored on DB.
      * @param firstName First name.
      * @param lastName  Last name.
-     * @param videos    Video where the guy participate as Director.
+     * @param videos    Video where the guy participate as Producer.
      * @since 1.0
      * @version 1.1
      */
-    public Director(long id, String firstName, String lastName, Set<Video> videos) {
+    public Producer(long id, String firstName, String lastName, Set<Video> videos) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -91,9 +91,9 @@ public class Director extends Person {
     }
 
     /**
-     * List of videos where director directed the movie.
+     * List of videos who the Producer produce the video.
      *
-     * @return List of all videos where director directed the movie.
+     * @return List of all videos who the Producer produce the video.
      * @since 1.0
      * @version 1.1
      */
@@ -102,7 +102,7 @@ public class Director extends Person {
     }
 
     /**
-     * Set list of videos where director directed the movie.
+     * Set list of videos who guy produce the video.
      *
      * @param videos New list of videos.
      * @since 1.0
@@ -113,9 +113,9 @@ public class Director extends Person {
     }
 
     /**
-     * Display content of the Director.
+     * Display content of the Producer.
      *
-     * @return A simple representation of the Director.
+     * @return A simple representation of the Producer.
      * @since 1.0
      * @version 1.1
      */
@@ -131,7 +131,7 @@ public class Director extends Person {
             videos.append("");
         }
 
-        return "Director{" +
+        return "Producer{" +
                 ", id=" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

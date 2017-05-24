@@ -16,9 +16,15 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
+import fr.nicolasgille.medialibrary.utils.MediaGenre;
+import fr.nicolasgille.medialibrary.utils.MediaSupport;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -59,6 +65,30 @@ public abstract class Media implements IMedia {
     @NotNull
     @Temporal(TemporalType.DATE)
     protected Calendar releaseDate;
+
+    /**
+     * Genre of the media.
+     *
+     * @see MediaGenre
+     * @since 2.0
+     */
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = MediaGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<MediaGenre> genres;
+
+    /**
+     * List of Support for the media.
+     *
+     * @see MediaSupport
+     * @since 2.0
+     */
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = MediaSupport.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<MediaSupport> supports;
 
     /**
      * Return the id.
@@ -127,6 +157,53 @@ public abstract class Media implements IMedia {
      */
     public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    /**
+     * Return the genres.
+     *
+     * @return The genres of the media.
+     * @see MediaGenre
+     * @since 2.0
+     * @version 1.0
+     */
+    public List<MediaGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
+     * Set genres of Media.
+     *
+     * @param genres New genres.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setGenres(List<MediaGenre> genres) {
+        this.genres = genres;
+    }
+
+    /**
+     * Return all supports for the video.
+     *
+     * @return
+     *  List of all supports.
+     * @since 2.0
+     * @version 1.0
+     */
+    public List<MediaSupport> getSupports() {
+        return supports;
+    }
+
+    /**
+     * Set the supports for the video.
+     *
+     * @param supports
+     *  New Supports.
+     * @since 2.0
+     * @version 1.0
+     */
+    public void setSupports(List<MediaSupport> supports) {
+        this.supports = supports;
     }
 
     /**

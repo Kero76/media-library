@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.common;
+package fr.nicolasgille.medialibrary.models.common.person;
 
 import fr.nicolasgille.medialibrary.models.video.Video;
 
@@ -24,13 +24,21 @@ import javax.persistence.Transient;
 import java.util.Set;
 
 /**
- * Class Producer present on class Movie or Series to representing producer of a movie or series.
+ * Class Actor present on class Movie or Series to representing main actor in a movie or series.
  *
  * V2.0 :
  * <ul>
  *     <li>Inherit abstract class <code>Person</code></li>
  *     <li>Removed all attributes excepted <code>movies</code> who he's renamed videos and became a <code>Set<Video></code></li>
  *     <li>Modified getter and setter for attribute Video.</li>
+ * </ul>
+ *
+ * V1.1 :
+ * <ul>
+ *     <li>Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.</li>
+ *     <li>Updated constructor with new attribute on parameter.</li>
+ *     <li>Added corresponding getter and setter for attribute <code>movies</code></li>
+ *     <li>Added <code>@Transient</code> annotations on new attribute <code>movies</code>.</li>
  * </ul>
  *
  * @see Person
@@ -40,11 +48,11 @@ import java.util.Set;
  * @version 2.0
  */
 @Entity
-@DiscriminatorValue(value = "producer")
-public class Producer extends Person {
+@DiscriminatorValue(value = "actor")
+public class Actor extends Person {
 
     /**
-     * Producer who produce videos.
+     * Videos where the actor played.
      *
      * @since 1.0
      */
@@ -57,44 +65,50 @@ public class Producer extends Person {
      * @since 1.0
      * @version 1.0
      */
-    public Producer() {
-    }
+    public Actor() {}
 
     /**
-     * Constructor used to create Producer on Database.
+     * Constructor used to create Actor on Database.
      *
-     * @param firstName First name of the Actor.
-     * @param lastName  Last name of the Actor.
+     * @param firstName
+     *  First name of the Actor.
+     * @param lastName
+     *  Last name of the Actor.
      * @since 1.0
      * @version 1.0
      */
-    public Producer(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Actor(String firstName, String lastName) {
+        super.firstName = firstName;
+        super.lastName  = lastName;
     }
 
     /**
      * Constructor with all parameters.
      *
-     * @param id        Identifier stored on DB.
-     * @param firstName First name.
-     * @param lastName  Last name.
-     * @param videos    Video where the guy participate as Producer.
+     * @param id
+     *  Identifier stored on database.
+     * @param firstName
+     *  First name.
+     * @param lastName
+     *  Last name.
+     * @param videos
+     *  Videos where the actor played as main actor.
      * @since 1.0
-     * @version 1.1
+     * @version 1.2
      */
-    public Producer(long id, String firstName, String lastName, Set<Video> videos) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Actor(long id, String firstName, String lastName, Set<Video> videos) {
+        super.id = id;
+        super.firstName = firstName;
+        super.lastName = lastName;
         this.videos = videos;
     }
 
     /**
-     * List of videos who the Producer produce the video.
+     * List of videos where the actor played as main actor.
      *
-     * @return List of all videos who the Producer produce the video.
-     * @since 1.0
+     * @return
+     *  List of all videos where the actor played as main actor.
+     * @since 1.1
      * @version 1.1
      */
     public Set<Video> getVideos() {
@@ -102,20 +116,22 @@ public class Producer extends Person {
     }
 
     /**
-     * Set list of videos who guy produce the video.
+     * Set list of videos where actor played as main actor.
      *
-     * @param videos New list of videos.
-     * @since 1.0
-     * @version 1.1
+     * @param videos
+     *  New list of videos.
+     * @since 1.1
+     * @version 1.0
      */
     public void setVideos(Set<Video> videos) {
         this.videos = videos;
     }
 
     /**
-     * Display content of the Producer.
+     * Display content of the Actor.
      *
-     * @return A simple representation of the Producer.
+     * @return
+     *  A simple representation of the Actor.
      * @since 1.0
      * @version 1.1
      */
@@ -131,11 +147,12 @@ public class Producer extends Person {
             videos.append("");
         }
 
-        return "Producer{" +
-                ", id=" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", videos='" + videos.toString() + '\'' +
+        return "Actor{" +
+                ", id=" + super.id + '\'' +
+                ", firstName='" + super.firstName + '\'' +
+                ", lastName='" + super.lastName + '\'' +
+                "', videos='" + videos.toString() + '\'' +
                 '}';
     }
 }
+

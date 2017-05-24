@@ -14,55 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.common;
-
-import javax.persistence.*;
+package fr.nicolasgille.medialibrary.models.common.person;
 
 /**
- * Main class to represent Human in Media-Library.
- * It implements the interface <code>IPerson</code> to impose many attributes :
- * <ul>
- *     <li>id : Identifier for the Database.</li>
- *     <li>firstName : First name of the Person.</li>
- *     <li>lastName : Last name of the Person.</li>
- * </ul>
+ * Interface <code>IPerson</code> implements by abstract class <code>Person</code>.
+ * It must be implement by all human representing in the project.
+ * It force all Human represented on the Media-Library to have a first name, last name and an id.
  *
  * @author Nicolas GILLE
- * @see IPerson
+ * @see Person
  * @since Media-Library 0.2.1
  * @version 1.0
  */
-@Entity
-@Table(name = "person")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "person_type")
-abstract class Person implements IPerson {
-
-    /**
-     * Identifier of the Person.
-     *
-     * @since 1.0
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    protected long id;
-
-    /**
-     * First name of the Person.
-     *
-     * @since 1.0
-     */
-    @Column(name = "fname")
-    protected String firstName;
-
-    /**
-     * Last name of the Person.
-     *
-     * @since 1.0
-     */
-    @Column(name = "lname")
-    protected String lastName;
+public interface IPerson {
 
     /**
      * Return id of the Person.
@@ -72,9 +36,7 @@ abstract class Person implements IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public long getId() {
-        return id;
-    }
+    public long getId();
 
     /**
      * Set id of the Person.
@@ -84,9 +46,7 @@ abstract class Person implements IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public void setId(long id) {
-        this.id = id;
-    }
+    public void setId(long id);
 
     /**
      * Return first name of the Person.
@@ -96,9 +56,7 @@ abstract class Person implements IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName();
 
     /**
      * Set first name of the Person.
@@ -108,9 +66,7 @@ abstract class Person implements IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public void setFirstName(String firstName);
 
     /**
      * Return last name of the Person.
@@ -120,9 +76,7 @@ abstract class Person implements IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName();
 
     /**
      * Set the last name of the Person.
@@ -132,7 +86,5 @@ abstract class Person implements IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public void setLastName(String lastName);
 }
