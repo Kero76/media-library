@@ -49,14 +49,6 @@ public abstract class Video extends Media {
     protected String originalTitle;
 
     /**
-     * Synopsis of the video.
-     *
-     * @since 2.0
-     */
-    @Column(columnDefinition = "TEXT")
-    protected String synopsis;
-
-    /**
      * List of language spoken available on the video.
      *
      * @see LanguageCode
@@ -130,28 +122,6 @@ public abstract class Video extends Media {
      */
     public void setOriginalTitle(String originalTitle) {
         this.originalTitle = originalTitle;
-    }
-
-    /**
-     * Return the synopsis.
-     *
-     * @return The synopsis.
-     * @since 2.0
-     * @version 1.0
-     */
-    public String getSynopsis() {
-        return this.synopsis;
-    }
-
-    /**
-     * Set synopsis.
-     *
-     * @param synopsis New synopsis.
-     * @since 2.0
-     * @version 1.0
-     */
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
     }
 
     /**

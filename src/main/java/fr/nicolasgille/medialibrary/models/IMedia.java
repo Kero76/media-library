@@ -68,6 +68,26 @@ public interface IMedia {
     void setTitle(String title);
 
     /**
+     * Get the synopsis of the book.
+     *
+     * @return
+     *  The synopsis of the book.
+     * @since 1.0
+     * @version 1.0
+     */
+    String getSynopsis();
+
+    /**
+     * Set the synopsis of the book.
+     *
+     * @param synopsis
+     *  New synopsis.
+     * @since 1.0
+     * @version 1.0
+     */
+    void setSynopsis(String synopsis);
+
+    /**
      * Return the release date.
      *
      * @return

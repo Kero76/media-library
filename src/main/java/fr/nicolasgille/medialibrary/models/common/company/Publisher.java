@@ -17,6 +17,7 @@
 package fr.nicolasgille.medialibrary.models.common.company;
 
 import fr.nicolasgille.medialibrary.models.book.Book;
+import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -95,7 +96,7 @@ public class Publisher extends Company {
     }
 
     /**
-     * Set the list of all books published by the publisher.
+     * Get the list of all books published by the publisher.
      *
      * @return
      *  A set with all book published by the publisher.
@@ -117,7 +118,9 @@ public class Publisher extends Company {
     @Override
     public String toString() {
         return "Publisher{" +
-                "books=" + books.toString() +
+                "id=" + super.id +
+                ", name=" + super.name +
+                ", books=" + CollectionAsString.setToString(this.books) +
                 '}';
     }
 }

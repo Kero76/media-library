@@ -19,9 +19,14 @@ package fr.nicolasgille.medialibrary.models.book;
 import fr.nicolasgille.medialibrary.models.Media;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
-import fr.nicolasgille.medialibrary.utils.BookFormat;
-import fr.nicolasgille.medialibrary.utils.MediaGenre;
-import fr.nicolasgille.medialibrary.utils.MediaSupport;
+import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.models.components.BookFormat;
+import fr.nicolasgille.medialibrary.models.components.MediaGenre;
+import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.utils.CollectionAsString;
+import fr.nicolasgille.medialibrary.utils.DateFormatter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -57,14 +62,6 @@ public class Book extends Media {
     private String originalTitle;
 
     /**
-     * Synopsis of the book.
-     *
-     * @since 1.0
-     */
-    @Column(columnDefinition = "TEXT")
-    private String synopsis;
-
-    /**
      * Number of page present on the book.
      *
      * @since 1.0
@@ -76,6 +73,14 @@ public class Book extends Media {
      *
      * @since 1.0
      */
+    @NotNull
+    @JoinTable(
+            name = "books_authors",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "authors_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Author> authors;
 
     /**
@@ -83,7 +88,15 @@ public class Book extends Media {
      *
      * @since 1.0
      */
-    private Publisher publisher;
+    @NotNull
+    @JoinTable(
+            name = "books_publisher",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = {@JoinColumn(name = "publisher_id", referencedColumnName = "id")}
+    )
+    @ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Publisher> publishers;
 
     /**
      * Format of the book.
@@ -93,7 +106,6 @@ public class Book extends Media {
      */
     @NotNull
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = BookFormat.class)
     private BookFormat format;
 
     /**
@@ -121,8 +133,8 @@ public class Book extends Media {
      *  ISBN of the book.
      * @param authors
      *  Authors of the book.
-     * @param publisher
-     *  Publisher of the book.
+     * @param publishers
+     *  Publishers of the book.
      * @param genres
      *  Genres of the book.
      * @param supports
@@ -134,16 +146,16 @@ public class Book extends Media {
      */
     public Book(String title, String originalTitle, String synopsis,
                 Calendar releaseDate, int nbPages, String isbn,
-                Set<Author> authors, Publisher publisher,
+                Set<Author> authors, Set<Publisher> publishers,
                 List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format) {
         super.title = title;
         this.originalTitle = originalTitle;
-        this.synopsis = synopsis;
+        super.synopsis = synopsis;
         super.releaseDate = releaseDate;
         this.nbPages = nbPages;
         this.isbn = isbn;
         this.authors = authors;
-        this.publisher = publisher;
+        this.publishers = publishers;
         super.genres = genres;
         super.supports = supports;
         this.format = format;
@@ -168,8 +180,8 @@ public class Book extends Media {
      *  ISBN of the book.
      * @param authors
      *  Authors of the book.
-     * @param publisher
-     *  Publisher of the book.
+     * @param publishers
+     *  Publishers of the book.
      * @param genres
      *  Genres of the book.
      * @param supports
@@ -181,17 +193,17 @@ public class Book extends Media {
      */
     public Book(long id, String title, String originalTitle, String synopsis,
                 Calendar releaseDate, int nbPages, String isbn,
-                Set<Author> authors, Publisher publisher,
+                Set<Author> authors, Set<Publisher> publishers,
                 List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format) {
         super.id = id;
         super.title = title;
         this.originalTitle = originalTitle;
-        this.synopsis = synopsis;
+        super.synopsis = synopsis;
         super.releaseDate = releaseDate;
         this.nbPages = nbPages;
         this.isbn = isbn;
         this.authors = authors;
-        this.publisher = publisher;
+        this.publishers = publishers;
         super.genres = genres;
         super.supports = supports;
         this.format = format;
@@ -209,12 +221,12 @@ public class Book extends Media {
         super.id = book.getId();
         super.title = book.getTitle();
         this.originalTitle = book.getOriginalTitle();
-        this.synopsis = book.getSynopsis();
+        super.synopsis = book.getSynopsis();
         super.releaseDate = book.getReleaseDate();
         this.nbPages = book.getNbPages();
         this.isbn = book.getIsbn();
         this.authors = book.getAuthors();
-        this.publisher = book.getPublisher();
+        this.publishers = book.getPublisher();
         super.genres = book.getGenres();
         super.supports = book.getSupports();
         this.format = book.getFormat();
@@ -269,30 +281,6 @@ public class Book extends Media {
     }
 
     /**
-     * Get the synopsis of the book.
-     *
-     * @return
-     *  The synopsis of the book.
-     * @since 1.0
-     * @version 1.0
-     */
-    public String getSynopsis() {
-        return synopsis;
-    }
-
-    /**
-     * Set the synopsis of the book.
-     *
-     * @param synopsis
-     *  New synopsis.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
-
-    /**
      * Get the number of pages available on the book.
      *
      * @return
@@ -341,27 +329,27 @@ public class Book extends Media {
     }
 
     /**
-     * Get the publisher of the book.
+     * Get the publishers of the book.
      *
      * @return
-     *  The publisher of the book.
+     *  The publishers of the book.
      * @since 1.0
      * @version 1.0
      */
-    public Publisher getPublisher() {
-        return publisher;
+    public Set<Publisher> getPublisher() {
+        return publishers;
     }
 
     /**
      * Set the publisher of the book.
      *
-     * @param publisher
+     * @param publishers
      *  The new publisher.
      * @since 1.0
      * @version 1.0
      */
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
+    public void setPublisher(Set<Publisher> publishers) {
+        this.publishers = publishers;
     }
 
     /**
@@ -398,37 +386,19 @@ public class Book extends Media {
      */
     @Override
     public String toString() {
-        // Build genres string.
-        StringBuilder genres = new StringBuilder();
-        for (int i = 0; i < super.genres.size(); ++i) {
-            genres.append(super.genres.get(i).getName());
-            if (i != super.genres.size() - 1) {
-                genres.append(", ");
-            }
-        }
-
-        // Build supports string.
-        StringBuilder supports = new StringBuilder();
-        for (int i = 0; i < super.supports.size(); ++i) {
-            supports.append(super.supports.get(i).getName());
-            if (i != super.supports.size() - 1) {
-                supports.append(", ");
-            }
-        }
-
         return "Book{" +
                 "id=" + super.id +
                 "isbn='" + isbn + '\'' +
                 ", title='" + super.title + '\'' +
                 ", originalTitle='" + originalTitle + '\'' +
                 ", synopsis='" + synopsis + '\'' +
-                ", categories=" + genres.toString() +
-                ", releaseDate=" + super.releaseDate.toString() +
-                ", supports='" + supports.toString() +
+                ", genres=" + CollectionAsString.listToString(super.getGenres()) +
+                ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
+                ", supports='" + CollectionAsString.listToString(super.getSupports()) +
                 ", format=" + format.getName() +
                 ", nbPages=" + nbPages +
-                ", authors=" + this.setStringBuilder(this.authors) +
-                ", publisher=" + publisher +
+                ", authors=" + CollectionAsString.setToString(this.authors) +
+                ", publishers=" + CollectionAsString.setToString(this.publishers) +
                 '}';
     }
 }

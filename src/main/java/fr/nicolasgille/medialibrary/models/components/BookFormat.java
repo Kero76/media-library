@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.utils;
+package fr.nicolasgille.medialibrary.models.components;
 
 /**
  * An enumeration to represent the format available for a book.

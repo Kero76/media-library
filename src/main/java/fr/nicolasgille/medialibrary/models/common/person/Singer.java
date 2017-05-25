@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.models.common.person;
 
-import fr.nicolasgille.medialibrary.models.book.Book;
+import fr.nicolasgille.medialibrary.models.music.Album;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 
 import javax.persistence.DiscriminatorValue;
@@ -28,22 +28,22 @@ import java.util.Set;
  * Class Author present the author of the Book.
  *
  * @see Person
- * @see Book
+ * @see Album
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0
  */
 @Entity
-@DiscriminatorValue(value = "author")
-public class Author extends Person {
+@DiscriminatorValue(value = "singer")
+public class Singer extends Person {
 
     /**
-     * List of all books written by the author.
+     * List of all albums sing by the Singer.
      *
      * @since 1.0
      */
     @Transient
-    private Set<Book> books;
+    private Set<Album> albums;
 
     /**
      * Empty constructor.
@@ -51,19 +51,19 @@ public class Author extends Person {
      * @since 1.0
      * @version 1.0
      */
-    public Author() {}
+    public Singer() {}
 
     /**
-     * Constructor used to create Author on Database.
+     * Constructor used to create Singer on Database.
      *
      * @param firstName
-     *  First name of the Author.
+     *  First name of the Singer.
      * @param lastName
-     *  Last name of the Author.
+     *  Last name of the Singer.
      * @since 1.0
      * @version 1.0
      */
-    public Author(String firstName, String lastName) {
+    public Singer(String firstName, String lastName) {
         super.firstName = firstName;
         super.lastName  = lastName;
     }
@@ -77,57 +77,57 @@ public class Author extends Person {
      *  First name.
      * @param lastName
      *  Last name.
-     * @param books
-     *  All books written by the author.
+     * @param albums
+     *  All album where the singer appear as Singer.
      * @since 1.0
      * @version 1.0
      */
-    public Author(long id, String firstName, String lastName, Set<Book> books) {
+    public Singer(long id, String firstName, String lastName, Set<Album> albums) {
         super.id = id;
         super.firstName = firstName;
         super.lastName = lastName;
-        this.books = books;
+        this.albums = albums;
     }
 
     /**
-     * List of all books written by the authors.
+     * List of all albums where the singer appear.
      *
      * @return
-     *  List of all books written by the author.
+     *  List of all albums where the singer appear.
      * @since 1.0
      * @version 1.0
      */
-    public Set<Book> getBooks() {
-        return books;
+    public Set<Album> getAlbums() {
+        return albums;
     }
 
     /**
-     * Set the list of all books written by the author.
+     * Set the list of all albums where the singer appear.
      *
-     * @param books
-     *  New list of books.
+     * @param albums
+     *  New list of albums.
      * @since 1.0
      * @version 1.0
      */
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setAlbums(Set<Album> albums) {
+        this.albums = albums;
     }
 
     /**
-     * Display content of the Author.
+     * Display content of the Singer.
      *
      * @return
-     *  A simple representation of the Author.
+     *  A simple representation of the Singer.
      * @since 1.0
      * @version 1.1
      */
     @Override
     public String toString() {
-        return "Author{" +
+        return "Singer{" +
                 ", id=" + super.id + '\'' +
                 ", firstName='" + super.firstName + '\'' +
                 ", lastName='" + super.lastName + '\'' +
-                "', books='" + CollectionAsString.setToString(this.books) + '\'' +
+                "', albums='" + CollectionAsString.setToString(this.albums) + '\'' +
                 '}';
     }
 }

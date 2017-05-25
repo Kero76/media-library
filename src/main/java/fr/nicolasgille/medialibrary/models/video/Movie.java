@@ -20,8 +20,10 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
-import fr.nicolasgille.medialibrary.utils.MediaGenre;
-import fr.nicolasgille.medialibrary.utils.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.MediaGenre;
+import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.utils.CollectionAsString;
+import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -263,56 +265,20 @@ public class Movie extends Video {
      */
     @Override
     public String toString() {
-        // Build genres string.
-        StringBuilder genres = new StringBuilder();
-        for (int i = 0; i < super.genres.size(); ++i) {
-            genres.append(super.genres.get(i).getName());
-            if (i != super.genres.size() - 1) {
-                genres.append(", ");
-            }
-        }
-
-        // Build supports string.
-        StringBuilder supports = new StringBuilder();
-        for (int i = 0; i < super.supports.size(); ++i) {
-            supports.append(super.supports.get(i).getName());
-            if (i != super.supports.size() - 1) {
-                supports.append(", ");
-            }
-        }
-
-        // Build languages spoken string.
-        StringBuilder languagesSpoken = new StringBuilder();
-        for (int i = 0; i < super.languagesSpoken.size(); ++i) {
-            languagesSpoken.append(super.languagesSpoken.get(i).getName());
-            if (i != this.languagesSpoken.size() - 1) {
-                languagesSpoken.append(", ");
-            }
-        }
-
-        // Build subtitles languages string.
-        StringBuilder subtitles = new StringBuilder();
-        for (int i = 0; i < super.subtitles.size(); ++i) {
-            subtitles.append(super.subtitles.get(i).getName());
-            if (i != this.subtitles.size() - 1) {
-                subtitles.append(", ");
-            }
-        }
-
         return "Movie{" +
                 "id=" + super.id +
                 ", title='" + super.title + '\'' +
                 ", originalTitle='" + super.originalTitle + '\'' +
-                ", categories=" + genres.toString() +
-                ", releaseDate=" + super.releaseDate.toString() +
+                ", genres=" + CollectionAsString.listToString(super.genres) +
+                ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
                 ", runtime=" + this.runtime +
                 ", synopsis='" + super.synopsis + '\'' +
-                ", mainActors='" + super.setStringBuilder(this.mainActors) + '\'' +
-                ", producers='" + super.setStringBuilder(super.producers) + '\'' +
-                ", directors='" + super.setStringBuilder(super.directors) + '\'' +
-                ", supports='" + supports.toString() +
-                ", languageSpoken='" + languagesSpoken.toString() +
-                ", subtitles='" + subtitles.toString() +
+                ", mainActors='" + CollectionAsString.setToString(this.mainActors) + '\'' +
+                ", producers='" + CollectionAsString.setToString(super.producers) + '\'' +
+                ", directors='" + CollectionAsString.setToString(super.directors) + '\'' +
+                ", supports='" + CollectionAsString.listToString(supports) +
+                ", languageSpoken='" + CollectionAsString.listToString(languagesSpoken) +
+                ", subtitles='" + CollectionAsString.listToString(subtitles) +
                 '}';
     }
 }

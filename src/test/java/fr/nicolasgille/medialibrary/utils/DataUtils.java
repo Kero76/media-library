@@ -20,6 +20,8 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.models.components.MediaGenre;
+import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.video.Movie;
 import fr.nicolasgille.medialibrary.models.video.Series;
 

@@ -16,8 +16,8 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.utils.MediaGenre;
-import fr.nicolasgille.medialibrary.utils.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.MediaGenre;
+import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -25,7 +25,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Abstract class at inherit by all subclasses of media type.
@@ -56,6 +55,14 @@ public abstract class Media implements IMedia {
      * @since 1.0
      */
     protected String title;
+
+    /**
+     * Synopsis of the media.
+     *
+     * @since 2.0
+     */
+    @Column(columnDefinition = "TEXT")
+    protected String synopsis;
 
     /**
      * Date of release for the media.
@@ -135,6 +142,31 @@ public abstract class Media implements IMedia {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    /**
+     * Get the synopsis of the media.
+     *
+     * @return
+     *  The synopsis of the media.
+     * @since 1.0
+     * @version 1.0
+     */
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    /**
+     * Set the synopsis of the media.
+     *
+     * @param synopsis
+     *  New synopsis.
+     * @since 1.0
+     * @version 1.0
+     */
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
     /**
      * Return the release date.
      *
@@ -204,30 +236,5 @@ public abstract class Media implements IMedia {
      */
     public void setSupports(List<MediaSupport> supports) {
         this.supports = supports;
-    }
-
-    /**
-     * Generate a String with content of Set.
-     *
-     * @param set
-     *  Set used to displayed element.
-     * @return
-     *  A string representation of the Set.
-     * @since 1.0
-     * @version 1.0
-     */
-    protected String setStringBuilder(Set<?> set) {
-        StringBuilder str = new StringBuilder();
-        if (set != null) {
-            for (int i = 0; i < set.size(); ++i) {
-                str.append(set.toArray()[i].toString());
-                if (i != set.size() - 1) {
-                    str.append(", ");
-                }
-            }
-        } else {
-            str.append("");
-        }
-        return str.toString();
     }
 }

@@ -17,6 +17,7 @@
 package fr.nicolasgille.medialibrary.models.common.person;
 
 import fr.nicolasgille.medialibrary.models.video.Video;
+import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -117,25 +118,15 @@ public class Producer extends Person {
      *
      * @return A simple representation of the Producer.
      * @since 1.0
-     * @version 1.1
+     * @version 1.2
      */
     @Override
     public String toString() {
-        StringBuilder videos = new StringBuilder();
-        if (this.videos != null) {
-            for (Video v : this.videos) {
-                videos.append(v.toString());
-                videos.append(";");
-            }
-        } else {
-            videos.append("");
-        }
-
         return "Producer{" +
                 ", id=" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", videos='" + videos.toString() + '\'' +
+                ", videos='" + CollectionAsString.setToString(this.videos) + '\'' +
                 '}';
     }
 }

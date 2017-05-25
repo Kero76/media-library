@@ -2,6 +2,7 @@ package fr.nicolasgille.medialibrary.models.common.person;
 
 import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.book.Comic;
+import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -103,25 +104,15 @@ public class Illustrator extends Person {
      * @return
      *  A simple representation of the Illustrator.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
     @Override
     public String toString() {
-        StringBuilder comics = new StringBuilder();
-        if (this.comics != null) {
-            for (Book b : this.comics) {
-                comics.append(b.toString());
-                comics.append(";");
-            }
-        } else {
-            comics.append("");
-        }
-
         return "Illustrator{" +
                 ", id=" + super.id + '\'' +
                 ", firstName='" + super.firstName + '\'' +
                 ", lastName='" + super.lastName + '\'' +
-                "', comics='" + comics.toString() + '\'' +
+                "', comics='" + CollectionAsString.setToString(this.comics) + '\'' +
                 '}';
     }
 }
