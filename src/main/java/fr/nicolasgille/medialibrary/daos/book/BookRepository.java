@@ -57,5 +57,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * @since 1.0
      * @version 1.0
      */
-    Cartoon findByTitleAndRuntimeAndReleaseDate(String title, Calendar releaseDate);
+    Cartoon findByTitleAndReleaseDate(String title, Calendar releaseDate);
 }

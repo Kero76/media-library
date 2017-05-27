@@ -79,7 +79,7 @@ public class LabelRecordsController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/labelRecordss/", method = RequestMethod.GET)
+    @RequestMapping(value = "/label-records/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<LabelRecords> labelRecordss = labelRecordsRepository.findAll();
         if (labelRecordss.isEmpty()) {
@@ -103,7 +103,7 @@ public class LabelRecordsController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/labelRecords", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/label-records", method = RequestMethod.GET)
     public ResponseEntity<?> getLabelRecordsByName(@RequestParam(name = "name") String nameEncoded) throws UnsupportedEncodingException {
         String name = URLDecoder.decode(nameEncoded, LabelRecordsController.ENCODING);
         logger.info("Fetching LabelRecords named {}", name);

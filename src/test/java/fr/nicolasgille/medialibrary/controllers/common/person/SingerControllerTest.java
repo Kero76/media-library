@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers.common;
+package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.models.common.person.Director;
+import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -28,13 +28,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit class test used to test DirectorController class.
+ * Unit class test used to test SingerController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1.1
+ * @since Media-Library 0.4
  * @version 1.0
  */
-public class DirectorControllerTest {
+public class SingerControllerTest {
+
     /**
      * URI of the Rest service.
      */
@@ -61,8 +62,8 @@ public class DirectorControllerTest {
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
 
-        // When - Get all directors from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/directors/", List.class);
+        // When - Get all actors from persistent system.
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/singers/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -70,15 +71,15 @@ public class DirectorControllerTest {
     }
 
     @Test
-    public void getOneActor() {
+    public void getOneSinger() {
         // Given - @see setUp() and instantiate last and first name of the actor to request.
         HttpStatus httpStatusExpected = HttpStatus.OK;
-        String fnameExpected = "Ridley";
-        String lnameExpected = "Scott";
+        String fnameExpected = "Nicolas";
+        String lnameExpected = "Cage";
 
-        // When - Get Ridley Scott from persistent system.
-        ResponseEntity<Director> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/director?fname=" + fnameExpected + "&lname=" + lnameExpected, Director.class);
+        // When - Get Nicolas Cage from persistent system.
+        ResponseEntity<Actor> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/search/singer?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

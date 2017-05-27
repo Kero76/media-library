@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers;
+package fr.nicolasgille.medialibrary.controllers.video;
 
 import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exception.video.SeriesException;
@@ -45,6 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @version 1.0
  */
 public class ClientSeriesTest {
+
     /**
      * URI of the Rest service.
      */

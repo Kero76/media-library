@@ -199,7 +199,7 @@ public class AlbumController {
         albumRepository.save(album);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/albums/search/title/{id}").buildAndExpand(album.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/music/search/title/{id}").buildAndExpand(album.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 

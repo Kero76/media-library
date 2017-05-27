@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers.common;
+package fr.nicolasgille.medialibrary.controllers.common.company;
 
+import fr.nicolasgille.medialibrary.models.common.company.Developer;
+import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +30,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit class test used to test ActorController class.
+ * Unit class test used to test LabelRecordsController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1.1
+ * @since Media-Library 0.4
  * @version 1.0
  */
-public class ActorControllerTest {
+public class LabelRecordsControllerTest {
+
     /**
      * URI of the Rest service.
      */
@@ -59,10 +62,10 @@ public class ActorControllerTest {
     public void getAll() {
         // Given - @see setUp()
         HttpStatus httpStatusExpected = HttpStatus.OK;
-        int sizeExpected = 1;
+        int sizeExpected = 3;
 
         // When - Get all actors from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/actors/", List.class);
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/label-records/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -70,20 +73,17 @@ public class ActorControllerTest {
     }
 
     @Test
-    public void getOneActor() {
-        // Given - @see setUp() and instantiate last and first name of the actor to request.
+    public void getOneLabelRecords() {
+        // Given - @see setUp() and instantiate name of the label records to request.
         HttpStatus httpStatusExpected = HttpStatus.OK;
-        String fnameExpected = "Nicolas";
-        String lnameExpected = "Cage";
+        String nameExpected = "EMI";
 
         // When - Get Nicolas Cage from persistent system.
-        ResponseEntity<Actor> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/actor?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
+        ResponseEntity<LabelRecords> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/search/label-records?name=" + nameExpected, LabelRecords.class);
 
-        // Then - Compare HTTP code and first and last name
+        // Then - Compare HTTP code and name.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getFirstName()).isEqualTo(fnameExpected);
-        assertThat(responseEntity.getBody().getLastName()).isEqualTo(lnameExpected);
+        assertThat(responseEntity.getBody().getName()).isEqualTo(nameExpected);
     }
 }
-
