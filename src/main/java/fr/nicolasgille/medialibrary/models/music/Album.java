@@ -19,6 +19,8 @@ package fr.nicolasgille.medialibrary.models.music;
 import fr.nicolasgille.medialibrary.models.Media;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
+import fr.nicolasgille.medialibrary.models.components.MediaGenre;
+import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
@@ -26,6 +28,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -82,6 +86,91 @@ public class Album extends Media {
     @ManyToMany(targetEntity = Singer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Singer> singers;
+
+    /**
+     * Empty constructor
+     *
+     * @since 1.0
+     * @version 1.0
+     */
+    public Album() {}
+
+    /**
+     * Constructor with all parameters expected id.
+     *
+     * @param title
+     *  Title of the album.
+     * @param tracks
+     *  Tracks present on the album.
+     * @param releaseDate
+     *  Release date of the album.
+     * @param genres
+     *  Genre of the album.
+     * @param supports
+     *  Support of the album.
+     * @param nbTracks
+     *  Number of track of the album.
+     * @param length
+     *  Length of the album.
+     * @param labelRecords
+     *  Label records of the album.
+     * @param singers
+     *  Singers of the album.
+     * @since 1.0
+     * @version 1.0
+     */
+    public Album(String title, String tracks, Calendar releaseDate, List<MediaGenre> genres, List<MediaSupport> supports,
+                 int nbTracks, double length, Set<LabelRecords> labelRecords, Set<Singer> singers) {
+        super.title = title;
+        super.synopsis = tracks;
+        super.releaseDate = releaseDate;
+        super.genres = genres;
+        super.supports = supports;
+        this.nbTracks = nbTracks;
+        this.length = length;
+        this.labelRecords = labelRecords;
+        this.singers = singers;
+    }
+
+    /**
+     * Constructor with all parameters expected id.
+     *
+     * @param id
+     *  Identifier of the album.
+     * @param title
+     *  Title of the album.
+     * @param tracks
+     *  Tracks present on the album.
+     * @param releaseDate
+     *  Release date of the album.
+     * @param genres
+     *  Genre of the album.
+     * @param supports
+     *  Support of the album.
+     * @param nbTracks
+     *  Number of track of the album.
+     * @param length
+     *  Length of the album.
+     * @param labelRecords
+     *  Label records of the album.
+     * @param singers
+     *  Singers of the album.
+     * @since 1.0
+     * @version 1.0
+     */
+    public Album(long id, String title, String tracks, Calendar releaseDate, List<MediaGenre> genres, List<MediaSupport> supports,
+                 int nbTracks, double length, Set<LabelRecords> labelRecords, Set<Singer> singers) {
+        super.id = id;
+        super.title = title;
+        super.synopsis = tracks;
+        super.releaseDate = releaseDate;
+        super.genres = genres;
+        super.supports = supports;
+        this.nbTracks = nbTracks;
+        this.length = length;
+        this.labelRecords = labelRecords;
+        this.singers = singers;
+    }
 
     /**
      * Return the number of tracks present on the album.
@@ -192,7 +281,7 @@ public class Album extends Media {
         return "Album{" +
                 "id=" + super.id +
                 ", title='" + super.title + '\'' +
-                ", synopsis='" + super.getSynopsis() + '\'' +
+                ", tracks='" + super.getSynopsis() + '\'' +
                 ", genres=" + CollectionAsString.listToString(super.getGenres()) +
                 ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
                 ", supports='" + CollectionAsString.listToString(super.getSupports()) +

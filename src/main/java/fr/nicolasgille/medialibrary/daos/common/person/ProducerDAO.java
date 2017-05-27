@@ -1,4 +1,4 @@
-package fr.nicolasgille.medialibrary.daos.common;
+package fr.nicolasgille.medialibrary.daos.common.person;
 
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -17,9 +17,9 @@
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import fr.nicolasgille.medialibrary.daos.video.SeriesRepository;
-import fr.nicolasgille.medialibrary.daos.common.ActorDAO;
-import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
-import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.ActorDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.DirectorDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.ProducerDAO;
 import fr.nicolasgille.medialibrary.exception.video.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;

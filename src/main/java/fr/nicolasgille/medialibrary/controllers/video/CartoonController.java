@@ -17,8 +17,8 @@
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import fr.nicolasgille.medialibrary.daos.video.CartoonRepository;
-import fr.nicolasgille.medialibrary.daos.common.DirectorDAO;
-import fr.nicolasgille.medialibrary.daos.common.ProducerDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.DirectorDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.ProducerDAO;
 import fr.nicolasgille.medialibrary.exception.video.CartoonException;
 import fr.nicolasgille.medialibrary.exception.video.MovieException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
