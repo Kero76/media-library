@@ -14,47 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.exception;
+package fr.nicolasgille.medialibrary.daos.book;
+
+import fr.nicolasgille.medialibrary.models.book.Comic;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import javax.transaction.Transactional;
 
 /**
- * Exception send at the client when a problem occurred during CRUD process.
+ * Repository used to interact with all comics available on Database.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.3
+ * @since Media-Library 0.4
  * @version 1.0
  */
-public class MediaException extends Exception {
+@Transactional
+public interface ComicRepository extends JpaRepository<Comic, Long> {
 
     /**
-     * Message at display when the exception was throw.
+     * Find a cartoon by his name.
      *
-     * @since 1.0
-     */
-    protected String message;
-
-    /**
-     * Constructor of the exception.
-     *
-     * @param message
-     *  Message at display when the error was throw.
-     * @since 1.0
-     * @version 1.0
-     */
-    public MediaException(String message) {
-        super(message);
-        this.message = message;
-    }
-
-    /**
-     * Message at display when the exception was throw.
-     *
+     * @param title
+     *  Title of the cartoon at search on Database.
      * @return
-     *  The message at display.
+     *  An instance of cartoon search by the name.
      * @since 1.0
      * @version 1.0
      */
-    @Override
-    public String toString() {
-        return this.message;
-    }
+    Comic findByTitleIgnoreCase(String title);
 }

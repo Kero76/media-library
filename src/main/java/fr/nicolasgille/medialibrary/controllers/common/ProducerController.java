@@ -17,7 +17,7 @@
 package fr.nicolasgille.medialibrary.controllers.common;
 
 import fr.nicolasgille.medialibrary.daos.common.person.ProducerDAO;
-import fr.nicolasgille.medialibrary.exception.common.ProducerException;
+import fr.nicolasgille.medialibrary.exception.common.person.ProducerException;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

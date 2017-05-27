@@ -17,7 +17,7 @@
 package fr.nicolasgille.medialibrary.controllers.common;
 
 import fr.nicolasgille.medialibrary.daos.common.person.ActorDAO;
-import fr.nicolasgille.medialibrary.exception.common.ActorException;
+import fr.nicolasgille.medialibrary.exception.common.person.ActorException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

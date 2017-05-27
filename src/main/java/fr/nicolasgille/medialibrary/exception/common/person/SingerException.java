@@ -14,23 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.exception;
+package fr.nicolasgille.medialibrary.exception.common.person;
+
+import fr.nicolasgille.medialibrary.exception.MediaException;
 
 /**
  * Exception send at the client when a problem occurred during CRUD process.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.3
+ * @since Media-Library 0.4
  * @version 1.0
  */
-public class MediaException extends Exception {
-
-    /**
-     * Message at display when the exception was throw.
-     *
-     * @since 1.0
-     */
-    protected String message;
+public class SingerException extends MediaException {
 
     /**
      * Constructor of the exception.
@@ -40,21 +35,7 @@ public class MediaException extends Exception {
      * @since 1.0
      * @version 1.0
      */
-    public MediaException(String message) {
+    public SingerException(String message) {
         super(message);
-        this.message = message;
-    }
-
-    /**
-     * Message at display when the exception was throw.
-     *
-     * @return
-     *  The message at display.
-     * @since 1.0
-     * @version 1.0
-     */
-    @Override
-    public String toString() {
-        return this.message;
     }
 }

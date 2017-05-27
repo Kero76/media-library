@@ -35,13 +35,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *
  * Representation of video game.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0
  */
+@Entity
+@DiscriminatorValue(value = "video_game")
 public class VideoGame extends Media {
 
     /**
