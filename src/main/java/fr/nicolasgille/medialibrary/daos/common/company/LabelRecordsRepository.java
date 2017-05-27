@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface LabelRecordsDAO extends JpaRepository<LabelRecords, Long> {
+public interface LabelRecordsRepository extends JpaRepository<LabelRecords, Long> {
 
     /**
      * Search an Label Records by his name.

@@ -17,8 +17,8 @@
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import fr.nicolasgille.medialibrary.daos.video.CartoonRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.DirectorDAO;
-import fr.nicolasgille.medialibrary.daos.common.person.ProducerDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.DirectorRepository;
+import fr.nicolasgille.medialibrary.daos.common.person.ProducerRepository;
 import fr.nicolasgille.medialibrary.exception.video.CartoonException;
 import fr.nicolasgille.medialibrary.exception.video.MovieException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
@@ -75,7 +75,7 @@ public class CartoonController {
      * @since 1.0
      */
     @Autowired
-    private ProducerDAO producerDAO;
+    private ProducerRepository producerRepository;
 
     /**
      * DAO used to interact with the table <code>common_director</code>.
@@ -83,7 +83,7 @@ public class CartoonController {
      * @since 1.0
      */
     @Autowired
-    private DirectorDAO directorDAO;
+    private DirectorRepository directorRepository;
 
     /**
      * Logger for debugging app.
@@ -172,11 +172,11 @@ public class CartoonController {
         Set<Producer> producersOnMovie = cartoon.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnMovie) {
-            Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
+            Producer producerExist = producerRepository.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
             // If the producer is not present on Database, he add on it.
             if (producerExist == null) {
                 logger.info("Created producer : {}", p);
-                producerDAO.save(p);
+                producerRepository.save(p);
                 producers.add(p);
             } else {
                 logger.info("Added producer {} already present on persistent system.", producerExist);
@@ -189,11 +189,11 @@ public class CartoonController {
         Set<Director> directorOnMovie = cartoon.getDirectors();
         Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnMovie) {
-            Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
+            Director directorExist = directorRepository.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
             if (directorExist  == null) {
                 logger.info("Created director : {}", d);
-                directorDAO.save(d);
+                directorRepository.save(d);
                 directors.add(d);
             } else {
                 logger.info("Added director {} already present on persistent system.", directorExist );
@@ -239,11 +239,11 @@ public class CartoonController {
         Set<Producer> producersOnMovie = cartoon.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnMovie) {
-            Producer producerExist = producerDAO.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
+            Producer producerExist = producerRepository.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
             // If the producer is not present on Database, he add on it.
             if (producerExist == null) {
                 logger.info("Created producer : {}", p);
-                producerDAO.save(p);
+                producerRepository.save(p);
                 producers.add(p);
             } else {
                 logger.info("Added producer {} already present on persistent system.", producerExist);
@@ -256,11 +256,11 @@ public class CartoonController {
         Set<Director> directorOnMovie = cartoon.getDirectors();
         Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnMovie) {
-            Director directorExist = directorDAO.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
+            Director directorExist = directorRepository.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
             if (directorExist  == null) {
                 logger.info("Created director : {}", d);
-                directorDAO.save(d);
+                directorRepository.save(d);
                 directors.add(d);
             } else {
                 logger.info("Added director {} already present on persistent system.", directorExist );

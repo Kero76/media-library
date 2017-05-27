@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface SingerDAO extends JpaRepository<Singer, Long> {
+public interface SingerRepository extends JpaRepository<Singer, Long> {
 
     /**
      * Search an Singer by his first name and last name.

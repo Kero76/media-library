@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers.common;
+package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.daos.common.person.ProducerDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.ProducerRepository;
 import fr.nicolasgille.medialibrary.exception.common.person.ProducerException;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class ProducerController {
      * @since 1.0
      */
     @Autowired
-    private ProducerDAO producerDAO;
+    private ProducerRepository producerRepository;
 
     /**
      * Logger for debugging app.
@@ -81,7 +81,7 @@ public class ProducerController {
      */
     @RequestMapping(value = "/producers/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Producer> producers = producerDAO.findAll();
+        List<Producer> producers = producerRepository.findAll();
         if (producers.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -110,7 +110,7 @@ public class ProducerController {
         String fName = URLDecoder.decode(fNameEncoded, ProducerController.ENCODING);
         String lName = URLDecoder.decode(lNameEncoded, ProducerController.ENCODING);
         logger.info("Fetching Producer named {} {}", fName, lName);
-        Producer producer = producerDAO.findByFirstNameAndLastName(fName, lName);
+        Producer producer = producerRepository.findByFirstNameAndLastName(fName, lName);
         if (producer == null) {
             logger.error("Producer named {} {} not found on Database", fName, lName);
             return new ResponseEntity<Object>(new ProducerException("Producer named " + fName + " " + lName + " not found on Database"), HttpStatus.NO_CONTENT);

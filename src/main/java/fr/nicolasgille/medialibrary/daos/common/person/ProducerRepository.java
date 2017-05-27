@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface ProducerDAO extends JpaRepository<Producer, Long> {
+public interface ProducerRepository extends JpaRepository<Producer, Long> {
 
     /**
      * Search a Producer by his first name and last name.

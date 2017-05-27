@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface PublisherDAO extends JpaRepository<Publisher, Long> {
+public interface PublisherRepository extends JpaRepository<Publisher, Long> {
 
     /**
      * Search an Publisher by his first name and last name.

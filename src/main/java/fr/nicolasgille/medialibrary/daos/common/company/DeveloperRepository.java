@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface DeveloperDAO extends JpaRepository<Developer, Long> {
+public interface DeveloperRepository extends JpaRepository<Developer, Long> {
 
     /**
      * Search an Actor by his name.

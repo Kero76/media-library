@@ -23,6 +23,7 @@ import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
+import fr.nicolasgille.medialibrary.models.video.Video;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
@@ -208,6 +209,29 @@ public class VideoGame extends Media {
         this.developers = developers;
         this.publishers = publishers;
         this.platforms = platforms;
+    }
+
+    /**
+     * Construcor used to copy a VideoGame.
+     *
+     * @param videoGame
+     *  VideoGame at copy.
+     * @since 1.0
+     * @version 1.0
+     */
+    public VideoGame(VideoGame videoGame) {
+        super.id = videoGame.getId();
+        super.title = videoGame.getTitle();
+        this.originalTitle = videoGame.getOriginalTitle();
+        super.synopsis = videoGame.getSynopsis();
+        super.releaseDate = videoGame.getReleaseDate();
+        super.genres = videoGame.getGenres();
+        super.supports = videoGame.getSupports();
+        this.multiplayers = videoGame.isMultiplayers();
+        this.languages = videoGame.getLanguages();
+        this.developers = videoGame.getDevelopers();
+        this.publishers = videoGame.getPublishers();
+        this.platforms = videoGame.getPlatforms();
     }
 
     /**

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers.common;
+package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.daos.common.person.ActorDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.ActorRepository;
 import fr.nicolasgille.medialibrary.exception.common.person.ActorException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class ActorController {
      * @since 1.0
      */
     @Autowired
-    private ActorDAO actorDAO;
+    private ActorRepository actorRepository;
 
     /**
      * Logger for debugging app.
@@ -81,7 +81,7 @@ public class ActorController {
      */
     @RequestMapping(value = "/actors/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Actor> actors = actorDAO.findAll();
+        List<Actor> actors = actorRepository.findAll();
         if (actors.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -110,7 +110,7 @@ public class ActorController {
         String fName = URLDecoder.decode(fNameEncoded, ActorController.ENCODING);
         String lName = URLDecoder.decode(lNameEncoded, ActorController.ENCODING);
         logger.info("Fetching Actor named {} {}", fName, lName);
-        Actor actor = actorDAO.findByFirstNameAndLastName(fName, lName);
+        Actor actor = actorRepository.findByFirstNameAndLastName(fName, lName);
         if (actor == null) {
             logger.error("Actor named {} {} not found on Database", fName, lName);
             return new ResponseEntity<Object>(new ActorException("Actor named " + fName + " " + lName + " not found on Database"), HttpStatus.NO_CONTENT);

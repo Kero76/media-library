@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface AuthorDAO extends JpaRepository<Author, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     /**
      * Search an Author by his first name and last name.

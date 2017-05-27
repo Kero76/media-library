@@ -173,6 +173,27 @@ public class Album extends Media {
     }
 
     /**
+     * Constructor to copy another instance of Album.
+     *
+     * @param album
+     *  Album at copying.
+     * @since 1.0
+     * @version 1.0
+     */
+    public Album(Album album) {
+        super.id = album.getId();
+        super.title = album.getTitle();
+        super.synopsis = album.getSynopsis();
+        super.releaseDate = album.getReleaseDate();
+        super.genres = album.getGenres();
+        super.supports = album.getSupports();
+        this.nbTracks = album.getNbTracks();
+        this.length = album.getLength();
+        this.labelRecords = album.getLabelRecords();
+        this.singers = album.getSingers();
+    }
+
+    /**
      * Return the number of tracks present on the album.
      *
      * @return

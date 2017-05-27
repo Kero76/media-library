@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface DirectorDAO extends JpaRepository<Director, Long> {
+public interface DirectorRepository extends JpaRepository<Director, Long> {
 
     /**
      * Search an Director by his first name and last name.

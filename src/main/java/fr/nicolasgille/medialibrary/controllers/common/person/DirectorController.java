@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.controllers.common;
+package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.daos.common.person.DirectorDAO;
+import fr.nicolasgille.medialibrary.daos.common.person.DirectorRepository;
 import fr.nicolasgille.medialibrary.exception.common.person.DirectorException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class DirectorController {
      * @since 1.0
      */
     @Autowired
-    private DirectorDAO directorDAO;
+    private DirectorRepository directorRepository;
 
     /**
      * Logger for debugging app.
@@ -81,7 +81,7 @@ public class DirectorController {
      */
     @RequestMapping(value = "/directors/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
-        List<Director> directors = directorDAO.findAll();
+        List<Director> directors = directorRepository.findAll();
         if (directors.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         }
@@ -110,7 +110,7 @@ public class DirectorController {
         String fName = URLDecoder.decode(fNameEncoded, DirectorController.ENCODING);
         String lName = URLDecoder.decode(lNameEncoded, DirectorController.ENCODING);
         logger.info("Fetching Director named {} {}", fName, lName);
-        Director director = directorDAO.findByFirstNameAndLastName(fName, lName);
+        Director director = directorRepository.findByFirstNameAndLastName(fName, lName);
         if (director == null) {
             logger.error("Director named {} {} not found on Database", fName, lName);
             return new ResponseEntity<Object>(new DirectorException("Director named " + fName + " " + lName + " not found on Database"), HttpStatus.NO_CONTENT);

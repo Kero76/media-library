@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @version 1.0
  */
 @Transactional
-public interface IllustratorDAO extends JpaRepository<Illustrator, Long> {
+public interface IllustratorRepository extends JpaRepository<Illustrator, Long> {
 
     /**
      * Search an illustrator by his first name and last name.

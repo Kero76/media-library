@@ -17,9 +17,11 @@
 package fr.nicolasgille.medialibrary.daos.book;
 
 import fr.nicolasgille.medialibrary.models.book.Book;
+import fr.nicolasgille.medialibrary.models.video.Cartoon;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 
 /**
  * Repository used to interact with all books available on Database.
@@ -32,14 +34,28 @@ import javax.transaction.Transactional;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
-     * Find a cartoon by his name.
+     * Find a book by his name.
      *
      * @param title
-     *  Title of the cartoon at search on Database.
+     *  Title of the book at search on Database.
      * @return
-     *  An instance of cartoon search by the name.
+     *  An instance of book search by the name.
      * @since 1.0
      * @version 1.0
      */
     Book findByTitleIgnoreCase(String title);
+
+    /**
+     * Find a book by his name, his duration and date of release.
+     *
+     * @param title
+     *  Title of the book.
+     * @param releaseDate
+     *  Date of release of the book search.
+     * @return
+     *  An instance of book search by title, duration and releaseDate.
+     * @since 1.0
+     * @version 1.0
+     */
+    Cartoon findByTitleAndRuntimeAndReleaseDate(String title, Calendar releaseDate);
 }
