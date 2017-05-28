@@ -16,7 +16,6 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import org.junit.Before;
 import org.junit.Test;

@@ -54,6 +54,7 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CartoonController {
+
     /**
      * Constant used to specified URL encoding.
      *

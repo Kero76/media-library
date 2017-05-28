@@ -67,7 +67,13 @@ public enum MediaGenre {
     NEW_WAVE("New Wave"),
     POP("Pop"),
     REGGAE("Reggae"),
-    ROCK_N_ROLL("Rock'n'Roll");
+    ROCK_N_ROLL("Rock'n'Roll"),
+
+    // VideoGame
+    FPS("First Person Shooter"),
+    PLATFORMS("Platform"),
+    RPG("Role Playing Game"),
+    TPS("Third Person Shooter");
 
 
     /**

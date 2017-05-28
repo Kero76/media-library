@@ -100,7 +100,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-games/", method = RequestMethod.GET)
+    @RequestMapping(value = "/video-game/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<VideoGame> videoGames = videoGameRepository.findAll();
         if (videoGames.isEmpty()) {
@@ -124,7 +124,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-games/search/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/video-game/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getVideoGameByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, VideoGameController.ENCODING);
         logger.info("Fetching VideoGame with title {}", title);
@@ -152,7 +152,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-games/", method = RequestMethod.POST)
+    @RequestMapping(value = "/video-game/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody VideoGame videoGame, UriComponentsBuilder uriBuilder) {
         logger.info("Created videoGame : {}", videoGame);
 
@@ -180,7 +180,7 @@ public class VideoGameController {
         }
         videoGame.setDevelopers(developers);
 
-        // Check if the illustrator are present on Database or not.
+        // Check if the publisher are present on Database or not.
         Set<Publisher> publishersOnVideoGame = videoGame.getPublishers();
         Set<Publisher> publishers = new HashSet<Publisher>();
         for (Publisher d : publishersOnVideoGame) {
@@ -199,7 +199,7 @@ public class VideoGameController {
         videoGameRepository.save(videoGame);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/videoGames/search/title/{id}").buildAndExpand(videoGame.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/video-game/search/title/{id}").buildAndExpand(videoGame.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
@@ -220,7 +220,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-games/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/video-game/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody VideoGame videoGame) {
         logger.info("Updating VideoGame with id {}", id);
 
@@ -247,7 +247,7 @@ public class VideoGameController {
         }
         videoGame.setDevelopers(developers);
 
-        // Check if the illustrator are present on Database or not.
+        // Check if the publisher are present on Database or not.
         Set<Publisher> publishersOnVideoGame = videoGame.getPublishers();
         Set<Publisher> publishers = new HashSet<Publisher>();
         for (Publisher d : publishersOnVideoGame) {
@@ -285,7 +285,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-games/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/video-game/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting VideoGame with id {}", id);
 

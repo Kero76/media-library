@@ -76,13 +76,12 @@ public class VideoGame extends Media {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "video_game_developer",
             joinColumns = @JoinColumn(name = "video_game_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "developer_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Developer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Developer> developers;
 
@@ -91,7 +90,6 @@ public class VideoGame extends Media {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "video_game_publisher",
             joinColumns = @JoinColumn(name = "video_game_id", referencedColumnName = "id"),

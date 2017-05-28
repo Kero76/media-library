@@ -23,6 +23,7 @@ import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -72,6 +73,8 @@ public class Publisher extends Company {
      */
     public Publisher(String name) {
         super.name = name;
+        this.books = new HashSet<Book>();
+        this.videoGames = new HashSet<VideoGame>();
     }
 
     /**
@@ -153,18 +156,23 @@ public class Publisher extends Company {
      */
     @Override
     public String toString() {
-        if (this.books.isEmpty()) {
+        if (this.books != null) {
             return "Publisher{" +
                     "id=" + super.id +
                     ", name=" + super.name +
-                    ", videoGames=" + CollectionAsString.setToString(this.videoGames) +
-                    '}';
-        } else {
-            return "Publisher{" +
-                    "id=" + super.id +
-                    ", name=" + super.name +
-                    ", books=" + CollectionAsString.setToString(this.books) +
+                    ", videoGames=" + CollectionAsString.setToString(this.books) +
                     '}';
         }
+        if (this.videoGames != null){
+            return "Publisher{" +
+                    "id=" + super.id +
+                    ", name=" + super.name +
+                    ", books=" + CollectionAsString.setToString(this.videoGames) +
+                    '}';
+        }
+        return "Publisher{" +
+                "id=" + super.id +
+                ", name=" + super.name +
+                '}';
     }
 }

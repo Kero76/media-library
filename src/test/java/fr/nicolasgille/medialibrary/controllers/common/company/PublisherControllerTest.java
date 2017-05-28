@@ -16,9 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.company;
 
-import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
-import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;

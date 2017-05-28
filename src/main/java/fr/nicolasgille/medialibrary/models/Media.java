@@ -79,7 +79,6 @@ public abstract class Media implements IMedia {
      * @see MediaGenre
      * @since 2.0
      */
-    @NotNull
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = MediaGenre.class)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -91,7 +90,6 @@ public abstract class Media implements IMedia {
      * @see MediaSupport
      * @since 2.0
      */
-    @NotNull
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = MediaSupport.class)
     @LazyCollection(LazyCollectionOption.FALSE)
