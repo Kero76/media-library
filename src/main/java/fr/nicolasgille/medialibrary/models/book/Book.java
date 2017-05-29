@@ -79,7 +79,7 @@ public class Book extends Media {
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = {@JoinColumn(name = "authors_id", referencedColumnName = "id")}
     )
-    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Author.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Author> authors;
 

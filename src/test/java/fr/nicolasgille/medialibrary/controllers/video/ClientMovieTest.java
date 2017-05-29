@@ -86,38 +86,12 @@ public class ClientMovieTest {
         // Given - Instantiate id at update and corresponding movie.
         String messageExcepted = "404 null";
         int id = 666;
-
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
-
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
-
-        Set<Actor> actors = new HashSet<Actor>();
-        actors.add(new Actor("Nicolas", "Cage"));
-
-        Set<Producer> producers = new HashSet<Producer>();
-        producers.add(new Producer("Steven", "Spielberg"));
-
-        Set<Director> directors = new HashSet<Director>();
-        directors.add(new Director("Ridley", "Scott"));
-
-        List<MediaSupport> supports = new ArrayList<MediaSupport>();
-        supports.add(MediaSupport.DVD);
-
-        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
-        languageSpoken.add(LanguageCode.fr);
-        languageSpoken.add(LanguageCode.en);
-
-        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
-        subtitles.add(LanguageCode.fr);
-        subtitles.add(LanguageCode.en);
-        subtitles.add(LanguageCode.nl);
-        subtitles.add(LanguageCode.de);
-        subtitles.add(LanguageCode.it);
 
         Movie movie = new Movie(
                 id,  "My title", "My original title", "My Synopsis",
-                actors, directors, producers, genres, supports, languageSpoken, subtitles,
+                new HashSet<Actor>(), new HashSet<Director>(), new HashSet<Producer>(),
+                new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
                 releaseDate, 120
         );
 

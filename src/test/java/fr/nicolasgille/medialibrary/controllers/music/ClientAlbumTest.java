@@ -84,17 +84,10 @@ public class ClientAlbumTest {
         // Given - Instantiate id at update and corresponding album.
         String messageExcepted = "404 null";
         int id = 666;
-
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
-
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
-        List<MediaSupport> supports = new ArrayList<MediaSupport>();
-        supports.add(MediaSupport.CD);
-
         Album album = new Album(
-                id, "My Title", "", releaseDate, genres, supports,
+                id, "My Title", "", releaseDate, new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(),
                 12, 48.42, new HashSet<LabelRecords>(), new HashSet<Singer>()
         );
 
@@ -119,10 +112,10 @@ public class ClientAlbumTest {
 
     @Test
     public void testGetAlbumWithEmptyPersistentSystem() {
-        // Given - Instantiate title of cartoon.
+        // Given - Instantiate title of album.
         String title = "Crusader";
 
-        // When - Get one cartoon from persistent system.
+        // When - Get one album from persistent system.
         ResponseEntity<Album> cartoon = this.restTemplate.getForEntity(REST_SERVICE_URI + "/music/search/title/" + title, Album.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
@@ -305,7 +298,7 @@ public class ClientAlbumTest {
 
     @Test
     public void testGetAllAlbums() {
-        // Given - Instantiate a album to push on persistent system.
+        // Given - Instantiate an album to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
 
@@ -345,7 +338,7 @@ public class ClientAlbumTest {
 
     @Test
     public void updateAlbum() throws UnsupportedEncodingException {
-        // Given - Instantiate a album to update on persistent system.
+        // Given - Instantiate an album to update on persistent system.
         int id = 2;
         String title = "Lionheart";
         String synopsis = "Witchfinder General";
@@ -382,7 +375,7 @@ public class ClientAlbumTest {
 
     @Test
     public void updateAlbumNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
-        // Given - Instantiate a album to update on persistent system.
+        // Given - Instantiate an album to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
         int id = 666;

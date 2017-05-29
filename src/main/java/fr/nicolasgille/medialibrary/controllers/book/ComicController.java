@@ -129,19 +129,23 @@ public class ComicController {
      *
      * @param titleEncoded
      *  Title of the comic encoded to search on Database.
+     * @param currentVolume
+     *  Current volume of the comic at search on Database.
      * @return
      *  A ResponseEntity with the comic found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/comics/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getComicByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/comics/search/title/{title}/{currentVolume}", method = RequestMethod.GET)
+    public ResponseEntity<?> getComicByTitleAndCurrentVolume(
+            @PathVariable(value = "title") String titleEncoded,
+            @PathVariable(value = "currentVolume") int currentVolume) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, ComicController.ENCODING);
-        logger.info("Fetching Comic with title {}", title);
-        Comic comic = comicRepository.findByTitleIgnoreCase(title);
+        logger.info("Fetching Comic with title {} and current volume {}", title);
+        Comic comic = comicRepository.findByTitleIgnoreCaseAndCurrentVolume(title, currentVolume);
         if (comic == null) {
-            logger.error("Comic with title {} not found.", title);
-            return new ResponseEntity<Object>(new ComicException("Comic with title " + title + " not found."), HttpStatus.NO_CONTENT);
+            logger.error("Comic with title {} and current volume {} not found.", title, currentVolume);
+            return new ResponseEntity<Object>(new ComicException("Comic with title " + title + " and current volume " + currentVolume + " not found."), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Comic>(comic, HttpStatus.OK);
     }
@@ -167,7 +171,7 @@ public class ComicController {
         logger.info("Created comic : {}", comic);
 
         // Check if the comic already exist on database.
-        Comic comicExist = comicRepository.findByTitleIgnoreCase(comic.getTitle());
+        Comic comicExist = comicRepository.findByTitleIgnoreCaseAndCurrentVolume(comic.getTitle(), comic.getCurrentVolume());
         if (comicExist != null) {
             logger.error("Unable to create. The comic {} already exist", comic.getTitle());
             return new ResponseEntity<ComicException>(new ComicException("Unable to create. The comic " + comic.getTitle() + " already exist"), HttpStatus.CONFLICT);

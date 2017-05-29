@@ -86,39 +86,13 @@ public class ClientSeriesTest {
         // Given - Instantiate id at update and corresponding series.
         String messageExcepted = "404 null";
         int id = 666;
-
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-
-        Set<Actor> actors = new HashSet<Actor>();
-        actors.add(new Actor("Nicolas", "Cage"));
-
-        Set<Producer> producers = new HashSet<Producer>();
-        producers.add(new Producer("Steven", "Spielberg"));
-
-        Set<Director> directors = new HashSet<Director>();
-        directors.add(new Director("Ridley", "Scott"));
-
-        List<MediaSupport> supports = new ArrayList<MediaSupport>();
-        supports.add(MediaSupport.DVD);
-
-        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
-        languageSpoken.add(LanguageCode.fr);
-        languageSpoken.add(LanguageCode.en);
-
-        List<LanguageCode> subtitles = new ArrayList<LanguageCode>();
-        subtitles.add(LanguageCode.fr);
-        subtitles.add(LanguageCode.en);
-        subtitles.add(LanguageCode.nl);
-        subtitles.add(LanguageCode.de);
-        subtitles.add(LanguageCode.it);
-
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 id, "Star Gate SG1", "Star Gate SG1", "My Synopsis",
-                actors, directors, producers, categories, supports, languageSpoken, subtitles,
+                new HashSet<Actor>(), new HashSet<Director>(), new HashSet<Producer>(),
+                new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
                 startDate, endDate, 10, 2, 226, 22, 42
         );
 

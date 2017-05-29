@@ -86,21 +86,10 @@ public class ClientVideoGameTest {
         // Given - Instantiate id at update and corresponding video game.
         String messageExcepted = "404 null";
         int id = 666;
-
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
-
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
-        List<MediaSupport> supports = new ArrayList<MediaSupport>();
-        supports.add(MediaSupport.CD);
-
-        List<LanguageCode> languageSpoken = new ArrayList<LanguageCode>();
-        languageSpoken.add(LanguageCode.fr);
-        languageSpoken.add(LanguageCode.en);
-
         VideoGame videoGame = new VideoGame(
-                id,"My Title", "My Original Title", "", releaseDate, genres, supports, false, languageSpoken,
+                id,"My Title", "My Original Title", "", releaseDate, new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), false, new ArrayList<LanguageCode>(),
                 new HashSet<Developer>(), new HashSet<Publisher>(), new ArrayList<VideoGamePlatform>()
         );
 
@@ -436,7 +425,7 @@ public class ClientVideoGameTest {
         // When - Get video game update and check if the difference appear.
         ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
 
-        // Then - Compare synopsis.
+        // Then - Compare originalTitle.
         assertThat(responseEntity.getBody().getOriginalTitle()).isEqualTo(originalTitle);
     }
 
