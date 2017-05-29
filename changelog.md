@@ -1,4 +1,14 @@
 # Changelog 
+## V1.0 : Initial Release - Released May 29, 2017
+
+### Features
+- Add following medias :
+  * Book
+  * Comic
+  * Music Album
+  * Video Game
+- Add some new elements on `MediaGenre`.
+- Add some new elements on `MediaSupport`
 
 ## V0.3 : Cartoon Release - Released May 18, 2017
 

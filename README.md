@@ -7,13 +7,11 @@ Media manages by Media Library are :
 | :-------:|-----------|
 | Movies   | Release   |
 | Series   | Release   |
-| Cartoon  | Forecast  |
-| Anime    | Forecast  |
-| Musics   | Forecast  |
-| Games    | Forecast  |
-| Books    | Forecast  |
-| Comics   | Forecast  |
-| Mangas   | Forecast  |
+| Cartoon  | Release   |
+| Musics   | Release   |
+| Games    | Release   |
+| Books    | Release   |
+| Comics   | Release   |
 
 The statement is a representation of the current state of development of each media :
 - `Forecast` mean the media not working and appear in the future released.
@@ -41,58 +39,6 @@ The statement is a representation of the current state of development of each me
 | GET    | /media-library/search/actor?fname=XXX&lname=YYY      | /      | Search one Actor by his first and last name.                                          |
 | GET    | /media-library/search/director?fname=XXX&lname=YYY   | /      | Search one Director by his first and last name.                                       |
 | GET    | /media-library/search/producer?fname=XXX&lname=YYY   | /      | Search one Producer by his first and last name.                                       |
-
-### Medias
-#### Movies content
-- id : long
-- title : String
-- originalTitle : String
-- synopsis : String
-- mainActors : array<actor>
-- directors : array<director>
-- producers : array<producer>
-- genres : array<String>
-- supports : array<String>
-- spokenLanguages : array<String>
-- subtitles : array<String>
-- releaseDate : date
-- duration : int
-- poster : path
-
-#### Cartoon content
-- id : long
-- title : String
-- originalTitle : String
-- synopsis : String
-- directors : array<director>
-- producers : array<producer>
-- genres : array<String>
-- supports : array<String>
-- spokenLanguages : array<String>
-- subtitles : array<String>
-- releaseDate : date
-- duration : int
-- poster : path
-
-#### Series content
-- id : long
-- title : String
-- originalTitle : String
-- synopsis : String
-- mainActors : array<actor>
-- directors : array<director>
-- producers : array<producer>
-- genres : array<String>
-- supports : array<String>
-- spokenLanguages : array<String>
-- subtitles : array<String>
-- numberOfSeasons : int
-- maxEpisodes : int
-- numberOfEpisodes : int
-- averageEpisodeRuntime : int
-- startDate : date
-- endDate : date
-- poster : path
  
 ## Commands
 - `mvn spring-boot:run` : Deploy Media Library in localhost:8080/
@@ -103,6 +49,7 @@ The statement is a representation of the current state of development of each me
 Media-Library is under GPLv3 license.
 
 ## Changelog 
+- V1.0 : Initial Release - Released May 29, 2017
 - V0.3 : Cartoon Release - Released May 18, 2017
 - V0.2.1 : Person Update - Released May 11, 2017
 - V0.2 : Refactoring Release - Released May 10, 2017
