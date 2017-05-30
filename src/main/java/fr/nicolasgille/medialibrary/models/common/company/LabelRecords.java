@@ -1,6 +1,5 @@
 package fr.nicolasgille.medialibrary.models.common.company;
 
-import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.music.Album;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 
@@ -9,12 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.Set;
 
-
 /**
- * Class Publisher represent a company who published book media type.
+ * Class LabelRecords represent a company who records music album.
  *
  * @see Company
- * @see Book
+ * @see Album
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0

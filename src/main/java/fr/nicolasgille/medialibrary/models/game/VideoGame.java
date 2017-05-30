@@ -38,6 +38,7 @@ import java.util.Set;
 /**
  * Representation of video game.
  *
+ * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0

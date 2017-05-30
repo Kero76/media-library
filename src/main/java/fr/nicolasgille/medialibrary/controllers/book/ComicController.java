@@ -16,15 +16,15 @@
  */
 package fr.nicolasgille.medialibrary.controllers.book;
 
-import fr.nicolasgille.medialibrary.daos.book.ComicRepository;
-import fr.nicolasgille.medialibrary.daos.common.company.PublisherRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.AuthorRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.IllustratorRepository;
-import fr.nicolasgille.medialibrary.exception.book.ComicException;
+import fr.nicolasgille.medialibrary.exceptions.book.ComicException;
 import fr.nicolasgille.medialibrary.models.book.Comic;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
+import fr.nicolasgille.medialibrary.repositories.book.ComicRepository;
+import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
+import fr.nicolasgille.medialibrary.repositories.common.person.AuthorRepository;
+import fr.nicolasgille.medialibrary.repositories.common.person.IllustratorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +43,13 @@ import java.util.Set;
 
 /**
  * Controller of the app to interact with comics present on Media-Library.
+ * You can use CRUD method to insert, delete, update or select book from Database.
+ * So, many methods about research are available on the controller to search comic with different way of search.
+ * You can add you own method of research if you would have a new research type of comic.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,7 +63,7 @@ public class ComicController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO used to interact with the table <code>media</code> present on Database.
+     * Repository used to interact with comic present on the service.
      *
      * @since 1.0
      */
@@ -68,7 +71,7 @@ public class ComicController {
     private ComicRepository comicRepository;
 
     /**
-     * DAO used to interact with the authors present on media-library.
+     * Repository used to interact with authors present on the service.
      *
      * @since 1.0
      */
@@ -76,7 +79,7 @@ public class ComicController {
     private AuthorRepository authorRepository;
 
     /**
-     * DAO used to interact with the publisher present on media-library.
+     * Repository used to interact with publishers present on the service.
      *
      * @since 1.0
      */
@@ -84,7 +87,7 @@ public class ComicController {
     private PublisherRepository publisherRepository;
 
     /**
-     * DAO used to interact with the illustrators present on media-library.
+     * Repository used to interact with illustrators present on the service.
      *
      * @since 1.0
      */
@@ -92,7 +95,7 @@ public class ComicController {
     private IllustratorRepository illustratorRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
@@ -120,12 +123,15 @@ public class ComicController {
     }
 
     /**
-     * Return a comic by his title.
+     * Return a comic by his title and his current volume.
      *
      * This method return a ResponseEntity with the comic retrieve from the Database.
-     * If the database research don't retrieve the comic, this method return an HTTP error.
-     * This method can call by GET request and take an path variable the title of the comic at research.
-     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search comic on Database.
+     * If the database doesn't get the comic, this method return an HTTP error : 204.
+     * In other case, this method return the comic found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the title of the comic at research and the current volume of the comic
+     * (especially with european comic, mangas, or american comic).
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
      *
      * @param titleEncoded
      *  Title of the comic encoded to search on Database.
@@ -151,11 +157,39 @@ public class ComicController {
     }
 
     /**
+     * Return a comic by his identifier.
+     *
+     * This method return a ResponseEntity with the comic retrieve from the Database.
+     * If the database doesn't get the comic, this method return an HTTP error : 204.
+     * In other case, this method return the comic found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the identifier of the comic at research.
+     *
+     * @param id
+     *  Identifier of the Comic on Database.
+     * @return
+     *  A ResponseEntity with the comic found on Database, or an error HTTP 204 : No Content.
+     * @since 1.1
+     * @version 1.0
+     */
+    @RequestMapping(value = "/comics/search/id/{id}")
+    public ResponseEntity<?> getComicById(@PathVariable(value = "id") long id) {
+        logger.info("Fetching Comic with id {}", id);
+        Comic comic = comicRepository.findOne(id);
+        if (comic == null) {
+            logger.error("Comic with id {} not found.", id);
+            return new ResponseEntity<Object>(new ComicException("Comic with id " + id + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Comic>(comic, HttpStatus.OK);
+    }
+
+    /**
      * Add a comic on the Database.
      *
      * Before added the comic on database, it check if the comic is already present on the database.
-     * And if the comic is present, the method return an error HTTP 409 : CONFLICT.
-     * This method can call only by a POST request and take on BODY the comic at insert on Database.
+     * So, if the comic is present, the method return an error HTTP 409 : CONFLICT.
+     * In other case, it return the code HTTP 200 and an uri to get information about the new comic insert.
+     * So, this method is call by POST method and take the comic at insert on the BODY request.
      *
      * @param comic
      *  Comic at insert on Database.
@@ -230,17 +264,17 @@ public class ComicController {
         comicRepository.save(comic);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/comics/search/title/{id}").buildAndExpand(comic.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/comics/search/id/{id}").buildAndExpand(comic.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a comic present on the Database.
      *
-     * This method update a comic present on database only if this comic is present on it.
-     * In other case, this method return a HTTP error 404 : Not Found.
-     * This method can call only by PUT method and take the id of the comic at update on path variable
-     * and the object comic with the new content on BODY.
+     * It update a comic only if found on database.
+     * It the comic is not found, the method return an error with the HTTP code 404.
+     * In other case, it update the information about the comic and return in the body the comic update
+     * can use to check if the modification are succeeded and the HTTP code 200.
      *
      * @param id
      *  Id of the comic on Database.
@@ -319,12 +353,12 @@ public class ComicController {
     }
 
     /**
-     * Removed a comic from the Database.
+     * Remove a comic from the Database.
      *
-     * This method remove a comic from the database only if the comic is present on the Database.
-     * It return an error HTTP 404 : NOT FOUND if the comic at deleted isn't present on the database.
-     * To call this method, you can pass on the url the id of the comic at remove
-     * and this method can call only with DELETE request.
+     * It remove a comic if it found on database.
+     * If the comic is not found on database, this method return an error and the HTTP code 404.
+     * Otherwise, the method delete the comic thanks to the identifier and return in the body the comic deleted
+     * and the code HTTP 200 to confirm the success of the deletion.
      *
      * @param id
      *  Id of the comic at delete.

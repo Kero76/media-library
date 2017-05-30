@@ -25,7 +25,9 @@ import javax.persistence.Transient;
 import java.util.Set;
 
 /**
- * Class Author present the author of the Book.
+ * Class Singer who represent a singer or a music group for an Album.
+ * To represent a band, you can add the name of the band directly as first name, last name or twice if you like.
+ * So, in following of your choice, you just get the information thanks to the right getXXX methods.
  *
  * @see Person
  * @see Album

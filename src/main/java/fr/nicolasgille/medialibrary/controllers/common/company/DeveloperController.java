@@ -16,18 +16,18 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.company;
 
-import fr.nicolasgille.medialibrary.daos.common.company.DeveloperRepository;
-import fr.nicolasgille.medialibrary.exception.common.company.DeveloperException;
+import fr.nicolasgille.medialibrary.exceptions.common.company.DeveloperException;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
+import fr.nicolasgille.medialibrary.repositories.common.company.DeveloperRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
@@ -38,8 +38,8 @@ import java.util.List;
  * Controller of Developer model object.
  *
  * This class control the access of the developer on the project.
- * In fact, it define CRUD method to interact with the model and the persistence model.
- * It can update in the future to add new methods like getXXX requests.
+ * It define some method to search developer present on the database.
+ * You can add your own method to search or interact with developer if you like.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
@@ -57,7 +57,7 @@ public class DeveloperController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO object used to interact with Developer on Database.
+     * Repository used to interact with developers present on the service.
      *
      * @since 1.0
      */
@@ -65,14 +65,17 @@ public class DeveloperController {
     private DeveloperRepository developerRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
     static final Logger logger = LoggerFactory.getLogger(DeveloperController.class);
 
     /**
-     * Get all Developers on persistent system.
+     * Get all developers from the database.
+     *
+     * If the database is empty, it return a response with the following code HTTP : 204.
+     * In other case, it return all developers present on database.
      *
      * @return
      *  A list of all developers present on persistent system or an error HTTP : NO_CONTENT.
@@ -89,22 +92,21 @@ public class DeveloperController {
     }
 
     /**
-     * Return a developer by his first name and last name.
+     * Get a developer by his name.
      *
-     * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the developer, this method return an HTTP error.
-     * This method can call by GET request and take two arguments on url which represent the first and the last name of the Developer.
-     * So, these arguments get from the URL are encoded and it necessary to decoded them before search developer on Database.
+     * This method return an instance of developer on the response body and the code HTTP 200 only if the developer was found.
+     * In the other case, the method return a response with the HTTP code 204.
+     * The name of the developer must passed on the url after the last "/ and encoded in UTF-8 to decoded on the search method.
      *
      * @param nameEncoded
-     *  First name of the developer encoding in UTF8.
+     *  Name of the developer encoding in UTF8.
      * @return
      *  A ResponseEntity with the developer found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/developer", method = RequestMethod.GET)
-    public ResponseEntity<?> getDeveloperByName(@RequestParam(name = "name") String nameEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/search/developer/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getDeveloperByName(@PathVariable(value = "name") String nameEncoded) throws UnsupportedEncodingException {
         String name = URLDecoder.decode(nameEncoded, DeveloperController.ENCODING);
         logger.info("Fetching Developer named {}", name);
         Developer developer = developerRepository.findByName(name);

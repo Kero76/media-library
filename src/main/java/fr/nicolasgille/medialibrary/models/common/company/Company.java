@@ -26,8 +26,8 @@ import javax.persistence.*;
  *     <li>name : Name of the company</li>
  * </ul>
  *
- * @author Nicolas GILLE
  * @see ICompany
+ * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0
  */

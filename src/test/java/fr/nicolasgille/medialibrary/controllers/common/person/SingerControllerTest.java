@@ -74,12 +74,12 @@ public class SingerControllerTest {
     public void getOneSinger() {
         // Given - @see setUp() and instantiate last and first name of the actor to request.
         HttpStatus httpStatusExpected = HttpStatus.OK;
-        String fnameExpected = "Nicolas";
-        String lnameExpected = "Cage";
+        String fnameExpected = "Saxon";
+        String lnameExpected = "";
 
         // When - Get Nicolas Cage from persistent system.
         ResponseEntity<Actor> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/singer?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
+                REST_SERVICE_URI + "/search/singers?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

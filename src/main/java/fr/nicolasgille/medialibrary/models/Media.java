@@ -54,6 +54,7 @@ public abstract class Media implements IMedia {
      *
      * @since 1.0
      */
+    @NotNull
     protected String title;
 
     /**

@@ -16,18 +16,18 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.company;
 
-import fr.nicolasgille.medialibrary.daos.common.company.PublisherRepository;
-import fr.nicolasgille.medialibrary.exception.common.company.PublisherException;
+import fr.nicolasgille.medialibrary.exceptions.common.company.PublisherException;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
+import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
@@ -38,8 +38,8 @@ import java.util.List;
  * Controller of Publisher model object.
  *
  * This class control the access of the publisher on the project.
- * In fact, it define CRUD method to interact with the model and the persistence model.
- * It can update in the future to add new methods like getXXX requests.
+ * It define some method to search publisher present on the database.
+ * You can add your own method to search or interact with publisher if you like.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
@@ -57,7 +57,7 @@ public class PublisherController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO object used to interact with Publisher on Database.
+     * Repository used to interact with publishers present on the service.
      *
      * @since 1.0
      */
@@ -65,17 +65,20 @@ public class PublisherController {
     private PublisherRepository publisherRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
     static final Logger logger = LoggerFactory.getLogger(PublisherController.class);
 
     /**
-     * Get all Publishers on persistent system.
+     * Get all publishers from the database.
+     *
+     * If the database is empty, it return a response with the following code HTTP : 204.
+     * In other case, it return all publishers present on database.
      *
      * @return
-     *  A list of all publishers present on persistent system or an error HTTP : NO_CONTENT.
+     *  A list of all publishers present on database or an error HTTP : NO_CONTENT.
      * @since 1.0
      * @version 1.0
      */
@@ -89,22 +92,21 @@ public class PublisherController {
     }
 
     /**
-     * Return a publisher by his first name and last name.
+     * Get a publisher by his name.
      *
-     * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the publisher, this method return an HTTP error.
-     * This method can call by GET request and take two arguments on url which represent the first and the last name of the Publisher.
-     * So, these arguments get from the URL are encoded and it necessary to decoded them before search publisher on Database.
+     * This method return an instance of publisher on the response body and the code HTTP 200 only if the publisher was found.
+     * In the other case, the method return a response with the HTTP code 204.
+     * The name of the publisher must passed on the url after the last "/ and encoded in UTF-8 to decoded on the search method.
      *
      * @param nameEncoded
-     *  First name of the publisher encoding in UTF8.
+     *  Name of the publisher encoding in UTF8.
      * @return
      *  A ResponseEntity with the publisher found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/publisher", method = RequestMethod.GET)
-    public ResponseEntity<?> getPublisherByName(@RequestParam(name = "name") String nameEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/search/publisher/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPublisherByName(@PathVariable(value = "name") String nameEncoded) throws UnsupportedEncodingException {
         String name = URLDecoder.decode(nameEncoded, PublisherController.ENCODING);
         logger.info("Fetching Publisher named {}", name);
         Publisher publisher = publisherRepository.findByName(name);

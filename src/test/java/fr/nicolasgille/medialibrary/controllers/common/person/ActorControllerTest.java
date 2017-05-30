@@ -79,7 +79,7 @@ public class ActorControllerTest {
 
         // When - Get Nicolas Cage from persistent system.
         ResponseEntity<Actor> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/actor?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
+                REST_SERVICE_URI + "/search/actors?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

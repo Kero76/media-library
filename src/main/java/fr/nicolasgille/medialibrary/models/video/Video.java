@@ -34,6 +34,7 @@ import java.util.Set;
  * If you would add new video subtype, you must extends <code>Video</code> class
  * to get all attributes available on Video type.
  *
+ * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.2
  * @version 2.0

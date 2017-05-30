@@ -16,7 +16,7 @@
  */
 package fr.nicolasgille.medialibrary.controllers.book;
 
-import fr.nicolasgille.medialibrary.exception.book.ComicException;
+import fr.nicolasgille.medialibrary.exceptions.book.ComicException;
 import fr.nicolasgille.medialibrary.models.book.Comic;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;

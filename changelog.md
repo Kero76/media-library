@@ -1,5 +1,5 @@
 # Changelog 
-## V1.0 : Initial Release - Released May 29, 2017
+## V0.4 : Medias Release - Released May 30, 2017
 
 ### Features
 - Add following medias :

@@ -53,9 +53,9 @@ public class DateFormatter {
      * Add a 0 before the number to get a format like <em>02</em> instead of <em>2</em>.
      *
      * @param n
-     *  Number add return with or without a 0.
+     *  Number to return with or without a 0 as a String.
      * @return
-     *  The String representation with a 0 before or not.
+     *  The String representation of the number n with a 0 before or not.
      */
     private static String addPreviousZero(int n) {
         if (n >= 10) {

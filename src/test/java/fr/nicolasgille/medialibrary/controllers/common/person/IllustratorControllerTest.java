@@ -74,12 +74,12 @@ public class IllustratorControllerTest {
     public void getOneIllustrator() {
         // Given - @see setUp() and instantiate last and first name of the actor to request.
         HttpStatus httpStatusExpected = HttpStatus.OK;
-        String fnameExpected = "Nicolas";
-        String lnameExpected = "Cage";
+        String fnameExpected = "Naoshi";
+        String lnameExpected = "Komi";
 
         // When - Get Nicolas Cage from persistent system.
         ResponseEntity<Actor> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/illustrator?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
+                REST_SERVICE_URI + "/search/illustrators?fname=" + fnameExpected + "&lname=" + lnameExpected, Actor.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

@@ -79,7 +79,7 @@ public class DirectorControllerTest {
 
         // When - Get Ridley Scott from persistent system.
         ResponseEntity<Director> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/director?fname=" + fnameExpected + "&lname=" + lnameExpected, Director.class);
+                REST_SERVICE_URI + "/search/directors?fname=" + fnameExpected + "&lname=" + lnameExpected, Director.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

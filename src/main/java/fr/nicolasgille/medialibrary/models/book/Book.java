@@ -39,6 +39,7 @@ import java.util.Set;
  * It must be extends by all subtype of book like <code>Manga</code> or <code>Comic</code>.
  * This class isn't abstract because books like <em>Novel</em> can be represented by this class.
  *
+ * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0

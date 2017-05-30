@@ -17,7 +17,7 @@
 package fr.nicolasgille.medialibrary.models.components;
 
 /**
- * An enumeration who representing all media support available on Media-Library.
+ * An enumeration who representing all media's support available on Media-Library.
  * This enumeration are composed by :
  * <ul>
  *     <li>VIDEO_TAPE : For old medias.</li>
@@ -25,21 +25,6 @@ package fr.nicolasgille.medialibrary.models.components;
  *     <li>BLU_RAY : Blu Ray support.</li>
  *     <li>PAPER : Paper support for book.</li>
  *     <li>DIGITAL : Digital version (on computer).</li>
- * </ul>
- *
- * V1.2 :
- * <ul>
- *     <li>Added <code>DIGITAL</code> value of enumerator.</li>
- *     <li>Added <code>PAPER</code> value of enumerator.</li>
- *     <li>Added <code>AUDIO_TAPE</code> value of enumerator.</li>
- *     <li>Added <code>VYNIL</code> value of enumerator.</li>
- *     <li>Added <code>CD</code> value of enumerator.</li>
- * </ul>
- *
- * V1.1 :
- * <ul>
- *     <li>Added constructor with <code>name</code> parameter.</li>
- *     <li>Added <<code>name</code> attributes and corresponding getter and setter.</li>
  * </ul>
  *
  * @author Nicolas GILLE

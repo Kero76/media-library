@@ -16,8 +16,8 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.daos.common.person.SingerRepository;
-import fr.nicolasgille.medialibrary.exception.common.person.SingerException;
+import fr.nicolasgille.medialibrary.repositories.common.person.SingerRepository;
+import fr.nicolasgille.medialibrary.exceptions.common.person.SingerException;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +37,9 @@ import java.util.List;
 /**
  * Controller of singer model object.
  *
- * This class control the access of the author on the project.
- * In fact, it define CRUD method to interact with the model and the persistence model.
- * It can update in the future to add new methods like getXXX requests.
+ * This class control the access of the singer on the project.
+ * It define some method to search singer present on the database.
+ * You can add your own method to search or interact with singer if you like.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
@@ -57,7 +57,7 @@ public class SingerController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO object used to interact with Singer on Database.
+     * Repository used to interact with singers present on the service.
      *
      * @since 1.0
      */
@@ -65,14 +65,17 @@ public class SingerController {
     private SingerRepository singerRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
     static final Logger logger = LoggerFactory.getLogger(SingerController.class);
 
     /**
-     * Get all Singers on persistent system.
+     * Get all singers from the database.
+     *
+     * If the database is empty, it return a response with the following code HTTP : 204.
+     * In other case, it return all singers present on database.
      *
      * @return
      *  A list of all singers present on persistent system or an error HTTP : NO_CONTENT.
@@ -89,12 +92,14 @@ public class SingerController {
     }
 
     /**
-     * Return a singer by his first name and last name.
+     * Return a singer by his first name and his last name.
      *
-     * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the singer, this method return an HTTP error.
-     * This method can call by GET request and take two arguments on url which represent the first and the last name of the Singer.
-     * So, these arguments get from the URL are encoded and it necessary to decoded them before search singer on Database.
+     * This method return an singer by his nam and his last name.
+     * If the singer is not found on database, it return a HTTP response with the error code 204.
+     * In other case, this method return the singer on the body of the HTTP response.
+     * The first name and the last name must encoded in UTF-8 to avoid problems with special characters,
+     * and must present as parameter of the url like the following format :
+     * <code>/media-library/search/singers?fname=XXX&lname=YYY</code>
      *
      * @param fNameEncoded
      *  First name of the singer encoding in UTF8.
@@ -105,7 +110,7 @@ public class SingerController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/singer", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/singers", method = RequestMethod.GET)
     public ResponseEntity<?> getSingerByFirstNameAndLastName(@RequestParam(name = "fname") String fNameEncoded, @RequestParam(name = "lname") String lNameEncoded) throws UnsupportedEncodingException {
         String fName = URLDecoder.decode(fNameEncoded, SingerController.ENCODING);
         String lName = URLDecoder.decode(lNameEncoded, SingerController.ENCODING);

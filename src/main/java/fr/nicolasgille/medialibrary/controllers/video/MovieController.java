@@ -16,15 +16,15 @@
  */
 package fr.nicolasgille.medialibrary.controllers.video;
 
-import fr.nicolasgille.medialibrary.daos.video.MovieRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.ActorRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.DirectorRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.ProducerRepository;
-import fr.nicolasgille.medialibrary.exception.video.MovieException;
+import fr.nicolasgille.medialibrary.exceptions.video.MovieException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Movie;
+import fr.nicolasgille.medialibrary.repositories.common.person.ActorRepository;
+import fr.nicolasgille.medialibrary.repositories.common.person.DirectorRepository;
+import fr.nicolasgille.medialibrary.repositories.common.person.ProducerRepository;
+import fr.nicolasgille.medialibrary.repositories.video.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,31 +42,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Controller of Movie model object.
- *
- * This class control the access of the movie on the project.
- * In fact, it define CRUD method to interact with the model and the persistence system.
- * It can update in the future to add new methods like getXXX requests.
- *
- * V2.1 :
- * <ul>
- *     <li>Added Actor DAO to interact with Actor present on persistent system.</li>
- *     <li>Added Director DAO to interact with Director present on persistent system.</li>
- *     <li>Added Producer DAO to interact with Producer present on persistent system.</li>
- *     <li>Update Movie constructor with new parameters.</li>
- *     <li>Added URLDecoder on method getMovieByTitle() and class attribute <code>ENCODING</code>.</li>
- * </ul>
- *
- * V2.0 :
- * <ul>
- *     <li>Completely rewrite content of all methods to modernize methods.</li>
- *     <li>Added Logger object to see step of each method and help debugging.</li>
- *     <li>Update CRUD method to add Actor registration on persistent system.</li>
- * </ul>
+ * Controller of the app to interact with movies present on Media-Library.
+ * You can use CRUD method to insert, delete, update or select movie from Database.
+ * So, many methods about research are available on the controller to search movie with different way of search.
+ * You can add you own method of research if you would have a new research type of movie.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 2.1
+ * @version 2.2
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -80,7 +63,7 @@ public class MovieController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO used to interact with the table <code>media</code> present on Database.
+     * Repository used to interact with movies present on the service.
      *
      * @since 1.0
      */
@@ -88,7 +71,7 @@ public class MovieController {
     private MovieRepository movieRepository;
 
     /**
-     * DAO used to interact with the table <code>common_actors</code>.
+     * Repository used to interact with actors present on the service.
      *
      * @since 2.1
      */
@@ -96,7 +79,7 @@ public class MovieController {
     private ActorRepository actorRepository;
 
     /**
-     * DAO used to interact with the table <code>common_producers</code>.
+     * Repository used to interact with producers present on the service.
      *
      * @since 2.1
      */
@@ -104,7 +87,7 @@ public class MovieController {
     private ProducerRepository producerRepository;
 
     /**
-     * DAO used to interact with the table <code>common_director</code>.
+     * Repository used to interact with directors present on the service.
      *
      * @since 2.1
      */
@@ -112,7 +95,7 @@ public class MovieController {
     private DirectorRepository directorRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 2.0
      */
@@ -143,9 +126,11 @@ public class MovieController {
      * Return a movie by his title.
      *
      * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the movie, this method return an HTTP error.
-     * This method can call by GET request and take an path variable the title of the movie at research.
-     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search movie on Database.
+     * If the database doesn't get the movie, this method return an HTTP error : 204.
+     * In other case, this method return the movie found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the title of the movie at research.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
      *
      * @param titleEncoded
      *  Title of the movie encoded to search on Database.
@@ -167,11 +152,39 @@ public class MovieController {
     }
 
     /**
+     * Return a movie by his identifier.
+     *
+     * This method return a ResponseEntity with the movie retrieve from the Database.
+     * If the database doesn't get the movie, this method return an HTTP error : 204.
+     * In other case, this method return the movie found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the identifier of the movie at research.
+     *
+     * @param id
+     *  Identifier of the movie on Database.
+     * @return
+     *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
+     * @since 2.2
+     * @version 1.0
+     */
+    @RequestMapping(value = "/movies/search/id/{id}")
+    public ResponseEntity<?> getMovieById(@PathVariable(value = "id") long id) {
+        logger.info("Fetching Movies with id {}", id);
+        Movie movie = movieRepository.findOne(id);
+        if (movie == null) {
+            logger.error("Movie with id {} not found.", id);
+            return new ResponseEntity<Object>(new MovieException("Movie with id " + id + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Movie>(movie, HttpStatus.OK);
+    }
+
+    /**
      * Add a movie on the Database.
      *
      * Before added the movie on database, it check if the movie is already present on the database.
-     * And if the movie is present, the method return an error HTTP 409 : CONFLICT.
-     * This method can call only by a POST request and take on BODY the movie at insert on Database.
+     * So, if the movie is present, the method return an error HTTP 409 : CONFLICT.
+     * In other case, it return the code HTTP 200 and an uri to get information about the new movie insert.
+     * So, this method is call by POST method and take the movie at insert on the BODY request.
      *
      * @param movie
      *  Movie at insert on Database.
@@ -246,17 +259,17 @@ public class MovieController {
         movieRepository.save(movie);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/movies/search/title/{id}").buildAndExpand(movie.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/movies/search/id/{id}").buildAndExpand(movie.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a movie present on the Database.
      *
-     * This method update a movie present on database only if this movie is present on it.
-     * In other case, this method return a HTTP error 404 : Not Found.
-     * This method can call only by PUT method and take the id of the movie at update on path variable
-     * and the object movie with the new content on BODY.
+     * It update a movie only if found on database.
+     * It the movie is not found, the method return an error with the HTTP code 404.
+     * In other case, it update the information about the movie and return in the body the movie update
+     * can use to check if the modification are succeeded and the HTTP code 200.
      *
      * @param id
      *  Id of the movie on Database.
@@ -335,12 +348,12 @@ public class MovieController {
     }
 
     /**
-     * Removed a movie from the Database.
+     * Remove a movie from the Database.
      *
-     * This method remove a movie from the database only if the movie is present on the Database.
-     * It return an error HTTP 404 : NOT FOUND if the movie at deleted isn't present on the database.
-     * To call this method, you can pass on the url the id of the movie at remove
-     * and this method can call only with DELETE request.
+     * It remove a movie if it found on database.
+     * If the movie is not found on database, this method return an error and the HTTP code 404.
+     * Otherwise, the method delete the movie thanks to the identifier and return in the body the movie deleted
+     * and the code HTTP 200 to confirm the success of the deletion.
      *
      * @param id
      *  Id of the movie at delete.

@@ -27,13 +27,6 @@ import java.util.Set;
 /**
  * Class Producer present on class Movie or Series to representing producer of a movie or series.
  *
- * V2.0 :
- * <ul>
- *     <li>Inherit abstract class <code>Person</code></li>
- *     <li>Removed all attributes excepted <code>movies</code> who he's renamed videos and became a <code>Set<Video></code></li>
- *     <li>Modified getter and setter for attribute Video.</li>
- * </ul>
- *
  * @see Person
  * @see Video
  * @author Nicolas GILLE

@@ -16,13 +16,13 @@
  */
 package fr.nicolasgille.medialibrary.controllers.book;
 
-import fr.nicolasgille.medialibrary.daos.book.BookRepository;
-import fr.nicolasgille.medialibrary.daos.common.company.PublisherRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.AuthorRepository;
-import fr.nicolasgille.medialibrary.exception.book.BookException;
+import fr.nicolasgille.medialibrary.exceptions.book.BookException;
 import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
+import fr.nicolasgille.medialibrary.repositories.book.BookRepository;
+import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
+import fr.nicolasgille.medialibrary.repositories.common.person.AuthorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +41,13 @@ import java.util.Set;
 
 /**
  * Controller of the app to interact with books present on Media-Library.
+ * You can use CRUD method to insert, delete, update or select book from Database.
+ * So, many methods about research are available on the controller to search book with different way of search.
+ * You can add you own method of research if you would have a new research type of book.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +61,7 @@ public class BookController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO used to interact with the table <code>media</code> present on Database.
+     * Repository used to interact with book present on the service.
      *
      * @since 1.0
      */
@@ -66,7 +69,7 @@ public class BookController {
     private BookRepository bookRepository;
 
     /**
-     * DAO used to interact with the authors present on media-library.
+     * Repository used to interact with authors present on the service.
      *
      * @since 1.0
      */
@@ -74,7 +77,7 @@ public class BookController {
     private AuthorRepository authorRepository;
 
     /**
-     * DAO used to interact with the publisher present on media-library.
+     * Repository used to interact with publishers present on the service.
      *
      * @since 1.0
      */
@@ -82,7 +85,7 @@ public class BookController {
     private PublisherRepository publisherRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
@@ -113,9 +116,11 @@ public class BookController {
      * Return a book by his title.
      *
      * This method return a ResponseEntity with the book retrieve from the Database.
-     * If the database research don't retrieve the book, this method return an HTTP error.
-     * This method can call by GET request and take an path variable the title of the book at research.
-     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search book on Database.
+     * If the database doesn't get the book, this method return an HTTP error : 204.
+     * In other case, this method return the book found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the title of the book at research.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
      *
      * @param titleEncoded
      *  Title of the book encoded to search on Database.
@@ -137,11 +142,39 @@ public class BookController {
     }
 
     /**
+     * Return a book by his identifier.
+     *
+     * This method return a ResponseEntity with the book retrieve from the Database.
+     * If the database doesn't get the book, this method return an HTTP error : 204.
+     * In other case, this method return the book found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the identifier of the book at research.
+     *
+     * @param id
+     *  Identifier of the Book on Database.
+     * @return
+     *  A ResponseEntity with the book found on Database, or an error HTTP 204 : No Content.
+     * @since 1.1
+     * @version 1.0
+     */
+    @RequestMapping(value = "/books/search/id/{id}")
+    public ResponseEntity<?> getBookById(@PathVariable(value = "id") long id) {
+        logger.info("Fetching Book with id {}", id);
+        Book book = bookRepository.findOne(id);
+        if (book == null) {
+            logger.error("Book with id {} not found.", id);
+            return new ResponseEntity<Object>(new BookException("Book with id " + id + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
+
+    /**
      * Add a book on the Database.
      *
      * Before added the book on database, it check if the book is already present on the database.
-     * And if the book is present, the method return an error HTTP 409 : CONFLICT.
-     * This method can call only by a POST request and take on BODY the book at insert on Database.
+     * So, if the book is present, the method return an error HTTP 409 : CONFLICT.
+     * In other case, it return the code HTTP 200 and an uri to get information about the new book insert.
+     * So, this method is call by POST method and take the book at insert on the BODY request.
      *
      * @param book
      *  Book at insert on Database.
@@ -199,17 +232,17 @@ public class BookController {
         bookRepository.save(book);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/books/search/title/{id}").buildAndExpand(book.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/books/search/id/{id}").buildAndExpand(book.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a book present on the Database.
      *
-     * This method update a book present on database only if this book is present on it.
-     * In other case, this method return a HTTP error 404 : Not Found.
-     * This method can call only by PUT method and take the id of the book at update on path variable
-     * and the object book with the new content on BODY.
+     * It update a book only if found on database.
+     * It the book is not found, the method return an error with the HTTP code 404.
+     * In other case, it update the information about the book and return in the body the book update
+     * can use to check if the modification are succeeded and the HTTP code 200.
      *
      * @param id
      *  Id of the book on Database.
@@ -271,12 +304,12 @@ public class BookController {
     }
 
     /**
-     * Removed a book from the Database.
+     * Remove a book from the Database.
      *
-     * This method remove a book from the database only if the book is present on the Database.
-     * It return an error HTTP 404 : NOT FOUND if the book at deleted isn't present on the database.
-     * To call this method, you can pass on the url the id of the book at remove
-     * and this method can call only with DELETE request.
+     * It remove a book if it found on database.
+     * If the book is not found on database, this method return an error and the HTTP code 404.
+     * Otherwise, the method delete the book thanks to the identifier and return in the body the book deleted
+     * and the code HTTP 200 to confirm the success of the deletion.
      *
      * @param id
      *  Id of the book at delete.

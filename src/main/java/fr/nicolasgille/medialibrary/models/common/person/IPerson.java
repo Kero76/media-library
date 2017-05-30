@@ -21,8 +21,8 @@ package fr.nicolasgille.medialibrary.models.common.person;
  * It must be implement by all human representing in the project.
  * It force all Human represented on the Media-Library to have a first name, last name and an id.
  *
- * @author Nicolas GILLE
  * @see Person
+ * @author Nicolas GILLE
  * @since Media-Library 0.2.1
  * @version 1.0
  */
@@ -36,7 +36,7 @@ public interface IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public long getId();
+    long getId();
 
     /**
      * Set id of the Person.
@@ -46,7 +46,7 @@ public interface IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public void setId(long id);
+    void setId(long id);
 
     /**
      * Return first name of the Person.
@@ -56,7 +56,7 @@ public interface IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public String getFirstName();
+    String getFirstName();
 
     /**
      * Set first name of the Person.
@@ -66,7 +66,7 @@ public interface IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public void setFirstName(String firstName);
+    void setFirstName(String firstName);
 
     /**
      * Return last name of the Person.
@@ -76,7 +76,7 @@ public interface IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public String getLastName();
+    String getLastName();
 
     /**
      * Set the last name of the Person.
@@ -86,5 +86,5 @@ public interface IPerson {
      * @since 1.0
      * @version 1.0
      */
-    public void setLastName(String lastName);
+    void setLastName(String lastName);
 }

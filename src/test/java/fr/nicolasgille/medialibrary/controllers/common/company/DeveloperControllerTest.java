@@ -78,7 +78,7 @@ public class DeveloperControllerTest {
 
         // When - Get Nicolas Cage from persistent system.
         ResponseEntity<Developer> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/developer?name=" + nameExpected, Developer.class);
+                REST_SERVICE_URI + "/search/developers/" + nameExpected, Developer.class);
 
         // Then - Compare HTTP code and name.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

@@ -17,7 +17,7 @@
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.exception.video.SeriesException;
+import fr.nicolasgille.medialibrary.exceptions.video.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;

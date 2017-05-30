@@ -27,21 +27,6 @@ import java.util.Set;
 /**
  * Class Actor present on class Movie or Series to representing main actor in a movie or series.
  *
- * V2.0 :
- * <ul>
- *     <li>Inherit abstract class <code>Person</code></li>
- *     <li>Removed all attributes excepted <code>movies</code> who he's renamed videos and became a <code>Set<Video></code></li>
- *     <li>Modified getter and setter for attribute Video.</li>
- * </ul>
- *
- * V1.1 :
- * <ul>
- *     <li>Added attribute <code>movies</code> who contains a list of all movies where the actor as considers as a main actor.</li>
- *     <li>Updated constructor with new attribute on parameter.</li>
- *     <li>Added corresponding getter and setter for attribute <code>movies</code></li>
- *     <li>Added <code>@Transient</code> annotations on new attribute <code>movies</code>.</li>
- * </ul>
- *
  * @see Person
  * @see Video
  * @author Nicolas GILLE

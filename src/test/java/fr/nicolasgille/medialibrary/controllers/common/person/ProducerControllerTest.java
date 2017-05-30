@@ -79,7 +79,7 @@ public class ProducerControllerTest {
 
         // When - Get Steven Spielberg from persistent system.
         ResponseEntity<Producer> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/producer?fname=" + fnameExpected + "&lname=" + lnameExpected, Producer.class);
+                REST_SERVICE_URI + "/search/producers?fname=" + fnameExpected + "&lname=" + lnameExpected, Producer.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

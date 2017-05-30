@@ -16,18 +16,18 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.company;
 
-import fr.nicolasgille.medialibrary.daos.common.company.LabelRecordsRepository;
-import fr.nicolasgille.medialibrary.exception.common.company.LabelRecordsException;
+import fr.nicolasgille.medialibrary.exceptions.common.company.LabelRecordsException;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
+import fr.nicolasgille.medialibrary.repositories.common.company.LabelRecordsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
@@ -37,9 +37,9 @@ import java.util.List;
 /**
  * Controller of LabelRecords model object.
  *
- * This class control the access of the labelRecords on the project.
- * In fact, it define CRUD method to interact with the model and the persistence model.
- * It can update in the future to add new methods like getXXX requests.
+ * This class control the access of the label records on the project.
+ * It define some method to search label records present on the database.
+ * You can add your own method to search or interact with label records if you like.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
@@ -57,7 +57,7 @@ public class LabelRecordsController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO object used to interact with LabelRecords on Database.
+     * Repository used to interact with label records present on the service.
      *
      * @since 1.0
      */
@@ -65,17 +65,20 @@ public class LabelRecordsController {
     private LabelRecordsRepository labelRecordsRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
     static final Logger logger = LoggerFactory.getLogger(LabelRecordsController.class);
 
     /**
-     * Get all LabelRecordss on persistent system.
+     * Get all label records from the database.
+     *
+     * If the database is empty, it return a response with the following code HTTP : 204.
+     * In other case, it return all label records present on database.
      *
      * @return
-     *  A list of all labelRecordss present on persistent system or an error HTTP : NO_CONTENT.
+     *  A list of all label records present on persistent system or an error HTTP : NO_CONTENT.
      * @since 1.0
      * @version 1.0
      */
@@ -89,22 +92,21 @@ public class LabelRecordsController {
     }
 
     /**
-     * Return a labelRecords by his first name and last name.
+     * Get a label records by his name.
      *
-     * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the labelRecords, this method return an HTTP error.
-     * This method can call by GET request and take two arguments on url which represent the first and the last name of the LabelRecords.
-     * So, these arguments get from the URL are encoded and it necessary to decoded them before search labelRecords on Database.
+     * This method return an instance of label records on the response body and the code HTTP 200 only if the label records was found.
+     * In the other case, the method return a response with the HTTP code 204.
+     * The name of the label records must passed on the url after the last "/ and encoded in UTF-8 to decoded on the search method.
      *
      * @param nameEncoded
-     *  First name of the labelRecords encoding in UTF8.
+     *  Name of the label records encoding in UTF8.
      * @return
-     *  A ResponseEntity with the labelRecords found on Database, or an error HTTP 204 : No Content.
+     *  A ResponseEntity with the label records found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/label-records", method = RequestMethod.GET)
-    public ResponseEntity<?> getLabelRecordsByName(@RequestParam(name = "name") String nameEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/search/label-records/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getLabelRecordsByName(@PathVariable(value = "name") String nameEncoded) throws UnsupportedEncodingException {
         String name = URLDecoder.decode(nameEncoded, LabelRecordsController.ENCODING);
         logger.info("Fetching LabelRecords named {}", name);
         LabelRecords labelRecords = labelRecordsRepository.findByName(name);

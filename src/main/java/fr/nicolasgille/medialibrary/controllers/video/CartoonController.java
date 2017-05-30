@@ -16,14 +16,13 @@
  */
 package fr.nicolasgille.medialibrary.controllers.video;
 
-import fr.nicolasgille.medialibrary.daos.video.CartoonRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.DirectorRepository;
-import fr.nicolasgille.medialibrary.daos.common.person.ProducerRepository;
-import fr.nicolasgille.medialibrary.exception.video.CartoonException;
-import fr.nicolasgille.medialibrary.exception.video.MovieException;
+import fr.nicolasgille.medialibrary.exceptions.video.CartoonException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Cartoon;
+import fr.nicolasgille.medialibrary.repositories.common.person.DirectorRepository;
+import fr.nicolasgille.medialibrary.repositories.common.person.ProducerRepository;
+import fr.nicolasgille.medialibrary.repositories.video.CartoonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +40,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Controller of Cartoon model object.
- *
- * This class control the access of the series on the project.
- * In fact, it define CRUD method to interact with the model and the persistence system.
- * It can update in the future to add new methods like getXXX requests.
+ * Controller of the app to interact with cartoons present on Media-Library.
+ * You can use CRUD method to insert, delete, update or select cartoon from Database.
+ * So, many methods about research are available on the controller to search cartoon with different way of search.
+ * You can add you own method of research if you would have a new research type of cartoon.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.3
- * @version 1.0
+ * @version 1.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +61,7 @@ public class CartoonController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO used to interact with the table <code>media</code> present on Database.
+     * Repository used to interact with cartoons present on the service.
      *
      * @since 1.0
      */
@@ -71,7 +69,7 @@ public class CartoonController {
     private CartoonRepository cartoonRepository;
 
     /**
-     * DAO used to interact with the table <code>common_producers</code>.
+     * Repository used to interact with producers present on the service.
      *
      * @since 1.0
      */
@@ -79,7 +77,7 @@ public class CartoonController {
     private ProducerRepository producerRepository;
 
     /**
-     * DAO used to interact with the table <code>common_director</code>.
+     * Repository used to interact with directors present on the service.
      *
      * @since 1.0
      */
@@ -87,7 +85,7 @@ public class CartoonController {
     private DirectorRepository directorRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
@@ -119,9 +117,11 @@ public class CartoonController {
      * Return a cartoon by his title.
      *
      * This method return a ResponseEntity with the cartoon retrieve from the Database.
-     * If the database research don't retrieve the cartoon, this method return an HTTP error.
-     * This method can call by GET request and take an path variable the title of the cartoon at research.
-     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search cartoon on Database.
+     * If the database doesn't get the cartoon, this method return an HTTP error : 204.
+     * In other case, this method return the cartoon found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the title of the cartoon at research.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
      *
      * @param titleEncoded
      *  Title of the cartoon encoded to search on Database.
@@ -137,7 +137,34 @@ public class CartoonController {
         Cartoon cartoon = cartoonRepository.findByTitleIgnoreCase(title);
         if (cartoon == null) {
             logger.error("Cartoon with title {} not found.", title);
-            return new ResponseEntity<Object>(new MovieException("Cartoon with title " + title + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new CartoonException("Cartoon with title " + title + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Cartoon>(cartoon, HttpStatus.OK);
+    }
+
+    /**
+     * Return a cartoon by his identifier.
+     *
+     * This method return a ResponseEntity with the cartoon retrieve from the Database.
+     * If the database doesn't get the cartoon, this method return an HTTP error : 204.
+     * In other case, this method return the cartoon found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the identifier of the cartoon at research.
+     *
+     * @param id
+     *  Identifier of the cartoon on Database.
+     * @return
+     *  A ResponseEntity with the cartoon found on Database, or an error HTTP 204 : No Content.
+     * @since 1.1
+     * @version 1.0
+     */
+    @RequestMapping(value = "/cartoons/search/id/{id}")
+    public ResponseEntity<?> getCartoonById(@PathVariable(value = "id") long id) {
+        logger.info("Fetching Cartoon with id {}", id);
+        Cartoon cartoon = cartoonRepository.findOne(id);
+        if (cartoon == null) {
+            logger.error("Cartoon with id {} not found.", id);
+            return new ResponseEntity<Object>(new CartoonException("Cartoon with id " + id + " not found."), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Cartoon>(cartoon, HttpStatus.OK);
     }
@@ -146,8 +173,9 @@ public class CartoonController {
      * Add a cartoon on the Database.
      *
      * Before added the cartoon on database, it check if the cartoon is already present on the database.
-     * And if the cartoon is present, the method return an error HTTP 409 : CONFLICT.
-     * This method can call only by a POST request and take on BODY the cartoon at insert on Database.
+     * So, if the cartoon is present, the method return an error HTTP 409 : CONFLICT.
+     * In other case, it return the code HTTP 200 and an uri to get information about the new cartoon insert.
+     * So, this method is call by POST method and take the cartoon at insert on the BODY request.
      *
      * @param cartoon
      *  Series at insert on Database.
@@ -160,7 +188,7 @@ public class CartoonController {
      */
     @RequestMapping(value = "/cartoons/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Cartoon cartoon, UriComponentsBuilder uriBuilder) {
-        logger.info("Created series : {}", cartoon);
+        logger.info("Created cartoon : {}", cartoon);
 
         // Check if the series already exist on database.
         Cartoon cartoonExist = cartoonRepository.findByTitleIgnoreCase(cartoon.getTitle());
@@ -205,17 +233,17 @@ public class CartoonController {
         cartoonRepository.save(cartoon);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/cartoons/search/title/{id}").buildAndExpand(cartoon.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/cartoons/search/id/{id}").buildAndExpand(cartoon.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a cartoon present on the Database.
      *
-     * This method update a cartoon present on database only if this cartoon is present on it.
-     * In other case, this method return a HTTP error 404 : Not Found.
-     * This method can call only by PUT method and take the id of the cartoon at update on path variable
-     * and the object series with the new content on BODY.
+     * It update a cartoon only if found on database.
+     * It the cartoon is not found, the method return an error with the HTTP code 404.
+     * In other case, it update the information about the cartoon and return in the body the cartoon update
+     * can use to check if the modification are succeeded and the HTTP code 200.
      *
      * @param id
      *  Id of the cartoon on Database.
@@ -233,7 +261,7 @@ public class CartoonController {
         Cartoon cartoonAtUpdate = cartoonRepository.findOne(id);
         if (cartoonAtUpdate == null) {
             logger.error("Unable to update. Cartoon with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to update. Cartoon with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(new CartoonException("Unable to update. Cartoon with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         // Check if the producers are present on Database or not.
@@ -277,12 +305,12 @@ public class CartoonController {
     }
 
     /**
-     * Removed a cartoon from the Database.
+     * Remove a cartoon from the Database.
      *
-     * This method remove a cartoon from the database only if the cartoon is present on the Database.
-     * It return an error HTTP 404 : NOT FOUND if the cartoon at deleted isn't present on the database.
-     * To call this method, you can pass on the url the id of the cartoon at remove
-     * and this method can call only with DELETE request.
+     * It remove a cartoon if it found on database.
+     * If the cartoon is not found on database, this method return an error and the HTTP code 404.
+     * Otherwise, the method delete the cartoon thanks to the identifier and return in the body the cartoon deleted
+     * and the code HTTP 200 to confirm the success of the deletion.
      *
      * @param id
      *  Id of the cartoon at delete.
@@ -298,7 +326,7 @@ public class CartoonController {
         Cartoon cartoon = cartoonRepository.findOne(id);
         if (cartoon == null) {
             logger.error("Unable to delete. Cartoon with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to delete. Cartoon with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(new CartoonException("Unable to delete. Cartoon with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         cartoonRepository.delete(cartoon);

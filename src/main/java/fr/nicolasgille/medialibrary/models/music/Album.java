@@ -35,6 +35,7 @@ import java.util.Set;
 /**
  * Representation of music album.
  *
+ * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0

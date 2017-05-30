@@ -17,7 +17,7 @@
 package fr.nicolasgille.medialibrary.controllers.game;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.exception.game.VideoGameException;
+import fr.nicolasgille.medialibrary.exceptions.game.VideoGameException;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
@@ -158,7 +158,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 id,title, originalTitle, synopsis, releaseDate, genres, supports,
@@ -205,7 +205,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 title, originalTitle, synopsis, releaseDate, genres, supports,
@@ -255,7 +255,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 title, originalTitle, synopsis, releaseDate, genres, supports,
@@ -316,7 +316,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 title, originalTitle, synopsis, releaseDate, genres, supports,
@@ -368,7 +368,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 title, originalTitle, synopsis, releaseDate, genres, supports,
@@ -414,7 +414,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 id, title, originalTitle, synopsis, releaseDate, genres, supports,
@@ -461,7 +461,7 @@ public class ClientVideoGameTest {
         publishers.add(new Publisher("Square Enix"));
 
         ArrayList<VideoGamePlatform> platforms = new ArrayList<VideoGamePlatform>();
-        platforms.add(VideoGamePlatform.PLAYSTATION_2);
+        platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
                 title, originalTitle, synopsis, releaseDate, genres, supports,

@@ -17,7 +17,7 @@
 package fr.nicolasgille.medialibrary.models.components;
 
 /**
- * An enumeration to represent the format available for a book.
+ * An enumeration to represent all video-game platforms available for the Media-Library.
  * It composed by :
  * <ul>
  *     <li><code>NES</code></li>
@@ -30,11 +30,13 @@ package fr.nicolasgille.medialibrary.models.components;
  *     <li><code>GAMEBOY_ADVANCE</code></li>
  *     <li><code>NINTENDO_DS</code></li>
  *     <li><code>NINTENDO_3DS</code></li>
+ *     <li><code>MEGA_DRIVE</code></li>
  *     <li><code>SEGA_SATURN</code></li>
- *     <li><code>PLAYSTATION</code></li>
- *     <li><code>PLAYSTATION_2</code></li>
- *     <li><code>PLAYSTATION_3</code></li>
- *     <li><code>PLAYSTATION_4</code></li>
+ *     <li><code>DREAMCAST</code></li>
+ *     <li><code>PSX</code></li>
+ *     <li><code>PS2</code></li>
+ *     <li><code>PS3</code></li>
+ *     <li><code>PS4</code></li>
  *     <li><code>PSP</code></li>
  *     <li><code>XBOX</code></li>
  *     <li><code>XBOX_360</code></li>
@@ -60,14 +62,15 @@ public enum VideoGamePlatform {
     NINTENDO_3DS("Nintendo 3DS"),
 
     // Sega
-    SEGA_SATURN("SEGA Saturn"),
+    MEGA_DRIVE("Sega Mega Drive"),
+    SEGA_SATURN("Sega Saturn"),
+    DREAMCAST("Sega Dreamcast"),
 
     // Sony
-    PLAYSTATION("Playstation"),
-    PLAYSTATION_2("Playstation 2"),
-    PLAYSTATION_3("Playstation 3"),
-    PLAYSTATION_4("Playstation 4"),
-
+    PSX("Playstation"),
+    PS2("Playstation 2"),
+    PS3("Playstation 3"),
+    PS4("Playstation 4"),
     PSP("Playstation Portable"),
 
     // Microsoft
@@ -93,7 +96,7 @@ public enum VideoGamePlatform {
      * @since 1.0
      * @version 1.0
      */
-    private VideoGamePlatform(String name) {
+    VideoGamePlatform(String name) {
         this.name = name;
     }
 

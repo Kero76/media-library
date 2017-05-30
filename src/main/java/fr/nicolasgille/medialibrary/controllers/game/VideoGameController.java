@@ -16,13 +16,13 @@
  */
 package fr.nicolasgille.medialibrary.controllers.game;
 
-import fr.nicolasgille.medialibrary.daos.common.company.DeveloperRepository;
-import fr.nicolasgille.medialibrary.daos.common.company.PublisherRepository;
-import fr.nicolasgille.medialibrary.daos.game.VideoGameRepository;
-import fr.nicolasgille.medialibrary.exception.game.VideoGameException;
+import fr.nicolasgille.medialibrary.exceptions.game.VideoGameException;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.game.VideoGame;
+import fr.nicolasgille.medialibrary.repositories.common.company.DeveloperRepository;
+import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
+import fr.nicolasgille.medialibrary.repositories.game.VideoGameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +40,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Controller of the app to interact with video game present on Media-Library.
+ * Controller of the app to interact with video games present on Media-Library.
+ * You can use CRUD method to insert, delete, update or select video game from Database.
+ * So, many methods about research are available on the controller to search video game with different way of search.
+ * You can add you own method of research if you would have a new research type of video game.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +61,7 @@ public class VideoGameController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO used to interact with the table <code>media</code> present on Database.
+     * Repository used to interact with video game present on the service.
      *
      * @since 1.0
      */
@@ -66,7 +69,7 @@ public class VideoGameController {
     private VideoGameRepository videoGameRepository;
 
     /**
-     * DAO used to interact with the Label Records present on media-library.
+     * Repository used to interact with developers present on the service.
      *
      * @since 1.0
      */
@@ -74,7 +77,7 @@ public class VideoGameController {
     private DeveloperRepository developerRepository;
 
     /**
-     * DAO used to interact with the Singer present on media-library.
+     * Repository used to interact with publishers present on the service.
      *
      * @since 1.0
      */
@@ -82,7 +85,7 @@ public class VideoGameController {
     private PublisherRepository publisherRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
@@ -100,7 +103,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-game/", method = RequestMethod.GET)
+    @RequestMapping(value = "/video-games/", method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<VideoGame> videoGames = videoGameRepository.findAll();
         if (videoGames.isEmpty()) {
@@ -110,12 +113,14 @@ public class VideoGameController {
     }
 
     /**
-     * Return a videoGame by his title.
+     * Return a video game by his title.
      *
-     * This method return a ResponseEntity with the videoGame retrieve from the Database.
-     * If the database research don't retrieve the videoGame, this method return an HTTP error.
-     * This method can call by GET request and take an path variable the title of the videoGame at research.
-     * So, the title retrieve from the URL is encoded and it necessary to decoded it before search videoGame on Database.
+     * This method return a ResponseEntity with the video game retrieve from the Database.
+     * If the database doesn't get the video game, this method return an HTTP error : 204.
+     * In other case, this method return the video game found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the title of the video game at research.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
      *
      * @param titleEncoded
      *  Title of the videoGame encoded to search on Database.
@@ -124,7 +129,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-game/search/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/video-games/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getVideoGameByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, VideoGameController.ENCODING);
         logger.info("Fetching VideoGame with title {}", title);
@@ -137,11 +142,39 @@ public class VideoGameController {
     }
 
     /**
+     * Return a video game by his identifier.
+     *
+     * This method return a ResponseEntity with the video game retrieve from the Database.
+     * If the database doesn't get the video game, this method return an HTTP error : 204.
+     * In other case, this method return the video game found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the identifier of the video game at research.
+     *
+     * @param id
+     *  Identifier of the Series on Database.
+     * @return
+     *  A ResponseEntity with the video game found on Database, or an error HTTP 204 : No Content.
+     * @since 1.1
+     * @version 1.0
+     */
+    @RequestMapping(value = "/video-games/search/id/{id}")
+    public ResponseEntity<?> getVideoGameById(@PathVariable(value = "id") long id) {
+        logger.info("Fetching Video Game with id {}", id);
+        VideoGame videoGame = videoGameRepository.findOne(id);
+        if (videoGame == null) {
+            logger.error("Video Game with id {} not found.", id);
+            return new ResponseEntity<Object>(new VideoGameException("Video Game with id " + id + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<VideoGame>(videoGame, HttpStatus.OK);
+    }
+
+    /**
      * Add a videoGame on the Database.
      *
-     * Before added the videoGame on database, it check if the videoGame is already present on the database.
-     * And if the videoGame is present, the method return an error HTTP 409 : CONFLICT.
-     * This method can call only by a POST request and take on BODY the videoGame at insert on Database.
+     * Before added the video game on database, it check if the video game is already present on the database.
+     * So, if the video game is present, the method return an error HTTP 409 : CONFLICT.
+     * In other case, it return the code HTTP 200 and an uri to get information about the new video game insert.
+     * So, this method is call by POST method and take the video game at insert on the BODY request.
      *
      * @param videoGame
      *  VideoGame at insert on Database.
@@ -152,7 +185,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-game/", method = RequestMethod.POST)
+    @RequestMapping(value = "/video-games/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody VideoGame videoGame, UriComponentsBuilder uriBuilder) {
         logger.info("Created videoGame : {}", videoGame);
 
@@ -199,17 +232,17 @@ public class VideoGameController {
         videoGameRepository.save(videoGame);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/video-game/search/title/{id}").buildAndExpand(videoGame.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/video-games/search/id/{id}").buildAndExpand(videoGame.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
-     * Update a videoGame present on the Database.
+     * Update a video game present on the Database.
      *
-     * This method update a videoGame present on database only if this videoGame is present on it.
-     * In other case, this method return a HTTP error 404 : Not Found.
-     * This method can call only by PUT method and take the id of the videoGame at update on path variable
-     * and the object videoGame with the new content on BODY.
+     * It update a video game only if found on database.
+     * It the video game is not found, the method return an error with the HTTP code 404.
+     * In other case, it update the information about the video game and return in the body the video game update
+     * can use to check if the modification are succeeded and the HTTP code 200.
      *
      * @param id
      *  Id of the videoGame on Database.
@@ -220,7 +253,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-game/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/video-games/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody VideoGame videoGame) {
         logger.info("Updating VideoGame with id {}", id);
 
@@ -271,12 +304,12 @@ public class VideoGameController {
     }
 
     /**
-     * Removed a videoGame from the Database.
+     * Remove a video game from the Database.
      *
-     * This method remove a videoGame from the database only if the videoGame is present on the Database.
-     * It return an error HTTP 404 : NOT FOUND if the videoGame at deleted isn't present on the database.
-     * To call this method, you can pass on the url the id of the videoGame at remove
-     * and this method can call only with DELETE request.
+     * It remove a video game if it found on database.
+     * If the video game is not found on database, this method return an error and the HTTP code 404.
+     * Otherwise, the method delete the video game thanks to the identifier and return in the body the video game deleted
+     * and the code HTTP 200 to confirm the success of the deletion.
      *
      * @param id
      *  Id of the videoGame at delete.
@@ -285,7 +318,7 @@ public class VideoGameController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/video-game/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/video-games/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting VideoGame with id {}", id);
 

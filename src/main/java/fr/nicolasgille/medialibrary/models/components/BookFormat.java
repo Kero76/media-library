@@ -47,7 +47,7 @@ public enum BookFormat {
      * @since 1.0
      * @version 1.0
      */
-    private BookFormat(String name) {
+    BookFormat(String name) {
         this.name = name;
     }
 

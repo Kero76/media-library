@@ -74,12 +74,12 @@ public class AuthorControllerTest {
     public void getOneAuthor() {
         // Given - @see setUp() and instantiate last and first name of the actor to request.
         HttpStatus httpStatusExpected = HttpStatus.OK;
-        String fnameExpected = "Nicolas";
-        String lnameExpected = "Cage";
+        String fnameExpected = "Dan";
+        String lnameExpected = "Brown";
 
         // When - Get Nicolas Cage from persistent system.
         ResponseEntity<Author> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/author?fname=" + fnameExpected + "&lname=" + lnameExpected, Author.class);
+                REST_SERVICE_URI + "/search/authors?fname=" + fnameExpected + "&lname=" + lnameExpected, Author.class);
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

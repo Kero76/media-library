@@ -16,8 +16,8 @@
  */
 package fr.nicolasgille.medialibrary.controllers.common.person;
 
-import fr.nicolasgille.medialibrary.daos.common.person.IllustratorRepository;
-import fr.nicolasgille.medialibrary.exception.common.person.IllustratorException;
+import fr.nicolasgille.medialibrary.repositories.common.person.IllustratorRepository;
+import fr.nicolasgille.medialibrary.exceptions.common.person.IllustratorException;
 import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +37,9 @@ import java.util.List;
 /**
  * Controller of Illustrator model object.
  *
- * This class control the access of the author on the project.
- * In fact, it define CRUD method to interact with the model and the persistence model.
- * It can update in the future to add new methods like getXXX requests.
+ * This class control the access of the illustrator on the project.
+ * It define some method to search illustrator present on the database.
+ * You can add your own method to search or interact with illustrator if you like.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
@@ -57,7 +57,7 @@ public class IllustratorController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * DAO object used to interact with Illustrator on Database.
+     * Repository used to interact with illustrators present on the service.
      *
      * @since 1.0
      */
@@ -65,14 +65,21 @@ public class IllustratorController {
     private IllustratorRepository illustratorRepository;
 
     /**
-     * Logger for debugging app.
+     * Logger to get information during some process.
      *
      * @since 1.0
      */
     static final Logger logger = LoggerFactory.getLogger(IllustratorController.class);
 
     /**
-     * Get all Illustrators on persistent system.
+     * Return an illustrator by his first name and his last name.
+     *
+     * This method return an illustrator by his nam and his last name.
+     * If the illustrator is not found on database, it return a HTTP response with the error code 204.
+     * In other case, this method return the illustrator on the body of the HTTP response.
+     * The first name and the last name must encoded in UTF-8 to avoid problems with special characters,
+     * and must present as parameter of the url like the following format :
+     * <code>/media-library/search/illustrator?fname=XXX&lname=YYY</code>
      *
      * @return
      *  A list of all illustrators present on persistent system or an error HTTP : NO_CONTENT.
@@ -89,12 +96,14 @@ public class IllustratorController {
     }
 
     /**
-     * Return a illustrator by his first name and last name.
+     * Return a illustrator by his first name and his last name.
      *
-     * This method return a ResponseEntity with the movie retrieve from the Database.
-     * If the database research don't retrieve the illustrator, this method return an HTTP error.
-     * This method can call by GET request and take two arguments on url which represent the first and the last name of the Illustrator.
-     * So, these arguments get from the URL are encoded and it necessary to decoded them before search illustrator on Database.
+     * This method return an illustrator by his nam and his last name.
+     * If the illustrator is not found on database, it return a HTTP response with the error code 204.
+     * In other case, this method return the illustrator on the body of the HTTP response.
+     * The first name and the last name must encoded in UTF-8 to avoid problems with special characters,
+     * and must present as parameter of the url like the following format :
+     * <code>/media-library/search/illustrators?fname=XXX&lname=YYY</code>
      *
      * @param fNameEncoded
      *  First name of the illustrator encoding in UTF8.
@@ -105,7 +114,7 @@ public class IllustratorController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/search/illustrator", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/illustrators", method = RequestMethod.GET)
     public ResponseEntity<?> getIllustratorByFirstNameAndLastName(@RequestParam(name = "fname") String fNameEncoded, @RequestParam(name = "lname") String lNameEncoded) throws UnsupportedEncodingException {
         String fName = URLDecoder.decode(fNameEncoded, IllustratorController.ENCODING);
         String lName = URLDecoder.decode(lNameEncoded, IllustratorController.ENCODING);

@@ -17,20 +17,9 @@
 package fr.nicolasgille.medialibrary.models.components;
 
 /**
- * An enumeration who representing all movies category available in Media Library.
- * This enumeration is present in order to force users at respect the syntax establish by Media Library.
- * It can be update in a future and a short description of each theme must write in a future.
- *
- * V1.2 :
- * <ul>
- *     <li>Added <code>HEROIC_FANTASY</code> attribute.</li>
- * </ul>
- *
- * V1.1 :
- * <ul>
- *     <li>Added constructor with <code>name</code> parameter.</li>
- *     <li>Added <code>name</code> attributes and corresponding getter and setter.</li>
- * </ul>
+ * An enumeration who representing all genres available in Media Library.
+ * This enumeration is composed by the genre from the Book, Video, Music and Game genre.
+ * You can add new genre on it, if you would add specific genre not found initially on Media-Library.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
@@ -58,23 +47,50 @@ public enum MediaGenre {
     WESTERN("Western"),
 
     // Music
+    BLUES("Blues"),
     CLASSIC("Classic"),
+    CELTIC("Celtic"),
+    COUNTRY("Country"),
     DISCO("Disco"),
     ELECTRO("Electro"),
     FUNK("Funk"),
+    JAZZ("Jazz"),
+    J_POP("J-Pop"),
+    J_ROCK("J-Rock"),
     HARD_ROCK("Hard Rock"),
+    HIP_HOP("Hip Hop"),
     METAL("Metal"),
     NEW_WAVE("New Wave"),
+    OPERA("Opera"),
+    ORCHESTRA("Orchestra"),
     POP("Pop"),
+    PUNK("Punk"),
     REGGAE("Reggae"),
     ROCK_N_ROLL("Rock'n'Roll"),
+    RNB("R'N'B"),
+    SOUL("Soul"),
+    TECHNO("Techno"),
+    ZOUK("Zouk"),
 
     // VideoGame
+    ACTION_RPG("Action RPG"),
+    BEAT_EM_ALL("Beat'em All"),
+    BEAT_EM_UP("Beat'em Up"),
+    COURSES("Courses"),
     FPS("First Person Shooter"),
+    IDLE("Idle"),
+    MANAGEMENT("Management"),
     PLATFORMS("Platform"),
+    PUZZLE_GAME("Puzzle Game"),
+    ROGUE_LIKE("Rogue Like"),
     RPG("Role Playing Game"),
-    TPS("Third Person Shooter");
-
+    RTS("Real-Time Strategy"),
+    SANDBOX("Sandbox"),
+    SHOOTER("Shooter"),
+    SURVIVAL_HORROR("Survival Horror"),
+    TACTICAL_RPG("Tactical RPG"),
+    TPS("Third Person Shooter"),
+    VERSUS_FIGHTING("Versus Fighting");
 
     /**
      * Name stored in database.
@@ -91,7 +107,7 @@ public enum MediaGenre {
      * @since 1.1
      * @version 1.0
      */
-    private MediaGenre(String name) {
+    MediaGenre(String name) {
         this.name = name;
     }
 

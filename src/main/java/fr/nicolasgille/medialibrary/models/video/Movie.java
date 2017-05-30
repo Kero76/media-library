@@ -43,6 +43,7 @@ import java.util.Set;
  *     <li>The List of main actors of the movie</li>
  * </ul>
  *
+ * @see Video
  * @author Nicolas GILLE
  * @since Media-Library 0.1
  * @version 2.0

@@ -78,7 +78,7 @@ public class LabelRecordsControllerTest {
 
         // When - Get Nicolas Cage from persistent system.
         ResponseEntity<LabelRecords> responseEntity = this.restTemplate.getForEntity(
-                REST_SERVICE_URI + "/search/label-records?name=" + nameExpected, LabelRecords.class);
+                REST_SERVICE_URI + "/search/label-records/" + nameExpected, LabelRecords.class);
 
         // Then - Compare HTTP code and name.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);

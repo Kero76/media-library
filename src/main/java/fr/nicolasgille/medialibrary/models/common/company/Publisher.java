@@ -27,10 +27,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class Publisher represent a company who published book media type.
+ * Class Publisher represent a company who published book or video game.
  *
  * @see Company
  * @see Book
+ * @see VideoGame
  * @author Nicolas GILLE
  * @since Media-Library 0.4
  * @version 1.0

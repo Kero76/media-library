@@ -27,8 +27,8 @@ import javax.persistence.*;
  *     <li>lastName : Last name of the Person.</li>
  * </ul>
  *
- * @author Nicolas GILLE
  * @see IPerson
+ * @author Nicolas GILLE
  * @since Media-Library 0.2.1
  * @version 1.0
  */
