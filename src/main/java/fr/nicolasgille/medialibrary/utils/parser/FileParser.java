@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.utils;
+package fr.nicolasgille.medialibrary.utils.parser;
 
 import java.util.List;
 
@@ -22,9 +22,10 @@ import java.util.List;
  * An interface to specified methods present on file parser.
  *
  * In fact, Media Library can parse data with specific extension to get all information for precise media.
+ * You must implement the method parse by your own specific parser to respect the
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
+ * @since Media-Library 0.5
  * @version 1.0
  */
 public interface FileParser {
@@ -36,6 +37,7 @@ public interface FileParser {
      *  Name of the file at parse.
      * @return
      *  A list composed by List of all information get during parsing.
+     * @throws java.io.IOException
      * @since 1.0
      * @version 1.0
      */

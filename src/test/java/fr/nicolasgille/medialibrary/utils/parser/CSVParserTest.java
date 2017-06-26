@@ -1,8 +1,56 @@
+/*
+ * This file is part of Media-Library.
+ *
+ * Media-Library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Media-Library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ */
+package fr.nicolasgille.medialibrary.utils.parser;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
- * Created by Kero76 on 26/06/17.
+ * Test the CSV parser class.
+ *
+ * @author Nicolas GILLE
+ * @since Media-Library 0.2.1
+ * @version 1.0
  */
 public class CSVParserTest {
 
+    private FileParser parser;
+
+    @Before
+    public void setUp() {
+        this.parser = new CSVParser();
+    }
+
+    @Test
+    public void parseCSVFile() throws Exception {
+        // Given - @see setUp() and instantiate the object return from the method parse.
+        List<List<String>> dataParse = new ArrayList<>();
+
+        // When - Parse file.
+        dataParse = this.parser.parse("test/resources/cartoons.csv");
+
+        // Then - Check content of the result.
+        for (List l : dataParse) {
+            System.out.println(l.toString());
+        }
+    }
 }
