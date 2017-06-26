@@ -41,10 +41,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Controller of the app to interact with animes present on Media-Library.
- * You can use CRUD method to insert, delete, update or select animes from Database.
- * So, many methods about research are available on the controller to search animes with different way of search.
- * You can add you own method of research if you would have a new research type of animes.
+ * Controller of the app to interact with anime present on Media-Library.
+ * You can use CRUD method to insert, delete, update or select anime from Database.
+ * So, many methods about research are available on the controller to search anime with different way of search.
+ * You can add you own method of research if you would have a new research type of anime.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
@@ -62,20 +62,12 @@ public class AnimeController {
     private final static String ENCODING = "UTF-8";
 
     /**
-     * Repository used to interact with animes present on the service.
+     * Repository used to interact with anime present on the service.
      *
      * @since 1.0
      */
     @Autowired
     private AnimeRepository animesRepository;
-
-    /**
-     * Repository used to interact with actors present on the service.
-     *
-     * @since 1.0
-     */
-    @Autowired
-    private ActorRepository actorRepository;
 
     /**
      * Repository used to interact with producers present on the service.
@@ -114,7 +106,7 @@ public class AnimeController {
      * @version 1.0
      */
     @RequestMapping(value = "/animes/", method = RequestMethod.GET)
-    public ResponseEntity getAll() {
+    public ResponseEntity<?> getAll() {
         List<Anime> animes = animesRepository.findAll();
         if (animes.isEmpty()) {
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
@@ -123,30 +115,30 @@ public class AnimeController {
     }
 
     /**
-     * Return a animes by his title and his current season.
+     * Return an anime by his title and his current season.
      *
-     * This method return a ResponseEntity with the animes retrieve from the Database.
-     * If the database doesn't get the animes, this method return an HTTP error : 204.
-     * In other case, this method return the animes found in body response and the success code HTTP 200.
+     * This method return a ResponseEntity with the anime retrieve from the Database.
+     * If the database doesn't get the anime, this method return an HTTP error : 204.
+     * In other case, this method return the anime found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
-     * parameter the title of the animes at research and the current season of the animes.
+     * parameter the title of the anime at research and the current season of the anime.
      * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
      *
      * @param titleEncoded
      *  Title of the animes encoded to search on Database.
      * @param currentSeason
-     *  Current season of the animes.
+     *  Current season of the anime.
      * @return
-     *  A ResponseEntity with the animes found on Database, or an error HTTP 204 : No Content.
+     *  A ResponseEntity with the anime found on Database, or an error HTTP 204 : No Content.
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/animes/search/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/animes/search/title/{title}/{currentSeason}", method = RequestMethod.GET)
     public ResponseEntity<?> getAnimeByTitleAndCurrentSeason (
             @PathVariable(value = "title") String titleEncoded,
             @PathVariable(value = "currentSeason") int currentSeason) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, AnimeController.ENCODING);
-        logger.info("Fetching Anime with title {}", title);
+        logger.info("Fetching Anime with title {} and current season {}", title, currentSeason);
         Anime animes = animesRepository.findByTitleAndCurrentSeason(title, currentSeason);
         if (animes == null) {
             logger.error("Anime with title {} not found.", title);

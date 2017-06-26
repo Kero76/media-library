@@ -142,7 +142,7 @@ public class SeriesController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/series/search/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/series/search/title/{title}/{currentSeason}", method = RequestMethod.GET)
     public ResponseEntity<?> getSeriesByTitleAndCurrentSeason (
             @PathVariable(value = "title") String titleEncoded,
             @PathVariable(value = "currentSeason") int currentSeason) throws UnsupportedEncodingException {

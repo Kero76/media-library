@@ -121,7 +121,7 @@ public class ClientSeriesTest {
         String title = "Persistent System 2 : Return of the Empty Row";
 
         // When - Get one series from persistent system.
-        ResponseEntity<Series> series = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + title, Series.class);
+        ResponseEntity<Series> series = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + title + "/" + 5, Series.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(series.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -132,8 +132,8 @@ public class ClientSeriesTest {
     public void testAddSeriesOnPersistentSystem() {
         // Given - Instantiate Series at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
-        int id = 3;
-        String uriExpected = "http://localhost:8080/media-library/series/search/title/" + id;
+        int id = 1;
+        String uriExpected = "http://localhost:8080/media-library/series/search/id/" + id;
 
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
@@ -301,7 +301,7 @@ public class ClientSeriesTest {
         // When - Get series from persistent system.
         ResponseEntity<Series> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER), Series.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER) + "/" + series.getCurrentSeason(), Series.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -378,7 +378,7 @@ public class ClientSeriesTest {
         // When - Get series from persistent system.
         ResponseEntity<Series> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER), Series.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER) + "/" + series.getCurrentSeason(), Series.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -451,7 +451,7 @@ public class ClientSeriesTest {
     @Test
     public void updateSeries() throws UnsupportedEncodingException {
         // Given - Instantiate a series to update on persistent system.
-        int id = 4;
+        int id = 2;
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is amazing !";
 
@@ -491,14 +491,14 @@ public class ClientSeriesTest {
         Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
-                title, title, synopsis,
+                id, title, title, synopsis,
                 actors, directors, producers, categories, supports, languageSpoken, subtitles,
                 startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
         );
         this.restTemplate.put(REST_SERVICE_URI + "/series/" + series.getId(), series, Series.class);
 
         // When - Get series update and check if the difference appear.
-        ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER), Series.class);
+        ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" + series.getCurrentSeason(), Series.class);
 
         // Then - Compare synopsis.
         assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
@@ -566,7 +566,7 @@ public class ClientSeriesTest {
     @Test
     public void deleteSeries() {
         // Given - id of series at delete and all elements expected.
-        int id = 4;
+        int id = 2;
         String title = "Star Gate SG2";
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -575,7 +575,7 @@ public class ClientSeriesTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/series/" + id);
 
         try {
-            ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER), Series.class);
+            ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" + 2, Series.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
