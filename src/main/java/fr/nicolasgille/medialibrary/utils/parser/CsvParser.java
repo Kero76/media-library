@@ -32,7 +32,7 @@ import java.util.Scanner;
  * @since Media-Library 0.5
  * @version 1.0
  */
-public class CSVParser implements FileParser {
+public class CsvParser implements FileParser {
 
     /**
      * Parse the file send in parameter and return a list of list of string who contains all elements parse during process.
@@ -49,7 +49,7 @@ public class CSVParser implements FileParser {
     public List<List<String>> parse(String filename) {
         List<List<String>> data = new ArrayList<>();
         try {
-            Scanner scan = new Scanner(Paths.get("src/test/resources/animes.csv"));
+            Scanner scan = new Scanner(Paths.get(filename));
             // Loop until file not completed.
             while (scan.hasNext()) {
                 // Get each line and split it by ','.

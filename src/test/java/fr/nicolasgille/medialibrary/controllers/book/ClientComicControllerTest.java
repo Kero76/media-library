@@ -91,7 +91,7 @@ public class ClientComicControllerTest {
         Comic comic = new Comic(
                 id, "", "", "", releaseDate, 0, "",
                 new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL,
-                17, 15, releaseDate, new HashSet<Illustrator>()
+                17, 15, new HashSet<Illustrator>()
         );
 
         // When - Try to update comic.
@@ -156,14 +156,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 24;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
 
         // When - Send comic to save it on persistent system.
@@ -203,14 +202,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 24;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
 
         ResponseEntity<ComicException> responseEntity = null;
@@ -253,14 +251,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 24;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
 
         // When - Get comic from persistent system.
@@ -314,14 +311,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 23;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
 
         // When - Get comic from persistent system.
@@ -366,14 +362,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 23;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/comics/", comic, Comic.class);
 
@@ -412,14 +407,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 5;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
         this.restTemplate.put(REST_SERVICE_URI + "/comics/" + comic.getId(), comic, Comic.class);
 
@@ -459,14 +453,13 @@ public class ClientComicControllerTest {
         BookFormat format = BookFormat.POCKET;
         int volumes = 25;
         int currentVolume = 23;
-        Calendar endDate = new GregorianCalendar(2017, Calendar.JUNE, 17);
 
         Set<Illustrator> illustrators = new HashSet<Illustrator>();
         illustrators.add(new Illustrator("Naoshi", "Komi"));
 
         Comic comic = new Comic(
                 title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers,
-                genres, supports, format, volumes, currentVolume, endDate, illustrators
+                genres, supports, format, volumes, currentVolume, illustrators
         );
 
         try {

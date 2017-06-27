@@ -22,31 +22,29 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Test the CSV parser class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.2.1
+ * @since Media-Library 0.5
  * @version 1.0
  */
-public class CSVParserTest {
+public class CsvParserTest {
 
     private FileParser parser;
 
     @Before
     public void setUp() {
-        this.parser = new CSVParser();
+        this.parser = new CsvParser();
     }
 
     @Test
-    public void parseCSVFile() throws Exception {
+    public void parseCsvFile() throws Exception {
         // Given - @see setUp() and instantiate the object return from the method parse.
         List<List<String>> dataParse = new ArrayList<>();
 
         // When - Parse file.
-        dataParse = this.parser.parse("test/resources/cartoons.csv");
+        dataParse = this.parser.parse("src/test/resources/animes.csv");
 
         // Then - Check content of the result.
         for (List l : dataParse) {

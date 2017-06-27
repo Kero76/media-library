@@ -41,7 +41,7 @@ import java.util.Set;
  * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @DiscriminatorValue(value = "comic")
@@ -60,13 +60,6 @@ public class Comic extends Book {
      * @since 1.0
      */
     private int currentVolume;
-
-    /**
-     * Date of the end of the series.
-     *
-     * @since 1.0
-     */
-    private Calendar endDate;
 
     /**
      * Illustrators of the Comic.
@@ -107,7 +100,6 @@ public class Comic extends Book {
      * @param format        Format of the comic.
      * @param volumes       Number of volume for the comic.
      * @param currentVolume current volume for the comic.
-     * @param endDate       Date of the end of the last volume.
      * @param illustrators  Illustrators of the comic.
      * @version 1.0
      * @since 1.0
@@ -115,11 +107,10 @@ public class Comic extends Book {
     public Comic(String title, String originalTitle, String synopsis,
                  Calendar releaseDate, int nbPages, String isbn,
                  Set<Author> authors, Set<Publisher> publishers, List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format,
-                 int volumes, int currentVolume, Calendar endDate, Set<Illustrator> illustrators) {
+                 int volumes, int currentVolume, Set<Illustrator> illustrators) {
         super(title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format);
         this.volumes = volumes;
         this.currentVolume = currentVolume;
-        this.endDate = endDate;
         this.illustrators = illustrators;
     }
 
@@ -140,7 +131,6 @@ public class Comic extends Book {
      * @param format        Format of the comic.
      * @param volumes       Number of volume for the comic.
      * @param currentVolume current volume for the comic.
-     * @param endDate       Date of the end of the last volume.
      * @param illustrators  Illustrators of the comic.
      * @version 1.0
      * @since 1.0
@@ -148,11 +138,10 @@ public class Comic extends Book {
     public Comic(long id, String title, String originalTitle, String synopsis,
                  Calendar releaseDate, int nbPages, String isbn,
                  Set<Author> authors, Set<Publisher> publishers, List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format,
-                 int volumes, int currentVolume, Calendar endDate, Set<Illustrator> illustrators) {
+                 int volumes, int currentVolume, Set<Illustrator> illustrators) {
         super(id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format);
         this.volumes = volumes;
         this.currentVolume = currentVolume;
-        this.endDate = endDate;
         this.illustrators = illustrators;
     }
 
@@ -179,7 +168,6 @@ public class Comic extends Book {
         super.setFormat(comic.getFormat());
         this.volumes = comic.getVolumes();
         this.currentVolume = comic.getCurrentVolume();
-        this.endDate = comic.getEndDate();
         this.illustrators = comic.getIllustrators();
     }
 
@@ -232,30 +220,6 @@ public class Comic extends Book {
     }
 
     /**
-     * The date of the end of the comic series.
-     *
-     * @return
-     *  The last date of release for a volume of the comic.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Calendar getEndDate() {
-        return endDate;
-    }
-
-    /**
-     * Set the date of the final release of a volume for the comic.
-     *
-     * @param endDate
-     *  New end date.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
-
-    /**
      * Return the illustrators who draw the comic.
      *
      * @return
@@ -304,7 +268,6 @@ public class Comic extends Book {
                 ", publisher=" + CollectionAsString.setToString(super.getPublisher()) +
                 ", volumes=" + volumes +
                 ", currentVolume=" + currentVolume +
-                ", endDate=" + endDate +
                 ", illustrator=" + CollectionAsString.setToString(this.illustrators) +
                 '}';
     }
