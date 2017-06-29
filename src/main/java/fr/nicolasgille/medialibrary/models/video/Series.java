@@ -269,7 +269,7 @@ public class Series extends Anime {
      * @return
      *  A short description of the content of the series's attribute.
      * @since 1.0
-     * @version 2.0
+     * @version 2.0.1
      */
     @Override
     public String toString() {
@@ -288,7 +288,7 @@ public class Series extends Anime {
                 ", numberOfSeasons=" + super.numberOfSeasons +
                 ", currentSeason=" + super.currentSeason +
                 ", startDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", endDate=" + super.endDate.toString() +
+                ", endDate=" + DateFormatter.frenchDate(super.endDate) +
                 ", averageEpisodeRuntime=" + super.averageEpisodeRuntime +
                 ", numberOfEpisode=" + super.numberOfEpisode +
                 ", maxepisodes=" + super.maxEpisodes +

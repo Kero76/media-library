@@ -17,9 +17,16 @@
 package fr.nicolasgille.medialibrary.builders;
 
 import com.neovisionaries.i18n.LanguageCode;
+import fr.nicolasgille.medialibrary.models.book.Book;
+import fr.nicolasgille.medialibrary.models.common.company.Developer;
+import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
+import fr.nicolasgille.medialibrary.models.common.company.Publisher;
+import fr.nicolasgille.medialibrary.models.common.person.*;
+import fr.nicolasgille.medialibrary.models.components.BookFormat;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
-import fr.nicolasgille.medialibrary.utils.DateFormatter;
+import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
+import fr.nicolasgille.medialibrary.models.game.VideoGame;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,7 +39,7 @@ import java.util.*;
  * @since Media-Library 0.5
  * @version 1.0
  */
-abstract class MediaBuilder implements IMediaBuilder {
+public abstract class MediaBuilder implements IMediaBuilder {
 
     private final static String MISSING_ARGUMENTS = "MISSING_ARGUMENTS";
 
@@ -115,6 +122,38 @@ abstract class MediaBuilder implements IMediaBuilder {
     }
 
     /**
+     * Split a string and return the list of VideoGamePlatform for the media.
+     *
+     * @param platforms
+     *  All platforms of the media on string format.
+     * @return
+     *  An empty list if the support not specified, or a list with all platforms get from the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected List<VideoGamePlatform> buildPlatformList(String platforms) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(platforms)) {
+            return new ArrayList<>();
+        }
+
+        // Split platforms to get one support.
+        List<VideoGamePlatform> platformList = new ArrayList<>();
+        String[] platformsSplit = platforms.split(",");
+
+        // Loop on each platform, video game platform and check if the platforms and the video game platform is the same.
+        for (String s : platformsSplit) {
+            for (VideoGamePlatform vgp : VideoGamePlatform.values()) {
+                if (vgp.getName().equals(s.trim())) {
+                    platformList.add(vgp);
+                }
+            }
+        }
+
+        return platformList;
+    }
+
+    /**
      * Split a string and return the list of LanguageCode for the media.
      *
      * @param languages
@@ -130,20 +169,46 @@ abstract class MediaBuilder implements IMediaBuilder {
             return new ArrayList<>();
         }
 
-        // Split languages to get one support.
+        // Split languages to get one language.
         List<LanguageCode> languageCodes = new ArrayList<>();
         String[] languagesSplit = languages.split(",");
 
         // Loop on each language or subtitle, LanguageCode and check if the language/subtitle and the LanguageCode is the same.
         for (String s : languagesSplit) {
             for (LanguageCode lc : LanguageCode.values()) {
-                if (lc.getName().equals(s.trim())) {
+                if (lc.name().equals(s.trim())) {
                     languageCodes.add(lc);
                 }
             }
         }
 
         return languageCodes;
+    }
+
+    /**
+     * Split a string and return the list of format for the media.
+     *
+     * @param format
+     *  Format of the Book/Comic
+     * @return
+     *  The format of the book.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected BookFormat buildBookFormat(String format) {
+        // If argument is empty, return a format not specified.
+        if (this.checkMissingArguments(format)) {
+            return BookFormat.UNSPECIFIED;
+        }
+
+        // Loop on each format and compare with the format send on parameter
+        for (BookFormat bf : BookFormat.values()) {
+            if (bf.getName().equals(format.trim())) {
+                return bf;
+            }
+        }
+
+        return BookFormat.UNSPECIFIED;
     }
 
     /**
@@ -169,5 +234,323 @@ abstract class MediaBuilder implements IMediaBuilder {
         }
 
         return calendar;
+    }
+
+    /**
+     * Transform the string representation of the actors into Actor object.
+     *
+     * @param persons
+     *  Persons at insert on Set.
+     * @return
+     *  A set of Actor composed by all actors present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Actor> buildActorSet(String persons) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(persons)) {
+            return new HashSet<>();
+        }
+
+        // Split persons to get one person.
+        Set<Actor> personSet = new HashSet<>();
+        String[] personsSplit = persons.split(",");
+
+        // Loop on each persons, split first and last name and added it on HashSet.
+        for (String s : personsSplit) {
+            String[] personName = s.trim().split(" ");
+            // If personName is equal 2, so the person have only one first name and one last name.
+            if (personName.length == 2) {
+                personSet.add(new Actor(personName[0], personName[1]));
+            } else {
+                // In other case, he can be have two first name or composed last name.
+                if (personName[1].matches("^[A-Za-z]\\.")) {
+                    personSet.add(new Actor(personName[0], personName[1] + " " + personName[2]));
+                } else {
+                    personSet.add(new Actor(personName[0] + " " + personName[1], personName[2]));
+                }
+            }
+        }
+
+        return personSet;
+    }
+
+    /**
+     * Transform the string representation of the authors into Authors object.
+     *
+     * @param persons
+     *  Persons at insert on Set.
+     * @return
+     *  A set of Authors composed by all authors present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Author> buildAuthorSet(String persons) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(persons)) {
+            return new HashSet<>();
+        }
+
+        // Split persons to get one person.
+        Set<Author> personSet = new HashSet<>();
+        String[] personsSplit = persons.split(",");
+
+        // Loop on each persons, split first and last name and added it on HashSet.
+        for (String s : personsSplit) {
+            String[] personName = s.trim().split(" ");
+            // If personName is equal 2, so the person have only one first name and one last name.
+            if (personName.length == 2) {
+                personSet.add(new Author(personName[0], personName[1]));
+            } else {
+                // In other case, he can be have two first name or composed last name.
+                if (personName[1].matches("^[A-Za-z]\\.")) {
+                    personSet.add(new Author(personName[0], personName[1] + " " + personName[2]));
+                } else {
+                    personSet.add(new Author(personName[0] + " " + personName[1], personName[2]));
+                }
+            }
+        }
+
+        return personSet;
+    }
+
+    /**
+     * Transform the string representation of the director into Director object.
+     *
+     * @param persons
+     *  Persons at insert on Set.
+     * @return
+     *  A set of Director composed by all directors present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Director> buildDirectorSet(String persons) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(persons)) {
+            return new HashSet<>();
+        }
+
+        // Split persons to get one person.
+        Set<Director> personSet = new HashSet<>();
+        String[] personsSplit = persons.split(",");
+
+        // Loop on each persons, split first and last name and added it on HashSet.
+        for (String s : personsSplit) {
+            String[] personName = s.trim().split(" ");
+            // If personName is equal 2, so the person have only one first name and one last name.
+            if (personName.length == 2) {
+                personSet.add(new Director(personName[0], personName[1]));
+            } else {
+                // In other case, he can be have two first name or composed last name.
+                if (personName[1].matches("^[A-Za-z]\\.")) {
+                    personSet.add(new Director(personName[0], personName[1] + " " + personName[2]));
+                } else {
+                    personSet.add(new Director(personName[0] + " " + personName[1], personName[2]));
+                }
+            }
+        }
+
+        return personSet;
+    }
+
+    /**
+     * Transform the string representation of the illustrator into Illustrator object.
+     *
+     * @param persons
+     *  Persons at insert on Set.
+     * @return
+     *  A set of Illustrator composed by all illustrators present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Illustrator> buildIllustratorSet(String persons) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(persons)) {
+            return new HashSet<>();
+        }
+
+        // Split persons to get one person.
+        Set<Illustrator> personSet = new HashSet<>();
+        String[] personsSplit = persons.split(",");
+
+        // Loop on each persons, split first and last name and added it on HashSet.
+        for (String s : personsSplit) {
+            String[] personName = s.trim().split(" ");
+            // If personName is equal 2, so the person have only one first name and one last name.
+            if (personName.length == 2) {
+                personSet.add(new Illustrator(personName[0], personName[1]));
+            } else {
+                // In other case, he can be have two first name or composed last name.
+                if (personName[1].matches("^[A-Za-z]\\.")) {
+                    personSet.add(new Illustrator(personName[0], personName[1] + " " + personName[2]));
+                } else {
+                    personSet.add(new Illustrator(personName[0] + " " + personName[1], personName[2]));
+                }
+            }
+        }
+
+        return personSet;
+    }
+
+    /**
+     * Transform the string representation of the producers into Producer object.
+     *
+     * @param persons
+     *  Persons at insert on Set.
+     * @return
+     *  A set of Producer composed by all producers present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Producer> buildProducerSet(String persons) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(persons)) {
+            return new HashSet<>();
+        }
+
+        // Split persons to get one person.
+        Set<Producer> personSet = new HashSet<>();
+        String[] personsSplit = persons.split(",");
+
+        // Loop on each persons, split first and last name and added it on HashSet.
+        for (String s : personsSplit) {
+            String[] personName = s.trim().split(" ");
+            // If personName is equal 2, so the person have only one first name and one last name.
+            if (personName.length == 2) {
+                personSet.add(new Producer(personName[0], personName[1]));
+            } else {
+                // In other case, he can be have two first name or composed last name.
+                if (personName[1].matches("^[A-Za-z]\\.")) {
+                    personSet.add(new Producer(personName[0], personName[1] + " " + personName[2]));
+                } else {
+                    personSet.add(new Producer(personName[0] + " " + personName[1], personName[2]));
+                }
+            }
+        }
+
+        return personSet;
+    }
+
+    /**
+     * Transform the string representation of the actors into singer object.
+     *
+     * @param persons
+     *  Persons at insert on Set.
+     * @return
+     *  A set of Singer composed by all singers present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Singer> buildSingerSet(String persons) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(persons)) {
+            return new HashSet<>();
+        }
+
+        // Split persons to get one person.
+        Set<Singer> personSet = new HashSet<>();
+        String[] personsSplit = persons.split(",");
+
+        // Loop on each persons, split first and last name and added it on HashSet.
+        for (String s : personsSplit) {
+            String[] personName = s.trim().split(" ");
+            // If personName is equal 2, so the person have only one first name and one last name.
+            if (personName.length == 2) {
+                personSet.add(new Singer(personName[0], personName[1]));
+            } else {
+                // In other case, he can be have two first name or composed last name.
+                if (personName[1].matches("^[A-Za-z]\\.")) {
+                    personSet.add(new Singer(personName[0], personName[1] + " " + personName[2]));
+                } else {
+                    personSet.add(new Singer(personName[0] + " " + personName[1], personName[2]));
+                }
+            }
+        }
+
+        return personSet;
+    }
+
+    /**
+     * Transform the string representation of the developers into developers object.
+     *
+     * @param companies
+     *  Companies at insert on Set.
+     * @return
+     *  A set of Developer composed by all developers present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Developer> buildDeveloperSet(String companies) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(companies)) {
+            return new HashSet<>();
+        }
+
+        // Split  to get one person.
+        Set<Developer> companiesSet = new HashSet<>();
+        String[] companiesSplit = companies.split(",");
+
+        // Loop on each companies, split first and last name and added it on HashSet.
+        for (String s : companiesSplit) {
+            companiesSet.add(new Developer(s.trim()));
+        }
+
+        return companiesSet;
+    }
+
+    /**
+     * Transform the string representation of the label records into label records object.
+     *
+     * @param companies
+     *  Companies at insert on Set.
+     * @return
+     *  A set of Label Records composed by all label records present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<LabelRecords> buildLabelRecordsSet(String companies) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(companies)) {
+            return new HashSet<>();
+        }
+
+        // Split  to get one person.
+        Set<LabelRecords> companiesSet = new HashSet<>();
+        String[] companiesSplit = companies.split(",");
+
+        // Loop on each companies, split first and last name and added it on HashSet.
+        for (String s : companiesSplit) {
+            companiesSet.add(new LabelRecords(s.trim()));
+        }
+
+        return companiesSet;
+    }
+
+    /**
+     * Transform the string representation of the publishers into publishers object.
+     *
+     * @param companies
+     *  Companies at insert on Set.
+     * @return
+     *  A set of Publisher composed by all publishers present on the string.
+     * @since 1.0
+     * @version 1.0
+     */
+    protected Set<Publisher> buildPublisherSet(String companies) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(companies)) {
+            return new HashSet<>();
+        }
+
+        // Split  to get one person.
+        Set<Publisher> companiesSet = new HashSet<>();
+        String[] companiesSplit = companies.split(",");
+
+        // Loop on each companies, split first and last name and added it on HashSet.
+        for (String s : companiesSplit) {
+            companiesSet.add(new Publisher(s.trim()));
+        }
+
+        return companiesSet;
     }
 }

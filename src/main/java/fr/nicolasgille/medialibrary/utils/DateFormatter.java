@@ -56,12 +56,13 @@ public class DateFormatter {
      *  Number to return with or without a 0 as a String.
      * @return
      *  The String representation of the number n with a 0 before or not.
+     * @since 1.0
+     * @version 1.1
      */
     private static String addPreviousZero(int n) {
         if (n >= 10) {
             return "" + n;
-        } else {
-            return "0" + n;
         }
+        return "0" + n;
     }
 }

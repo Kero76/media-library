@@ -22,6 +22,7 @@ package fr.nicolasgille.medialibrary.models.components;
  * <ul>
  *     <li><code>CLASSICAL</code> : Classical format when the book can be bought on the market.</li>
  *     <li><code>POCKET</code> : A re-edition of the book in little format.</li>
+ *     <li><code>UNSPECIFIED</code> : Format not specified or unknown.</li>
  * </ul>
  *
  * @author Nicolas GILLE
@@ -30,7 +31,8 @@ package fr.nicolasgille.medialibrary.models.components;
  */
 public enum BookFormat {
     CLASSICAL("Classical"),
-    POCKET("Pocket");
+    POCKET("Pocket"),
+    UNSPECIFIED("Unspecified");
 
     /**
      * Name stored in database.

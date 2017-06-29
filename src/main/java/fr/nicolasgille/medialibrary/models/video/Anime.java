@@ -418,7 +418,7 @@ public class Anime extends Video {
      * @return
      *  A short description of the content of the anime's attribute.
      * @since 1.0
-     * @version 2.0
+     * @version 2.0.1
      */
     @Override
     public String toString() {
@@ -436,7 +436,7 @@ public class Anime extends Video {
                 ", numberOfSeasons=" + numberOfSeasons +
                 ", currentSeason=" + currentSeason +
                 ", startDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", endDate=" + endDate.toString() +
+                ", endDate=" + DateFormatter.frenchDate(endDate) +
                 ", averageEpisodeRuntime=" + averageEpisodeRuntime +
                 ", numberOfEpisode=" + numberOfEpisode +
                 ", maxepisodes=" + maxEpisodes +

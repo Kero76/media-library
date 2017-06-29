@@ -31,6 +31,8 @@ import java.util.List;
  */
 public class TsvParserTest {
 
+    private final static String FILENAME = "src/test/resources/animes.tsv";
+
     private FileParser parser;
 
     @Before
@@ -41,10 +43,10 @@ public class TsvParserTest {
     @Test
     public void parseTsvFile() throws Exception {
         // Given - @see setUp() and instantiate the object return from the method parse.
-        List<List<String>> dataParse = new ArrayList<>();
+        List<List<String>> dataParse;
 
         // When - Parse file.
-        dataParse = this.parser.parse("src/test/resources/animes.tsv");
+        dataParse = this.parser.parse(FILENAME);
 
         // Then - Check content of the result.
         for (List l : dataParse) {
