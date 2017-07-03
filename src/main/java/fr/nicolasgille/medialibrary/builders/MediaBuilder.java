@@ -17,7 +17,6 @@
 package fr.nicolasgille.medialibrary.builders;
 
 import com.neovisionaries.i18n.LanguageCode;
-import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
@@ -26,7 +25,6 @@ import fr.nicolasgille.medialibrary.models.components.BookFormat;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
-import fr.nicolasgille.medialibrary.models.game.VideoGame;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -225,6 +223,10 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @version 1.0
      */
     protected Calendar buildDate(String date) {
+        if (date.equals("pending")) {
+            return Calendar.getInstance();
+        }
+
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
         try {
@@ -262,6 +264,8 @@ public abstract class MediaBuilder implements IMediaBuilder {
             // If personName is equal 2, so the person have only one first name and one last name.
             if (personName.length == 2) {
                 personSet.add(new Actor(personName[0], personName[1]));
+            } else if (personName.length == 1) {
+                personSet.add(new Actor(personName[0], personName[0]));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -301,6 +305,8 @@ public abstract class MediaBuilder implements IMediaBuilder {
             // If personName is equal 2, so the person have only one first name and one last name.
             if (personName.length == 2) {
                 personSet.add(new Author(personName[0], personName[1]));
+            } else if (personName.length == 1) {
+                personSet.add(new Author(personName[0], personName[0]));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -340,6 +346,8 @@ public abstract class MediaBuilder implements IMediaBuilder {
             // If personName is equal 2, so the person have only one first name and one last name.
             if (personName.length == 2) {
                 personSet.add(new Director(personName[0], personName[1]));
+            } else if (personName.length == 1) {
+                personSet.add(new Director(personName[0], personName[0]));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -379,6 +387,8 @@ public abstract class MediaBuilder implements IMediaBuilder {
             // If personName is equal 2, so the person have only one first name and one last name.
             if (personName.length == 2) {
                 personSet.add(new Illustrator(personName[0], personName[1]));
+            } else if (personName.length == 1) {
+                personSet.add(new Illustrator(personName[0], personName[0]));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -418,6 +428,8 @@ public abstract class MediaBuilder implements IMediaBuilder {
             // If personName is equal 2, so the person have only one first name and one last name.
             if (personName.length == 2) {
                 personSet.add(new Producer(personName[0], personName[1]));
+            } else if (personName.length == 1) {
+                personSet.add(new Producer(personName[0], personName[0]));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -457,6 +469,8 @@ public abstract class MediaBuilder implements IMediaBuilder {
             // If personName is equal 2, so the person have only one first name and one last name.
             if (personName.length == 2) {
                 personSet.add(new Singer(personName[0], personName[1]));
+            } else if (personName.length == 1) {
+                personSet.add(new Singer(personName[0], personName[0]));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {

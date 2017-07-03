@@ -190,7 +190,7 @@ public class AlbumController {
         logger.info("Created album : {}", album);
 
         // Check if the album already exist on database.
-        Album albumExist = albumRepository.findByTitleIgnoreCase(album.getTitle());
+        Album albumExist = albumRepository.findByTitleAndNbTracksAndLength(album.getTitle(), album.getNbTracks(), album.getLength());
         if (albumExist != null) {
             logger.error("Unable to create. The album {} already exist", album.getTitle());
             return new ResponseEntity<AlbumException>(new AlbumException("Unable to create. The album " + album.getTitle() + " already exist"), HttpStatus.CONFLICT);

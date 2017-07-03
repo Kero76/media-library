@@ -148,62 +148,62 @@ public class AnimeController {
     }
 
     /**
-     * Return a animes by his identifier.
+     * Return an anime by his identifier.
      *
-     * This method return a ResponseEntity with the animes retrieve from the Database.
-     * If the database doesn't get the animes, this method return an HTTP error : 204.
-     * In other case, this method return the animes found in body response and the success code HTTP 200.
+     * This method return a ResponseEntity with the anime retrieve from the Database.
+     * If the database doesn't get the anime, this method return an HTTP error : 204.
+     * In other case, this method return the anime found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
-     * parameter the identifier of the animes at research.
+     * parameter the identifier of the anime at research.
      *
      * @param id
      *  Identifier of the Anime on Database.
      * @return
-     *  A ResponseEntity with the animes found on Database, or an error HTTP 204 : No Content.
+     *  A ResponseEntity with the anime found on Database, or an error HTTP 204 : No Content.
      * @since 1.1
      * @version 1.0
      */
     @RequestMapping(value = "/animes/search/id/{id}")
     public ResponseEntity<?> getAnimeById(@PathVariable(value = "id") long id) {
         logger.info("Fetching Anime with id {}", id);
-        Anime animes = animesRepository.findOne(id);
-        if (animes == null) {
+        Anime anime = animesRepository.findOne(id);
+        if (anime == null) {
             logger.error("Anime with id {} not found.", id);
             return new ResponseEntity<Object>(new AnimeException("Anime with id " + id + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Anime>(animes, HttpStatus.OK);
+        return new ResponseEntity<Anime>(anime, HttpStatus.OK);
     }
 
     /**
-     * Add a animes on the Database.
+     * Add an anime on the Database.
      *
-     * Before added the animes on database, it check if the animes is already present on the database.
-     * So, if the animes is present, the method return an error HTTP 409 : CONFLICT.
-     * In other case, it return the code HTTP 200 and an uri to get information about the new animes insert.
-     * So, this method is call by POST method and take the animes at insert on the BODY request.
+     * Before added the anime on database, it check if the anime is already present on the database.
+     * So, if the anime is present, the method return an error HTTP 409 : CONFLICT.
+     * In other case, it return the code HTTP 200 and an uri to get information about the new anime insert.
+     * So, this method is call by POST method and take the anime at insert on the BODY request.
      *
-     * @param animes
+     * @param anime
      *  Anime at insert on Database.
      * @param uriBuilder
-     *  UrlComponentsBuilder use to redirect user on animes page.
+     *  UrlComponentsBuilder use to redirect user on anime page.
      * @return
-     *  A ResponseEntity with the animes added, or an error HTTP 409 : CONFLICT.
+     *  A ResponseEntity with the anime added, or an error HTTP 409 : CONFLICT.
      * @since 1.0
      * @version 1.1
      */
     @RequestMapping(value = "/animes/", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody Anime animes, UriComponentsBuilder uriBuilder) {
-        logger.info("Created animes : {}", animes);
+    public ResponseEntity<?> create(@RequestBody Anime anime, UriComponentsBuilder uriBuilder) {
+        logger.info("Created anime : {}", anime);
 
-        // Check if the animes already exist on database.
-        Anime animesExist = animesRepository.findByTitleAndCurrentSeason(animes.getTitle(), animes.getCurrentSeason());
-        if (animesExist != null) {
-            logger.error("Unable to create. The animes {} already exist", animes.getTitle());
-            return new ResponseEntity<AnimeException>(new AnimeException("Unable to create. The animes " + animes.getTitle() + " already exist"), HttpStatus.CONFLICT);
+        // Check if the anime already exist on database.
+        Anime animeExist = animesRepository.findByTitleAndCurrentSeason(anime.getTitle(), anime.getCurrentSeason());
+        if (animeExist != null) {
+            logger.error("Unable to create. The anime {} already exist", anime.getTitle());
+            return new ResponseEntity<AnimeException>(new AnimeException("Unable to create. The anime " + anime.getTitle() + " already exist"), HttpStatus.CONFLICT);
         }
 
         // Check if the producers are present on Database or not.
-        Set<Producer> producersOnAnime = animes.getProducers();
+        Set<Producer> producersOnAnime = anime.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnAnime) {
             Producer producerExist = producerRepository.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
@@ -217,10 +217,10 @@ public class AnimeController {
                 producers.add(producerExist);
             }
         }
-        animes.setProducers(producers);
+        anime.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        Set<Director> directorOnAnime = animes.getDirectors();
+        Set<Director> directorOnAnime = anime.getDirectors();
         Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnAnime) {
             Director directorExist = directorRepository.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
@@ -234,43 +234,43 @@ public class AnimeController {
                 directors.add(directorExist);
             }
         }
-        animes.setDirectors(directors);
-        animesRepository.save(animes);
+        anime.setDirectors(directors);
+        animesRepository.save(anime);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/animes/search/id/{id}").buildAndExpand(animes.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/anime/search/id/{id}").buildAndExpand(anime.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
-     * Update a animes present on the Database.
+     * Update an anime present on the Database.
      *
-     * It update a animes only if found on database.
-     * It the animes is not found, the method return an error with the HTTP code 404.
-     * In other case, it update the information about the animes and return in the body the animes update
+     * It update an anime only if found on database.
+     * It the anime is not found, the method return an error with the HTTP code 404.
+     * In other case, it update the information about the anime and return in the body the anime update
      * can use to check if the modification are succeeded and the HTTP code 200.
      *
      * @param id
-     *  Id of the animes on Database.
-     * @param animes
+     *  Id of the anime on Database.
+     * @param anime
      *  Anime with new content at update.
      * @return
-     *  A ResponseEntity with all animes found on Database, or an error HTTP 404 : NOT FOUND.
+     *  A ResponseEntity with all anime found on Database, or an error HTTP 404 : NOT FOUND.
      * @since 1.0
      * @version 1.0
      */
     @RequestMapping(value = "/animes/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Anime animes) {
+    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Anime anime) {
         logger.info("Updating Anime with id {}", id);
 
-        Anime animesAtUpdate = animesRepository.findOne(id);
-        if (animesAtUpdate == null) {
+        Anime animeAtUpdate = animesRepository.findOne(id);
+        if (animeAtUpdate == null) {
             logger.error("Unable to update. Anime with id {} not found", id);
             return new ResponseEntity<Object>(new AnimeException("Unable to update. Anime with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         // Check if the producers are present on Database or not.
-        Set<Producer> producersOnAnime = animes.getProducers();
+        Set<Producer> producersOnAnime = anime.getProducers();
         Set<Producer> producers = new HashSet<Producer>();
         for (Producer p : producersOnAnime) {
             Producer producerExist = producerRepository.findByFirstNameAndLastName(p.getFirstName(), p.getLastName());
@@ -284,10 +284,10 @@ public class AnimeController {
                 producers.add(producerExist);
             }
         }
-        animes.setProducers(producers);
+        anime.setProducers(producers);
 
         // Check if the directors are present on Database or not.
-        Set<Director> directorOnAnime = animes.getDirectors();
+        Set<Director> directorOnAnime = anime.getDirectors();
         Set<Director> directors = new HashSet<Director>();
         for (Director d : directorOnAnime) {
             Director directorExist = directorRepository.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
@@ -301,26 +301,26 @@ public class AnimeController {
                 directors.add(directorExist);
             }
         }
-        animes.setDirectors(directors);
+        anime.setDirectors(directors);
 
-        // Copy content of the animes receive on request body on the animes retrieve from the database.
-        animesAtUpdate = new Anime(animes);
-        animesRepository.save(animesAtUpdate);
-        return new ResponseEntity<Object>(animesAtUpdate, HttpStatus.OK);
+        // Copy content of the anime receive on request body on the anime retrieve from the database.
+        animeAtUpdate = new Anime(anime);
+        animesRepository.save(animeAtUpdate);
+        return new ResponseEntity<Object>(animeAtUpdate, HttpStatus.OK);
     }
 
     /**
-     * Remove a animes from the Database.
+     * Remove an anime from the Database.
      *
-     * It remove a animes if it found on database.
-     * If the animes is not found on database, this method return an error and the HTTP code 404.
-     * Otherwise, the method delete the animes thanks to the identifier and return in the body the animes deleted
+     * It remove a anime if it found on database.
+     * If the anime is not found on database, this method return an error and the HTTP code 404.
+     * Otherwise, the method delete the anime thanks to the identifier and return in the body the anime deleted
      * and the code HTTP 200 to confirm the success of the deletion.
      *
      * @param id
-     *  Id of the animes at delete.
+     *  Id of the anime at delete.
      * @return
-     *  A ResponseEntity with all animes found on Database, or an error HTTP 404 : NOT_FOUND.
+     *  A ResponseEntity with all anime found on Database, or an error HTTP 404 : NOT_FOUND.
      * @since 1.0
      * @version 2.0
      */
@@ -328,13 +328,13 @@ public class AnimeController {
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Anime with id {}", id);
 
-        Anime animes = animesRepository.findOne(id);
-        if (animes == null) {
+        Anime anime = animesRepository.findOne(id);
+        if (anime == null) {
             logger.error("Unable to delete. Anime with id {} not found", id);
             return new ResponseEntity<Object>(new AnimeException("Unable to delete. Anime with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        animesRepository.delete(animes);
-        return new ResponseEntity<Object>(animes, HttpStatus.OK);
+        animesRepository.delete(anime);
+        return new ResponseEntity<Object>(anime, HttpStatus.OK);
     }
 }

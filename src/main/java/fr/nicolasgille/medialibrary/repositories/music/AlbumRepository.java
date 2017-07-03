@@ -26,13 +26,13 @@ import javax.transaction.Transactional;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Transactional
 public interface AlbumRepository extends JpaRepository<Album, Long> {
 
     /**
-     * Find a album by his name.
+     * Find an album by his name.
      *
      * @param title
      *  Title of the album at search on Database.
@@ -42,4 +42,20 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
      * @version 1.0
      */
     Album findByTitleIgnoreCase(String title);
+
+    /**
+     * Find an album by his name, his length and his number of tracks.
+     *
+     * @param title
+     *  Title of the album.
+     * @param nbTrack
+     *  Number of track present on the album.
+     * @param length
+     *  Length of the album.
+     * @return
+     *  An instance of album search by the name, the number of tracks and his length.
+     * @since 1.1
+     * @version 1.0
+     */
+    Album findByTitleAndNbTracksAndLength(String title, int nbTrack, double length);
 }

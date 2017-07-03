@@ -54,8 +54,8 @@ public class AlbumBuilder extends MediaBuilder {
         Calendar releaseDate = this.buildDate(data.get(2));
         List<MediaGenre>   genres    = this.buildGenreList(data.get(3));
         List<MediaSupport> supports  = this.buildSupportList(data.get(4));
-        double length = Double.parseDouble(data.get(5));
-        int nbTracks  = Integer.parseInt(data.get(6));
+        double length =  this.checkMissingArguments(data.get(5)) ? -1 : Double.parseDouble(data.get(5));
+        int nbTracks  = this.checkMissingArguments(data.get(6))  ? 0  : Integer.parseInt(data.get(6));
         Set<LabelRecords> labelRecords = this.buildLabelRecordsSet(data.get(7));
         Set<Singer>       singers      = this.buildSingerSet(data.get(8));
 

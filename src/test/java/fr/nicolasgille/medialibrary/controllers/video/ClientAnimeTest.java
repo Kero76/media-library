@@ -172,14 +172,14 @@ public class ClientAnimeTest {
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
         Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
-        Anime animes = new Anime(
+        Anime anime = new Anime(
                 title, originalTitle, synopsis,
                 directors, producers, categories, supports, languageSpoken, subtitles,
                 startDate, endDate, numberOfSeasons, currentSeason, maxEpisodes, numberOfEpisode, averageEpisodeRuntime
         );
 
-        // When - Send animes to save it on persistent system.
-        ResponseEntity<Anime> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", animes, Anime.class);
+        // When - Send anime to save it on persistent system.
+        ResponseEntity<Anime> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", anime, Anime.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
