@@ -38,7 +38,7 @@ If the series or animes are currently in production, you must replace the date o
 So, the parser replace these keyword by the current date, so can't forget to change it when the media is finished ;).
 
 ## Contributions
-**Work in Progress**.
+You can get more information about the contribution on reading [CONTRIBUTING.md](https://github.com/Kero76/media-library/blob/master/CONTRIBUTING.md)
 
 ## Changelog 
 - v1.0 : Media-Library Release - Released July 03, 2017
@@ -49,7 +49,7 @@ So, the parser replace these keyword by the current date, so can't forget to cha
 - V0.1.1 : Deployment Update - Released May 08, 2017
 - V0.1 : Movie's Release - Released May 04, 2017
 
-You can get more information about the modification of the project here : [Changelog.md](https://github.com/Kero76/media-library/blob/master/changelog.md)
+You can get more information about the modification of the project here : [Changelog.md](https://github.com/Kero76/media-library/blob/master/CHANGELOG.md)
 
 ## License 
 Media-Library is under GPLv3 license.
