@@ -18,8 +18,10 @@ package fr.nicolasgille.medialibrary.repositories.video;
 
 import fr.nicolasgille.medialibrary.models.video.Anime;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * An interface who specified method to interact with the anime table.
@@ -30,7 +32,7 @@ import javax.transaction.Transactional;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.1
+ * @version 1.2
  */
 @Transactional
 public interface AnimeRepository extends JpaRepository<Anime, Long> {
@@ -60,4 +62,15 @@ public interface AnimeRepository extends JpaRepository<Anime, Long> {
      * @version 1.0
      */
     Anime findByTitleAndCurrentSeason(String title, int currentSeason);
+
+    /**
+     * Find all animes present on Media Library.
+     *
+     * @return
+     *  List of all Anime.
+     * @since 1.2
+     * @version 1.0
+     */
+    @Query(value = "SELECT * FROM media WHERE media_type = \"anime\"", nativeQuery = true)
+    List<Anime> findAll();
 }

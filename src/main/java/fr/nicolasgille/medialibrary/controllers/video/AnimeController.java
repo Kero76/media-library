@@ -20,7 +20,6 @@ import fr.nicolasgille.medialibrary.exceptions.video.AnimeException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Anime;
-import fr.nicolasgille.medialibrary.repositories.common.person.ActorRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.DirectorRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.ProducerRepository;
 import fr.nicolasgille.medialibrary.repositories.video.AnimeRepository;
@@ -139,12 +138,12 @@ public class AnimeController {
             @PathVariable(value = "currentSeason") int currentSeason) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, AnimeController.ENCODING);
         logger.info("Fetching Anime with title {} and current season {}", title, currentSeason);
-        Anime animes = animesRepository.findByTitleAndCurrentSeason(title, currentSeason);
-        if (animes == null) {
+        Anime anime = animesRepository.findByTitleAndCurrentSeason(title, currentSeason);
+        if (anime == null) {
             logger.error("Anime with title {} not found.", title);
             return new ResponseEntity<Object>(new AnimeException("Anime with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Anime>(animes, HttpStatus.OK);
+        return new ResponseEntity<Anime>(anime, HttpStatus.OK);
     }
 
     /**
