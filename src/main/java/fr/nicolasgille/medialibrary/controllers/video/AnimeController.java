@@ -237,7 +237,7 @@ public class AnimeController {
         animesRepository.save(anime);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/anime/search/id/{id}").buildAndExpand(anime.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/animes/search/id/{id}").buildAndExpand(anime.getId()).toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
