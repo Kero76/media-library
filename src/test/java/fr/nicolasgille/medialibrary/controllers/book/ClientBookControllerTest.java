@@ -23,8 +23,11 @@ import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -43,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.4
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientBookControllerTest {
 
     /**
@@ -65,8 +69,13 @@ public class ClientBookControllerTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -81,7 +90,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding book.
         String messageExcepted = "404 null";
         int id = 666;
@@ -101,7 +110,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testGetAllBooksWithEmptyPersistentSystem() {
+    public void test03GetAllBooksWithEmptyPersistentSystem() {
         // Given / When - Get all books from persistent system.
         ResponseEntity<List> videoGames = this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/", List.class);
 
@@ -111,7 +120,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testGetBookWithEmptyPersistentSystem() {
+    public void test04GetBookWithEmptyPersistentSystem() {
         // Given - Instantiate title of book.
         String title = "Da Vinci Code";
 
@@ -124,11 +133,11 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testAddBookOnPersistentSystem() {
+    public void test05AddBookOnPersistentSystem() {
         // Given - Instantiate book at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
-        String uriExpected = "http://localhost:8080/media-library/books/search/title/" + id;
+        String uriExpected = "http://localhost:8080/media-library/books/search/id/" + id;
 
         String title = "Da Vinci Code";
         String originalTitle = "The Da Vinci Code";
@@ -164,7 +173,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testAddBookAlreadyPresentOnPersistentSystem() {
+    public void test06AddBookAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate book at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -206,7 +215,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testGetOneBook() throws UnsupportedEncodingException {
+    public void test07GetOneBook() throws UnsupportedEncodingException {
         // Given - Instantiate book at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -259,7 +268,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testGetBookNotFoundOnPersistentSystem() {
+    public void test08GetBookNotFoundOnPersistentSystem() {
         // Given - Instantiate book at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -303,7 +312,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void testGetAllBooks() {
+    public void test09GetAllBooks() {
         // Given - Instantiate a book to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -343,7 +352,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void updateBook() throws UnsupportedEncodingException {
+    public void test10UpdateBook() throws UnsupportedEncodingException {
         // Given - Instantiate a book to update on persistent system.
         int id = 2;
         String title = "Anges et Démons";
@@ -380,7 +389,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void updateBookNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateBookNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate a book to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -420,7 +429,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void deleteBook() {
+    public void test12DeleteBook() {
         // Given - id of book at delete and all elements expected.
         int id = 2;
         String title = "Anges et Démons";
@@ -442,7 +451,7 @@ public class ClientBookControllerTest {
     }
 
     @Test
-    public void deleteBookNotFoundOnPersistentSystem() {
+    public void test13DeleteBookNotFoundOnPersistentSystem() {
         // Given - id of book at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;

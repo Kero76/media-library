@@ -24,8 +24,11 @@ import fr.nicolasgille.medialibrary.models.video.Movie;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -44,6 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.1
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientMovieTest {
 
     /**
@@ -66,8 +70,13 @@ public class ClientMovieTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -82,7 +91,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding movie.
         String messageExcepted = "404 null";
         int id = 666;
@@ -105,7 +114,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testGetAllMoviesWithEmptyPersistentSystem() {
+    public void test03GetAllMoviesWithEmptyPersistentSystem() {
         // Given / When - Get all movies from persistent system.
         ResponseEntity<List> movies = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/", List.class);
 
@@ -115,7 +124,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testGetMovieWithEmptyPersistentSystem() {
+    public void test04GetMovieWithEmptyPersistentSystem() {
         // Given - Instantiate title of movie.
         String title = "Persistent System 2 : Return of the Empty Row";
 
@@ -128,7 +137,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testAddMovieOnPersistentSystem() {
+    public void test05AddMovieOnPersistentSystem() {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
@@ -179,7 +188,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testAddMovieAlreadyPresentOnPersistentSystem() {
+    public void test06AddMovieAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -232,7 +241,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testGetOneMovie() throws UnsupportedEncodingException {
+    public void test07GetOneMovie() throws UnsupportedEncodingException {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -296,7 +305,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testGetMovieNotFoundOnPersistentSystem() {
+    public void test08GetMovieNotFoundOnPersistentSystem() {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -351,7 +360,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void testGetAllMovies() {
+    public void test09GetAllMovies() {
         // Given - Instantiate a movie to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -402,7 +411,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void updateMovie() throws UnsupportedEncodingException {
+    public void test10UpdateMovie() throws UnsupportedEncodingException {
         // Given - Instantiate a movie to update on persistent system.
         int id = 2;
         String title = "Persistent System 3 : A new Hope";
@@ -450,7 +459,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void updateMovieNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateMovieNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate a movie to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -501,7 +510,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void deleteMovie() {
+    public void test12DeleteMovie() {
         // Given - id of movie at delete and all elements expected.
         int id = 2;
         String title = "Persistent System 3 : A new Hope";
@@ -523,7 +532,7 @@ public class ClientMovieTest {
     }
 
     @Test
-    public void deleteMovieNotFoundOnPersistentSystem() {
+    public void test13DeleteMovieNotFoundOnPersistentSystem() {
         // Given - id of movie at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;

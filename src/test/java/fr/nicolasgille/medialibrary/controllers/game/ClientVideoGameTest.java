@@ -24,8 +24,11 @@ import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
 import fr.nicolasgille.medialibrary.models.game.VideoGame;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -44,6 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.4
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientVideoGameTest {
 
     /**
@@ -66,15 +70,20 @@ public class ClientVideoGameTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
 
         // When - Try to delete it.
         try {
-            this.restTemplate.delete(REST_SERVICE_URI + "/video-game/" + id);
+            this.restTemplate.delete(REST_SERVICE_URI + "/video-games/" + id);
         } catch (Exception e) {
             // Then - Exception throws give the expected message.
             assertThat(e.getMessage()).isEqualTo(messageExcepted);
@@ -82,7 +91,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding video game.
         String messageExcepted = "404 null";
         int id = 666;
@@ -95,7 +104,7 @@ public class ClientVideoGameTest {
 
         // When - Try to update album.
         try {
-            this.restTemplate.put(REST_SERVICE_URI + "/video-game/" + videoGame.getId(), videoGame);
+            this.restTemplate.put(REST_SERVICE_URI + "/video-games/" + videoGame.getId(), videoGame);
         } catch (Exception e) {
             // Then - Exception throws is null.
             assertThat(e.getMessage()).isEqualTo(messageExcepted);
@@ -103,9 +112,9 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testGetAllVideoGamesWithEmptyPersistentSystem() {
+    public void test03GetAllVideoGamesWithEmptyPersistentSystem() {
         // Given / When - Get all video games from persistent system.
-        ResponseEntity<List> videoGames = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/", List.class);
+        ResponseEntity<List> videoGames = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/", List.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(videoGames.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -113,24 +122,24 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testGetVideoGameWithEmptyPersistentSystem() {
+    public void test04GetVideoGameWithEmptyPersistentSystem() {
         // Given - Instantiate title of cartoon.
         String title = "Final Fantasy";
 
         // When - Get one cartoon from persistent system.
-        ResponseEntity<VideoGame> cartoon = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/search/title/" + title, VideoGame.class);
+        ResponseEntity<VideoGame> videoGame = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + title, VideoGame.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
-        assertThat(cartoon.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        assertThat(cartoon.getBody()).isNull();
+        assertThat(videoGame.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(videoGame.getBody()).isNull();
     }
 
     @Test
-    public void testAddVideoGameOnPersistentSystem() {
+    public void test05AddVideoGameOnPersistentSystem() {
         // Given - Instantiate VideoGame at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
-        String uriExpected = "http://localhost:8080/media-library/video-game/search/title/" + id;
+        String uriExpected = "http://localhost:8080/media-library/video-games/search/id/" + id;
 
         String title = "Final Fantasy XII";
         String originalTitle = "Final Fantasy XII";
@@ -166,7 +175,7 @@ public class ClientVideoGameTest {
         );
 
         // When - Send video game to save it on persistent system.
-        ResponseEntity<VideoGame> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-game/", videoGame, VideoGame.class);
+        ResponseEntity<VideoGame> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -174,7 +183,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testAddVideoGameAlreadyPresentOnPersistentSystem() {
+    public void test06AddVideoGameAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate VideoGame at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -215,7 +224,7 @@ public class ClientVideoGameTest {
         ResponseEntity<VideoGameException> responseEntity = null;
         // When - Send video game to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-game/", videoGame, VideoGameException.class);
+            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGameException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -224,7 +233,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testGetOneVideoGame() throws UnsupportedEncodingException {
+    public void test07GetOneVideoGame() throws UnsupportedEncodingException {
         // Given - Instantiate VideoGame at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -265,7 +274,7 @@ public class ClientVideoGameTest {
         // When - Get video game from persistent system.
         ResponseEntity<VideoGame> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/search/title/" + URLEncoder.encode(videoGame.getTitle(), URL_ENCODER), VideoGame.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(videoGame.getTitle(), URL_ENCODER), VideoGame.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -285,7 +294,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testGetVideoGameNotFoundOnPersistentSystem() {
+    public void test08GetVideoGameNotFoundOnPersistentSystem() {
         // Given - Instantiate VideoGame at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -326,7 +335,7 @@ public class ClientVideoGameTest {
         // When - Get video game from persistent system.
         ResponseEntity<VideoGame> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/search/title/" + URLEncoder.encode(videoGame.getTitle(), URL_ENCODER), VideoGame.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(videoGame.getTitle(), URL_ENCODER), VideoGame.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -337,7 +346,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void testGetAllVideoGames() {
+    public void test09GetAllVideoGames() {
         // Given - Instantiate a video game to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -374,10 +383,10 @@ public class ClientVideoGameTest {
                 title, originalTitle, synopsis, releaseDate, genres, supports,
                 multiplayers, languages, developers, publishers, platforms
         );
-        this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-game/", videoGame, VideoGame.class);
+        this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
 
         // When - Get all video games from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/", List.class);
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -385,7 +394,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void updateVideoGame() throws UnsupportedEncodingException {
+    public void test10UpdateVideoGame() throws UnsupportedEncodingException {
         // Given - Instantiate a video game to update on persistent system.
         int id = 2;
         String title = "Final Fantasy XIII";
@@ -420,17 +429,17 @@ public class ClientVideoGameTest {
                 id, title, originalTitle, synopsis, releaseDate, genres, supports,
                 multiplayers, languages, developers, publishers, platforms
         );
-        this.restTemplate.put(REST_SERVICE_URI + "/video-game/" + videoGame.getId(), videoGame, VideoGame.class);
+        this.restTemplate.put(REST_SERVICE_URI + "/video-games/" + videoGame.getId(), videoGame, VideoGame.class);
 
         // When - Get video game update and check if the difference appear.
-        ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
+        ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
 
         // Then - Compare originalTitle.
         assertThat(responseEntity.getBody().getOriginalTitle()).isEqualTo(originalTitle);
     }
 
     @Test
-    public void updateVideoGameNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateVideoGameNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate a video game to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -470,7 +479,7 @@ public class ClientVideoGameTest {
 
         try {
             // When - Try to update video game not present on persistent system.
-            this.restTemplate.put(REST_SERVICE_URI + "/video-game/" + videoGame.getId(), videoGame, VideoGame.class);
+            this.restTemplate.put(REST_SERVICE_URI + "/video-games/" + videoGame.getId(), videoGame, VideoGame.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare http code error.
             assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -478,7 +487,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void deleteVideoGame() {
+    public void test12DeleteVideoGame() {
         // Given - id of video game at delete and all elements expected.
         int id = 2;
         String title = "Final Fantasy XIII";
@@ -486,10 +495,10 @@ public class ClientVideoGameTest {
         String httpClientExceptionExpected = "404 null";
 
         // When - Delete video game
-        this.restTemplate.delete(REST_SERVICE_URI + "/video-game/" + id);
+        this.restTemplate.delete(REST_SERVICE_URI + "/video-games/" + id);
 
         try {
-            ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-game/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
+            ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -500,7 +509,7 @@ public class ClientVideoGameTest {
     }
 
     @Test
-    public void deleteVideoGameNotFoundOnPersistentSystem() {
+    public void test13DeleteVideoGameNotFoundOnPersistentSystem() {
         // Given - id of video game at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
@@ -508,7 +517,7 @@ public class ClientVideoGameTest {
 
         try {
             // When - Delete video game
-            this.restTemplate.delete(REST_SERVICE_URI + "/video-game/" + id);
+            this.restTemplate.delete(REST_SERVICE_URI + "/video-games/" + id);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);

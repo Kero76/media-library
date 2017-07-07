@@ -23,8 +23,11 @@ import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Cartoon;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -43,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.3
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientCartoonTest {
 
     /**
@@ -65,8 +69,13 @@ public class ClientCartoonTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -81,7 +90,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding cartoon.
         String messageExcepted = "404 null";
         int id = 666;
@@ -103,7 +112,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testGetAllCartoonsWithEmptyPersistentSystem() {
+    public void test03GetAllCartoonsWithEmptyPersistentSystem() {
         // Given / When - Get all cartoons from persistent system.
         ResponseEntity<List> cartoons = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/", List.class);
 
@@ -113,7 +122,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testGetCartoonWithEmptyPersistentSystem() {
+    public void test04GetCartoonWithEmptyPersistentSystem() {
         // Given - Instantiate title of cartoon.
         String title = "Persistent System 2 : Return of the Empty Row";
 
@@ -126,11 +135,11 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testAddCartoonOnPersistentSystem() {
+    public void test05AddCartoonOnPersistentSystem() {
         // Given - Instantiate Cartoon at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
-        String uriExpected = "http://localhost:8080/media-library/cartoons/search/title/" + id;
+        String uriExpected = "http://localhost:8080/media-library/cartoons/search/id/" + id;
 
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
@@ -174,7 +183,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testAddCartoonAlreadyPresentOnPersistentSystem() {
+    public void test06AddCartoonAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate Cartoon at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -224,7 +233,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testGetOneCartoon() throws UnsupportedEncodingException {
+    public void test07GetOneCartoon() throws UnsupportedEncodingException {
         // Given - Instantiate Cartoon at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -284,7 +293,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testGetCartoonNotFoundOnPersistentSystem() {
+    public void test08GetCartoonNotFoundOnPersistentSystem() {
         // Given - Instantiate Cartoon at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -336,7 +345,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void testGetAllCartoons() {
+    public void test09GetAllCartoons() {
         // Given - Instantiate a cartoon to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -384,7 +393,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void updateCartoon() throws UnsupportedEncodingException {
+    public void test10UpdateCartoon() throws UnsupportedEncodingException {
         // Given - Instantiate a cartoon to update on persistent system.
         int id = 2;
         String title = "Persistent System 3 : A new Hope";
@@ -429,7 +438,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void updateCartoonNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateCartoonNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate a cartoon to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -477,7 +486,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void deleteCartoon() {
+    public void test12DeleteCartoon() {
         // Given - id of cartoon at delete and all elements expected.
         int id = 2;
         String title = "Persistent System 3 : A new Hope";
@@ -499,7 +508,7 @@ public class ClientCartoonTest {
     }
 
     @Test
-    public void deleteCartoonNotFoundOnPersistentSystem() {
+    public void test13DeleteCartoonNotFoundOnPersistentSystem() {
         // Given - id of cartoon at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;

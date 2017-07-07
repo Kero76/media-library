@@ -23,8 +23,11 @@ import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.video.Anime;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -43,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.2
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientAnimeTest {
 
     /**
@@ -65,8 +69,13 @@ public class ClientAnimeTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -81,7 +90,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding animes.
         String messageExcepted = "404 null";
         int id = 666;
@@ -105,7 +114,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testGetAllAnimeWithEmptyPersistentSystem() {
+    public void test03GetAllAnimeWithEmptyPersistentSystem() {
         // Given / When - Get all animes from persistent system.
         ResponseEntity<List> animes = this.restTemplate.getForEntity(REST_SERVICE_URI + "/animes/", List.class);
 
@@ -115,7 +124,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testGetAnimeWithEmptyPersistentSystem() {
+    public void test04GetAnimeWithEmptyPersistentSystem() {
         // Given - Instantiate title of anime.
         String title = "Persistent System 2 : Return of the Empty Row";
 
@@ -128,7 +137,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testAddAnimeOnPersistentSystem() {
+    public void test05AddAnimeOnPersistentSystem() {
         // Given - Instantiate Anime at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
@@ -187,7 +196,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testAddAnimeAlreadyPresentOnPersistentSystem() {
+    public void test06AddAnimeAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate Anime at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -248,7 +257,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testGetOneAnime() throws UnsupportedEncodingException {
+    public void test07GetOneAnime() throws UnsupportedEncodingException {
         // Given - Instantiate Anime at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int directorExpected = 1;
@@ -325,7 +334,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testGetAnimeNotFoundOnPersistentSystem() {
+    public void test08GetAnimeNotFoundOnPersistentSystem() {
         // Given - Instantiate Anime at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -388,7 +397,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void testGetAllAnimes() {
+    public void test09GetAllAnimes() {
         // Given - Instantiate a anime to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -448,7 +457,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void updateAnime() throws UnsupportedEncodingException {
+    public void test10UpdateAnime() throws UnsupportedEncodingException {
         // Given - Instantiate an anime to update on persistent system.
         int id = 1;
         String title = "Sakura, chasseuse de cartes";
@@ -504,7 +513,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void updateAnimeNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateAnimeNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate an anime to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -563,7 +572,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void deleteAnime() {
+    public void test12DeleteAnime() {
         // Given - id of anime at delete and all elements expected.
         int id = 2;
         String title = "Star Gate SG2";
@@ -585,7 +594,7 @@ public class ClientAnimeTest {
     }
 
     @Test
-    public void deleteAnimesNotFoundOnPersistentSystem() {
+    public void test13DeleteAnimesNotFoundOnPersistentSystem() {
         // Given - id of animes at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;

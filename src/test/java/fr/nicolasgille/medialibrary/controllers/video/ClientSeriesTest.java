@@ -24,8 +24,11 @@ import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.video.Series;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -44,6 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.2
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientSeriesTest {
 
     /**
@@ -66,8 +70,13 @@ public class ClientSeriesTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -82,7 +91,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding series.
         String messageExcepted = "404 null";
         int id = 666;
@@ -106,7 +115,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetAllSeriesWithEmptyPersistentSystem() {
+    public void test03GetAllSeriesWithEmptyPersistentSystem() {
         // Given / When - Get all series from persistent system.
         ResponseEntity<List> series = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/", List.class);
 
@@ -116,7 +125,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetSeriesWithEmptyPersistentSystem() {
+    public void test04GetSeriesWithEmptyPersistentSystem() {
         // Given - Instantiate title of series.
         String title = "Persistent System 2 : Return of the Empty Row";
 
@@ -129,7 +138,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testAddSeriesOnPersistentSystem() {
+    public void test05AddSeriesOnPersistentSystem() {
         // Given - Instantiate Series at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
@@ -188,7 +197,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testAddSeriesAlreadyPresentOnPersistentSystem() {
+    public void test06AddSeriesAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate Series at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -249,7 +258,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetOneSeries() throws UnsupportedEncodingException {
+    public void test07GetOneSeries() throws UnsupportedEncodingException {
         // Given - Instantiate Series at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -326,7 +335,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetSeriesNotFoundOnPersistentSystem() {
+    public void test08GetSeriesNotFoundOnPersistentSystem() {
         // Given - Instantiate Series at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -389,7 +398,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void testGetAllSeries() {
+    public void test09GetAllSeries() {
         // Given - Instantiate a series to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -449,7 +458,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void updateSeries() throws UnsupportedEncodingException {
+    public void test10UpdateSeries() throws UnsupportedEncodingException {
         // Given - Instantiate a series to update on persistent system.
         int id = 2;
         String title = "Star Gate SG2";
@@ -505,7 +514,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void updateSeriesNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateSeriesNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate a series to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -564,7 +573,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void deleteSeries() {
+    public void test12DeleteSeries() {
         // Given - id of series at delete and all elements expected.
         int id = 2;
         String title = "Star Gate SG2";
@@ -586,7 +595,7 @@ public class ClientSeriesTest {
     }
 
     @Test
-    public void deleteSeriesNotFoundOnPersistentSystem() {
+    public void test13DeleteSeriesNotFoundOnPersistentSystem() {
         // Given - id of series at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;

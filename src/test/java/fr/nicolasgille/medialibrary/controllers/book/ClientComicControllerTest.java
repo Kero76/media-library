@@ -24,8 +24,11 @@ import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -44,6 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.4
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientComicControllerTest {
 
     /**
@@ -66,8 +70,13 @@ public class ClientComicControllerTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -82,7 +91,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding book.
         String messageExcepted = "404 null";
         int id = 666;
@@ -104,7 +113,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testGetAllComicsWithEmptyPersistentSystem() {
+    public void test03GetAllComicsWithEmptyPersistentSystem() {
         // Given / When - Get all comics from persistent system.
         ResponseEntity<List> videoGames = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/", List.class);
 
@@ -114,12 +123,13 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testGetComicWithEmptyPersistentSystem() {
+    public void test04GetComicWithEmptyPersistentSystem() {
         // Given - Instantiate title of comic.
         String title = "Nisekoi";
+        int currentVolume = 10;
 
         // When - Get one comic from persistent system.
-        ResponseEntity<Comic> comic = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + title, Comic.class);
+        ResponseEntity<Comic> comic = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + title + "/" + currentVolume, Comic.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(comic.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -127,11 +137,11 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testAddComicOnPersistentSystem() {
+    public void test05AddComicOnPersistentSystem() {
         // Given - Instantiate comic at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
-        String uriExpected = "http://localhost:8080/media-library/comics/search/title/" + id;
+        String uriExpected = "http://localhost:8080/media-library/comics/search/id/" + id;
 
         String title = "Nisekoi : Amours, Mensonges et Yakuzas";
         String originalTitle = "Nisekoi";
@@ -174,7 +184,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testAddComicAlreadyPresentOnPersistentSystem() {
+    public void test06AddComicAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate comic at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -223,7 +233,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testGetOneComic() throws UnsupportedEncodingException {
+    public void test07GetOneComic() throws UnsupportedEncodingException {
         // Given - Instantiate comic at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -263,7 +273,7 @@ public class ClientComicControllerTest {
         // When - Get comic from persistent system.
         ResponseEntity<Comic> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER), Comic.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER) + "/" + comic.getCurrentVolume(), Comic.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -283,7 +293,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testGetComicNotFoundOnPersistentSystem() {
+    public void test08GetComicNotFoundOnPersistentSystem() {
         // Given - Instantiate comic at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -323,7 +333,7 @@ public class ClientComicControllerTest {
         // When - Get comic from persistent system.
         ResponseEntity<Comic> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER), Comic.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER) + "/" + comic.getCurrentVolume(), Comic.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -334,7 +344,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void testGetAllComics() {
+    public void test09GetAllComics() {
         // Given - Instantiate a comic to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -381,7 +391,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void updateComic() throws UnsupportedEncodingException {
+    public void test10UpdateComic() throws UnsupportedEncodingException {
         // Given - Instantiate a comic to update on persistent system.
         int id = 2;
         String title = "Nisekoi : Amours, Mensonges et Yakuzas";
@@ -425,7 +435,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void updateComicNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateComicNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate a comic to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -472,7 +482,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void deleteComic() {
+    public void test12DeleteComic() {
         // Given - id of comic at delete and all elements expected.
         int id = 2;
         String title = "Anges et Démons";
@@ -494,7 +504,7 @@ public class ClientComicControllerTest {
     }
 
     @Test
-    public void deleteComicNotFoundOnPersistentSystem() {
+    public void test13DeleteComicNotFoundOnPersistentSystem() {
         // Given - id of comic at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;

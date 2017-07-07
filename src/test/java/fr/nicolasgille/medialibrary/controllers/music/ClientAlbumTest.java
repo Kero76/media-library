@@ -22,8 +22,11 @@ import fr.nicolasgille.medialibrary.models.common.person.Singer;
 import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.music.Album;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -42,6 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since Media-Library 0.4
  * @version 1.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientAlbumTest {
 
     /**
@@ -64,8 +68,13 @@ public class ClientAlbumTest {
         this.restTemplate = new RestTemplate();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Thread.sleep(250);
+    }
+
     @Test
-    public void testDeleteWithEmptyPersistentSystem() {
+    public void test01DeleteWithEmptyPersistentSystem() {
         // Given - Instantiate id at delete on persistent system.
         int id = 666;
         String messageExcepted = "404 null";
@@ -80,7 +89,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testUpdateWithEmptyPersistentSystem() {
+    public void test02UpdateWithEmptyPersistentSystem() {
         // Given - Instantiate id at update and corresponding album.
         String messageExcepted = "404 null";
         int id = 666;
@@ -101,7 +110,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testGetAllAlbumsWithEmptyPersistentSystem() {
+    public void test03GetAllAlbumsWithEmptyPersistentSystem() {
         // Given / When - Get all albums from persistent system.
         ResponseEntity<List> albums = this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/", List.class);
 
@@ -111,7 +120,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testGetAlbumWithEmptyPersistentSystem() {
+    public void test04GetAlbumWithEmptyPersistentSystem() {
         // Given - Instantiate title of album.
         String title = "Crusader";
 
@@ -124,11 +133,11 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testAddAlbumOnPersistentSystem() {
+    public void test05AddAlbumOnPersistentSystem() {
         // Given - Instantiate Album at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
-        String uriExpected = "http://localhost:8080/media-library/musics/search/title/" + id;
+        String uriExpected = "http://localhost:8080/media-library/musics/search/id/" + id;
 
         String title = "Crusader";
         String synopsis = "";
@@ -163,7 +172,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testAddAlbumAlreadyPresentOnPersistentSystem() {
+    public void test06AddAlbumAlreadyPresentOnPersistentSystem() {
         // Given - Instantiate Album at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CONFLICT;
         String httpClientExceptionExpected = "409 null";
@@ -204,7 +213,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testGetOneAlbum() throws UnsupportedEncodingException {
+    public void test07GetOneAlbum() throws UnsupportedEncodingException {
         // Given - Instantiate Album at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 1;
@@ -254,7 +263,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testGetAlbumNotFoundOnPersistentSystem() {
+    public void test08GetAlbumNotFoundOnPersistentSystem() {
         // Given - Instantiate Album at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
         String httpClientExceptionExpected = "404 null";
@@ -297,7 +306,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void testGetAllAlbums() {
+    public void test09GetAllAlbums() {
         // Given - Instantiate an album to push on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.OK;
         int sizeExpected = 2;
@@ -337,7 +346,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void updateAlbum() throws UnsupportedEncodingException {
+    public void test10UpdateAlbum() throws UnsupportedEncodingException {
         // Given - Instantiate an album to update on persistent system.
         int id = 2;
         String title = "Lionheart";
@@ -374,7 +383,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void updateAlbumNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
+    public void test11UpdateAlbumNotFoundOnPersistentSystem() throws UnsupportedEncodingException {
         // Given - Instantiate an album to update on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
 
@@ -414,7 +423,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void deleteAlbum() {
+    public void test12DeleteAlbum() {
         // Given - id of album at delete and all elements expected.
         int id = 2;
         String title = "Lionheart";
@@ -436,7 +445,7 @@ public class ClientAlbumTest {
     }
 
     @Test
-    public void deleteAlbumNotFoundOnPersistentSystem() {
+    public void test13DeleteAlbumNotFoundOnPersistentSystem() {
         // Given - id of album at delete and all elements expected.
         int id = 2;
         HttpStatus httpStatusExpected = HttpStatus.NOT_FOUND;
