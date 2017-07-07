@@ -27,14 +27,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <tomcat.version>9.0.0.M19</tomcat.version>
-        <spring.version>1.5.2.RELEASE</spring.version>
-        <hsqldb.version>2.3.1</hsqldb.version>
+        <spring.version>1.5.4.RELEASE</spring.version>
+        <hsqldb.version>2.4.0</hsqldb.version>
         <mysql.connector.version>6.0.6</mysql.connector.version>
-        <assertj.version>3.6.2</assertj.version>
+        <assertj.version>3.8.0</assertj.version>
         <nv-i18n.version>1.22</nv-i18n.version>
         <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
-        <javax.servlet.version>3.1.0</javax.servlet.version>
+        <javax.servlet.version>4.0.0-b07</javax.servlet.version>
     </properties>
 
     <!-- Dependencies -->
