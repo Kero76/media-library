@@ -132,7 +132,7 @@ public class ClientMovieTest {
         // Given - Instantiate Movie at insert on persistent system.
         HttpStatus httpStatusExpected = HttpStatus.CREATED;
         int id = 1;
-        String uriExpected = "http://localhost:8080/media-library/movies/search/title/" + id;
+        String uriExpected = "http://localhost:8080/media-library/movies/search/id/" + id;
 
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
@@ -436,7 +436,7 @@ public class ClientMovieTest {
         subtitles.add(LanguageCode.de);
         subtitles.add(LanguageCode.it);
         Movie movie = new Movie(
-                title, title, synopsis,
+                id, title, title, synopsis,
                 actors, directors, producers, genres, supports, languageSpoken, subtitles,
                 releaseDate, 126
         );

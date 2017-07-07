@@ -61,7 +61,7 @@ public class MediaBuilderTest {
     /**
      * URI of the Rest service.
      */
-    private static final String REST_SERVICE_URI = "http://localhost/media-library";
+    private static final String REST_SERVICE_URI = "http://localhost:8080/media-library";
 
     /**
      * Encoding used to encoded URL.
