@@ -21,6 +21,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Repository used to interact with all books available on Database.
@@ -42,7 +43,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * @since 1.0
      * @version 1.0
      */
-    Book findByTitleIgnoreCase(String title);
+    List<Book> findByTitleIgnoreCase(String title);
 
     /**
      * Find a book by his name, his duration and date of release.

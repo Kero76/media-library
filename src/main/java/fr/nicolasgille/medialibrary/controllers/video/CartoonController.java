@@ -47,7 +47,7 @@ import java.util.Set;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.3
- * @version 1.1
+ * @version 1.1.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -127,19 +127,21 @@ public class CartoonController {
      *  Title of the cartoon encoded to search on Database.
      * @return
      *  A ResponseEntity with the cartoon found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     @RequestMapping(value = "/cartoons/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getCartoonByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, CartoonController.ENCODING);
         logger.info("Fetching Cartoon with title {}", title);
-        Cartoon cartoon = cartoonRepository.findByTitleIgnoreCase(title);
-        if (cartoon == null) {
+        List<Cartoon> cartoons = cartoonRepository.findByTitleIgnoreCase(title);
+        if (cartoons == null) {
             logger.error("Cartoon with title {} not found.", title);
             return new ResponseEntity<Object>(new CartoonException("Cartoon with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Cartoon>(cartoon, HttpStatus.OK);
+        return new ResponseEntity<List<Cartoon>>(cartoons, HttpStatus.OK);
     }
 
     /**
@@ -191,7 +193,7 @@ public class CartoonController {
         logger.info("Created cartoon : {}", cartoon);
 
         // Check if the series already exist on database.
-        Cartoon cartoonExist = cartoonRepository.findByTitleIgnoreCase(cartoon.getTitle());
+        Cartoon cartoonExist = cartoonRepository.findByTitleAndRuntimeAndReleaseDate(cartoon.getTitle(), cartoon.getRuntime(), cartoon.getReleaseDate());
         if (cartoonExist!= null) {
             logger.error("Unable to create. The cartoon {} already exist", cartoon.getTitle());
             return new ResponseEntity<CartoonException>(new CartoonException("Unable to create. The cartoon " + cartoon.getTitle() + " already exist"), HttpStatus.CONFLICT);

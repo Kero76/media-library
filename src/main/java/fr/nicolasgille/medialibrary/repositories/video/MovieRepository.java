@@ -22,6 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * An interface who specified method to interact with the movies.
@@ -29,30 +30,25 @@ import java.util.Calendar;
  * In fact, hsqldb can generate corresponding source code in function of the nomenclature of the method.
  * So, this interface don't implements to use method present on it.
  * Then, we add in the future much method to interact with "movies", in particular find methods.
- *
- * V1.1 :
- * <ul>
- *     <li>Added method findByTitleAndDurationAndReleaseDate()</li>
- * </ul>
- *
+ * *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.1
+ * @version 1.1.1
  */
 @Transactional
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     /**
-     * Find a movie by his name.
+     * Find all movies by his name.
      *
      * @param title
-     *  Title of the movie at search on Database.
+     *  Title of the movies search on Database.
      * @return
-     *  An instance of movie search by the name.
+     *  An instance of movies search by the name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
-    Movie findByTitleIgnoreCase(String title);
+    List<Movie> findByTitleIgnoreCase(String title);
 
     /**
      * Find a movie by his name, his duration and date of release.

@@ -49,7 +49,7 @@ import java.util.Set;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -101,7 +101,6 @@ public class SeriesController {
      */
     static final Logger logger = LoggerFactory.getLogger(SeriesController.class);
 
-
     /**
      * Return all series found on Database.
      *
@@ -124,6 +123,34 @@ public class SeriesController {
     }
 
     /**
+     * Return all series found on Database.
+     *
+     * This method return a ResponseEntity object who contains a list of series found on the Database.
+     * If the database is empty, this method return an error HTTP 204 : No Content.
+     * This method can call only by GET request and take nothing parameter to work.
+     *
+     * @param titleEncoded
+     *  Title of the series encoded to search on Database.
+     * @return
+     *  A ResponseEntity with the series found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/series/search/title/{title}", method = RequestMethod.GET)
+    public ResponseEntity getSeriesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+        String title = URLDecoder.decode(titleEncoded, SeriesController.ENCODING);
+        logger.info("Fetching Series with title {}", title);
+        List<Series> series = seriesRepository.findByTitleIgnoreCase(title);
+        if (series == null) {
+            logger.error("Series with title {} not found.", title);
+            return new ResponseEntity<Object>(new SeriesException("Series with title " + title + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Series>>(series, HttpStatus.OK);
+    }
+
+    /**
      * Return a series by his title and his current season.
      *
      * This method return a ResponseEntity with the series retrieve from the Database.
@@ -139,6 +166,8 @@ public class SeriesController {
      *  Current season of the series.
      * @return
      *  A ResponseEntity with the series found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
      * @version 1.0
      */

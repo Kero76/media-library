@@ -49,7 +49,7 @@ import java.util.Set;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -123,6 +123,34 @@ public class ComicController {
     }
 
     /**
+     * Get all comics who have the title send on request parameter.
+     *
+     * This method return a ResponseEntity object who contains a list of comics found on the Database.
+     * If the database is empty, this method return an error HTTP 204 : No Content.
+     * This method can call only by GET request and take nothing parameter to work.
+     *
+     * @param titleEncoded
+     *  Title of the comic encoded to search on Database.
+     * @return
+     *  A ResponseEntity with all comics found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/comics/search/title/{title}", method = RequestMethod.GET)
+    public ResponseEntity<?> getComicsByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+        String title = URLDecoder.decode(titleEncoded, ComicController.ENCODING);
+        logger.info("Fetching Comic with title {}", title);
+        List<Comic> comics = comicRepository.findByTitleIgnoreCase(title);
+        if (comics == null) {
+            logger.error("Comic(s) with title {} not found.", title);
+            return new ResponseEntity<Object>(new ComicException("Comic(s) with title " + title + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Comic>>(comics, HttpStatus.OK);
+    }
+
+    /**
      * Return a comic by his title and his current volume.
      *
      * This method return a ResponseEntity with the comic retrieve from the Database.
@@ -139,6 +167,8 @@ public class ComicController {
      *  Current volume of the comic at search on Database.
      * @return
      *  A ResponseEntity with the comic found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
      * @version 1.0
      */
@@ -147,7 +177,7 @@ public class ComicController {
             @PathVariable(value = "title") String titleEncoded,
             @PathVariable(value = "currentVolume") int currentVolume) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, ComicController.ENCODING);
-        logger.info("Fetching Comic with title {} and current volume {}", title);
+        logger.info("Fetching Comic with title {} and current volume {}", title, currentVolume);
         Comic comic = comicRepository.findByTitleIgnoreCaseAndCurrentVolume(title, currentVolume);
         if (comic == null) {
             logger.error("Comic with title {} and current volume {} not found.", title, currentVolume);

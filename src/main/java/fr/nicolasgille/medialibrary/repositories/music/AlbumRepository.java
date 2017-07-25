@@ -20,6 +20,7 @@ import fr.nicolasgille.medialibrary.models.music.Album;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Repository used to interact with all albums available on Database.
@@ -32,16 +33,16 @@ import javax.transaction.Transactional;
 public interface AlbumRepository extends JpaRepository<Album, Long> {
 
     /**
-     * Find an album by his name.
+     * Find all albums by their name.
      *
      * @param title
      *  Title of the album at search on Database.
      * @return
      *  An instance of album search by the name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
-    Album findByTitleIgnoreCase(String title);
+    List<Album> findByTitleIgnoreCase(String title);
 
     /**
      * Find an album by his name, his length and his number of tracks.

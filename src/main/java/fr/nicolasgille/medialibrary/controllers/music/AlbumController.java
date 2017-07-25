@@ -113,7 +113,7 @@ public class AlbumController {
     }
 
     /**
-     * Return a music album by his title.
+     * Return all musics album by his title.
      *
      * This method return a ResponseEntity with the music album retrieve from the Database.
      * If the database doesn't get the music album, this method return an HTTP error : 204.
@@ -126,6 +126,8 @@ public class AlbumController {
      *  Title of the album encoded to search on Database.
      * @return
      *  A ResponseEntity with the album found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
      * @version 1.0
      */
@@ -133,12 +135,12 @@ public class AlbumController {
     public ResponseEntity<?> getAlbumByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, AlbumController.ENCODING);
         logger.info("Fetching Album with title {}", title);
-        Album album = albumRepository.findByTitleIgnoreCase(title);
-        if (album == null) {
+        List<Album> albums = albumRepository.findByTitleIgnoreCase(title);
+        if (albums == null) {
             logger.error("Album with title {} not found.", title);
             return new ResponseEntity<Object>(new AlbumException("Album with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Album>(album, HttpStatus.OK);
+        return new ResponseEntity<List<Album>>(albums, HttpStatus.OK);
     }
 
     /**

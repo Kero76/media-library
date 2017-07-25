@@ -21,6 +21,7 @@ import fr.nicolasgille.medialibrary.models.video.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * An interface who specified method to interact with the series table.
@@ -44,9 +45,9 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
      * @return
      *  An instance of series search by his name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    Series findByTitleIgnoreCase(String title);
+    List<Series> findByTitleIgnoreCase(String title);
 
     /**
      * Find a series by his name and his current season.

@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.2
+ * @version 1.2.1
  */
 @Transactional
 public interface AnimeRepository extends JpaRepository<Anime, Long> {
@@ -45,9 +45,9 @@ public interface AnimeRepository extends JpaRepository<Anime, Long> {
      * @return
      *  An instance of anime search by his name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    Anime findByTitleIgnoreCase(String title);
+    List<Anime> findByTitleIgnoreCase(String title);
 
     /**
      * Find a anime by his name and his current season.

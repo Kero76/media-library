@@ -20,6 +20,7 @@ import fr.nicolasgille.medialibrary.models.video.Cartoon;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * An interface who specified method to interact with the cartoon.
@@ -30,21 +31,21 @@ import java.util.Calendar;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.3
- * @version 1.0
+ * @version 1.0.1
  */
 public interface CartoonRepository extends JpaRepository<Cartoon, Long> {
 
     /**
-     * Find a cartoon by his name.
+     * Find all cartoons by his name.
      *
      * @param title
-     *  Title of the cartoon at search on Database.
+     *  Title of the cartoons at search on Database.
      * @return
-     *  An instance of cartoon search by the name.
+     *  An instance of cartoons search by the name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
-    Cartoon findByTitleIgnoreCase(String title);
+    List<Cartoon> findByTitleIgnoreCase(String title);
 
     /**
      * Find a cartoon by his name, his duration and date of release.

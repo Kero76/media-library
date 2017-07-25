@@ -20,26 +20,42 @@ import fr.nicolasgille.medialibrary.models.game.VideoGame;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Repository used to interact with all video games available on Database.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Transactional
 public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
 
     /**
-     * Find a video game by his name.
+     * Find all video games by his name.
      *
      * @param title
      *  Title of the video game at search on Database.
      * @return
-     *  An instance of video game search by the name.
+     *  An instance of all video games search by the name.
      * @since 1.0
      * @version 1.0
      */
-    VideoGame findByTitleIgnoreCase(String title);
+    List<VideoGame> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find video game by his name and his release date.
+     *
+     * @param title
+     *  Title of the video game at search on Database.
+     * @param releaseDate
+     *  Date of release of the book search.
+     * @return
+     *  An instance of video game search by the name.
+     * @since 1.1
+     * @version 1.0
+     */
+    VideoGame findByTitleIgnoreCaseAndReleaseDate(String title, Calendar releaseDate);
 }

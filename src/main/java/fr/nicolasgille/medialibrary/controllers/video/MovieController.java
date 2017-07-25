@@ -49,7 +49,7 @@ import java.util.Set;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 2.2
+ * @version 2.2.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -136,19 +136,21 @@ public class MovieController {
      *  Title of the movie encoded to search on Database.
      * @return
      *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
-     * @version 2.1
+     * @version 2.1.1
      */
     @RequestMapping(value = "/movies/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
         logger.info("Fetching Movie with title {}", title);
-        Movie movie = movieRepository.findByTitleIgnoreCase(title);
-        if (movie == null) {
+        List<Movie> movies = movieRepository.findByTitleIgnoreCase(title);
+        if (movies == null) {
             logger.error("Movie with title {} not found.", title);
             return new ResponseEntity<Object>(new MovieException("Movie with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Movie>(movie, HttpStatus.OK);
+        return new ResponseEntity<List<Movie>>(movies, HttpStatus.OK);
     }
 
     /**

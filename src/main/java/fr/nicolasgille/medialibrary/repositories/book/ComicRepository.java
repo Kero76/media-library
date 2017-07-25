@@ -20,14 +20,10 @@ import fr.nicolasgille.medialibrary.models.book.Comic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Repository used to interact with all comics available on Database.
- *
- * V1.1 :
- * <ul>
- *     <li>Added method <code>findByTitleIgnoreCaseAndCurrentVolume(String title, int currentVolume)</code>.</li>
- * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
@@ -44,9 +40,9 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
      * @return
      *  An instance of cartoon search by the name.
      * @since 1.0
-     * @version 1.0
+     * @version 1.1
      */
-    Comic findByTitleIgnoreCase(String title);
+    List<Comic> findByTitleIgnoreCase(String title);
 
     /**
      * Find a cartoon by his name and his current volume.

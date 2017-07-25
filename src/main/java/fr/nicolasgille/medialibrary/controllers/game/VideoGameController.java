@@ -126,19 +126,21 @@ public class VideoGameController {
      *  Title of the videoGame encoded to search on Database.
      * @return
      *  A ResponseEntity with the videoGame found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     @RequestMapping(value = "/video-games/search/title/{title}", method = RequestMethod.GET)
     public ResponseEntity<?> getVideoGameByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, VideoGameController.ENCODING);
         logger.info("Fetching VideoGame with title {}", title);
-        VideoGame videoGame = videoGameRepository.findByTitleIgnoreCase(title);
-        if (videoGame == null) {
+        List<VideoGame> videoGames = videoGameRepository.findByTitleIgnoreCase(title);
+        if (videoGames == null) {
             logger.error("VideoGame with title {} not found.", title);
             return new ResponseEntity<Object>(new VideoGameException("VideoGame with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<VideoGame>(videoGame, HttpStatus.OK);
+        return new ResponseEntity<List<VideoGame>>(videoGames, HttpStatus.OK);
     }
 
     /**
@@ -183,14 +185,14 @@ public class VideoGameController {
      * @return
      *  A ResponseEntity with the videoGame added, or an error HTTP 409 : CONFLICT.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     @RequestMapping(value = "/video-games/", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody VideoGame videoGame, UriComponentsBuilder uriBuilder) {
         logger.info("Created videoGame : {}", videoGame);
 
         // Check if the videoGame already exist on database.
-        VideoGame videoGameExist = videoGameRepository.findByTitleIgnoreCase(videoGame.getTitle());
+        VideoGame videoGameExist = videoGameRepository.findByTitleIgnoreCaseAndReleaseDate(videoGame.getTitle(), videoGame.getReleaseDate());
         if (videoGameExist != null) {
             logger.error("Unable to create. The videoGame {} already exist", videoGame.getTitle());
             return new ResponseEntity<VideoGameException>(new VideoGameException("Unable to create. The videoGame " + videoGame.getTitle() + " already exist"), HttpStatus.CONFLICT);

@@ -47,7 +47,7 @@ import java.util.Set;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.1
+ * @version 1.1.1
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -113,7 +113,7 @@ public class BookController {
     }
 
     /**
-     * Return a book by his title.
+     * Return a list of books by his title.
      *
      * This method return a ResponseEntity with the book retrieve from the Database.
      * If the database doesn't get the book, this method return an HTTP error : 204.
@@ -125,20 +125,22 @@ public class BookController {
      * @param titleEncoded
      *  Title of the book encoded to search on Database.
      * @return
-     *  A ResponseEntity with the book found on Database, or an error HTTP 204 : No Content.
+     *  A ResponseEntity with the all books found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     @RequestMapping(value = "/books/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getBookByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+    public ResponseEntity<?> getBooksByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, BookController.ENCODING);
         logger.info("Fetching Book with title {}", title);
-        Book book = bookRepository.findByTitleIgnoreCase(title);
-        if (book == null) {
-            logger.error("Book with title {} not found.", title);
-            return new ResponseEntity<Object>(new BookException("Book with title " + title + " not found."), HttpStatus.NO_CONTENT);
+        List<Book> books = bookRepository.findByTitleIgnoreCase(title);
+        if (books == null) {
+            logger.error("Book(s) with title {} not found.", title);
+            return new ResponseEntity<Object>(new BookException("Book(s) with title " + title + " not found."), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Book>(book, HttpStatus.OK);
+        return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
     /**
@@ -190,7 +192,7 @@ public class BookController {
         logger.info("Created book : {}", book);
 
         // Check if the book already exist on database.
-        Book bookExist = bookRepository.findByTitleIgnoreCase(book.getTitle());
+        Book bookExist = bookRepository.findByTitleAndReleaseDate(book.getTitle(), book.getReleaseDate());
         if (bookExist != null) {
             logger.error("Unable to create. The book {} already exist", book.getTitle());
             return new ResponseEntity<BookException>(new BookException("Unable to create. The book " + book.getTitle() + " already exist"), HttpStatus.CONFLICT);

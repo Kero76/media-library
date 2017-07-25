@@ -547,4 +547,17 @@ public class ClientMovieTest {
             assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
         }
     }
+
+    @Test
+    public void test14GetAllKingKongMovies() throws UnsupportedEncodingException {
+        // Given - id of movie at delete and all elements expected.
+        int sizeExpected = 3;
+        String title = "King Kong";
+
+        // When - Get all King Kong movie.
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), List.class);
+
+        // Then - Compare size of king kong retrieve.
+        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+    }
 }

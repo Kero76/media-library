@@ -47,7 +47,7 @@ import java.util.Set;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -114,6 +114,37 @@ public class AnimeController {
     }
 
     /**
+     * Return all animes with his title.
+     *
+     * This method return a ResponseEntity with the anime retrieve from the Database.
+     * If the database doesn't get the anime, this method return an HTTP error : 204.
+     * In other case, this method return the anime found in body response and the success code HTTP 200.
+     * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
+     * parameter the title of the anime at research.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
+     *
+     * @param titleEncoded
+     *  Title of the animes encoded to search on Database.
+     * @return
+     *  A ResponseEntity with the anime found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
+     * @since 1.2
+     * @version 1.0
+     */
+    @RequestMapping(value = "/animes/search/title/{title}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAnimesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+        String title = URLDecoder.decode(titleEncoded, AnimeController.ENCODING);
+        logger.info("Fetching Anime with title {}", title);
+        List<Anime> animes = animesRepository.findByTitleIgnoreCase(title);
+        if (animes == null) {
+            logger.error("Anime with title {} not found.", title);
+            return new ResponseEntity<Object>(new AnimeException("Anime with title " + title + " not found."), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Anime>>(animes, HttpStatus.OK);
+    }
+
+    /**
      * Return an anime by his title and his current season.
      *
      * This method return a ResponseEntity with the anime retrieve from the Database.
@@ -129,6 +160,8 @@ public class AnimeController {
      *  Current season of the anime.
      * @return
      *  A ResponseEntity with the anime found on Database, or an error HTTP 204 : No Content.
+     * @throws UnsupportedEncodingException
+     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
      * @since 1.0
      * @version 1.0
      */
