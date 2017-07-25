@@ -21,6 +21,7 @@ import fr.nicolasgille.medialibrary.builders.video.AnimeBuilder;
 import fr.nicolasgille.medialibrary.builders.video.CartoonBuilder;
 import fr.nicolasgille.medialibrary.builders.video.MovieBuilder;
 import fr.nicolasgille.medialibrary.builders.video.SeriesBuilder;
+import fr.nicolasgille.medialibrary.models.common.person.Singer;
 import fr.nicolasgille.medialibrary.models.music.Album;
 import fr.nicolasgille.medialibrary.models.video.Anime;
 import fr.nicolasgille.medialibrary.models.video.Cartoon;
@@ -33,6 +34,8 @@ import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit test for MediaBuilder's object.
@@ -122,12 +125,16 @@ public class MediaBuilderTest {
         // Given - @see setUp() and instantiate list of string.
         this.builder = new AlbumBuilder();
         List<List<String>> data = this.parser.parse(PATH + "musics.tsv");
+        Singer singer = null;
 
         // When - Try to build Album from first data line.
-        Album album = (Album) this.builder.build(data.get(1));
+        Album album = (Album) this.builder.build(data.get(12));
+        singer = (Singer) album.getSingers().toArray()[0];
 
         // Then - Compare result.
         System.out.println(album.toString());
+        assertThat(singer.getFirstName()).isEqualTo("Amaranthe");
+        assertThat(singer.getLastName()).isEqualTo("");
     }
 
     @Test

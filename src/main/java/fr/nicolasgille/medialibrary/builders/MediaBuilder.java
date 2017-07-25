@@ -32,10 +32,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ * Abstract class where all methods to build set of Company or Person are implement.
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.5
- * @version 1.0
+ * @version 1.0.1
  */
 public abstract class MediaBuilder implements IMediaBuilder {
 
@@ -246,7 +247,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @return
      *  A set of Actor composed by all actors present on the string.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     protected Set<Actor> buildActorSet(String persons) {
         // If argument is empty, return an empty ArrayList.
@@ -265,7 +266,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
             if (personName.length == 2) {
                 personSet.add(new Actor(personName[0], personName[1]));
             } else if (personName.length == 1) {
-                personSet.add(new Actor(personName[0], personName[0]));
+                personSet.add(new Actor(personName[0], ""));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -287,7 +288,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @return
      *  A set of Authors composed by all authors present on the string.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     protected Set<Author> buildAuthorSet(String persons) {
         // If argument is empty, return an empty ArrayList.
@@ -306,7 +307,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
             if (personName.length == 2) {
                 personSet.add(new Author(personName[0], personName[1]));
             } else if (personName.length == 1) {
-                personSet.add(new Author(personName[0], personName[0]));
+                personSet.add(new Author(personName[0], ""));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -328,7 +329,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @return
      *  A set of Director composed by all directors present on the string.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     protected Set<Director> buildDirectorSet(String persons) {
         // If argument is empty, return an empty ArrayList.
@@ -347,7 +348,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
             if (personName.length == 2) {
                 personSet.add(new Director(personName[0], personName[1]));
             } else if (personName.length == 1) {
-                personSet.add(new Director(personName[0], personName[0]));
+                personSet.add(new Director(personName[0], ""));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -369,7 +370,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @return
      *  A set of Illustrator composed by all illustrators present on the string.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     protected Set<Illustrator> buildIllustratorSet(String persons) {
         // If argument is empty, return an empty ArrayList.
@@ -388,7 +389,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
             if (personName.length == 2) {
                 personSet.add(new Illustrator(personName[0], personName[1]));
             } else if (personName.length == 1) {
-                personSet.add(new Illustrator(personName[0], personName[0]));
+                personSet.add(new Illustrator(personName[0], ""));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -410,7 +411,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @return
      *  A set of Producer composed by all producers present on the string.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     protected Set<Producer> buildProducerSet(String persons) {
         // If argument is empty, return an empty ArrayList.
@@ -429,7 +430,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
             if (personName.length == 2) {
                 personSet.add(new Producer(personName[0], personName[1]));
             } else if (personName.length == 1) {
-                personSet.add(new Producer(personName[0], personName[0]));
+                personSet.add(new Producer(personName[0], ""));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
@@ -451,7 +452,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
      * @return
      *  A set of Singer composed by all singers present on the string.
      * @since 1.0
-     * @version 1.0
+     * @version 1.0.1
      */
     protected Set<Singer> buildSingerSet(String persons) {
         // If argument is empty, return an empty ArrayList.
@@ -470,7 +471,7 @@ public abstract class MediaBuilder implements IMediaBuilder {
             if (personName.length == 2) {
                 personSet.add(new Singer(personName[0], personName[1]));
             } else if (personName.length == 1) {
-                personSet.add(new Singer(personName[0], personName[0]));
+                personSet.add(new Singer(personName[0], ""));
             } else {
                 // In other case, he can be have two first name or composed last name.
                 if (personName[1].matches("^[A-Za-z]\\.")) {
