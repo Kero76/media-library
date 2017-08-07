@@ -54,7 +54,6 @@ public abstract class Media implements IMedia {
      *
      * @since 1.0
      */
-    @NotNull
     protected String title;
 
     /**
@@ -70,7 +69,6 @@ public abstract class Media implements IMedia {
      *
      * @since 2.0
      */
-    @NotNull
     @Temporal(TemporalType.DATE)
     protected Calendar releaseDate;
 

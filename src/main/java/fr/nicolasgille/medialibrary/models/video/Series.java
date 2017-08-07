@@ -57,7 +57,6 @@ public class Series extends Anime {
      * @see Actor
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "video_main_actors",
             joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),

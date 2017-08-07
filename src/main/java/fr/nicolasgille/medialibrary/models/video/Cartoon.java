@@ -54,7 +54,6 @@ public class Cartoon extends Video {
      *
      * @since 1.0
      */
-    @NotNull
     private Integer runtime;
 
     /**

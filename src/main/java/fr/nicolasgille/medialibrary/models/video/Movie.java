@@ -57,7 +57,6 @@ public class Movie extends Video {
      *
      * @since 1.0
      */
-    @NotNull
     private Integer runtime;
 
     /**
@@ -66,7 +65,6 @@ public class Movie extends Video {
      * @see Actor
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "video_main_actors",
             joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),

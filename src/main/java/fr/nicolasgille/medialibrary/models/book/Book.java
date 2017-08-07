@@ -74,7 +74,6 @@ public class Book extends Media {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "books_authors",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
@@ -89,7 +88,6 @@ public class Book extends Media {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "books_publisher",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
@@ -105,7 +103,6 @@ public class Book extends Media {
      * @see BookFormat
      * @since 1.0
      */
-    @NotNull
     @Enumerated(EnumType.STRING)
     private BookFormat format;
 

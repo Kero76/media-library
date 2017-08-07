@@ -66,7 +66,6 @@ public class Comic extends Book {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "books_illustrator",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),

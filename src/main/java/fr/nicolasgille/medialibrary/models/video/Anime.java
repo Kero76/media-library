@@ -60,7 +60,6 @@ public class Anime extends Video {
      *
      * @since 1.0
      */
-    @NotNull
     protected int numberOfSeasons;
 
     /**
@@ -68,7 +67,6 @@ public class Anime extends Video {
      *
      * @since 1.0
      */
-    @NotNull
     protected int currentSeason;
 
     /**
@@ -84,7 +82,6 @@ public class Anime extends Video {
      *
      * @since 1.0
      */
-    @NotNull
     protected int averageEpisodeRuntime;
 
     /**
@@ -92,7 +89,6 @@ public class Anime extends Video {
      *
      * @since 1.0
      */
-    @NotNull
     protected int numberOfEpisode;
 
     /**
@@ -100,7 +96,6 @@ public class Anime extends Video {
      *
      * @since 1.1
      */
-    @NotNull
     protected int maxEpisodes;
 
     /**

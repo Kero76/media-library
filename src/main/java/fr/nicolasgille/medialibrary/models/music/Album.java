@@ -63,7 +63,6 @@ public class Album extends Media {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "album_labels_records",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
@@ -78,7 +77,6 @@ public class Album extends Media {
      *
      * @since 1.0
      */
-    @NotNull
     @JoinTable(
             name = "album_singers",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),

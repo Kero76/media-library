@@ -77,7 +77,6 @@ public abstract class Video extends Media {
      * @see Producer
      * @since 2.0
      */
-    @NotNull
     @JoinTable(
             name = "video_producers",
             joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
@@ -93,7 +92,6 @@ public abstract class Video extends Media {
      * @see Director
      * @since 2.0
      */
-    @NotNull
     @JoinTable(
             name = "video_directors",
             joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
