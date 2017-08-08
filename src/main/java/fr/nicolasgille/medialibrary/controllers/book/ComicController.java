@@ -259,7 +259,7 @@ public class ComicController {
         comic.setAuthors(authors);
 
         // Check if the publisher are present on Database or not.
-        Set<Publisher> publishersOnComic = comic.getPublisher();
+        Set<Publisher> publishersOnComic = comic.getPublishers();
         Set<Publisher> publishers = new HashSet<Publisher>();
         for (Publisher p : publishersOnComic) {
             Publisher publisherExist = publisherRepository.findByName(p.getName());
@@ -273,7 +273,7 @@ public class ComicController {
                 publishers.add(publisherExist);
             }
         }
-        comic.setPublisher(publishers);
+        comic.setPublishers(publishers);
 
         // Check if the illustrator are present on Database or not.
         Set<Illustrator> illustratorsOnComic = comic.getIllustrators();
@@ -343,7 +343,7 @@ public class ComicController {
         comic.setAuthors(authors);
 
         // Check if the publisher are present on Database or not.
-        Set<Publisher> publishersOnComic = comic.getPublisher();
+        Set<Publisher> publishersOnComic = comic.getPublishers();
         Set<Publisher> publishers = new HashSet<Publisher>();
         for (Publisher p : publishersOnComic) {
             Publisher publisherExist = publisherRepository.findByName(p.getName());
@@ -357,7 +357,7 @@ public class ComicController {
                 publishers.add(publisherExist);
             }
         }
-        comic.setPublisher(publishers);
+        comic.setPublishers(publishers);
 
         // Check if the illustrator are present on Database or not.
         Set<Illustrator> illustratorsOnComic = comic.getIllustrators();

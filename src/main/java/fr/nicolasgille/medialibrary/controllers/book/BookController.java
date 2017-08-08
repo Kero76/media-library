@@ -216,7 +216,7 @@ public class BookController {
         book.setAuthors(authors);
 
         // Check if the publisher are present on Database or not.
-        Set<Publisher> publishersOnBook = book.getPublisher();
+        Set<Publisher> publishersOnBook = book.getPublishers();
         Set<Publisher> publishers = new HashSet<Publisher>();
         for (Publisher p : publishersOnBook) {
             Publisher publisherExist = publisherRepository.findByName(p.getName());
@@ -230,7 +230,7 @@ public class BookController {
                 publishers.add(publisherExist);
             }
         }
-        book.setPublisher(publishers);
+        book.setPublishers(publishers);
         bookRepository.save(book);
 
         HttpHeaders header = new HttpHeaders();
@@ -283,7 +283,7 @@ public class BookController {
         book.setAuthors(authors);
 
         // Check if the publisher are present on Database or not.
-        Set<Publisher> publishersOnBook = book.getPublisher();
+        Set<Publisher> publishersOnBook = book.getPublishers();
         Set<Publisher> publishers = new HashSet<Publisher>();
         for (Publisher p : publishersOnBook) {
             Publisher publisherExist = publisherRepository.findByName(p.getName());
@@ -297,7 +297,7 @@ public class BookController {
                 publishers.add(publisherExist);
             }
         }
-        book.setPublisher(publishers);
+        book.setPublishers(publishers);
 
         // Copy content of the book receive on request body on the book retrieve from the database.
         bookAtUpdate = new Book(book);

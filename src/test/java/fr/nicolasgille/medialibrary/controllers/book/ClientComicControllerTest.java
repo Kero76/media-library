@@ -287,7 +287,7 @@ public class ClientComicControllerTest {
         assertThat(responseEntity.getBody().getGenres()).isEqualTo(comic.getGenres());
         assertThat(responseEntity.getBody().getSupports()).isEqualTo(comic.getSupports());
         assertThat(responseEntity.getBody().getAuthors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getPublisher().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody().getPublishers().size()).isEqualTo(sizeExpected);
         assertThat(responseEntity.getBody().getFormat()).isEqualTo(format);
         System.out.println(responseEntity.getBody().toString());
     }

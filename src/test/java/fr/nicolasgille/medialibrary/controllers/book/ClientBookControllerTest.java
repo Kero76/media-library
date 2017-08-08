@@ -262,7 +262,7 @@ public class ClientBookControllerTest {
         assertThat(responseEntity.getBody().getGenres()).isEqualTo(book.getGenres());
         assertThat(responseEntity.getBody().getSupports()).isEqualTo(book.getSupports());
         assertThat(responseEntity.getBody().getAuthors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getPublisher().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody().getPublishers().size()).isEqualTo(sizeExpected);
         assertThat(responseEntity.getBody().getFormat()).isEqualTo(format);
         System.out.println(responseEntity.getBody().toString());
     }

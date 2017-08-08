@@ -224,7 +224,7 @@ public class Book extends Media {
         this.nbPages = book.getNbPages();
         this.isbn = book.getIsbn();
         this.authors = book.getAuthors();
-        this.publishers = book.getPublisher();
+        this.publishers = book.getPublishers();
         super.genres = book.getGenres();
         super.supports = book.getSupports();
         this.format = book.getFormat();
@@ -334,7 +334,7 @@ public class Book extends Media {
      * @since 1.0
      * @version 1.0
      */
-    public Set<Publisher> getPublisher() {
+    public Set<Publisher> getPublishers() {
         return publishers;
     }
 
@@ -346,7 +346,7 @@ public class Book extends Media {
      * @since 1.0
      * @version 1.0
      */
-    public void setPublisher(Set<Publisher> publishers) {
+    public void setPublishers(Set<Publisher> publishers) {
         this.publishers = publishers;
     }
 
