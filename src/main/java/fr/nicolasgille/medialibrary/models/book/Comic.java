@@ -161,7 +161,7 @@ public class Comic extends Book {
         super.setNbPages(comic.getNbPages());
         super.setIsbn(comic.getIsbn());
         super.setAuthors(comic.getAuthors());
-        super.setPublisher(comic.getPublisher());
+        super.setPublishers(comic.getPublishers());
         super.genres = comic.getGenres();
         super.supports = comic.getSupports();
         super.setFormat(comic.getFormat());
@@ -264,7 +264,7 @@ public class Comic extends Book {
                 ", format=" + super.getFormat().getName() +
                 ", nbPages=" + super.getNbPages() +
                 ", authors=" + CollectionAsString.setToString(super.getAuthors()) +
-                ", publisher=" + CollectionAsString.setToString(super.getPublisher()) +
+                ", publisher=" + CollectionAsString.setToString(super.getPublishers()) +
                 ", volumes=" + volumes +
                 ", currentVolume=" + currentVolume +
                 ", illustrator=" + CollectionAsString.setToString(this.illustrators) +

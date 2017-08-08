@@ -17,7 +17,9 @@
 package fr.nicolasgille.medialibrary.repositories.book;
 
 import fr.nicolasgille.medialibrary.models.book.Book;
+import fr.nicolasgille.medialibrary.models.book.Comic;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
@@ -28,7 +30,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Transactional
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -58,4 +60,15 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * @version 1.0
      */
     Book findByTitleAndReleaseDate(String title, Calendar releaseDate);
+
+    /**
+     * Find all books present on Media Library.
+     *
+     * @return
+     *  List of all Books.
+     * @since 1.1
+     * @version 1.0
+     */
+    @Query(value = "SELECT * FROM media WHERE media_type = \"book\"", nativeQuery = true)
+    List<Book> findAll();
 }

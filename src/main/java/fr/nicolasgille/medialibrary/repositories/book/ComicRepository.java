@@ -17,7 +17,9 @@
 package fr.nicolasgille.medialibrary.repositories.book;
 
 import fr.nicolasgille.medialibrary.models.book.Comic;
+import fr.nicolasgille.medialibrary.models.video.Anime;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -27,7 +29,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.1
+ * @version 1.2
  */
 @Transactional
 public interface ComicRepository extends JpaRepository<Comic, Long> {
@@ -57,4 +59,15 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
      * @version 1.0
      */
     Comic findByTitleIgnoreCaseAndCurrentVolume(String title, int currentVolume);
+
+    /**
+     * Find all comic present on Media Library.
+     *
+     * @return
+     *  List of all Comic.
+     * @since 1.2
+     * @version 1.0
+     */
+    @Query(value = "SELECT * FROM media WHERE media_type = \"comic\"", nativeQuery = true)
+    List<Comic> findAll();
 }
