@@ -33,7 +33,7 @@ import java.util.List;
  * *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.1.1
+ * @version 1.2
  */
 @Transactional
 public interface MovieRepository extends JpaRepository<Movie, Long> {
@@ -49,6 +49,18 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
      * @version 1.0.1
      */
     List<Movie> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find all movies by title like.
+     *
+     * @param title
+     *  Title of the movies search on Database.
+     * @return
+     *  An instance of movies search by the name.
+     * @since 1.2
+     * @version 1.0
+     */
+    List<Movie> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find a movie by his name, his duration and date of release.

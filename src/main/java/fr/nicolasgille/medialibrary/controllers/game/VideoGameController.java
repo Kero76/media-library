@@ -135,7 +135,7 @@ public class VideoGameController {
     public ResponseEntity<?> getVideoGameByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, VideoGameController.ENCODING);
         logger.info("Fetching VideoGame with title {}", title);
-        List<VideoGame> videoGames = videoGameRepository.findByTitleIgnoreCase(title);
+        List<VideoGame> videoGames = videoGameRepository.findByTitleIgnoreCaseContaining(title);
         if (videoGames == null) {
             logger.error("VideoGame with title {} not found.", title);
             return new ResponseEntity<Object>(new VideoGameException("VideoGame with title " + title + " not found."), HttpStatus.NO_CONTENT);

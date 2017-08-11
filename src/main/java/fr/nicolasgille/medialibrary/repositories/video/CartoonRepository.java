@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.3
- * @version 1.0.1
+ * @version 1.1
  */
 public interface CartoonRepository extends JpaRepository<Cartoon, Long> {
 
@@ -46,6 +46,18 @@ public interface CartoonRepository extends JpaRepository<Cartoon, Long> {
      * @version 1.0.1
      */
     List<Cartoon> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find all cartoons by his name.
+     *
+     * @param title
+     *  Title of the cartoons at search on Database.
+     * @return
+     *  An instance of cartoons search by the name.
+     * @since 1.1
+     * @version 1.0
+     */
+    List<Cartoon> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find a cartoon by his name, his duration and date of release.

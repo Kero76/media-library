@@ -135,7 +135,7 @@ public class AlbumController {
     public ResponseEntity<?> getAlbumByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, AlbumController.ENCODING);
         logger.info("Fetching Album with title {}", title);
-        List<Album> albums = albumRepository.findByTitleIgnoreCase(title);
+        List<Album> albums = albumRepository.findByTitleIgnoreCaseContaining(title);
         if (albums == null) {
             logger.error("Album with title {} not found.", title);
             return new ResponseEntity<Object>(new AlbumException("Album with title " + title + " not found."), HttpStatus.NO_CONTENT);

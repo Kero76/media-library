@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.2
+ * @version 1.3
  */
 @Transactional
 public interface ComicRepository extends JpaRepository<Comic, Long> {
@@ -45,6 +45,18 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
      * @version 1.1
      */
     List<Comic> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find all cartoons by name.
+     *
+     * @param title
+     *  Title of the cartoon at search on Database.
+     * @return
+     *  An instance of cartoon search by the name.
+     * @since 1.3
+     * @version 1.0
+     */
+    List<Comic> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find a cartoon by his name and his current volume.

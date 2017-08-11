@@ -135,7 +135,7 @@ public class BookController {
     public ResponseEntity<?> getBooksByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, BookController.ENCODING);
         logger.info("Fetching Book with title {}", title);
-        List<Book> books = bookRepository.findByTitleIgnoreCase(title);
+        List<Book> books = bookRepository.findByTitleIgnoreCaseContaining(title);
         if (books == null) {
             logger.error("Book(s) with title {} not found.", title);
             return new ResponseEntity<Object>(new BookException("Book(s) with title " + title + " not found."), HttpStatus.NO_CONTENT);

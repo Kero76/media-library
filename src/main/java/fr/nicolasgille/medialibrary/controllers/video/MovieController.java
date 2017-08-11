@@ -145,7 +145,7 @@ public class MovieController {
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
         logger.info("Fetching Movie with title {}", title);
-        List<Movie> movies = movieRepository.findByTitleIgnoreCase(title);
+        List<Movie> movies = movieRepository.findByTitleIgnoreCaseContaining(title);
         if (movies == null) {
             logger.error("Movie with title {} not found.", title);
             return new ResponseEntity<Object>(new MovieException("Movie with title " + title + " not found."), HttpStatus.NO_CONTENT);

@@ -30,13 +30,13 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.1
+ * @version 1.3
  */
 @Transactional
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
-     * Find a book by his name.
+     * Find a list of books by title.
      *
      * @param title
      *  Title of the book at search on Database.
@@ -46,6 +46,18 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * @version 1.0
      */
     List<Book> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find a book by string .
+     *
+     * @param title
+     *  Title of the book at search on Database.
+     * @return
+     *  An instance of book search by the name.
+     * @since 1.3
+     * @version 1.0
+     */
+    List<Book> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find a book by his name, his duration and date of release.

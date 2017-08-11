@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.1
+ * @version 1.2
  */
 @Transactional
 public interface AlbumRepository extends JpaRepository<Album, Long> {
@@ -43,6 +43,18 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
      * @version 1.0.1
      */
     List<Album> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find all albums by their name.
+     *
+     * @param title
+     *  Title of the album at search on Database.
+     * @return
+     *  An instance of album search by the name.
+     * @since 1.2
+     * @version 1.0
+     */
+    List<Album> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find an album by his name, his length and his number of tracks.

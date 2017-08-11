@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.1
+ * @version 1.2
  */
 @Transactional
 public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
@@ -44,6 +44,18 @@ public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
      * @version 1.0
      */
     List<VideoGame> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find all video games by his name.
+     *
+     * @param title
+     *  Title of the video game at search on Database.
+     * @return
+     *  An instance of all video games search by the name.
+     * @since 1.2
+     * @version 1.0
+     */
+    List<VideoGame> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find video game by his name and his release date.

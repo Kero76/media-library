@@ -136,7 +136,7 @@ public class AnimeController {
     public ResponseEntity<?> getAnimesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, AnimeController.ENCODING);
         logger.info("Fetching Anime with title {}", title);
-        List<Anime> animes = animesRepository.findByTitleIgnoreCase(title);
+        List<Anime> animes = animesRepository.findByTitleIgnoreCaseContaining(title);
         if (animes == null) {
             logger.error("Anime with title {} not found.", title);
             return new ResponseEntity<Object>(new AnimeException("Anime with title " + title + " not found."), HttpStatus.NO_CONTENT);

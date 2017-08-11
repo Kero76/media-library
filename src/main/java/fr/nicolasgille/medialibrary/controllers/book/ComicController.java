@@ -142,7 +142,7 @@ public class ComicController {
     public ResponseEntity<?> getComicsByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, ComicController.ENCODING);
         logger.info("Fetching Comic with title {}", title);
-        List<Comic> comics = comicRepository.findByTitleIgnoreCase(title);
+        List<Comic> comics = comicRepository.findByTitleIgnoreCaseContaining(title);
         if (comics == null) {
             logger.error("Comic(s) with title {} not found.", title);
             return new ResponseEntity<Object>(new ComicException("Comic(s) with title " + title + " not found."), HttpStatus.NO_CONTENT);

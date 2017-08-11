@@ -136,7 +136,7 @@ public class CartoonController {
     public ResponseEntity<?> getCartoonByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, CartoonController.ENCODING);
         logger.info("Fetching Cartoon with title {}", title);
-        List<Cartoon> cartoons = cartoonRepository.findByTitleIgnoreCase(title);
+        List<Cartoon> cartoons = cartoonRepository.findByTitleIgnoreCaseContaining(title);
         if (cartoons == null) {
             logger.error("Cartoon with title {} not found.", title);
             return new ResponseEntity<Object>(new CartoonException("Cartoon with title " + title + " not found."), HttpStatus.NO_CONTENT);

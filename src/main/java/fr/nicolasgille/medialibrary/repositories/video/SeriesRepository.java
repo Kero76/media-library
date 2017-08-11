@@ -16,7 +16,6 @@
  */
 package fr.nicolasgille.medialibrary.repositories.video;
 
-
 import fr.nicolasgille.medialibrary.models.video.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -32,7 +31,7 @@ import java.util.List;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 1.1
+ * @version 1.2
  */
 @Transactional
 public interface SeriesRepository extends JpaRepository<Series, Long> {
@@ -48,6 +47,18 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
      * @version 1.1
      */
     List<Series> findByTitleIgnoreCase(String title);
+
+    /**
+     * Find a series by his name.
+     *
+     * @param title
+     *  Title of the series at search on Database.
+     * @return
+     *  An instance of series search by his name.
+     * @since 1.2
+     * @version 1.0
+     */
+    List<Series> findByTitleIgnoreCaseContaining(String title);
 
     /**
      * Find a series by his name and his current season.

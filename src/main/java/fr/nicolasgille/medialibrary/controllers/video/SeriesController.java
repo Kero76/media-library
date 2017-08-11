@@ -142,7 +142,7 @@ public class SeriesController {
     public ResponseEntity getSeriesByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, SeriesController.ENCODING);
         logger.info("Fetching Series with title {}", title);
-        List<Series> series = seriesRepository.findByTitleIgnoreCase(title);
+        List<Series> series = seriesRepository.findByTitleIgnoreCaseContaining(title);
         if (series == null) {
             logger.error("Series with title {} not found.", title);
             return new ResponseEntity<Object>(new SeriesException("Series with title " + title + " not found."), HttpStatus.NO_CONTENT);
