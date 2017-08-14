@@ -24,12 +24,15 @@ package fr.nicolasgille.medialibrary.models.components;
  *     <li>DVD : DVD support.</li>
  *     <li>BLU_RAY : Blu Ray support.</li>
  *     <li>PAPER : Paper support for book.</li>
+ *     <li>AUDIO_TAPE : Audio tape sound support.</li>
+ *     <li>VYNIL : Vynil sound support.</li>
+ *     <li>GAME_CARTRIDGE : Game cartridge for video game support.</li>
  *     <li>DIGITAL : Digital version (on computer).</li>
  * </ul>
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.2
+ * @version 1.3
  */
 public enum MediaSupport {
     // Video support
@@ -44,6 +47,9 @@ public enum MediaSupport {
     AUDIO_TAPE("Audio Tape"),
     VYNIL("Vynil"),
     CD("CD"),
+
+    // Game support
+    GAME_CARTRIDGE("game cartridge"),
 
     // For all media
     DIGITAL("Digital");

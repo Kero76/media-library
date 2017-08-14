@@ -23,7 +23,7 @@ package fr.nicolasgille.medialibrary.models.components;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.1
- * @version 1.2
+ * @version 1.3
  */
 public enum MediaGenre {
     // Book / Video
@@ -59,6 +59,7 @@ public enum MediaGenre {
     SPY("Spy"),
     SUPERHERO("Superhero"),
     SUPERNATURAL("Supernatural"),
+    TECHNICAL("Technical"),
     TEEN("Teen"),
     TOKUSATSU("Tokusatsu"),
     THEATER("Theater"),
