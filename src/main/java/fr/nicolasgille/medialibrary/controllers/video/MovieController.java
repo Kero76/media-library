@@ -52,7 +52,7 @@ import java.util.Set;
  * @version 2.2.1
  */
 @RestController
-@RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
 
     /**

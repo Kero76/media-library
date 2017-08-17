@@ -39,7 +39,7 @@ public class DeveloperControllerTest {
     /**
      * URI of the Rest service.
      */
-    private static final String REST_SERVICE_URI = "http://localhost:8080/media-library";
+    private static final String REST_SERVICE_URI = "http://localhost:8080";
 
     /**
      * Encoding used to encoded URL.

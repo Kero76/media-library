@@ -46,7 +46,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SingerController {
 
     /**
@@ -99,7 +99,7 @@ public class SingerController {
      * In other case, this method return the singer on the body of the HTTP response.
      * The first name and the last name must encoded in UTF-8 to avoid problems with special characters,
      * and must present as parameter of the url like the following format :
-     * <code>/media-library/search/singers?fname=XXX&lname=YYY</code>
+     * <code>//search/singers?fname=XXX&lname=YYY</code>
      *
      * @param fNameEncoded
      *  First name of the singer encoding in UTF8.

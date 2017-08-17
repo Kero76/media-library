@@ -46,7 +46,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/media-library", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PublisherController {
 
     /**
