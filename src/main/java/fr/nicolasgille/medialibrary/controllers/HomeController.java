@@ -126,7 +126,7 @@ public class HomeController {
      * @since 1.0
      * @version 1.0
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/", method = RequestMethod.GET)
     public ResponseEntity<?> getHomePage() {
         // Instantiate a Map with key as name of the media type and value as List of specific media.
         Map<String, List> homeContent = new HashMap<>();
@@ -178,7 +178,13 @@ public class HomeController {
                     media = videoGameRepository.findAll();
                     break;
             }
-            homeContent.put(mediaName[i], media.subList(media.size() - 10, media.size()));
+
+            if (media.size() > 10) {
+                homeContent.put(mediaName[i], media.subList(media.size() - 10, media.size()));
+            } else {
+                homeContent.put(mediaName[i], media.subList(0, media.size()));
+            }
+
         }
 
         return new ResponseEntity<Map>(homeContent, HttpStatus.OK);
@@ -192,6 +198,7 @@ public class HomeController {
      * @since 1.0
      * @version 1.0
      */
+    @RequestMapping(value = "/books/formats/", method = RequestMethod.GET)
     public ResponseEntity<?> getBookFormat() {
         return new ResponseEntity<>(BookFormat.values(), HttpStatus.OK);
     }
@@ -204,6 +211,7 @@ public class HomeController {
      * @since 1.0
      * @version 1.0
      */
+    @RequestMapping(value = "/media/genres/", method = RequestMethod.GET)
     public ResponseEntity<?> getMediaGenre() {
         return new ResponseEntity<>(MediaGenre.values(), HttpStatus.OK);
     }
@@ -216,6 +224,7 @@ public class HomeController {
      * @since 1.0
      * @version 1.0
      */
+    @RequestMapping(value = "/media/supports/", method = RequestMethod.GET)
     public ResponseEntity<?> getMediaSupport() {
         return new ResponseEntity<>(MediaSupport.values(), HttpStatus.OK);
     }
@@ -228,6 +237,7 @@ public class HomeController {
      * @since 1.0
      * @version 1.0
      */
+    @RequestMapping(value = "/video-games/platforms/", method = RequestMethod.GET)
     public ResponseEntity<?> getVideoGamePlatform() {
         return new ResponseEntity<>(VideoGamePlatform.values(), HttpStatus.OK);
     }
