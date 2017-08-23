@@ -166,7 +166,7 @@ public class MediaBuilderTest {
                 // Animes
                 case 0:
                     this.builder = new AnimeBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         Anime anime = (Anime) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", anime, Anime.class);
                     }
@@ -175,7 +175,7 @@ public class MediaBuilderTest {
                 // Books
                 case 1:
                     this.builder = new BookBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         Book book = (Book) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/books/", book, Book.class);
                     }
@@ -184,7 +184,7 @@ public class MediaBuilderTest {
                 // Cartoons
                 case 2:
                     this.builder = new CartoonBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         Cartoon cartoon = (Cartoon) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/cartoons/", cartoon, Cartoon.class);
                     }
@@ -193,7 +193,7 @@ public class MediaBuilderTest {
                 // Movies
                 case 3:
                     this.builder = new MovieBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         Movie movie = (Movie) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
                     }
@@ -202,7 +202,7 @@ public class MediaBuilderTest {
                 // Musics
                 case 4:
                     this.builder = new AlbumBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         Album album = (Album) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/musics/", album, Album.class);
                     }
@@ -211,7 +211,7 @@ public class MediaBuilderTest {
                 // Series
                 case 5:
                     this.builder = new SeriesBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         Series series = (Series) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
                     }
@@ -220,7 +220,7 @@ public class MediaBuilderTest {
                 // Video Game
                 case 6:
                     this.builder = new VideoGameBuilder();
-                    for (int j = 1; j < data.size(); ++j) {
+                    for (int j = 0; j < data.size(); ++j) {
                         VideoGame videoGame = (VideoGame) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
                     }
