@@ -19,6 +19,8 @@ package fr.nicolasgille.medialibrary.controllers.music;
 import fr.nicolasgille.medialibrary.exceptions.music.AlbumException;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
+import fr.nicolasgille.medialibrary.models.components.genre.MusicGenre;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.models.music.Album;
 import fr.nicolasgille.medialibrary.repositories.common.company.LabelRecordsRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.SingerRepository;
@@ -332,5 +334,18 @@ public class AlbumController {
 
         albumRepository.delete(album);
         return new ResponseEntity<Object>(album, HttpStatus.OK);
+    }
+
+    /**
+     * Get all musics genres present on Media Library.
+     *
+     * @return
+     *  An array with all musics genres.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/musics/genres/", method = RequestMethod.GET)
+    public ResponseEntity<?> getMediaGenre() {
+        return new ResponseEntity<>(MusicGenre.values(), HttpStatus.OK);
     }
 }

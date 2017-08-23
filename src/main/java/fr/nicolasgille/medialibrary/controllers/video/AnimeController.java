@@ -19,6 +19,7 @@ package fr.nicolasgille.medialibrary.controllers.video;
 import fr.nicolasgille.medialibrary.exceptions.video.AnimeException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.Anime;
 import fr.nicolasgille.medialibrary.repositories.common.person.DirectorRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.ProducerRepository;
@@ -368,5 +369,18 @@ public class AnimeController {
 
         animesRepository.delete(anime);
         return new ResponseEntity<Object>(anime, HttpStatus.OK);
+    }
+
+    /**
+     * Get all video genres present on Media Library.
+     *
+     * @return
+     *  An array with all video genres.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/animes/genres/", method = RequestMethod.GET)
+    public ResponseEntity<?> getMediaGenre() {
+        return new ResponseEntity<>(VideoGenre.values(), HttpStatus.OK);
     }
 }

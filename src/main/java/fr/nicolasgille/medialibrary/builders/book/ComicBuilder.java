@@ -23,8 +23,8 @@ import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 
 import java.util.Calendar;
 import java.util.List;
@@ -55,14 +55,14 @@ public class ComicBuilder extends MediaBuilder {
         String originalTitle = this.checkMissingArguments(data.get(1)) ? "" : data.get(1);
         String synopsis      = this.checkMissingArguments(data.get(2)) ? "" : data.get(2);
         Calendar releaseDate = this.buildDate(data.get(3));
-        List<MediaGenre>   genres   = this.buildGenreList(data.get(4));
+        List<BookGenre> genres = this.buildGenreBookList(data.get(4));
         List<MediaSupport> supports = this.buildSupportList(data.get(5));
-        String isbn          = this.checkMissingArguments(data.get(6)) ? "" : data.get(6);
+        String isbn = this.checkMissingArguments(data.get(6)) ? "" : data.get(6);
         int nbPages = Integer.parseInt(data.get(7));
         Set<Author> authors = this.buildAuthorSet(data.get(8));
         Set<Publisher> publishers = this.buildPublisherSet(data.get(9));
         BookFormat format = this.buildBookFormat(data.get(10));
-        int volumes       = Integer.parseInt(data.get(11));
+        int volumes = Integer.parseInt(data.get(11));
         int currentVolume = Integer.parseInt(data.get(12));
         Set<Illustrator> illustrators = this.buildIllustratorSet(data.get(13));
 

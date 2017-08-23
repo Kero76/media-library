@@ -20,8 +20,8 @@ import fr.nicolasgille.medialibrary.builders.MediaBuilder;
 import fr.nicolasgille.medialibrary.models.IMedia;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.MusicGenre;
 import fr.nicolasgille.medialibrary.models.music.Album;
 
 import java.util.Calendar;
@@ -52,7 +52,7 @@ public class AlbumBuilder extends MediaBuilder {
         String title         = this.checkMissingArguments(data.get(0)) ? "" : data.get(0);
         String tracks        = this.checkMissingArguments(data.get(1)) ? "" : data.get(1);
         Calendar releaseDate = this.buildDate(data.get(2));
-        List<MediaGenre>   genres    = this.buildGenreList(data.get(3));
+        List<MusicGenre>   genres    = this.buildGenreMusicList(data.get(3));
         List<MediaSupport> supports  = this.buildSupportList(data.get(4));
         double length =  this.checkMissingArguments(data.get(5)) ? -1 : Double.parseDouble(data.get(5));
         int nbTracks  = this.checkMissingArguments(data.get(6))  ? 0  : Integer.parseInt(data.get(6));

@@ -21,9 +21,9 @@ import fr.nicolasgille.medialibrary.builders.MediaBuilder;
 import fr.nicolasgille.medialibrary.models.IMedia;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGameGenre;
 import fr.nicolasgille.medialibrary.models.game.VideoGame;
 
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class VideoGameBuilder extends MediaBuilder {
         String originalTitle = this.checkMissingArguments(data.get(1)) ? "" : data.get(1);
         String synopsis      = this.checkMissingArguments(data.get(2)) ? "" : data.get(2);
         Calendar releaseDate = this.buildDate(data.get(3));
-        List<MediaGenre>   genres   = this.buildGenreList(data.get(4));
+        List<VideoGameGenre>   genres   = this.buildGenreVideoGameList(data.get(4));
         List<MediaSupport> supports = this.buildSupportList(data.get(5));
         boolean multiplayers = Boolean.parseBoolean(data.get(6));
         List<LanguageCode> languages = this.buildLanguageList(data.get(7));

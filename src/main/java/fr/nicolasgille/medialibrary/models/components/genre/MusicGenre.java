@@ -14,60 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.nicolasgille.medialibrary.models.components;
+package fr.nicolasgille.medialibrary.models.components.genre;
 
 /**
- * An enumeration who representing all genres available in Media Library.
- * This enumeration is composed by the genre from the Book, Video, Music and Game genre.
- * You can add new genre on it, if you would add specific genre not found initially on Media-Library.
+ * An enumeration representing all music genre present on app.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
- * @version 1.3
+ * @since Media-Library 1.0
+ * @version 1.0
  */
-public enum MediaGenre {
-    // Book / Video
-    ACTION("Action"),
-    ADVENTURE("Adventure"),
-    ANIMATION("Animation"),
-    BIOPIC("Biopic"),
-    BUDDY_COP("Buddy Cop"),
-    COMEDY("Comedy"),
-    COP("Cop"),
-    CRIME("Crime"),
-    CYBERPUNK("Cyberpunk"),
-    DISASTER("Disaster"),
-    DRAMA("Drama"),
-    DYSTOPIAN("Dystopian"),
-    EPIC("Epic"),
-    FAMILY("Family"),
-    FANTASY("Fantasy"),
-    HORROR("Horror"),
-    HEROIC_FANTASY("Heroic Fantasy"),
-    HISTORICAL("Historical"),
-    MAGICAL_GIRL("Magical Girl"),
-    MARTIAL_ART("Martial Art"),
-    MECHA("Mecha"),
-    MONSTER("Monster"),
-    MUSICAL("Musical"),
-    MYSTERY("Mystery"),
-    ROMANTIC("Romantic"),
-    SCIENCE_FICTION("Science Fiction"),
-    SPACE_OPERA("Space Opera"),
-    SPAGUETTI_WESTERN("Spaghetti Western"),
-    SPORT("Sport"),
-    SPY("Spy"),
-    SUPERHERO("Superhero"),
-    SUPERNATURAL("Supernatural"),
-    TECHNICAL("Technical"),
-    TEEN("Teen"),
-    TOKUSATSU("Tokusatsu"),
-    THEATER("Theater"),
-    THRILLER("Thriller"),
-    WAR("War"),
-    WESTERN("Western"),
-
-    // Music
+public enum MusicGenre {
     ALTERNATIVE_METAL("Alternative Metal"),
     ALTERNATIVE_ROCK("Alternative Rock"),
     BALLAD("Ballad"),
@@ -116,32 +72,12 @@ public enum MediaGenre {
     SOUTHERN_ROCK("Southern Rock"),
     SYNTHPOP("Synthpop"),
     TECHNO("Techno"),
-    ZOUK("Zouk"),
-
-    // VideoGame
-    ACTION_RPG("Action RPG"),
-    BEAT_EM_ALL("Beat'em All"),
-    BEAT_EM_UP("Beat'em Up"),
-    COURSES("Courses"),
-    FPS("First Person Shooter"),
-    IDLE("Idle"),
-    MANAGEMENT("Management"),
-    PLATFORMS("Platform"),
-    PUZZLE_GAME("Puzzle Game"),
-    ROGUE_LIKE("Rogue Like"),
-    RPG("Role Playing Game"),
-    RTS("Real-Time Strategy"),
-    SANDBOX("Sandbox"),
-    SHOOTER("Shooter"),
-    SURVIVAL_HORROR("Survival Horror"),
-    TACTICAL_RPG("Tactical RPG"),
-    TPS("Third Person Shooter"),
-    VERSUS_FIGHTING("Versus Fighting");
+    ZOUK("Zouk");
 
     /**
      * Name stored in database.
      *
-     * @since 1.1
+     * @since 1.0
      */
     private String name;
 
@@ -150,10 +86,10 @@ public enum MediaGenre {
      *
      * @param name
      *  Name stored in database.
-     * @since 1.1
+     * @since 1.0
      * @version 1.0
      */
-    MediaGenre(String name) {
+    MusicGenre(String name) {
         this.name = name;
     }
 
@@ -162,7 +98,7 @@ public enum MediaGenre {
      *
      * @return
      *  Return the name of the element.
-     * @since 1.1
+     * @since 1.0
      * @version 1.0
      */
     public String getName() {

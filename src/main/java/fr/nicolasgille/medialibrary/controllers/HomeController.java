@@ -17,11 +17,7 @@
 package fr.nicolasgille.medialibrary.controllers;
 
 import fr.nicolasgille.medialibrary.controllers.video.AnimeController;
-import fr.nicolasgille.medialibrary.models.Media;
-import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
-import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
 import fr.nicolasgille.medialibrary.repositories.book.BookRepository;
 import fr.nicolasgille.medialibrary.repositories.book.ComicRepository;
 import fr.nicolasgille.medialibrary.repositories.game.VideoGameRepository;
@@ -187,19 +183,6 @@ public class HomeController {
         }
 
         return new ResponseEntity<Map>(homeContent, HttpStatus.OK);
-    }
-
-    /**
-     * Get all media genres present on Media Library.
-     *
-     * @return
-     *  An array with all media genres.
-     * @since 1.0
-     * @version 1.0
-     */
-    @RequestMapping(value = "/media/genres/", method = RequestMethod.GET)
-    public ResponseEntity<?> getMediaGenre() {
-        return new ResponseEntity<>(MediaGenre.values(), HttpStatus.OK);
     }
 
     /**

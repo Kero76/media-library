@@ -22,8 +22,8 @@ import fr.nicolasgille.medialibrary.models.IMedia;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.Movie;
 
 import java.util.Calendar;
@@ -54,7 +54,7 @@ public class MovieBuilder extends MediaBuilder {
         String title         = this.checkMissingArguments(data.get(0)) ? "" : data.get(0);
         String originalTitle = this.checkMissingArguments(data.get(1)) ? "" : data.get(1);
         String synopsis      = this.checkMissingArguments(data.get(2)) ? "" : data.get(2);
-        List<MediaGenre>   genres    = this.buildGenreList(data.get(3));
+        List<VideoGenre>   genres    = this.buildGenreVideoList(data.get(3));
         List<MediaSupport> supports  = this.buildSupportList(data.get(4));
         List<LanguageCode> languages = this.buildLanguageList(data.get(5));
         List<LanguageCode> subtitles = this.buildLanguageList(data.get(6));

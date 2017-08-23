@@ -22,9 +22,12 @@ import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.*;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
+import fr.nicolasgille.medialibrary.models.components.genre.MusicGenre;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGameGenre;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,7 +39,7 @@ import java.util.*;
  *
  * @author Nicolas GILLE
  * @since Media-Library 0.5
- * @version 1.0.1
+ * @version 1.1
  */
 public abstract class MediaBuilder implements IMediaBuilder {
 
@@ -63,22 +66,118 @@ public abstract class MediaBuilder implements IMediaBuilder {
      *  All genres of the media on string format.
      * @return
      *  An empty list if the genre not specified, or a list with all genres get from the string.
-     * @since 1.0
+     * @since 1.1
      * @version 1.0
      */
-    protected List<MediaGenre> buildGenreList(String genres) {
+    protected List<VideoGenre> buildGenreVideoList(String genres) {
         // If argument is empty, return an empty ArrayList.
         if (this.checkMissingArguments(genres)) {
             return new ArrayList<>();
         }
 
         // Split genres to get one genre.
-        List<MediaGenre> genreList = new ArrayList<>();
+        List<VideoGenre> genreList = new ArrayList<>();
         String[] genresSplit = genres.split(",");
 
         // Loop on each genre, media genre and check if the genre and the media genre is the same.
         for (String s : genresSplit) {
-            for (MediaGenre mg : MediaGenre.values()) {
+            for (VideoGenre mg : VideoGenre.values()) {
+                if (mg.getName().equals(s.trim())) {
+                    genreList.add(mg);
+                }
+            }
+        }
+
+        return genreList;
+    }
+
+    /**
+     * Split a string and return the list of MediaGenre for the media.
+     *
+     * @param genres
+     *  All genres of the media on string format.
+     * @return
+     *  An empty list if the genre not specified, or a list with all genres get from the string.
+     * @since 1.1
+     * @version 1.0
+     */
+    protected List<MusicGenre> buildGenreMusicList(String genres) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(genres)) {
+            return new ArrayList<>();
+        }
+
+        // Split genres to get one genre.
+        List<MusicGenre> genreList = new ArrayList<>();
+        String[] genresSplit = genres.split(",");
+
+        // Loop on each genre, media genre and check if the genre and the media genre is the same.
+        for (String s : genresSplit) {
+            for (MusicGenre mg : MusicGenre.values()) {
+                if (mg.getName().equals(s.trim())) {
+                    genreList.add(mg);
+                }
+            }
+        }
+
+        return genreList;
+    }
+
+    /**
+     * Split a string and return the list of MediaGenre for the media.
+     *
+     * @param genres
+     *  All genres of the media on string format.
+     * @return
+     *  An empty list if the genre not specified, or a list with all genres get from the string.
+     * @since 1.1
+     * @version 1.0
+     */
+    protected List<VideoGameGenre> buildGenreVideoGameList(String genres) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(genres)) {
+            return new ArrayList<>();
+        }
+
+        // Split genres to get one genre.
+        List<VideoGameGenre> genreList = new ArrayList<>();
+        String[] genresSplit = genres.split(",");
+
+        // Loop on each genre, media genre and check if the genre and the media genre is the same.
+        for (String s : genresSplit) {
+            for (VideoGameGenre mg : VideoGameGenre.values()) {
+                if (mg.getName().equals(s.trim())) {
+                    genreList.add(mg);
+                }
+            }
+        }
+
+        return genreList;
+    }
+
+    /**
+     * Split a string and return the list of MediaGenre for the media.
+     *
+     * @param genres
+     *  All genres of the media on string format.
+     * @return
+     *  An empty list if the genre not specified, or a list with all genres get from the string.
+     * @since 1.1
+     * @version 1.0
+     */
+    protected List<BookGenre> buildGenreBookList(String genres) {
+        // If argument is empty, return an empty ArrayList.
+        if (this.checkMissingArguments(genres)) {
+            return new ArrayList<>();
+        }
+
+        // Split genres to get one genre.
+        List<BookGenre> genreList = new ArrayList<>();
+        String[] genresSplit = genres.split(",");
+
+        // Loop on each genre, media genre and check if the genre and the media genre is the same.
+        for (String s : genresSplit) {
+            for (BookGenre mg : BookGenre.values()) {
                 if (mg.getName().equals(s.trim())) {
                     genreList.add(mg);
                 }

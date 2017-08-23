@@ -20,11 +20,11 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.Media;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +37,7 @@ import java.util.Set;
  * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.2
- * @version 2.0
+ * @version 2.1
  */
 @MappedSuperclass
 public abstract class Video extends Media {
@@ -48,6 +48,17 @@ public abstract class Video extends Media {
      * @since 2.0
      */
     protected String originalTitle;
+
+    /**
+     * Genre of the media.
+     *
+     * @see VideoGenre
+     * @since 2.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = VideoGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<VideoGenre> genres;
 
     /**
      * List of language spoken available on the video.
@@ -217,5 +228,28 @@ public abstract class Video extends Media {
      */
     public void setDirectors(Set<Director> directors) {
         this.directors = directors;
+    }
+
+    /**
+     * Return the genres.
+     *
+     * @return The genres of the book.
+     * @see VideoGenre
+     * @since 2.1
+     * @version 1.0
+     */
+    public List<VideoGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
+     * Set genres of Media.
+     *
+     * @param genres New book.
+     * @since 2.1
+     * @version 1.0
+     */
+    public void setGenres(List<VideoGenre> genres) {
+        this.genres = genres;
     }
 }

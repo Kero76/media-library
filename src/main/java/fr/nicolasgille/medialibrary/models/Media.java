@@ -16,13 +16,11 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 
@@ -71,17 +69,6 @@ public abstract class Media implements IMedia {
      */
     @Temporal(TemporalType.DATE)
     protected Calendar releaseDate;
-
-    /**
-     * Genre of the media.
-     *
-     * @see MediaGenre
-     * @since 2.0
-     */
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = MediaGenre.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<MediaGenre> genres;
 
     /**
      * List of Support for the media.
@@ -186,29 +173,6 @@ public abstract class Media implements IMedia {
      */
     public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    /**
-     * Return the genres.
-     *
-     * @return The genres of the media.
-     * @see MediaGenre
-     * @since 2.0
-     * @version 1.0
-     */
-    public List<MediaGenre> getGenres() {
-        return this.genres;
-    }
-
-    /**
-     * Set genres of Media.
-     *
-     * @param genres New genres.
-     * @since 2.0
-     * @version 1.0
-     */
-    public void setGenres(List<MediaGenre> genres) {
-        this.genres = genres;
     }
 
     /**

@@ -19,15 +19,15 @@ package fr.nicolasgille.medialibrary.models.music;
 import fr.nicolasgille.medialibrary.models.Media;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
+import fr.nicolasgille.medialibrary.models.components.genre.MusicGenre;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +38,7 @@ import java.util.Set;
  * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @DiscriminatorValue(value = "album")
@@ -57,6 +57,17 @@ public class Album extends Media {
      * @since 1.0
      */
     private double length;
+
+    /**
+     * Genre of the media.
+     *
+     * @see MusicGenre
+     * @since 1.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = MusicGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<MusicGenre> genres;
 
     /**
      * Labels who records the album.
@@ -118,12 +129,12 @@ public class Album extends Media {
      * @since 1.0
      * @version 1.0
      */
-    public Album(String title, String tracks, Calendar releaseDate, List<MediaGenre> genres, List<MediaSupport> supports,
+    public Album(String title, String tracks, Calendar releaseDate, List<MusicGenre> genres, List<MediaSupport> supports,
                  int nbTracks, double length, Set<LabelRecords> labelRecords, Set<Singer> singers) {
         super.title = title;
         super.synopsis = tracks;
         super.releaseDate = releaseDate;
-        super.genres = genres;
+        this.genres = genres;
         super.supports = supports;
         this.nbTracks = nbTracks;
         this.length = length;
@@ -157,13 +168,13 @@ public class Album extends Media {
      * @since 1.0
      * @version 1.0
      */
-    public Album(long id, String title, String tracks, Calendar releaseDate, List<MediaGenre> genres, List<MediaSupport> supports,
+    public Album(long id, String title, String tracks, Calendar releaseDate, List<MusicGenre> genres, List<MediaSupport> supports,
                  int nbTracks, double length, Set<LabelRecords> labelRecords, Set<Singer> singers) {
         super.id = id;
         super.title = title;
         super.synopsis = tracks;
         super.releaseDate = releaseDate;
-        super.genres = genres;
+        this.genres = genres;
         super.supports = supports;
         this.nbTracks = nbTracks;
         this.length = length;
@@ -184,7 +195,7 @@ public class Album extends Media {
         super.title = album.getTitle();
         super.synopsis = album.getSynopsis();
         super.releaseDate = album.getReleaseDate();
-        super.genres = album.getGenres();
+        this.genres = album.getGenres();
         super.supports = album.getSupports();
         this.nbTracks = album.getNbTracks();
         this.length = album.getLength();
@@ -289,6 +300,29 @@ public class Album extends Media {
     }
 
     /**
+     * Return the genres.
+     *
+     * @return The genres of the book.
+     * @see BookGenre
+     * @since 1.1
+     * @version 1.0
+     */
+    public List<MusicGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
+     * Set genres of Media.
+     *
+     * @param genres New book.
+     * @since 1.1
+     * @version 1.0
+     */
+    public void setGenres(List<MusicGenre> genres) {
+        this.genres = genres;
+    }
+
+    /**
      * Some information about the Album.
      *
      * @return
@@ -302,7 +336,7 @@ public class Album extends Media {
                 "id=" + super.id +
                 ", title='" + super.title + '\'' +
                 ", tracks='" + super.getSynopsis() + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.getGenres()) +
+                ", genres=" + CollectionAsString.listToString(this.getGenres()) +
                 ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
                 ", supports='" + CollectionAsString.listToString(super.getSupports()) +
                 ", nbTracks=" + nbTracks +

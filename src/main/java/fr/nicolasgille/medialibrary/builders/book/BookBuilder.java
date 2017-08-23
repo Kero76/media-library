@@ -22,8 +22,8 @@ import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 
 import java.util.Calendar;
 import java.util.List;
@@ -54,7 +54,7 @@ public class BookBuilder extends MediaBuilder {
         String originalTitle = this.checkMissingArguments(data.get(1)) ? "" : data.get(1);
         String synopsis      = this.checkMissingArguments(data.get(2)) ? "" : data.get(2);
         Calendar releaseDate = this.buildDate(data.get(3));
-        List<MediaGenre>   genres   = this.buildGenreList(data.get(4));
+        List<BookGenre>   genres   = this.buildGenreBookList(data.get(4));
         List<MediaSupport> supports = this.buildSupportList(data.get(5));
         String isbn          = this.checkMissingArguments(data.get(6)) ? "" : data.get(6);
         int nbPages = Integer.parseInt(data.get(7));

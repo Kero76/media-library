@@ -21,6 +21,8 @@ import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.repositories.book.BookRepository;
 import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.AuthorRepository;
@@ -333,6 +335,19 @@ public class BookController {
 
         bookRepository.delete(book);
         return new ResponseEntity<Object>(book, HttpStatus.OK);
+    }
+
+    /**
+     * Get all books genres present on Media Library.
+     *
+     * @return
+     *  An array with all books genres.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/books/genres/", method = RequestMethod.GET)
+    public ResponseEntity<?> getMediaGenre() {
+        return new ResponseEntity<>(BookGenre.values(), HttpStatus.OK);
     }
 
     /**

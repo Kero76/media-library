@@ -20,15 +20,14 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -116,7 +115,7 @@ public class Series extends Anime {
      */
     public Series(String title, String originalTitle, String synopsis,
                   Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
-                  List<MediaGenre> genres, List<MediaSupport> supports,
+                  List<VideoGenre> genres, List<MediaSupport> supports,
                   List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
                   Calendar startDate, Calendar endDate,
                   int numberOfSeasons, int currentSeason,
@@ -184,7 +183,7 @@ public class Series extends Anime {
      */
     public Series(long id, String title, String originalTitle, String synopsis,
                   Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
-                  List<MediaGenre> genres, List<MediaSupport> supports,
+                  List<VideoGenre> genres, List<MediaSupport> supports,
                   List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
                   Calendar startDate, Calendar endDate,
                   int numberOfSeasons, int currentSeason,

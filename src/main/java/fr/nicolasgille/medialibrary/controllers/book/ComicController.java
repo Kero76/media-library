@@ -21,6 +21,8 @@ import fr.nicolasgille.medialibrary.models.book.Comic;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
+import fr.nicolasgille.medialibrary.models.components.BookFormat;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 import fr.nicolasgille.medialibrary.repositories.book.ComicRepository;
 import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.AuthorRepository;
@@ -409,5 +411,31 @@ public class ComicController {
 
         comicRepository.delete(comic);
         return new ResponseEntity<Object>(comic, HttpStatus.OK);
+    }
+
+    /**
+     * Get all books genres present on Media Library.
+     *
+     * @return
+     *  An array with all books genres.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/comics/genres/", method = RequestMethod.GET)
+    public ResponseEntity<?> getMediaGenre() {
+        return new ResponseEntity<>(BookGenre.values(), HttpStatus.OK);
+    }
+
+    /**
+     * Get all books format present on Media Library.
+     *
+     * @return
+     *  An array with all book format.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/comics/formats/", method = RequestMethod.GET)
+    public ResponseEntity<?> getBookFormat() {
+        return new ResponseEntity<>(BookFormat.values(), HttpStatus.OK);
     }
 }

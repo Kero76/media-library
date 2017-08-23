@@ -20,17 +20,15 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.models.Media;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
-import fr.nicolasgille.medialibrary.models.video.Video;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGameGenre;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +39,7 @@ import java.util.Set;
  * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @DiscriminatorValue(value = "video_game")
@@ -60,6 +58,17 @@ public class VideoGame extends Media {
      * @since 1.0
      */
     private boolean multiplayers;
+
+    /**
+     * Genre of the media.
+     *
+     * @see VideoGameGenre
+     * @since 1.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = VideoGameGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<VideoGameGenre> genres;
 
     /**
      * List of language spoken available on the video.
@@ -148,13 +157,13 @@ public class VideoGame extends Media {
      * @version 1.0
      */
     public VideoGame(String title, String originalTitle, String synopsis, Calendar releaseDate,
-                     List<MediaGenre> genres, List<MediaSupport> supports, boolean multiplayers, List<LanguageCode> languages,
+                     List<VideoGameGenre> genres, List<MediaSupport> supports, boolean multiplayers, List<LanguageCode> languages,
                      Set<Developer> developers, Set<Publisher> publishers, List<VideoGamePlatform> platforms) {
         super.title = title;
         this.originalTitle = originalTitle;
         super.synopsis = synopsis;
         super.releaseDate = releaseDate;
-        super.genres = genres;
+        this.genres = genres;
         super.supports = supports;
         this.multiplayers = multiplayers;
         this.languages = languages;
@@ -194,14 +203,14 @@ public class VideoGame extends Media {
      * @version 1.0
      */
     public VideoGame(long id, String title, String originalTitle, String synopsis, Calendar releaseDate,
-                     List<MediaGenre> genres, List<MediaSupport> supports, boolean multiplayers, List<LanguageCode> languages,
+                     List<VideoGameGenre> genres, List<MediaSupport> supports, boolean multiplayers, List<LanguageCode> languages,
                      Set<Developer> developers, Set<Publisher> publishers, List<VideoGamePlatform> platforms) {
         super.id = id;
         super.title = title;
         this.originalTitle = originalTitle;
         super.synopsis = synopsis;
         super.releaseDate = releaseDate;
-        super.genres = genres;
+        this.genres = genres;
         super.supports = supports;
         this.multiplayers = multiplayers;
         this.languages = languages;
@@ -224,7 +233,7 @@ public class VideoGame extends Media {
         this.originalTitle = videoGame.getOriginalTitle();
         super.synopsis = videoGame.getSynopsis();
         super.releaseDate = videoGame.getReleaseDate();
-        super.genres = videoGame.getGenres();
+        this.genres = videoGame.getGenres();
         super.supports = videoGame.getSupports();
         this.multiplayers = videoGame.isMultiplayers();
         this.languages = videoGame.getLanguages();
@@ -354,6 +363,29 @@ public class VideoGame extends Media {
     }
 
     /**
+     * Return the genres.
+     *
+     * @return The genres of the book.
+     * @see VideoGameGenre
+     * @since 1.1
+     * @version 1.0
+     */
+    public List<VideoGameGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
+     * Set genres of Media.
+     *
+     * @param genres New book.
+     * @since 1.1
+     * @version 1.0
+     */
+    public void setGenres(List<VideoGameGenre> genres) {
+        this.genres = genres;
+    }
+
+    /**
      * Get the list of platform available for the game.
      *
      * @return
@@ -382,7 +414,7 @@ public class VideoGame extends Media {
         return "VideoGame{" +
                 "title⁼" + title + '\'' +
                 ", originalTitle='" + originalTitle + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.getGenres()) +
+                ", genres=" + CollectionAsString.listToString(this.getGenres()) +
                 ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
                 ", supports='" + CollectionAsString.listToString(super.getSupports()) +
                 ", multiplayers=" + multiplayers +

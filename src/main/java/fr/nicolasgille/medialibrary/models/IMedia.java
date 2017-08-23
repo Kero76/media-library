@@ -16,7 +16,6 @@
  */
 package fr.nicolasgille.medialibrary.models;
 
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 
 import java.util.Calendar;
@@ -110,25 +109,6 @@ public interface IMedia {
      * @version 1.0
      */
     void setReleaseDate(Calendar releaseDate);
-
-    /**
-     * Return the genres.
-     *
-     * @return The genres of the media.
-     * @see MediaGenre
-     * @since 2.0
-     * @version 1.0
-     */
-    List<MediaGenre> getGenres();
-
-    /**
-     * Set genres of Media.
-     *
-     * @param genres New genres.
-     * @since 2.0
-     * @version 1.0
-     */
-    void setGenres(List<MediaGenre> genres);
 
     /**
      * Return all supports for the video.

@@ -20,6 +20,7 @@ import fr.nicolasgille.medialibrary.exceptions.video.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.Series;
 import fr.nicolasgille.medialibrary.repositories.common.person.ActorRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.DirectorRepository;
@@ -408,5 +409,18 @@ public class SeriesController {
 
         seriesRepository.delete(series);
         return new ResponseEntity<Object>(series, HttpStatus.OK);
+    }
+
+    /**
+     * Get all video genres present on Media Library.
+     *
+     * @return
+     *  An array with all video genres.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/series/genres/", method = RequestMethod.GET)
+    public ResponseEntity<?> getMediaGenre() {
+        return new ResponseEntity<>(VideoGenre.values(), HttpStatus.OK);
     }
 }

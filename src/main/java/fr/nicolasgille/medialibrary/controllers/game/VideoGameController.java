@@ -20,6 +20,7 @@ import fr.nicolasgille.medialibrary.exceptions.game.VideoGameException;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGameGenre;
 import fr.nicolasgille.medialibrary.models.game.VideoGame;
 import fr.nicolasgille.medialibrary.repositories.common.company.DeveloperRepository;
 import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
@@ -333,6 +334,20 @@ public class VideoGameController {
 
         videoGameRepository.delete(videoGame);
         return new ResponseEntity<Object>(videoGame, HttpStatus.OK);
+    }
+
+
+    /**
+     * Get all video genres present on Media Library.
+     *
+     * @return
+     *  An array with all video genres.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/video-games/genres/", method = RequestMethod.GET)
+    public ResponseEntity<?> getMediaGenre() {
+        return new ResponseEntity<>(VideoGameGenre.values(), HttpStatus.OK);
     }
 
     /**

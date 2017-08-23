@@ -21,15 +21,14 @@ import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -105,7 +104,7 @@ public class Comic extends Book {
      */
     public Comic(String title, String originalTitle, String synopsis,
                  Calendar releaseDate, int nbPages, String isbn,
-                 Set<Author> authors, Set<Publisher> publishers, List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format,
+                 Set<Author> authors, Set<Publisher> publishers, List<BookGenre> genres, List<MediaSupport> supports, BookFormat format,
                  int volumes, int currentVolume, Set<Illustrator> illustrators) {
         super(title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format);
         this.volumes = volumes;
@@ -136,7 +135,7 @@ public class Comic extends Book {
      */
     public Comic(long id, String title, String originalTitle, String synopsis,
                  Calendar releaseDate, int nbPages, String isbn,
-                 Set<Author> authors, Set<Publisher> publishers, List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format,
+                 Set<Author> authors, Set<Publisher> publishers, List<BookGenre> genres, List<MediaSupport> supports, BookFormat format,
                  int volumes, int currentVolume, Set<Illustrator> illustrators) {
         super(id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format);
         this.volumes = volumes;

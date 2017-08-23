@@ -19,17 +19,15 @@ package fr.nicolasgille.medialibrary.models.book;
 import fr.nicolasgille.medialibrary.models.Media;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
-import fr.nicolasgille.medialibrary.models.common.person.Producer;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 import fr.nicolasgille.medialibrary.utils.CollectionAsString;
 import fr.nicolasgille.medialibrary.utils.DateFormatter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +40,7 @@ import java.util.Set;
  * @see Media
  * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @DiscriminatorValue(value = "book")
@@ -68,6 +66,17 @@ public class Book extends Media {
      * @since 1.0
      */
     private int nbPages;
+
+    /**
+     * Genre of the media.
+     *
+     * @see BookGenre
+     * @since 1.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = BookGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<BookGenre> genres;
 
     /**
      * Set of all authors who written books.
@@ -145,7 +154,7 @@ public class Book extends Media {
     public Book(String title, String originalTitle, String synopsis,
                 Calendar releaseDate, int nbPages, String isbn,
                 Set<Author> authors, Set<Publisher> publishers,
-                List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format) {
+                List<BookGenre> genres, List<MediaSupport> supports, BookFormat format) {
         super.title = title;
         this.originalTitle = originalTitle;
         super.synopsis = synopsis;
@@ -154,7 +163,7 @@ public class Book extends Media {
         this.isbn = isbn;
         this.authors = authors;
         this.publishers = publishers;
-        super.genres = genres;
+        this.genres = genres;
         super.supports = supports;
         this.format = format;
     }
@@ -192,7 +201,7 @@ public class Book extends Media {
     public Book(long id, String title, String originalTitle, String synopsis,
                 Calendar releaseDate, int nbPages, String isbn,
                 Set<Author> authors, Set<Publisher> publishers,
-                List<MediaGenre> genres, List<MediaSupport> supports, BookFormat format) {
+                List<BookGenre> genres, List<MediaSupport> supports, BookFormat format) {
         super.id = id;
         super.title = title;
         this.originalTitle = originalTitle;
@@ -202,7 +211,7 @@ public class Book extends Media {
         this.isbn = isbn;
         this.authors = authors;
         this.publishers = publishers;
-        super.genres = genres;
+        this.genres = genres;
         super.supports = supports;
         this.format = format;
     }
@@ -225,7 +234,7 @@ public class Book extends Media {
         this.isbn = book.getIsbn();
         this.authors = book.getAuthors();
         this.publishers = book.getPublishers();
-        super.genres = book.getGenres();
+        this.genres = book.getGenres();
         super.supports = book.getSupports();
         this.format = book.getFormat();
     }
@@ -350,6 +359,30 @@ public class Book extends Media {
         this.publishers = publishers;
     }
 
+
+    /**
+     * Return the genres.
+     *
+     * @return The genres of the book.
+     * @see BookGenre
+     * @since 1.1
+     * @version 1.0
+     */
+    public List<BookGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
+     * Set genres of Media.
+     *
+     * @param genres New book.
+     * @since 1.1
+     * @version 1.0
+     */
+    public void setGenres(List<BookGenre> genres) {
+        this.genres = genres;
+    }
+
     /**
      * Get the format of the book.
      *
@@ -390,7 +423,7 @@ public class Book extends Media {
                 ", title='" + super.title + '\'' +
                 ", originalTitle='" + originalTitle + '\'' +
                 ", synopsis='" + synopsis + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.getGenres()) +
+                ", genres=" + CollectionAsString.listToString(this.getGenres()) +
                 ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
                 ", supports='" + CollectionAsString.listToString(super.getSupports()) +
                 ", format=" + format.getName() +
