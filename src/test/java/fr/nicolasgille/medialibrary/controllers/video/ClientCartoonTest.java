@@ -20,9 +20,9 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exceptions.video.CartoonException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
-import fr.nicolasgille.medialibrary.models.video.Cartoon;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
+import fr.nicolasgille.medialibrary.models.video.Cartoon;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -98,7 +98,7 @@ public class ClientCartoonTest {
 
         Cartoon cartoon = new Cartoon(
                 id,  "My title", "My original title", "My Synopsis",
-                new HashSet<Director>(), new HashSet<Producer>(), new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(),
+                new HashSet<Director>(), new HashSet<Producer>(), new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(),
                 new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(), releaseDate, 120
         );
 
@@ -144,8 +144,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -191,8 +191,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -241,8 +241,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 2 : Return of the Empty Row";
         String synopsis = "A developer fight the empty row present on the persistent system";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
@@ -301,8 +301,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -353,8 +353,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer failed during empty row fix, and a new developer appear has a new hope !";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -399,8 +399,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 3 : A new Hope";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope ?";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 
@@ -446,8 +446,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 3 : A new Despair";
         String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.FANTASY);
+        List<VideoGenre> genres = new ArrayList<VideoGenre>();
+        genres.add(VideoGenre.FANTASY);
 
         Calendar releaseDate = new GregorianCalendar(2017, GregorianCalendar.MAY, GregorianCalendar.MONDAY);
 

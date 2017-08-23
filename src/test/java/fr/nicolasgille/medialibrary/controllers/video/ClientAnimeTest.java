@@ -20,8 +20,8 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exceptions.video.AnimeException;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.models.video.Anime;
 import org.junit.After;
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class ClientAnimeTest {
         Anime animes = new Anime(
                 id, "Sakura, chasseuse de cartes", "Kādokyaputā Sakura", "My Synopsis",
                 new HashSet<Director>(), new HashSet<Producer>(),
-                new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
+                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
                 startDate, endDate, 3, 1, 70, 36, 22
         );
 
@@ -147,10 +147,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));
@@ -205,10 +205,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));
@@ -267,10 +267,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));
@@ -343,10 +343,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));
@@ -406,10 +406,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));
@@ -464,10 +464,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3. Kero Chan <3<3<3<3<3<3<3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));
@@ -522,10 +522,10 @@ public class ClientAnimeTest {
         String originalTitle = "Kādokyaputā Sakura";
         String synopsis = "Cardcaptor Sakura 4ever <3";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
-        categories.add(MediaGenre.ROMANTIC);
-        categories.add(MediaGenre.COMEDY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
+        categories.add(VideoGenre.ROMANTIC);
+        categories.add(VideoGenre.COMEDY);
 
         Set<Producer> producers = new HashSet<Producer>();
         producers.add(new Producer("Eizo", "Kondo"));

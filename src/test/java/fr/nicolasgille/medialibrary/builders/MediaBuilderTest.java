@@ -16,19 +16,23 @@
  */
 package fr.nicolasgille.medialibrary.builders;
 
+import fr.nicolasgille.medialibrary.builders.book.BookBuilder;
+import fr.nicolasgille.medialibrary.builders.game.VideoGameBuilder;
 import fr.nicolasgille.medialibrary.builders.music.AlbumBuilder;
 import fr.nicolasgille.medialibrary.builders.video.AnimeBuilder;
 import fr.nicolasgille.medialibrary.builders.video.CartoonBuilder;
 import fr.nicolasgille.medialibrary.builders.video.MovieBuilder;
 import fr.nicolasgille.medialibrary.builders.video.SeriesBuilder;
+import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
+import fr.nicolasgille.medialibrary.models.game.VideoGame;
 import fr.nicolasgille.medialibrary.models.music.Album;
 import fr.nicolasgille.medialibrary.models.video.Anime;
 import fr.nicolasgille.medialibrary.models.video.Cartoon;
 import fr.nicolasgille.medialibrary.models.video.Movie;
 import fr.nicolasgille.medialibrary.models.video.Series;
-import fr.nicolasgille.medialibrary.utils.parser.FileParser;
-import fr.nicolasgille.medialibrary.utils.parser.TsvParser;
+import fr.nicolasgille.medialibrary.parser.FileParser;
+import fr.nicolasgille.medialibrary.parser.TsvParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
@@ -64,7 +68,7 @@ public class MediaBuilderTest {
     /**
      * URI of the Rest service.
      */
-    private static final String REST_SERVICE_URI = "http://localhost:8080/media-library";
+    private static final String REST_SERVICE_URI = "http://localhost:8080/";
 
     /**
      * Encoding used to encoded URL.
@@ -74,7 +78,7 @@ public class MediaBuilderTest {
     /**
      * Files name.
      */
-    private String[] filename = {"animes", "cartoons", "movies", "musics", "series"};
+    private String[] filename = {"animes", "books", "cartoons", "movies", "musics", "series", "video-games"};
 
     @Before
     public void setUp() {
@@ -168,8 +172,17 @@ public class MediaBuilderTest {
                     }
                     break;
 
-                // Cartoons
+                // Books
                 case 1:
+                    this.builder = new BookBuilder();
+                    for (int j = 1; j < data.size(); ++j) {
+                        Book book = (Book) this.builder.build(data.get(j));
+                        restTemplate.postForEntity(REST_SERVICE_URI + "/books/", book, Book.class);
+                    }
+                    break;
+
+                // Cartoons
+                case 2:
                     this.builder = new CartoonBuilder();
                     for (int j = 1; j < data.size(); ++j) {
                         Cartoon cartoon = (Cartoon) this.builder.build(data.get(j));
@@ -178,7 +191,7 @@ public class MediaBuilderTest {
                     break;
 
                 // Movies
-                case 2:
+                case 3:
                     this.builder = new MovieBuilder();
                     for (int j = 1; j < data.size(); ++j) {
                         Movie movie = (Movie) this.builder.build(data.get(j));
@@ -187,7 +200,7 @@ public class MediaBuilderTest {
                     break;
 
                 // Musics
-                case 3:
+                case 4:
                     this.builder = new AlbumBuilder();
                     for (int j = 1; j < data.size(); ++j) {
                         Album album = (Album) this.builder.build(data.get(j));
@@ -196,11 +209,20 @@ public class MediaBuilderTest {
                     break;
 
                 // Series
-                case 4:
+                case 5:
                     this.builder = new SeriesBuilder();
                     for (int j = 1; j < data.size(); ++j) {
                         Series series = (Series) this.builder.build(data.get(j));
                         restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
+                    }
+                    break;
+
+                // Video Game
+                case 6:
+                    this.builder = new VideoGameBuilder();
+                    for (int j = 1; j < data.size(); ++j) {
+                        VideoGame videoGame = (VideoGame) this.builder.build(data.get(j));
+                        restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
                     }
                     break;
             }

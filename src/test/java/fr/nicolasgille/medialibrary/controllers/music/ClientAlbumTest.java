@@ -19,8 +19,8 @@ package fr.nicolasgille.medialibrary.controllers.music;
 import fr.nicolasgille.medialibrary.exceptions.music.AlbumException;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.MusicGenre;
 import fr.nicolasgille.medialibrary.models.music.Album;
 import org.junit.After;
 import org.junit.Before;
@@ -96,7 +96,7 @@ public class ClientAlbumTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Album album = new Album(
-                id, "My Title", "", releaseDate, new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(),
+                id, "My Title", "", releaseDate, new ArrayList<MusicGenre>(), new ArrayList<MediaSupport>(),
                 12, 48.42, new HashSet<LabelRecords>(), new HashSet<Singer>()
         );
 
@@ -142,8 +142,8 @@ public class ClientAlbumTest {
         String title = "Crusader";
         String synopsis = "";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(1984, GregorianCalendar.APRIL, 16);
 
@@ -180,8 +180,8 @@ public class ClientAlbumTest {
         String title = "Crusader";
         String synopsis = "";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(1984, GregorianCalendar.APRIL, 16);
 
@@ -221,8 +221,8 @@ public class ClientAlbumTest {
         String title = "Crusader";
         String synopsis = "";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(1984, GregorianCalendar.APRIL, 16);
 
@@ -271,8 +271,8 @@ public class ClientAlbumTest {
         String title = "Lionheart";
         String synopsis = "";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(1984, GregorianCalendar.APRIL, 16);
 
@@ -314,8 +314,8 @@ public class ClientAlbumTest {
         String title = "Lionheart";
         String synopsis = "";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(2004, GregorianCalendar.SEPTEMBER, 28);
 
@@ -352,8 +352,8 @@ public class ClientAlbumTest {
         String title = "Lionheart";
         String synopsis = "Witchfinder General";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(2004, GregorianCalendar.SEPTEMBER, 28);
 
@@ -391,8 +391,8 @@ public class ClientAlbumTest {
         String title = "Lionheart";
         String synopsis = "Witchfinder General";
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.METAL);
+        List<MusicGenre> genres = new ArrayList<MusicGenre>();
+        genres.add(MusicGenre.METAL);
 
         Calendar releaseDate = new GregorianCalendar(2004, GregorianCalendar.SEPTEMBER, 28);
 

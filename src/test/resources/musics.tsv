@@ -1,15 +1,14 @@
-Titre	Synopsis	Date de Sortie	Genre	Support	Durée	NbTracks	LabelRecords	Singer/Groups
 Pokémon: The First Movie	MISSING_ARGUMENTS	09/11/1999	Original Soundtrack	CD	64.47	16	Atlantic Records	MISSING_ARGUMENTS
 Pokémon - Bande originale de la série TV	MISSING_ARGUMENTS	28/03/2000	Original Soundtrack	CD	MISSING_ARGUMENTS	13	Edel France	MISSING_ARGUMENTS
 Wheels of Steel	MISSING_ARGUMENTS	05/05/1980	Metal	CD	38.56	17	Carrere Records	Saxon
 Crusader	MISSING_ARGUMENTS	16/04/1984	Metal	CD	39.10	10	EMI	Saxon
 Rock the Nations	MISSING_ARGUMENTS	13/10/1986	Metal	CD	40.50	17	EMI, Parlophone	Saxon
 Lionheart	MISSING_ARGUMENTS	28/09/2004	Metal	CD	45.03	11	SPV, Steamhammer	Saxon
-Battering Ram	MISSING_ARGUMENTS	16/10/2015	Metal	CD	50.24	11	UDR	Saxon
+Battering Ram	MISSING_ARGUMENTS	16/10/2015	Metal	CD, Digital	50.24	11	UDR	Saxon
 Symphony of War	MISSING_ARGUMENTS	29/10/2010	Metal	CD	80.01	13	Limb Music	Magic Kingdom
 Lancer	MISSING_ARGUMENTS	18/01/2013	Metal	CD	46.25	9	Doolittle Group	Lancer
 Painkiller	MISSING_ARGUMENTS	03/09/1990	Metal	CD	55.11	12	Columbia Records	Judas Priest
-Redeemer of Souls	MISSING_ARGUMENTS	11/07/2014	Metal	CD	83.46	18	Columbia Records, Epic Records	Judas Priest
+Redeemer of Souls	MISSING_ARGUMENTS	11/07/2014	Metal	CD, Digital	83.46	18	Columbia Records, Epic Records	Judas Priest
 The Nexus	MISSING_ARGUMENTS	19/03/2013	Metal	CD	48.14	14	Spinefarm	Amaranthe
 High Voltage	MISSING_ARGUMENTS	14/05/1976	Hard Rock	CD	44.04	9	Atlantic Records, Albert Productions	AC/DC
 Dirty Deeds Done Dirt Cheap	MISSING_ARGUMENTS	20/09/1976	Hard Rock	CD	40	9	Atlantic Records, Albert Productions	AC/DC
@@ -52,7 +51,7 @@ Humanity: Hour 1	MISSING_ARGUMENTS	14/05/2007	Hard Rock	CD	56.27	12	BMG Entertai
 Unbreakable	MISSING_ARGUMENTS	03/05/2004	Hard Rock	CD	56.30	13	BMG Entertainment	Scorpions
 Sting in the Tail	MISSING_ARGUMENTS	19/03/2010	Hard Rock	CD	47.20	12	Sony Music Entertainment	Scorpions
 Comeblack	MISSING_ARGUMENTS	04/11/2010	Hard Rock	CD	54.01	13	Sony Music Entertainment	Scorpions
-Return to Forever	MISSING_ARGUMENTS	20/02/2015	Hard Rock	CD	47.38	16	Sony Music Entertainment	Scorpions
+Return to Forever	MISSING_ARGUMENTS	20/02/2015	Hard Rock	CD, Digital	47.38	16	Sony Music Entertainment	Scorpions
 MTV Unplugged : Live In Athens	MISSING_ARGUMENTS	29/11/2013	Hard Rock	CD	109.08	49	Sony Music Entertainment	Scorpions
 The Very Best of Elton John	MISSING_ARGUMENTS	01/10/1990	Rock, Pop	CD	137.56	30	PolyGram	Elton John
 Made in England	MISSING_ARGUMENTS	20/03/1995	Rock, Pop	CD	52.39	11	The Rocket Record Company	Elton John
@@ -84,7 +83,7 @@ Gang	MISSING_ARGUMENTS	06/12/1986	Pop, Rock, French Variety	CD	42.18	10	Philips,
 Pour me comprendre	MISSING_ARGUMENTS	01/01/2002	French Variety	CD	MISSING_ARGUMENTS	18	Warner Music Group	Michel Berger
 Celui qui chante	MISSING_ARGUMENTS	01/01/1994	French Variety	CD	MISSING_ARGUMENTS	18	Warner Music Group	Michel Berger
 Jusqu'au bout de la nuit	MISSING_ARGUMENTS	21/06/2000	French Variety	CD	MISSING_ARGUMENTS	11	Warner Music Group	Emiles & Images
-L'Équilibre	MISSING_ARGUMENTS	24/03/2014	Alternative Rock	CD	44.38	14	Sony Music Entertainment	Kyo
+L'Équilibre	MISSING_ARGUMENTS	24/03/2014	Alternative Rock	CD, Digital	44.38	14	Sony Music Entertainment	Kyo
 Don't Stop	MISSING_ARGUMENTS	05/02/1996	Rock	CD	56.02	15	Polydor	Status Quo
 18 Greatest Hits	MISSING_ARGUMENTS	12/10/1992	Synthpop	CD	71.21	18	Virgin Records	Sandra
 Greatest Hits Collection	MISSING_ARGUMENTS	01/10/1988	Pop, Dance-Pop, New Wave	CD	MISSING_ARGUMENTS	18	London Records	Bananarama
@@ -97,7 +96,7 @@ France, I Wish You Love	MISSING_ARGUMENTS	01/01/1993	Jazz, Rock	CD	MISSING_ARGUM
 She	MISSING_ARGUMENTS	12/07/1994	Funk	CD	MISSING_ARGUMENTS	14	Columbia Records	Harry Connick Jr.
 Curtain Call: The Hits	MISSING_ARGUMENTS	06/12/2005	Rap	CD	77.55	16	Shady Records, Aftermath Entertainment, Interscope Records	Enimen
 Dance Collection	MISSING_ARGUMENTS	01/01/1990	Disco, Funk	CD	MISSING_ARGUMENTS	13	Polygram	Kool & the Gang
-Revolution	MISSING_ARGUMENTS	01/01/1987	Reggae	CD	MISSING_ARGUMENTS	7	Alpha Blondy Productions	Alpha Blondy
+Revolution	MISSING_ARGUMENTS	01/01/1987	Reggae	CD, Digital	MISSING_ARGUMENTS	7	Alpha Blondy Productions	Alpha Blondy
 Jerusalem	MISSING_ARGUMENTS	01/01/1989	Reggae	CD	MISSING_ARGUMENTS	9	EMI 	Alpha Blondy
 Best of	MISSING_ARGUMENTS	04/01/1996	Reggae	CD	MISSING_ARGUMENTS	18	Sony Music Entertainment	Jimmy Cliff
 Third World Child	MISSING_ARGUMENTS	10/07/1987	Reggae	CD	43.14	10	Capitol Records	Johnny Clegg & Savuka
@@ -151,8 +150,8 @@ Discovery	MISSING_ARGUMENTS	13/03/2001	Electro, House	CD	61.01	14	Virgin Records
 Au cœur de moi	MISSING_ARGUMENTS	29/04/2016	French Variety	CD	42.14	12	Warner Music France	Amir
 The Greatest Hits	MISSING_ARGUMENTS	24/06/2016	Pop Rock	CD	MISSING_ARGUMENTS	19	Smart Records	Big Time Rush
 Hunting High and Low	MISSING_ARGUMENTS	01/06/1985	Synthpop, New Wave	CD	38.16	10	Warners Bros. Records	A-Ha
-Scoundrel Days	MISSING_ARGUMENTS	24/10/1986	Synthpop, New Wave	CD	38.41	10	Warners Bros. Records	A-Ha
-Stay on These Roads	MISSING_ARGUMENTS	01/05/1988	New Wave, Pop Rock	CD	43.16	10	Warners Bros. Records	A-Ha
+Scoundrel Days	MISSING_ARGUMENTS	24/10/1986	Synthpop, New Wave	CD, Digital	38.41	10	Warners Bros. Records	A-Ha
+Stay on These Roads	MISSING_ARGUMENTS	01/05/1988	New Wave, Pop Rock	CD, Digital	43.16	10	Warners Bros. Records	A-Ha
 Memorial Beach	MISSING_ARGUMENTS	14/06/1993	Alternative Rock, Pop Rock	CD	49.33	10	Warners Bros. Records	A-Ha
 Headlines and Deadlines – The Hits of a-ha	MISSING_ARGUMENTS	04/11/1991	Alternative Rock, Pop Rock, Synthpop, New Wave	CD	MISSING_ARGUMENTS	16	Warners Bros. Records	A-Ha
 The Best of UB40 – Volume One	MISSING_ARGUMENTS	28/10/1987	Reggae	CD	36.22	18	Virgin Records	UB40

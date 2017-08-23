@@ -21,8 +21,8 @@ import fr.nicolasgille.medialibrary.models.book.Book;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -97,7 +97,7 @@ public class ClientBookControllerTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Book book = new Book(
-            id, "", "", "", releaseDate, 0, "", new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL
+            id, "", "", "", releaseDate, 0, "", new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<BookGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL
         );
 
         // When - Try to update book.
@@ -152,8 +152,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -191,8 +191,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -233,8 +233,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -286,8 +286,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -330,8 +330,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -368,8 +368,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -407,8 +407,8 @@ public class ClientBookControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Jean-Claude Lattès"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.THRILLER);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.THRILLER);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);

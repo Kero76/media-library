@@ -22,8 +22,8 @@ import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.common.person.Illustrator;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -99,7 +99,7 @@ public class ClientComicControllerTest {
 
         Comic comic = new Comic(
                 id, "", "", "", releaseDate, 0, "",
-                new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL,
+                new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<BookGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL,
                 17, 15, new HashSet<Illustrator>()
         );
 
@@ -156,9 +156,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -202,9 +202,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -251,9 +251,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -311,9 +311,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -362,9 +362,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -407,9 +407,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);
@@ -453,9 +453,9 @@ public class ClientComicControllerTest {
         Set<Publisher> publishers = new HashSet<Publisher>();
         publishers.add(new Publisher("Shūeisha"));
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.ROMANTIC);
-        genres.add(MediaGenre.COMEDY);
+        List<BookGenre> genres = new ArrayList<BookGenre>();
+        genres.add(BookGenre.ROMANTIC);
+        genres.add(BookGenre.COMEDY);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.PAPER);

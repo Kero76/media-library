@@ -20,9 +20,9 @@ import com.neovisionaries.i18n.LanguageCode;
 import fr.nicolasgille.medialibrary.exceptions.game.VideoGameException;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
 import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGameGenre;
 import fr.nicolasgille.medialibrary.models.game.VideoGame;
 import org.junit.After;
 import org.junit.Before;
@@ -98,7 +98,7 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         VideoGame videoGame = new VideoGame(
-                id,"My Title", "My Original Title", "", releaseDate, new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), false, new ArrayList<LanguageCode>(),
+                id,"My Title", "My Original Title", "", releaseDate, new ArrayList<VideoGameGenre>(), new ArrayList<MediaSupport>(), false, new ArrayList<LanguageCode>(),
                 new HashSet<Developer>(), new HashSet<Publisher>(), new ArrayList<VideoGamePlatform>()
         );
 
@@ -147,8 +147,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2006, GregorianCalendar.MARCH, 16);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);
@@ -194,8 +194,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2006, GregorianCalendar.MARCH, 16);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);
@@ -244,8 +244,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2006, GregorianCalendar.MARCH, 16);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);
@@ -305,8 +305,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2001, GregorianCalendar.DECEMBER, 17);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);
@@ -357,8 +357,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2001, GregorianCalendar.DECEMBER, 17);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);
@@ -403,8 +403,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2001, GregorianCalendar.DECEMBER, 17);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);
@@ -450,8 +450,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2001, GregorianCalendar.DECEMBER, 17);
         boolean multiplayers = false;
 
-        List<MediaGenre> genres = new ArrayList<MediaGenre>();
-        genres.add(MediaGenre.RPG);
+        List<VideoGameGenre> genres = new ArrayList<VideoGameGenre>();
+        genres.add(VideoGameGenre.RPG);
 
         List<MediaSupport> supports = new ArrayList<MediaSupport>();
         supports.add(MediaSupport.CD);

@@ -21,9 +21,9 @@ import fr.nicolasgille.medialibrary.exceptions.video.SeriesException;
 import fr.nicolasgille.medialibrary.models.common.person.Actor;
 import fr.nicolasgille.medialibrary.models.common.person.Director;
 import fr.nicolasgille.medialibrary.models.common.person.Producer;
-import fr.nicolasgille.medialibrary.models.video.Series;
-import fr.nicolasgille.medialibrary.models.components.MediaGenre;
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
+import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
+import fr.nicolasgille.medialibrary.models.video.Series;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -101,7 +101,7 @@ public class ClientSeriesTest {
         Series series = new Series(
                 id, "Star Gate SG1", "Star Gate SG1", "My Synopsis",
                 new HashSet<Actor>(), new HashSet<Director>(), new HashSet<Producer>(),
-                new ArrayList<MediaGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
+                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
                 startDate, endDate, 10, 2, 226, 22, 42
         );
 
@@ -147,8 +147,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -205,8 +205,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -266,8 +266,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG1";
         String synopsis = "Star Gate SG1 is awesome !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -343,8 +343,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is awesome !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -406,8 +406,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is awesome !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -464,8 +464,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is amazing !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
@@ -522,8 +522,8 @@ public class ClientSeriesTest {
         String title = "Star Gate SG2";
         String synopsis = "Star Gate SG2 is awesome !";
 
-        List<MediaGenre> categories = new ArrayList<MediaGenre>();
-        categories.add(MediaGenre.FANTASY);
+        List<VideoGenre> categories = new ArrayList<VideoGenre>();
+        categories.add(VideoGenre.FANTASY);
 
         Set<Actor> actors = new HashSet<Actor>();
         actors.add(new Actor("Nicolas", "Cage"));
