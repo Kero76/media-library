@@ -97,19 +97,19 @@ public class HomeController {
      * @since 1.0
      */
     @Autowired
-    private ComicRepository comicRepository;
+    private ComicRepository comicsRepository;
 
     /**
      * @since 1.0
      */
     @Autowired
-    private VideoGameRepository videoGameRepository;
+    private VideoGameRepository videoGamesRepository;
 
     /**
      * @since 1.0
      */
     @Autowired
-    private AlbumRepository albumRepository;
+    private AlbumRepository albumsRepository;
 
     /**
      * Logger to get information during some process.
@@ -167,15 +167,15 @@ public class HomeController {
                     break;
 
                 case 5 :
-                    media = cartoonsRepository.findAll();
+                    media = comicsRepository.findAll();
                     break;
 
                 case 6 :
-                    media = albumRepository.findAll();
+                    media = albumsRepository.findAll();
                     break;
 
                 case 7 :
-                    media = videoGameRepository.findAll();
+                    media = videoGamesRepository.findAll();
                     break;
             }
 
