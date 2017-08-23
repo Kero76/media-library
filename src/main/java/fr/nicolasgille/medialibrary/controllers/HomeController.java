@@ -184,23 +184,9 @@ public class HomeController {
             } else {
                 homeContent.put(mediaName[i], media.subList(0, media.size()));
             }
-
         }
 
         return new ResponseEntity<Map>(homeContent, HttpStatus.OK);
-    }
-
-    /**
-     * Get all book format present on Media Library.
-     *
-     * @return
-     *  An array with all book format.
-     * @since 1.0
-     * @version 1.0
-     */
-    @RequestMapping(value = "/books/formats/", method = RequestMethod.GET)
-    public ResponseEntity<?> getBookFormat() {
-        return new ResponseEntity<>(BookFormat.values(), HttpStatus.OK);
     }
 
     /**
@@ -227,18 +213,5 @@ public class HomeController {
     @RequestMapping(value = "/media/supports/", method = RequestMethod.GET)
     public ResponseEntity<?> getMediaSupport() {
         return new ResponseEntity<>(MediaSupport.values(), HttpStatus.OK);
-    }
-
-    /**
-     * Get all video games platform.
-     *
-     * @return
-     *  An array with all video game platform.
-     * @since 1.0
-     * @version 1.0
-     */
-    @RequestMapping(value = "/video-games/platforms/", method = RequestMethod.GET)
-    public ResponseEntity<?> getVideoGamePlatform() {
-        return new ResponseEntity<>(VideoGamePlatform.values(), HttpStatus.OK);
     }
 }

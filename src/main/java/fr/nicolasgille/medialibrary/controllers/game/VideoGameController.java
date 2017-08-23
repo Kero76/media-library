@@ -19,6 +19,7 @@ package fr.nicolasgille.medialibrary.controllers.game;
 import fr.nicolasgille.medialibrary.exceptions.game.VideoGameException;
 import fr.nicolasgille.medialibrary.models.common.company.Developer;
 import fr.nicolasgille.medialibrary.models.common.company.Publisher;
+import fr.nicolasgille.medialibrary.models.components.VideoGamePlatform;
 import fr.nicolasgille.medialibrary.models.game.VideoGame;
 import fr.nicolasgille.medialibrary.repositories.common.company.DeveloperRepository;
 import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
@@ -332,5 +333,18 @@ public class VideoGameController {
 
         videoGameRepository.delete(videoGame);
         return new ResponseEntity<Object>(videoGame, HttpStatus.OK);
+    }
+
+    /**
+     * Get all video games platform.
+     *
+     * @return
+     *  An array with all video game platform.
+     * @since 1.0
+     * @version 1.0
+     */
+    @RequestMapping(value = "/video-games/platforms/", method = RequestMethod.GET)
+    public ResponseEntity<?> getVideoGamePlatform() {
+        return new ResponseEntity<>(VideoGamePlatform.values(), HttpStatus.OK);
     }
 }
