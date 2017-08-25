@@ -50,21 +50,21 @@ package fr.nicolasgille.medialibrary.models.components;
  */
 public enum VideoGamePlatform {
     // Nintendo
-    NES("Nintendo Entertainment System"),
-    SNES("Super Nintendo"),
-    N64("Nintendo 64"),
+    NES("Nes"),
+    SNES("Snes"),
+    N64("N64"),
     GAMECUBE("Gamecube"),
     WII("Wii"),
-    WIIU("Wii U"),
+    WII_U("Wii U"),
     GAMEBOY("Gameboy"),
     GAMEBOY_ADVANCE("Gameboy Advance"),
     NINTENDO_DS("Nintendo DS"),
     NINTENDO_3DS("Nintendo 3DS"),
 
     // Sega
-    MEGA_DRIVE("Sega Mega Drive"),
-    SEGA_SATURN("Sega Saturn"),
-    DREAMCAST("Sega Dreamcast"),
+    MEGA_DRIVE("Mega Drive"),
+    SEGA_SATURN("Saturn"),
+    DREAMCAST("Dreamcast"),
 
     // Sony
     PSX("Playstation"),
@@ -79,7 +79,7 @@ public enum VideoGamePlatform {
     XBOX_ONE("Xbox One"),
 
     // Computer
-    PC("Personnal Computer");
+    PC("PC");
 
     /**
      * Name stored in database.

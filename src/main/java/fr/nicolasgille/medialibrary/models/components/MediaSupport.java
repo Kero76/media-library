@@ -49,7 +49,7 @@ public enum MediaSupport {
     CD("CD"),
 
     // Game support
-    GAME_CARTRIDGE("game cartridge"),
+    ROM_CARTRIDGE("ROM Cartridge"),
 
     // For all media
     DIGITAL("Digital");
