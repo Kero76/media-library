@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.utils;
 
 import java.util.Calendar;
@@ -22,22 +24,22 @@ import java.util.Calendar;
  * Util class used for format Calender object as precise format.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 public class DateFormatter {
 
     /**
      * Format a <code>Calendar</code> object as specific format.
-     *
+     * <p>
      * The format return by this method is <em>dd/mm/YYYY</em>.
      *
-     * @param date
-     *  Date at formatted.
-     * @return
-     *  A representation of the date with the following format : <em>dd/mm/YYYY</em>.
-     * @since 1.0
+     * @param date Date at formatted.
+     *
+     * @return A representation of the date with the following format : <em>dd/mm/YYYY</em>.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public static String frenchDate(Calendar date) {
         StringBuilder str = new StringBuilder();
@@ -52,12 +54,12 @@ public class DateFormatter {
     /**
      * Add a 0 before the number to get a format like <em>02</em> instead of <em>2</em>.
      *
-     * @param n
-     *  Number to return with or without a 0 as a String.
-     * @return
-     *  The String representation of the number n with a 0 before or not.
-     * @since 1.0
+     * @param n Number to return with or without a 0 as a String.
+     *
+     * @return The String representation of the number n with a 0 before or not.
+     *
      * @version 1.1
+     * @since 1.0
      */
     private static String addPreviousZero(int n) {
         if (n >= 10) {

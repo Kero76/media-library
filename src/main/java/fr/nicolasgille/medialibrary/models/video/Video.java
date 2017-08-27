@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -30,14 +32,14 @@ import java.util.Set;
 
 /**
  * Main class of the Video media type.
- *
+ * <p>
  * If you would add new video subtype, you must extends <code>Video</code> class
  * to get all attributes available on Video type.
  *
- * @see Media
  * @author Nicolas GILLE
- * @since Media-Library 0.2
  * @version 2.1
+ * @see Media
+ * @since Media-Library 0.2
  */
 @MappedSuperclass
 public abstract class Video extends Media {
@@ -90,10 +92,16 @@ public abstract class Video extends Media {
      */
     @JoinTable(
             name = "video_producers",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "producers_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "video_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "producers_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Producer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Producer.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     protected Set<Producer> producers;
 
@@ -105,10 +113,16 @@ public abstract class Video extends Media {
      */
     @JoinTable(
             name = "video_directors",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "directors_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "video_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "directors_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Director.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Director.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     protected Set<Director> directors;
 
@@ -116,8 +130,9 @@ public abstract class Video extends Media {
      * Return the original title.
      *
      * @return The original title of the media.
-     * @since 2.0
+     *
      * @version 1.0
+     * @since 2.0
      */
     public String getOriginalTitle() {
         return this.originalTitle;
@@ -127,8 +142,9 @@ public abstract class Video extends Media {
      * Set original title.
      *
      * @param originalTitle New title.
-     * @since 2.0
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setOriginalTitle(String originalTitle) {
         this.originalTitle = originalTitle;
@@ -137,10 +153,10 @@ public abstract class Video extends Media {
     /**
      * Get the list of languages spoken.
      *
-     * @return
-     *  A list of languages spoken.
-     * @since 2.0
+     * @return A list of languages spoken.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public List<LanguageCode> getLanguagesSpoken() {
         return languagesSpoken;
@@ -149,10 +165,10 @@ public abstract class Video extends Media {
     /**
      * Set the list of languages spoken available on the video.
      *
-     * @param languagesSpoken
-     *  New list of languages spoken.
-     * @since 2.0
+     * @param languagesSpoken New list of languages spoken.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setLanguagesSpoken(List<LanguageCode> languagesSpoken) {
         this.languagesSpoken = languagesSpoken;
@@ -161,10 +177,10 @@ public abstract class Video extends Media {
     /**
      * Get the list of subtitle languages.
      *
-     * @return
-     *  A list of subtitle languages.
-     * @since 2.0
+     * @return A list of subtitle languages.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public List<LanguageCode> getSubtitles() {
         return subtitles;
@@ -173,10 +189,10 @@ public abstract class Video extends Media {
     /**
      * Set the list of subtitle languages available on the video.
      *
-     * @param subtitles
-     *  New list of subtitle languages.
-     * @since 2.0
+     * @param subtitles New list of subtitle languages.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setSubtitles(List<LanguageCode> subtitles) {
         this.subtitles = subtitles;
@@ -185,10 +201,10 @@ public abstract class Video extends Media {
     /**
      * Return all producers for the movie.
      *
-     * @return
-     *  Set of all producer of the movie.
-     * @since 2.0
+     * @return Set of all producer of the movie.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public Set<Producer> getProducers() {
         return producers;
@@ -197,10 +213,10 @@ public abstract class Video extends Media {
     /**
      * Set the list of producers.
      *
-     * @param producers
-     *  New Set of producer.
-     * @since 2.0
+     * @param producers New Set of producer.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setProducers(Set<Producer> producers) {
         this.producers = producers;
@@ -209,10 +225,10 @@ public abstract class Video extends Media {
     /**
      * Return all directors for the movie.
      *
-     * @return
-     *  Set of all directors of the movie.
-     * @since 2.0
+     * @return Set of all directors of the movie.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public Set<Director> getDirectors() {
         return directors;
@@ -221,10 +237,10 @@ public abstract class Video extends Media {
     /**
      * Set the list of directors.
      *
-     * @param directors
-     *  New set of Director.
-     * @since 2.0
+     * @param directors New set of Director.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setDirectors(Set<Director> directors) {
         this.directors = directors;
@@ -234,9 +250,10 @@ public abstract class Video extends Media {
      * Return the genres.
      *
      * @return The genres of the book.
+     *
+     * @version 1.0
      * @see VideoGenre
      * @since 2.1
-     * @version 1.0
      */
     public List<VideoGenre> getGenres() {
         return this.genres;
@@ -246,8 +263,9 @@ public abstract class Video extends Media {
      * Set genres of Media.
      *
      * @param genres New book.
-     * @since 2.1
+     *
      * @version 1.0
+     * @since 2.1
      */
     public void setGenres(List<VideoGenre> genres) {
         this.genres = genres;

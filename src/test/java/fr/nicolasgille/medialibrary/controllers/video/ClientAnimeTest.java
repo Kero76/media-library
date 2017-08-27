@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -43,8 +45,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test AnimeController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.2
  * @version 1.0
+ * @since Media-Library 0.2
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientAnimeTest {
@@ -95,12 +97,13 @@ public class ClientAnimeTest {
         String messageExcepted = "404 null";
         int id = 666;
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 id, "Sakura, chasseuse de cartes", "Kādokyaputā Sakura", "My Synopsis",
                 new HashSet<Director>(), new HashSet<Producer>(),
-                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
+                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(),
+                new ArrayList<LanguageCode>(),
                 startDate, endDate, 3, 1, 70, 36, 22
         );
 
@@ -129,7 +132,9 @@ public class ClientAnimeTest {
         String title = "Persistent System 2 : Return of the Empty Row";
 
         // When - Get one anime from persistent system.
-        ResponseEntity<Anime> anime = this.restTemplate.getForEntity(REST_SERVICE_URI + "/animes/search/title/" + title + "/" + 5, Anime.class);
+        ResponseEntity<Anime> anime =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/animes/search/title/" + title + "/" + 5,
+                                               Anime.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(anime.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -174,12 +179,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 1;
+        int currentSeason = 1;
         int numberOfEpisode = 36;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime anime = new Anime(
                 title, originalTitle, synopsis,
@@ -188,11 +193,14 @@ public class ClientAnimeTest {
         );
 
         // When - Send anime to save it on persistent system.
-        ResponseEntity<Anime> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", anime, Anime.class);
+        ResponseEntity<Anime> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", anime, Anime.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -232,12 +240,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 1;
+        int currentSeason = 1;
         int numberOfEpisode = 36;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 title, originalTitle, synopsis,
@@ -248,7 +256,8 @@ public class ClientAnimeTest {
         ResponseEntity<AnimeException> responseEntity = null;
         // When - Send animes to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", animes, AnimeException.class);
+            responseEntity =
+                    this.restTemplate.postForEntity(REST_SERVICE_URI + "/animes/", animes, AnimeException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -294,12 +303,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 1;
+        int currentSeason = 1;
         int numberOfEpisode = 36;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 title, originalTitle, synopsis,
@@ -310,27 +319,48 @@ public class ClientAnimeTest {
         // When - Get anime from persistent system.
         ResponseEntity<Anime> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/animes/search/title/" + URLEncoder.encode(animes.getTitle(), URL_ENCODER) + "/" + animes.getCurrentSeason(), Anime.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/animes/search/title/" + URLEncoder.encode(animes.getTitle(), URL_ENCODER) +
+                    "/" + animes.getCurrentSeason(), Anime.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and anime retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(animes.getTitle());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(animes.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getEndDate().get(Calendar.YEAR)).isEqualTo(animes.getEndDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(animes.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(animes.getSupports());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(animes.getSynopsis());
-        assertThat(responseEntity.getBody().getAverageEpisodeRuntime()).isEqualTo(animes.getAverageEpisodeRuntime());
-        assertThat(responseEntity.getBody().getCurrentSeason()).isEqualTo(animes.getCurrentSeason());
-        assertThat(responseEntity.getBody().getNumberOfSeasons()).isEqualTo(animes.getNumberOfSeasons());
-        assertThat(responseEntity.getBody().getNumberOfEpisode()).isEqualTo(animes.getNumberOfEpisode());
-        assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(directorExpected);
-        assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(producersExpected);
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(animes.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(animes.getReleaseDate()
+                                                                      .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getEndDate()
+                                 .get(Calendar.YEAR)).isEqualTo(animes.getEndDate()
+                                                                      .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(animes.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(animes.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(animes.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getAverageEpisodeRuntime()).isEqualTo(animes.getAverageEpisodeRuntime());
+        assertThat(responseEntity.getBody()
+                                 .getCurrentSeason()).isEqualTo(animes.getCurrentSeason());
+        assertThat(responseEntity.getBody()
+                                 .getNumberOfSeasons()).isEqualTo(animes.getNumberOfSeasons());
+        assertThat(responseEntity.getBody()
+                                 .getNumberOfEpisode()).isEqualTo(animes.getNumberOfEpisode());
+        assertThat(responseEntity.getBody()
+                                 .getDirectors()
+                                 .size()).isEqualTo(directorExpected);
+        assertThat(responseEntity.getBody()
+                                 .getProducers()
+                                 .size()).isEqualTo(producersExpected);
 
-        System.out.println(responseEntity.getBody().toString());
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -370,12 +400,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 1;
+        int currentSeason = 1;
         int numberOfEpisode = 36;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 title, originalTitle, synopsis,
@@ -386,7 +416,9 @@ public class ClientAnimeTest {
         // When - Get anime from persistent system.
         ResponseEntity<Anime> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(animes.getTitle(), URL_ENCODER), Anime.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(animes.getTitle(), URL_ENCODER),
+                    Anime.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -433,12 +465,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 10;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 title, originalTitle, synopsis,
@@ -453,7 +485,8 @@ public class ClientAnimeTest {
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -491,12 +524,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 1;
+        int currentSeason = 1;
         int numberOfEpisode = 36;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 id, title, originalTitle, synopsis,
@@ -506,10 +539,13 @@ public class ClientAnimeTest {
         this.restTemplate.put(REST_SERVICE_URI + "/animes/" + animes.getId(), animes, Anime.class);
 
         // When - Get anime update and check if the difference appear.
-        ResponseEntity<Anime> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/animes/search/title/" + URLEncoder.encode(title, URL_ENCODER)+ "/" + animes.getCurrentSeason(), Anime.class);
+        ResponseEntity<Anime> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/animes/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" +
+                animes.getCurrentSeason(), Anime.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -549,12 +585,12 @@ public class ClientAnimeTest {
 
         int averageEpisodeRuntime = 22;
         int numberOfSeasons = 3;
-        int currentSeason   = 1;
+        int currentSeason = 1;
         int numberOfEpisode = 36;
         int maxEpisodes = 70;
 
         Calendar startDate = new GregorianCalendar(1998, GregorianCalendar.APRIL, 7);
-        Calendar endDate   = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
+        Calendar endDate = new GregorianCalendar(2000, GregorianCalendar.MARCH, 21);
 
         Anime animes = new Anime(
                 title, originalTitle, synopsis,
@@ -583,7 +619,8 @@ public class ClientAnimeTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/animes/" + id);
 
         try {
-            ResponseEntity<Anime> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/animes/search/title/" + URLEncoder.encode(title, URL_ENCODER), Anime.class);
+            ResponseEntity<Anime> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/animes/search/title/" + URLEncoder.encode(title, URL_ENCODER), Anime.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

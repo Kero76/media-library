@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.common.company;
 
 import fr.nicolasgille.medialibrary.models.book.Book;
@@ -29,12 +31,12 @@ import java.util.Set;
 /**
  * Class Publisher represent a company who published book or video game.
  *
+ * @author Nicolas GILLE
+ * @version 1.0
  * @see Company
  * @see Book
  * @see VideoGame
- * @author Nicolas GILLE
  * @since Media-Library 0.4
- * @version 1.0
  */
 @Entity
 @DiscriminatorValue(value = "publisher")
@@ -59,18 +61,18 @@ public class Publisher extends Company {
     /**
      * Empty constructor
      *
-     * @since 1.0
      * @version 1.0
+     * @since 1.0
      */
     public Publisher() {}
 
     /**
      * Constructor with <code>name</code> attribute.
      *
-     * @param name
-     *  Name of the publisher.
-     * @since 1.0
+     * @param name Name of the publisher.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Publisher(String name) {
         super.name = name;
@@ -81,16 +83,13 @@ public class Publisher extends Company {
     /**
      * Constructor with all attributes.
      *
-     * @param id
-     *  Identifier of the publisher.
-     * @param name
-     *  Name of the publisher.
-     * @param books
-     *  Set of all books published by the publisher.
-     * @param videoGames
-     *  List of all video game published by the video game.
-     * @since 1.0
+     * @param id Identifier of the publisher.
+     * @param name Name of the publisher.
+     * @param books Set of all books published by the publisher.
+     * @param videoGames List of all video game published by the video game.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Publisher(long id, String name, Set<Book> books, Set<VideoGame> videoGames) {
         super.id = id;
@@ -102,10 +101,10 @@ public class Publisher extends Company {
     /**
      * Get the list of all books published by the publisher.
      *
-     * @return
-     *  A set with all book published by the publisher.
-     * @since 1.0
+     * @return A set with all book published by the publisher.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<Book> getBooks() {
         return books;
@@ -114,10 +113,10 @@ public class Publisher extends Company {
     /**
      * Set the list of books published by the publisher.
      *
-     * @param books
-     *  New set of books.
-     * @since 1.0
+     * @param books New set of books.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setBooks(Set<Book> books) {
         this.books = books;
@@ -126,10 +125,10 @@ public class Publisher extends Company {
     /**
      * Get all video games published by the publisher.
      *
-     * @return
-     *  A set with all video game published bu the publisher.
-     * @since 1.0
+     * @return A set with all video game published bu the publisher.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<VideoGame> getVideoGames() {
         return videoGames;
@@ -138,10 +137,10 @@ public class Publisher extends Company {
     /**
      * Set the list of video game published bt rhe publisher.
      *
-     * @param videoGames
-     *  List of all video games.
-     * @since 1.0
+     * @param videoGames List of all video games.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setVideoGames(Set<VideoGame> videoGames) {
         this.videoGames = videoGames;
@@ -150,30 +149,30 @@ public class Publisher extends Company {
     /**
      * Display all information about the publisher.
      *
-     * @return
-     *  Information about publisher.
-     * @since 1.0
+     * @return Information about publisher.
+     *
      * @version 1.0
+     * @since 1.0
      */
     @Override
     public String toString() {
         if (this.books != null) {
             return "Publisher{" +
-                    "id=" + super.id +
-                    ", name=" + super.name +
-                    ", videoGames=" + CollectionAsString.setToString(this.books) +
-                    '}';
+                   "id=" + super.id +
+                   ", name=" + super.name +
+                   ", videoGames=" + CollectionAsString.collectionToString(this.books) +
+                   '}';
         }
-        if (this.videoGames != null){
+        if (this.videoGames != null) {
             return "Publisher{" +
-                    "id=" + super.id +
-                    ", name=" + super.name +
-                    ", books=" + CollectionAsString.setToString(this.videoGames) +
-                    '}';
+                   "id=" + super.id +
+                   ", name=" + super.name +
+                   ", books=" + CollectionAsString.collectionToString(this.videoGames) +
+                   '}';
         }
         return "Publisher{" +
-                "id=" + super.id +
-                ", name=" + super.name +
-                '}';
+               "id=" + super.id +
+               ", name=" + super.name +
+               '}';
     }
 }

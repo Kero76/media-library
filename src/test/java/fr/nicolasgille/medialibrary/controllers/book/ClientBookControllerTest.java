@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.book;
 
 import fr.nicolasgille.medialibrary.exceptions.book.BookException;
@@ -43,8 +45,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test BookController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientBookControllerTest {
@@ -97,7 +99,8 @@ public class ClientBookControllerTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Book book = new Book(
-            id, "", "", "", releaseDate, 0, "", new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<BookGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL
+                id, "", "", "", releaseDate, 0, "", new HashSet<Author>(), new HashSet<Publisher>(),
+                new ArrayList<BookGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL
         );
 
         // When - Try to update book.
@@ -125,7 +128,8 @@ public class ClientBookControllerTest {
         String title = "Da Vinci Code";
 
         // When - Get one book from persistent system.
-        ResponseEntity<Book> book = this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/search/title/" + title, Book.class);
+        ResponseEntity<Book> book =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/search/title/" + title, Book.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(book.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -161,15 +165,19 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-            title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
 
         // When - Send book to save it on persistent system.
-        ResponseEntity<Book> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/books/", book, Book.class);
+        ResponseEntity<Book> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/books/", book, Book.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -200,7 +208,8 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
 
         ResponseEntity<BookException> responseEntity = null;
@@ -242,29 +251,46 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
 
         // When - Get book from persistent system.
         ResponseEntity<Book> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(book.getTitle(), URL_ENCODER), Book.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(book.getTitle(), URL_ENCODER),
+                    Book.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and book retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(book.getTitle());
-        assertThat(responseEntity.getBody().getOriginalTitle()).isEqualTo(book.getOriginalTitle());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(book.getSynopsis());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(book.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(book.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(book.getSupports());
-        assertThat(responseEntity.getBody().getAuthors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getPublishers().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getFormat()).isEqualTo(format);
-        System.out.println(responseEntity.getBody().toString());
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(book.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getOriginalTitle()).isEqualTo(book.getOriginalTitle());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(book.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(book.getReleaseDate()
+                                                                    .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(book.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(book.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getAuthors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getPublishers()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getFormat()).isEqualTo(format);
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -295,13 +321,16 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
 
         // When - Get book from persistent system.
         ResponseEntity<Book> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(book.getTitle(), URL_ENCODER), Book.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(book.getTitle(), URL_ENCODER),
+                    Book.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -339,7 +368,8 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/books/", book, Book.class);
 
@@ -348,7 +378,8 @@ public class ClientBookControllerTest {
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -377,15 +408,18 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-                id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
         this.restTemplate.put(REST_SERVICE_URI + "/books/" + book.getId(), book, Book.class);
 
         // When - Get book update and check if the difference appear.
-        ResponseEntity<Book> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(title, URL_ENCODER), Book.class);
+        ResponseEntity<Book> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(title, URL_ENCODER), Book.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -416,7 +450,8 @@ public class ClientBookControllerTest {
         BookFormat format = BookFormat.CLASSICAL;
 
         Book book = new Book(
-                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format
+                title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+                format
         );
 
         try {
@@ -440,7 +475,8 @@ public class ClientBookControllerTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/books/" + id);
 
         try {
-            ResponseEntity<Book> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(title, URL_ENCODER), Book.class);
+            ResponseEntity<Book> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/books/search/title/" + URLEncoder.encode(title, URL_ENCODER), Book.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

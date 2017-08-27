@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.common.person;
 
 /**
@@ -21,70 +23,70 @@ package fr.nicolasgille.medialibrary.models.common.person;
  * It must be implement by all human representing in the project.
  * It force all Human represented on the Media-Library to have a first name, last name and an id.
  *
- * @see Person
  * @author Nicolas GILLE
- * @since Media-Library 0.2.1
  * @version 1.0
+ * @see Person
+ * @since Media-Library 0.2.1
  */
 public interface IPerson {
 
     /**
      * Return id of the Person.
      *
-     * @return
-     *  Id of the Person.
-     * @since 1.0
+     * @return Id of the Person.
+     *
      * @version 1.0
+     * @since 1.0
      */
     long getId();
 
     /**
      * Set id of the Person.
      *
-     * @param id
-     *  New id.
-     * @since 1.0
+     * @param id New id.
+     *
      * @version 1.0
+     * @since 1.0
      */
     void setId(long id);
 
     /**
      * Return first name of the Person.
      *
-     * @return
-     *  First name of the Person.
-     * @since 1.0
+     * @return First name of the Person.
+     *
      * @version 1.0
+     * @since 1.0
      */
     String getFirstName();
 
     /**
      * Set first name of the Person.
      *
-     * @param firstName
-     *  New first name.
-     * @since 1.0
+     * @param firstName New first name.
+     *
      * @version 1.0
+     * @since 1.0
      */
     void setFirstName(String firstName);
 
     /**
      * Return last name of the Person.
      *
-     * @return
-     *  Last name of the Person.
-     * @since 1.0
+     * @return Last name of the Person.
+     *
      * @version 1.0
+     * @since 1.0
      */
     String getLastName();
 
     /**
      * Set the last name of the Person.
      *
-     * @param lastName
-     *  New last name.
-     * @since 1.0
+     * @param lastName New last name.
+     *
      * @version 1.0
+     * @since 1.0
      */
     void setLastName(String lastName);
 }

@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.game;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -44,8 +46,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test VideoGameController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientVideoGameTest {
@@ -98,7 +100,8 @@ public class ClientVideoGameTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         VideoGame videoGame = new VideoGame(
-                id,"My Title", "My Original Title", "", releaseDate, new ArrayList<VideoGameGenre>(), new ArrayList<MediaSupport>(), false, new ArrayList<LanguageCode>(),
+                id, "My Title", "My Original Title", "", releaseDate, new ArrayList<VideoGameGenre>(),
+                new ArrayList<MediaSupport>(), false, new ArrayList<LanguageCode>(),
                 new HashSet<Developer>(), new HashSet<Publisher>(), new ArrayList<VideoGamePlatform>()
         );
 
@@ -114,7 +117,8 @@ public class ClientVideoGameTest {
     @Test
     public void test03GetAllVideoGamesWithEmptyPersistentSystem() {
         // Given / When - Get all video games from persistent system.
-        ResponseEntity<List> videoGames = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/", List.class);
+        ResponseEntity<List> videoGames =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/", List.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(videoGames.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -127,7 +131,9 @@ public class ClientVideoGameTest {
         String title = "Final Fantasy";
 
         // When - Get one cartoon from persistent system.
-        ResponseEntity<VideoGame> videoGame = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + title, VideoGame.class);
+        ResponseEntity<VideoGame> videoGame =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + title,
+                                               VideoGame.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(videoGame.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -170,16 +176,19 @@ public class ClientVideoGameTest {
         platforms.add(VideoGamePlatform.PS2);
 
         VideoGame videoGame = new VideoGame(
-                id,title, originalTitle, synopsis, releaseDate, genres, supports,
+                id, title, originalTitle, synopsis, releaseDate, genres, supports,
                 multiplayers, languages, developers, publishers, platforms
         );
 
         // When - Send video game to save it on persistent system.
-        ResponseEntity<VideoGame> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
+        ResponseEntity<VideoGame> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -224,7 +233,8 @@ public class ClientVideoGameTest {
         ResponseEntity<VideoGameException> responseEntity = null;
         // When - Send video game to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGameException.class);
+            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame,
+                                                             VideoGameException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -274,23 +284,40 @@ public class ClientVideoGameTest {
         // When - Get video game from persistent system.
         ResponseEntity<VideoGame> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(videoGame.getTitle(), URL_ENCODER), VideoGame.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" +
+                                                            URLEncoder.encode(videoGame.getTitle(), URL_ENCODER),
+                                                            VideoGame.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and video game retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(videoGame.getTitle());
-        assertThat(responseEntity.getBody().getOriginalTitle()).isEqualTo(videoGame.getOriginalTitle());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(videoGame.getSynopsis());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(videoGame.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(videoGame.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(videoGame.getSupports());
-        assertThat(responseEntity.getBody().getDevelopers().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getPublishers().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getPlatforms().size()).isEqualTo(sizeExpected);
-        System.out.println(responseEntity.getBody().toString());
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(videoGame.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getOriginalTitle()).isEqualTo(videoGame.getOriginalTitle());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(videoGame.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(videoGame.getReleaseDate()
+                                                                         .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(videoGame.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(videoGame.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getDevelopers()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getPublishers()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getPlatforms()
+                                 .size()).isEqualTo(sizeExpected);
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -335,7 +362,9 @@ public class ClientVideoGameTest {
         // When - Get video game from persistent system.
         ResponseEntity<VideoGame> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(videoGame.getTitle(), URL_ENCODER), VideoGame.class);
+            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" +
+                                                            URLEncoder.encode(videoGame.getTitle(), URL_ENCODER),
+                                                            VideoGame.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -386,11 +415,13 @@ public class ClientVideoGameTest {
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/video-games/", videoGame, VideoGame.class);
 
         // When - Get all video games from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/", List.class);
+        ResponseEntity<List> responseEntity =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -432,10 +463,13 @@ public class ClientVideoGameTest {
         this.restTemplate.put(REST_SERVICE_URI + "/video-games/" + videoGame.getId(), videoGame, VideoGame.class);
 
         // When - Get video game update and check if the difference appear.
-        ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
+        ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(title, URL_ENCODER),
+                VideoGame.class);
 
         // Then - Compare originalTitle.
-        assertThat(responseEntity.getBody().getOriginalTitle()).isEqualTo(originalTitle);
+        assertThat(responseEntity.getBody()
+                                 .getOriginalTitle()).isEqualTo(originalTitle);
     }
 
     @Test
@@ -498,7 +532,9 @@ public class ClientVideoGameTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/video-games/" + id);
 
         try {
-            ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(title, URL_ENCODER), VideoGame.class);
+            ResponseEntity<VideoGame> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/video-games/search/title/" + URLEncoder.encode(title, URL_ENCODER),
+                    VideoGame.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

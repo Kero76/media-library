@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.parser;
 
 import java.io.IOException;
@@ -25,23 +27,23 @@ import java.util.Scanner;
 
 /**
  * A parser used to parse TSV file.
- *
+ * <p>
  * This class parse a file who contains information about a media under the format tsv.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.5
  * @version 1.0
+ * @since Media-Library 0.5
  */
 public class TsvParser implements FileParser {
 
     /**
-     * Parse the file send in parameter and return a list of list of string who contains all elements parse during process.
+     * Parse the file send in parameter and return a list of list of string who contains all elements parse during
+     * process.
      *
-     * @param filename
-     *  Name of the file at parse.
-     * @return
-     *  A list composed by List of all information get during parsing.
-     * @throws IOException
+     * @param filename Name of the file at parse.
+     *
+     * @return A list composed by List of all information get during parsing.
+     *
      * @version 1.0
      * @since 1.0
      */

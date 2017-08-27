@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -34,18 +36,18 @@ import java.util.Set;
 
 /**
  * Model class for Movie instance.
- *
+ * <p>
  * It extends the class Video to get all main attributes for video type.
  * The attributes added on the media are :
  * <ul>
- *     <li>The <code>runtime</code> of the movie.</li>
- *     <li>The List of main actors of the movie</li>
+ * <li>The <code>runtime</code> of the movie.</li>
+ * <li>The List of main actors of the movie</li>
  * </ul>
  *
- * @see Video
  * @author Nicolas GILLE
- * @since Media-Library 0.1
  * @version 2.0
+ * @see Video
+ * @since Media-Library 0.1
  */
 @Entity
 @DiscriminatorValue(value = "movie")
@@ -66,50 +68,45 @@ public class Movie extends Video {
      */
     @JoinTable(
             name = "video_main_actors",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "main_actors_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "video_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "main_actors_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Actor.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Actor.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Actor> mainActors;
 
     /**
      * Empty constructor.
      *
-     * @since 1.0
      * @version 1.0
+     * @since 1.0
      */
     public Movie() {}
 
     /**
      * Constructor of the movie object.
      *
-     * @param title
-     *  Title of the movie.
-     * @param originalTitle
-     *  Original title of the movie.
-     * @param synopsis
-     *  Synopsis of the movie.
-     * @param mainActors
-     *  Main actors of the movie.
-     * @param directors
-     *  List of all directors of the movie.
-     * @param producers
-     *  List of all producers of the movie.
-     * @param genres
-     *  List of all genres for the movie.
-     * @param supports
-     *  Supports present for the movie.
-     * @param languagesSpoken
-     *  List of languages spoken available on movie.
-     * @param subtitles
-     *  List of subtitle languages available on movie.
-     * @param releaseDate
-     *  Date of release of the movie.
-     * @param runtime
-     *  Duration of the movie in minute.
-     * @since 1.0
+     * @param title Title of the movie.
+     * @param originalTitle Original title of the movie.
+     * @param synopsis Synopsis of the movie.
+     * @param mainActors Main actors of the movie.
+     * @param directors List of all directors of the movie.
+     * @param producers List of all producers of the movie.
+     * @param genres List of all genres for the movie.
+     * @param supports Supports present for the movie.
+     * @param languagesSpoken List of languages spoken available on movie.
+     * @param subtitles List of subtitle languages available on movie.
+     * @param releaseDate Date of release of the movie.
+     * @param runtime Duration of the movie in minute.
+     *
      * @version 2.0
+     * @since 1.0
      */
     public Movie(String title, String originalTitle, String synopsis,
                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -134,32 +131,21 @@ public class Movie extends Video {
      * Constructor of the movie object.
      * This constructor is used to stored information retrieve from the persistent system.
      *
-     * @param title
-     *  Title of the movie.
-     * @param originalTitle
-     *  Original title of the movie.
-     * @param synopsis
-     *  Synopsis of the movie.
-     * @param mainActors
-     *  Main actors of the movie.
-     * @param directors
-     *  List of all directors of the movie.
-     * @param producers
-     *  List of all producers of the movie.
-     * @param genres
-     *  List of all genres for the movie.
-     * @param supports
-     *  Supports present for the movie.
-     * @param languagesSpoken
-     *  List of languages spoken available on movie.
-     * @param subtitles
-     *  List of subtitle languages available on movie.
-     * @param releaseDate
-     *  Date of release of the movie.
-     * @param runtime
-     *  Duration of the movie in minute.
-     * @since 1.0
+     * @param title Title of the movie.
+     * @param originalTitle Original title of the movie.
+     * @param synopsis Synopsis of the movie.
+     * @param mainActors Main actors of the movie.
+     * @param directors List of all directors of the movie.
+     * @param producers List of all producers of the movie.
+     * @param genres List of all genres for the movie.
+     * @param supports Supports present for the movie.
+     * @param languagesSpoken List of languages spoken available on movie.
+     * @param subtitles List of subtitle languages available on movie.
+     * @param releaseDate Date of release of the movie.
+     * @param runtime Duration of the movie in minute.
+     *
      * @version 2.0
+     * @since 1.0
      */
     public Movie(long id, String title, String originalTitle, String synopsis,
                  Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -184,10 +170,10 @@ public class Movie extends Video {
     /**
      * Constructor use to update attribute of the current movie by the movie passed on parameter.
      *
-     * @param movie
-     *  New content of each attribute of this.
-     * @since 1.0
+     * @param movie New content of each attribute of this.
+     *
      * @version 2.0
+     * @since 1.0
      */
     public Movie(Movie movie) {
         super.id = movie.getId();
@@ -206,12 +192,24 @@ public class Movie extends Video {
     }
 
     /**
+     * Return the set composed by main actors.
+     *
+     * @return Set of the main actors.
+     *
+     * @version 1.0
+     * @since 1.0
+     */
+    public Set<Actor> getMainActors() {
+        return mainActors;
+    }
+
+    /**
      * Return the runtime of the movie in minute.
      *
-     * @return
-     *  The runtime in minute.
-     * @since 1.0
+     * @return The runtime in minute.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getRuntime() {
         return runtime;
@@ -220,34 +218,22 @@ public class Movie extends Video {
     /**
      * Set runtime in minute.
      *
-     * @param runtime
-     *  New runtime in minute.
-     * @since 1.0
+     * @param runtime New runtime in minute.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setRuntime(int runtime) {
         this.runtime = runtime;
     }
 
     /**
-     * Return the set composed by main actors.
-     *
-     * @return
-     *  Set of the main actors.
-     * @since 1.0
-     * @version 1.0
-     */
-    public Set<Actor> getMainActors() {
-        return mainActors;
-    }
-
-    /**
      * Set main actors.
      *
-     * @param mainActors
-     *  New mainActors.
-     * @since 1.0
+     * @param mainActors New mainActors.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setMainActors(Set<Actor> mainActors) {
         this.mainActors = mainActors;
@@ -256,27 +242,27 @@ public class Movie extends Video {
     /**
      * Display Movie information.
      *
-     * @return
-     *  A short description of the content of the movie's attribute.
-     * @since 1.0
+     * @return A short description of the content of the movie's attribute.
+     *
      * @version 1.0
+     * @since 1.0
      */
     @Override
     public String toString() {
         return "Movie{" +
-                "id=" + super.id +
-                ", title='" + super.title + '\'' +
-                ", originalTitle='" + super.originalTitle + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.genres) +
-                ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", runtime=" + this.runtime +
-                ", synopsis='" + super.synopsis + '\'' +
-                ", mainActors='" + CollectionAsString.setToString(this.mainActors) + '\'' +
-                ", producers='" + CollectionAsString.setToString(super.producers) + '\'' +
-                ", directors='" + CollectionAsString.setToString(super.directors) + '\'' +
-                ", supports='" + CollectionAsString.listToString(supports) +
-                ", languageSpoken='" + CollectionAsString.listToString(languagesSpoken) +
-                ", subtitles='" + CollectionAsString.listToString(subtitles) +
-                '}';
+               "id=" + super.id +
+               ", title='" + super.title + '\'' +
+               ", originalTitle='" + super.originalTitle + '\'' +
+               ", genres=" + CollectionAsString.collectionToString(super.genres) +
+               ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
+               ", runtime=" + this.runtime +
+               ", synopsis='" + super.synopsis + '\'' +
+               ", mainActors='" + CollectionAsString.collectionToString(this.mainActors) + '\'' +
+               ", producers='" + CollectionAsString.collectionToString(super.producers) + '\'' +
+               ", directors='" + CollectionAsString.collectionToString(super.directors) + '\'' +
+               ", supports='" + CollectionAsString.collectionToString(supports) +
+               ", languageSpoken='" + CollectionAsString.collectionToString(languagesSpoken) +
+               ", subtitles='" + CollectionAsString.collectionToString(subtitles) +
+               '}';
     }
 }

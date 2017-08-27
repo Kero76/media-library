@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.builders;
 
 import fr.nicolasgille.medialibrary.builders.book.BookBuilder;
@@ -45,8 +47,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit test for MediaBuilder's object.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.5
  * @version 1.0
+ * @since Media-Library 0.5
  */
 public class MediaBuilderTest {
 
@@ -54,16 +56,6 @@ public class MediaBuilderTest {
      * Path for the resources file at load.
      */
     private final static String PATH = "src/test/resources/";
-
-    /**
-     * Parser to get data from files.
-     */
-    private FileParser parser;
-
-    /**
-     * Parse data get from parser into Models Object.
-     */
-    private IMediaBuilder builder;
 
     /**
      * URI of the Rest service.
@@ -76,13 +68,23 @@ public class MediaBuilderTest {
     private static final String URL_ENCODER = "UTF-8";
 
     /**
+     * Parser to get data from files.
+     */
+    private FileParser parser;
+
+    /**
+     * Parse data get from parser into Models Object.
+     */
+    private IMediaBuilder builder;
+
+    /**
      * Files name.
      */
     private String[] filename = {"animes", "books", "cartoons", "movies", "musics", "series", "video-games"};
 
     @Before
     public void setUp() {
-        this.parser  = new TsvParser();
+        this.parser = new TsvParser();
     }
 
     @Test
@@ -133,7 +135,8 @@ public class MediaBuilderTest {
 
         // When - Try to build Album from first data line.
         Album album = (Album) this.builder.build(data.get(12));
-        singer = (Singer) album.getSingers().toArray()[0];
+        singer = (Singer) album.getSingers()
+                               .toArray()[0];
 
         // Then - Compare result.
         System.out.println(album.toString());

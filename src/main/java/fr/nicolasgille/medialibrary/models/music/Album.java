@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.music;
 
 import fr.nicolasgille.medialibrary.models.Media;
@@ -35,10 +37,10 @@ import java.util.Set;
 /**
  * Representation of music album.
  *
- * @see Media
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.1
+ * @see Media
+ * @since Media-Library 0.4
  */
 @Entity
 @DiscriminatorValue(value = "album")
@@ -76,10 +78,16 @@ public class Album extends Media {
      */
     @JoinTable(
             name = "album_labels_records",
-            joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "labels_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "album_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "labels_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = LabelRecords.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = LabelRecords.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<LabelRecords> labelRecords;
 
@@ -90,46 +98,45 @@ public class Album extends Media {
      */
     @JoinTable(
             name = "album_singers",
-            joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "singers_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "album_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "singers_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Singer.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Singer.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Singer> singers;
 
     /**
      * Empty constructor
      *
-     * @since 1.0
      * @version 1.0
+     * @since 1.0
      */
     public Album() {}
 
     /**
      * Constructor with all parameters expected id.
      *
-     * @param title
-     *  Title of the album.
-     * @param tracks
-     *  Tracks present on the album.
-     * @param releaseDate
-     *  Release date of the album.
-     * @param genres
-     *  Genre of the album.
-     * @param supports
-     *  Support of the album.
-     * @param nbTracks
-     *  Number of track of the album.
-     * @param length
-     *  Length of the album.
-     * @param labelRecords
-     *  Label records of the album.
-     * @param singers
-     *  Singers of the album.
-     * @since 1.0
+     * @param title Title of the album.
+     * @param tracks Tracks present on the album.
+     * @param releaseDate Release date of the album.
+     * @param genres Genre of the album.
+     * @param supports Support of the album.
+     * @param nbTracks Number of track of the album.
+     * @param length Length of the album.
+     * @param labelRecords Label records of the album.
+     * @param singers Singers of the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    public Album(String title, String tracks, Calendar releaseDate, List<MusicGenre> genres, List<MediaSupport> supports,
+    public Album(String title, String tracks, Calendar releaseDate, List<MusicGenre> genres,
+                 List<MediaSupport> supports,
                  int nbTracks, double length, Set<LabelRecords> labelRecords, Set<Singer> singers) {
         super.title = title;
         super.synopsis = tracks;
@@ -145,30 +152,22 @@ public class Album extends Media {
     /**
      * Constructor with all parameters expected id.
      *
-     * @param id
-     *  Identifier of the album.
-     * @param title
-     *  Title of the album.
-     * @param tracks
-     *  Tracks present on the album.
-     * @param releaseDate
-     *  Release date of the album.
-     * @param genres
-     *  Genre of the album.
-     * @param supports
-     *  Support of the album.
-     * @param nbTracks
-     *  Number of track of the album.
-     * @param length
-     *  Length of the album.
-     * @param labelRecords
-     *  Label records of the album.
-     * @param singers
-     *  Singers of the album.
-     * @since 1.0
+     * @param id Identifier of the album.
+     * @param title Title of the album.
+     * @param tracks Tracks present on the album.
+     * @param releaseDate Release date of the album.
+     * @param genres Genre of the album.
+     * @param supports Support of the album.
+     * @param nbTracks Number of track of the album.
+     * @param length Length of the album.
+     * @param labelRecords Label records of the album.
+     * @param singers Singers of the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    public Album(long id, String title, String tracks, Calendar releaseDate, List<MusicGenre> genres, List<MediaSupport> supports,
+    public Album(long id, String title, String tracks, Calendar releaseDate, List<MusicGenre> genres,
+                 List<MediaSupport> supports,
                  int nbTracks, double length, Set<LabelRecords> labelRecords, Set<Singer> singers) {
         super.id = id;
         super.title = title;
@@ -185,10 +184,10 @@ public class Album extends Media {
     /**
      * Constructor to copy another instance of Album.
      *
-     * @param album
-     *  Album at copying.
-     * @since 1.0
+     * @param album Album at copying.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Album(Album album) {
         super.id = album.getId();
@@ -204,12 +203,25 @@ public class Album extends Media {
     }
 
     /**
+     * Return the genres.
+     *
+     * @return The genres of the book.
+     *
+     * @version 1.0
+     * @see BookGenre
+     * @since 1.1
+     */
+    public List<MusicGenre> getGenres() {
+        return this.genres;
+    }
+
+    /**
      * Return the number of tracks present on the album.
      *
-     * @return
-     *  The number of tracks available on album.
-     * @since 1.0
+     * @return The number of tracks available on album.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getNbTracks() {
         return nbTracks;
@@ -218,10 +230,10 @@ public class Album extends Media {
     /**
      * Set the number of tracks on the album.
      *
-     * @param nbTracks
-     *  New number of tracks of the album.
-     * @since 1.0
+     * @param nbTracks New number of tracks of the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setNbTracks(int nbTracks) {
         this.nbTracks = nbTracks;
@@ -230,10 +242,10 @@ public class Album extends Media {
     /**
      * Get the length of the album.
      *
-     * @return
-     *  The length of the album.
-     * @since 1.0
+     * @return The length of the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public double getLength() {
         return length;
@@ -242,10 +254,10 @@ public class Album extends Media {
     /**
      * Set the length of the album.
      *
-     * @param length
-     *  New length of the album.
-     * @since 1.0
+     * @param length New length of the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setLength(double length) {
         this.length = length;
@@ -254,10 +266,10 @@ public class Album extends Media {
     /**
      * Get the label records for the album.
      *
-     * @return
-     *  Get all label records.
-     * @since 1.0
+     * @return Get all label records.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<LabelRecords> getLabelRecords() {
         return labelRecords;
@@ -266,10 +278,10 @@ public class Album extends Media {
     /**
      * Set the label records.
      *
-     * @param labelRecords
-     *  New labels records.
-     * @since 1.0
+     * @param labelRecords New labels records.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setLabelRecords(Set<LabelRecords> labelRecords) {
         this.labelRecords = labelRecords;
@@ -278,10 +290,10 @@ public class Album extends Media {
     /**
      * Get all singers or groups for the album.
      *
-     * @return
-     *  Get all singers or groups present on the album.
-     * @since 1.0
+     * @return Get all singers or groups present on the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<Singer> getSingers() {
         return singers;
@@ -290,33 +302,22 @@ public class Album extends Media {
     /**
      * Set the singers or groups for the albums.
      *
-     * @param singers
-     *  New singers or groups.
-     * @since 1.0
+     * @param singers New singers or groups.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setSingers(Set<Singer> singers) {
         this.singers = singers;
     }
 
     /**
-     * Return the genres.
-     *
-     * @return The genres of the book.
-     * @see BookGenre
-     * @since 1.1
-     * @version 1.0
-     */
-    public List<MusicGenre> getGenres() {
-        return this.genres;
-    }
-
-    /**
      * Set genres of Media.
      *
      * @param genres New book.
-     * @since 1.1
+     *
      * @version 1.0
+     * @since 1.1
      */
     public void setGenres(List<MusicGenre> genres) {
         this.genres = genres;
@@ -325,24 +326,24 @@ public class Album extends Media {
     /**
      * Some information about the Album.
      *
-     * @return
-     *  The information about the album.
-     * @since 1.0
+     * @return The information about the album.
+     *
      * @version 1.0
+     * @since 1.0
      */
     @Override
     public String toString() {
         return "Album{" +
-                "id=" + super.id +
-                ", title='" + super.title + '\'' +
-                ", tracks='" + super.getSynopsis() + '\'' +
-                ", genres=" + CollectionAsString.listToString(this.getGenres()) +
-                ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", supports='" + CollectionAsString.listToString(super.getSupports()) +
-                ", nbTracks=" + nbTracks +
-                ", length=" + length +
-                ", singers=" + CollectionAsString.setToString(this.singers) +
-                ", labels=" + CollectionAsString.setToString(this.labelRecords) +
-                '}';
+               "id=" + super.id +
+               ", title='" + super.title + '\'' +
+               ", tracks='" + super.getSynopsis() + '\'' +
+               ", genres=" + CollectionAsString.collectionToString(this.getGenres()) +
+               ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
+               ", supports='" + CollectionAsString.collectionToString(super.getSupports()) +
+               ", nbTracks=" + nbTracks +
+               ", length=" + length +
+               ", singers=" + CollectionAsString.collectionToString(this.singers) +
+               ", labels=" + CollectionAsString.collectionToString(this.labelRecords) +
+               '}';
     }
 }

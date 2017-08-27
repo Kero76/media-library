@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers;
 
 import fr.nicolasgille.medialibrary.controllers.video.AnimeController;
@@ -45,12 +47,20 @@ import java.util.Map;
  * HomeController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.1
  * @version 1.0
+ * @since Media-Library 1.1
  */
 @RestController
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/",
+                produces = MediaType.APPLICATION_JSON_VALUE)
 public class HomeController {
+
+    /**
+     * Logger to get information during some process.
+     *
+     * @since 1.0
+     */
+    static final Logger logger = LoggerFactory.getLogger(AnimeController.class);
 
     /**
      * Constant used to specified URL encoding.
@@ -108,69 +118,63 @@ public class HomeController {
     private AlbumRepository albumsRepository;
 
     /**
-     * Logger to get information during some process.
-     *
-     * @since 1.0
-     */
-    static final Logger logger = LoggerFactory.getLogger(AnimeController.class);
-
-    /**
      * Return home page with all media present on Library.
      *
-     * @return
-     *  Return an instance of ResponseEntity who contains
-     * @since 1.0
+     * @return Return an instance of ResponseEntity who contains
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/home/", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/",
+                    method = RequestMethod.GET)
     public ResponseEntity<?> getHomePage() {
         // Instantiate a Map with key as name of the media type and value as List of specific media.
         Map<String, List> homeContent = new HashMap<>();
         String[] mediaName = {
-            "animes",
-            "cartoons",
-            "movies",
-            "series",
-            "books",
-            "comics",
-            "musics",
-            "video-games",
-        };
+                "animes",
+                "cartoons",
+                "movies",
+                "series",
+                "books",
+                "comics",
+                "musics",
+                "video-games",
+                };
 
         // Loop on each media type and get all media.
         List<?> media = null;
         for (int i = 0; i < mediaName.length; ++i) {
             media = new ArrayList<>();
             switch (i) {
-                case 0 :
+                case 0:
                     media = animesRepository.findAll();
                     break;
 
-                case 1 :
+                case 1:
                     media = cartoonsRepository.findAll();
                     break;
 
-                case 2 :
+                case 2:
                     media = moviesRepository.findAll();
                     break;
 
-                case 3 :
+                case 3:
                     media = seriesRepository.findAll();
                     break;
 
-                case 4 :
+                case 4:
                     media = booksRepository.findAll();
                     break;
 
-                case 5 :
+                case 5:
                     media = comicsRepository.findAll();
                     break;
 
-                case 6 :
+                case 6:
                     media = albumsRepository.findAll();
                     break;
 
-                case 7 :
+                case 7:
                     media = videoGamesRepository.findAll();
                     break;
             }
@@ -188,12 +192,13 @@ public class HomeController {
     /**
      * Get all media support present on Media-Library.
      *
-     * @return
-     *  An array with all media supports.
-     * @since 1.0
+     * @return An array with all media supports.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/media/supports/", method = RequestMethod.GET)
+    @RequestMapping(value = "/media/supports/",
+                    method = RequestMethod.GET)
     public ResponseEntity<?> getMediaSupport() {
         return new ResponseEntity<>(MediaSupport.values(), HttpStatus.OK);
     }

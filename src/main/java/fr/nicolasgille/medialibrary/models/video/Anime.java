@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -34,21 +36,21 @@ import java.util.Set;
 
 /**
  * Model class for Anime instance.
- *
+ * <p>
  * It extends the class Video to get all main attributes for video type.
  * The attributes added on the media are :
  * <ul>
- *     <li>The number of seasons for the anime.</li>
- *     <li>The current season of the anime.</li>
- *     <li>The average time for the episode of the anime.</li>
- *     <li>The number of episode for the current season.</li>
- *     <li>The number of episode for all seasons of the seasons.</li>
+ * <li>The number of seasons for the anime.</li>
+ * <li>The current season of the anime.</li>
+ * <li>The average time for the episode of the anime.</li>
+ * <li>The number of episode for the current season.</li>
+ * <li>The number of episode for all seasons of the seasons.</li>
  * </ul>
  *
- * @see Video
  * @author Nicolas GILLE
- * @since Media-Library 0.5
  * @version 1.0
+ * @see Video
+ * @since Media-Library 0.5
  */
 @Entity
 @DiscriminatorValue(value = "anime")
@@ -100,56 +102,41 @@ public class Anime extends Video {
     /**
      * Empty constructor.
      *
-     * @since 1.0
      * @version 1.0
+     * @since 1.0
      */
     public Anime() {}
 
     /**
      * Constructor of the anime object.
      *
-     * @param title
-     *  Title of the anime.
-     * @param originalTitle
-     *  Original title of the anime.
-     * @param synopsis
-     *  Synopsis of the anime.
-     * @param producers
-     *  List of all producers of the anime.
-     * @param directors
-     *  List of all directors of the anime.
-     * @param genres
-     *  List of all genres for the anime.
-     * @param supports
-     *  Supports present for the anime.
-     * @param languagesSpoken
-     *  List of languages spoken available on anime.
-     * @param subtitles
-     *  List of subtitle languages available on anime.
-     * @param numberOfSeasons
-     *  Number of seasons who composed the anime.
-     * @param currentSeason
-     *  Current season of the anime.
-     * @param startDate
-     *  Release date of the anime.
-     * @param endDate
-     *  End date of the release.
-     * @param maxEpisodes
-     *  Number of episode during the anime.
-     * @param numberOfEpisode
-     *  Average time of episode in minute.
-     * @param averageEpisodeRuntime
-     *  Number of episode available on the season.
-     * @since 1.0
+     * @param title Title of the anime.
+     * @param originalTitle Original title of the anime.
+     * @param synopsis Synopsis of the anime.
+     * @param producers List of all producers of the anime.
+     * @param directors List of all directors of the anime.
+     * @param genres List of all genres for the anime.
+     * @param supports Supports present for the anime.
+     * @param languagesSpoken List of languages spoken available on anime.
+     * @param subtitles List of subtitle languages available on anime.
+     * @param numberOfSeasons Number of seasons who composed the anime.
+     * @param currentSeason Current season of the anime.
+     * @param startDate Release date of the anime.
+     * @param endDate End date of the release.
+     * @param maxEpisodes Number of episode during the anime.
+     * @param numberOfEpisode Average time of episode in minute.
+     * @param averageEpisodeRuntime Number of episode available on the season.
+     *
      * @version 1.2
+     * @since 1.0
      */
     public Anime(String title, String originalTitle, String synopsis,
-                  Set<Director> directors, Set<Producer> producers,
-                  List<VideoGenre> genres, List<MediaSupport> supports,
-                  List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
-                  Calendar startDate, Calendar endDate,
-                  int numberOfSeasons, int currentSeason,
-                  int maxEpisodes, int numberOfEpisode, int averageEpisodeRuntime) {
+                 Set<Director> directors, Set<Producer> producers,
+                 List<VideoGenre> genres, List<MediaSupport> supports,
+                 List<LanguageCode> languagesSpoken, List<LanguageCode> subtitles,
+                 Calendar startDate, Calendar endDate,
+                 int numberOfSeasons, int currentSeason,
+                 int maxEpisodes, int numberOfEpisode, int averageEpisodeRuntime) {
         super.title = title;
         super.originalTitle = originalTitle;
         super.synopsis = synopsis;
@@ -171,42 +158,26 @@ public class Anime extends Video {
     /**
      * Constructor of the anime object.
      *
-     * @param id
-     *  Identifier of the anime.
-     * @param title
-     *  Title of the anime.
-     * @param originalTitle
-     *  Original title of the anime.
-     * @param synopsis
-     *  Synopsis of the anime.
-     * @param producers
-     *  List of all producers of the anime.
-     * @param directors
-     *  List of all directors of the anime.
-     * @param genres
-     *  List of all genres for the anime.
-     * @param supports
-     *  Supports present for the anime.
-     * @param languagesSpoken
-     *  List of languages spoken available on anime.
-     * @param subtitles
-     *  List of subtitle languages available on anime.
-     * @param numberOfSeasons
-     *  Number of seasons who composed the anime.
-     * @param currentSeason
-     *  Current season of the anime.
-     * @param startDate
-     *  Release date of the anime.
-     * @param endDate
-     *  End date of the release.
-     * @param maxEpisodes
-     *  Number of episode during the anime.
-     * @param numberOfEpisode
-     *  Average time of episode in minute.
-     * @param averageEpisodeRuntime
-     *  Number of episode available on the season.
-     * @since 1.0
+     * @param id Identifier of the anime.
+     * @param title Title of the anime.
+     * @param originalTitle Original title of the anime.
+     * @param synopsis Synopsis of the anime.
+     * @param producers List of all producers of the anime.
+     * @param directors List of all directors of the anime.
+     * @param genres List of all genres for the anime.
+     * @param supports Supports present for the anime.
+     * @param languagesSpoken List of languages spoken available on anime.
+     * @param subtitles List of subtitle languages available on anime.
+     * @param numberOfSeasons Number of seasons who composed the anime.
+     * @param currentSeason Current season of the anime.
+     * @param startDate Release date of the anime.
+     * @param endDate End date of the release.
+     * @param maxEpisodes Number of episode during the anime.
+     * @param numberOfEpisode Average time of episode in minute.
+     * @param averageEpisodeRuntime Number of episode available on the season.
+     *
      * @version 1.2
+     * @since 1.0
      */
     public Anime(long id, String title, String originalTitle, String synopsis,
                  Set<Director> directors, Set<Producer> producers,
@@ -237,10 +208,10 @@ public class Anime extends Video {
     /**
      * Constructor use to update attribute of the current anime by the anime passed on parameter.
      *
-     * @param anime
-     *  New content of each attribute of this.
-     * @since 1.0
+     * @param anime New content of each attribute of this.
+     *
      * @version 1.1
+     * @since 1.0
      */
     public Anime(Anime anime) {
         super.id = anime.getId();
@@ -265,10 +236,10 @@ public class Anime extends Video {
     /**
      * Get the number of season for the anime.
      *
-     * @return
-     *  The number of seasons for the anime.
-     * @since 1.0
+     * @return The number of seasons for the anime.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getNumberOfSeasons() {
         return numberOfSeasons;
@@ -277,10 +248,10 @@ public class Anime extends Video {
     /**
      * Set the number of seasons who composed the anime.
      *
-     * @param numberOfSeasons
-     *  New number of seasons.
-     * @since 1.0
+     * @param numberOfSeasons New number of seasons.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setNumberOfSeasons(int numberOfSeasons) {
         this.numberOfSeasons = numberOfSeasons;
@@ -289,10 +260,10 @@ public class Anime extends Video {
     /**
      * Get the current season number.
      *
-     * @return
-     *  The current number.
-     * @since 1.0
+     * @return The current number.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getCurrentSeason() {
         return currentSeason;
@@ -301,10 +272,10 @@ public class Anime extends Video {
     /**
      * Set the current number of seasons.
      *
-     * @param currentSeason
-     *  Current season number.
-     * @since 1.0
+     * @param currentSeason Current season number.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setCurrentSeason(int currentSeason) {
         this.currentSeason = currentSeason;
@@ -313,10 +284,10 @@ public class Anime extends Video {
     /**
      * Get the date of the end of the anime.
      *
-     * @return
-     *  The date of the end of the anime.
-     * @since 1.0
+     * @return The date of the end of the anime.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Calendar getEndDate() {
         return endDate;
@@ -325,22 +296,34 @@ public class Anime extends Video {
     /**
      * Set the date of the end of the anime.
      *
-     * @param endDate
-     *  The end of the anime.
-     * @since 1.0
+     * @param endDate The end of the anime.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
     }
 
     /**
+     * Get the number of episode available during the current season.
+     *
+     * @return The number of episode available during the current season.
+     *
+     * @version 1.0
+     * @since 1.0
+     */
+    public int getNumberOfEpisode() {
+        return numberOfEpisode;
+    }
+
+    /**
      * Get the average time for each episode in minute.
      *
-     * @return
-     *  The average time of each episode in minute.
-     * @since 1.0
+     * @return The average time of each episode in minute.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getAverageEpisodeRuntime() {
         return averageEpisodeRuntime;
@@ -349,46 +332,22 @@ public class Anime extends Video {
     /**
      * Set the average time for each episode.
      *
-     * @param averageEpisodeRuntime
-     *  New average time of episode.
-     * @since 1.0
+     * @param averageEpisodeRuntime New average time of episode.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setAverageEpisodeRuntime(int averageEpisodeRuntime) {
         this.averageEpisodeRuntime = averageEpisodeRuntime;
     }
 
     /**
-     * Get the number of episode available during the current season.
-     *
-     * @return
-     *  The number of episode available during the current season.
-     * @since 1.0
-     * @version 1.0
-     */
-    public int getNumberOfEpisode() {
-        return numberOfEpisode;
-    }
-
-    /**
-     * Set the number of episode available during the current season.
-     *
-     * @param numberOfEpisode
-     *  The new number of episode available during the current season.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setNumberOfEpisode(int numberOfEpisode) {
-        this.numberOfEpisode = numberOfEpisode;
-    }
-
-    /**
      * Get the number of episodes available on the anime.
      *
-     * @return
-     *  The number of episodes for the anime.
-     * @since 1.1
+     * @return The number of episodes for the anime.
+     *
      * @version 1.0
+     * @since 1.1
      */
     public int getMaxEpisodes() {
         return maxEpisodes;
@@ -397,43 +356,55 @@ public class Anime extends Video {
     /**
      * Set the number of episodes available on the anime.
      *
-     * @param maxEpisodes
-     *  The new number of episodes for the anime.
-     * @since 1.1
+     * @param maxEpisodes The new number of episodes for the anime.
+     *
      * @version 1.0
+     * @since 1.1
      */
     public void setMaxEpisodes(int maxEpisodes) {
         this.maxEpisodes = maxEpisodes;
     }
 
     /**
+     * Set the number of episode available during the current season.
+     *
+     * @param numberOfEpisode The new number of episode available during the current season.
+     *
+     * @version 1.0
+     * @since 1.0
+     */
+    public void setNumberOfEpisode(int numberOfEpisode) {
+        this.numberOfEpisode = numberOfEpisode;
+    }
+
+    /**
      * Display Anime information.
      *
-     * @return
-     *  A short description of the content of the anime's attribute.
-     * @since 1.0
+     * @return A short description of the content of the anime's attribute.
+     *
      * @version 2.0.1
+     * @since 1.0
      */
     @Override
     public String toString() {
         return "Anime{" +
-                "id=" + super.id +
-                ", title='" + super.title + '\'' +
-                ", originalTitle='" + super.originalTitle + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.genres) +
-                ", synopsis='" + super.synopsis + '\'' +
-                ", producers='" + CollectionAsString.setToString(super.producers) + '\'' +
-                ", directors='" + CollectionAsString.setToString(super.directors) + '\'' +
-                ", supports='" + CollectionAsString.listToString(supports) +
-                ", languageSpoken='" + CollectionAsString.listToString(languagesSpoken) +
-                ", subtitles='" + CollectionAsString.listToString(subtitles) +
-                ", numberOfSeasons=" + numberOfSeasons +
-                ", currentSeason=" + currentSeason +
-                ", startDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", endDate=" + DateFormatter.frenchDate(endDate) +
-                ", averageEpisodeRuntime=" + averageEpisodeRuntime +
-                ", numberOfEpisode=" + numberOfEpisode +
-                ", maxepisodes=" + maxEpisodes +
-                '}';
+               "id=" + super.id +
+               ", title='" + super.title + '\'' +
+               ", originalTitle='" + super.originalTitle + '\'' +
+               ", genres=" + CollectionAsString.collectionToString(super.genres) +
+               ", synopsis='" + super.synopsis + '\'' +
+               ", producers='" + CollectionAsString.collectionToString(super.producers) + '\'' +
+               ", directors='" + CollectionAsString.collectionToString(super.directors) + '\'' +
+               ", supports='" + CollectionAsString.collectionToString(supports) +
+               ", languageSpoken='" + CollectionAsString.collectionToString(languagesSpoken) +
+               ", subtitles='" + CollectionAsString.collectionToString(subtitles) +
+               ", numberOfSeasons=" + numberOfSeasons +
+               ", currentSeason=" + currentSeason +
+               ", startDate=" + DateFormatter.frenchDate(super.releaseDate) +
+               ", endDate=" + DateFormatter.frenchDate(endDate) +
+               ", averageEpisodeRuntime=" + averageEpisodeRuntime +
+               ", numberOfEpisode=" + numberOfEpisode +
+               ", maxepisodes=" + maxEpisodes +
+               '}';
     }
 }

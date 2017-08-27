@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -44,8 +46,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test MovieController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
  * @version 1.0
+ * @since Media-Library 0.1
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientMovieTest {
@@ -98,9 +100,10 @@ public class ClientMovieTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Movie movie = new Movie(
-                id,  "My title", "My original title", "My Synopsis",
+                id, "My title", "My original title", "My Synopsis",
                 new HashSet<Actor>(), new HashSet<Director>(), new HashSet<Producer>(),
-                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
+                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(),
+                new ArrayList<LanguageCode>(),
                 releaseDate, 120
         );
 
@@ -129,7 +132,8 @@ public class ClientMovieTest {
         String title = "Persistent System 2 : Return of the Empty Row";
 
         // When - Get one movie from persistent system.
-        ResponseEntity<Movie> movie = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + title, Movie.class);
+        ResponseEntity<Movie> movie =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + title, Movie.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(movie.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -180,11 +184,14 @@ public class ClientMovieTest {
         );
 
         // When - Send movie to save it on persistent system.
-        ResponseEntity<Movie> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
+        ResponseEntity<Movie> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, Movie.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -232,8 +239,9 @@ public class ClientMovieTest {
         ResponseEntity<MovieException> responseEntity = null;
         // When - Send movie to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, MovieException.class);
-         } catch (HttpClientErrorException httpClientErrorException) {
+            responseEntity =
+                    this.restTemplate.postForEntity(REST_SERVICE_URI + "/movies/", movie, MovieException.class);
+        } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
             assertThat(httpClientErrorException.getStatusCode()).isEqualTo(httpStatusExpected);
@@ -285,23 +293,40 @@ public class ClientMovieTest {
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER), Movie.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER),
+                    Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and movie retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(movie.getTitle());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(movie.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(movie.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(movie.getSupports());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(movie.getSynopsis());
-        assertThat(responseEntity.getBody().getRuntime()).isEqualTo(movie.getRuntime());
-        assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getMainActors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(sizeExpected);
-        System.out.println(responseEntity.getBody().toString());
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(movie.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(movie.getReleaseDate()
+                                                                     .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(movie.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(movie.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(movie.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getRuntime()).isEqualTo(movie.getRuntime());
+        assertThat(responseEntity.getBody()
+                                 .getDirectors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getMainActors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getProducers()
+                                 .size()).isEqualTo(sizeExpected);
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -349,7 +374,9 @@ public class ClientMovieTest {
         // When - Get movie from persistent system.
         ResponseEntity<Movie> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER), Movie.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(movie.getTitle(), URL_ENCODER),
+                    Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -407,7 +434,8 @@ public class ClientMovieTest {
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -452,10 +480,12 @@ public class ClientMovieTest {
         this.restTemplate.put(REST_SERVICE_URI + "/movies/" + movie.getId(), movie, Movie.class);
 
         // When - Get movie update and check if the difference appear.
-        ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
+        ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -465,7 +495,8 @@ public class ClientMovieTest {
 
         int id = 666;
         String title = "Persistent System 3 : A new Despair";
-        String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
+        String synopsis =
+                "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
         List<VideoGenre> genres = new ArrayList<VideoGenre>();
         genres.add(VideoGenre.FANTASY);
@@ -521,7 +552,8 @@ public class ClientMovieTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/movies/" + id);
 
         try {
-            ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
+            ResponseEntity<Movie> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), Movie.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -555,9 +587,11 @@ public class ClientMovieTest {
         String title = "King Kong";
 
         // When - Get all King Kong movie.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), List.class);
+        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/movies/search/title/" + URLEncoder.encode(title, URL_ENCODER), List.class);
 
         // Then - Compare size of king kong retrieve.
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 }

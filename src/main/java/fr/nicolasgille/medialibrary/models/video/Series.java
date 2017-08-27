@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -34,17 +36,17 @@ import java.util.Set;
 
 /**
  * Model class for Series instance.
- *
+ * <p>
  * It extends the class Video to get all main attributes for series type.
  * The attributes added on the media are :
  * <ul>
- *     <li>The List of main actors of the movie</li>
+ * <li>The List of main actors of the movie</li>
  * </ul>
  *
- * @see Anime
  * @author Nicolas GILLE
- * @since Media-Library 0.2
  * @version 2.1
+ * @see Anime
+ * @since Media-Library 0.2
  */
 @Entity
 @DiscriminatorValue(value = "series")
@@ -58,60 +60,50 @@ public class Series extends Anime {
      */
     @JoinTable(
             name = "video_main_actors",
-            joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "main_actors_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "video_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "main_actors_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Actor.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Actor.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Actor> mainActors;
 
     /**
      * Empty constructor.
      *
-     * @since 1.0
      * @version 1.0
+     * @since 1.0
      */
     public Series() {}
 
     /**
      * Constructor of the series object.
      *
-     * @param title
-     *  Title of the series.
-     * @param originalTitle
-     *  Original title of the series.
-     * @param synopsis
-     *  Synopsis of the series.
-     * @param mainActors
-     *  Main actors of the series.
-     * @param producers
-     *  List of all producers of the series.
-     * @param directors
-     *  List of all directors of the series.
-     * @param genres
-     *  List of all genres for the series.
-     * @param supports
-     *  Supports present for the series.
-     * @param languagesSpoken
-     *  List of languages spoken available on series.
-     * @param subtitles
-     *  List of subtitle languages available on series.
-     * @param numberOfSeasons
-     *  Number of seasons who composed the series.
-     * @param currentSeason
-     *  Current season of the series.
-     * @param startDate
-     *  Release date of the series.
-     * @param endDate
-     *  End date of the release.
-     * @param maxEpisodes
-     *  Number of episode during the series.
-     * @param numberOfEpisode
-     *  Average time of episode in minute.
-     * @param averageEpisodeRuntime
-     *  Number of episode available on the season.
-     * @since 1.0
+     * @param title Title of the series.
+     * @param originalTitle Original title of the series.
+     * @param synopsis Synopsis of the series.
+     * @param mainActors Main actors of the series.
+     * @param producers List of all producers of the series.
+     * @param directors List of all directors of the series.
+     * @param genres List of all genres for the series.
+     * @param supports Supports present for the series.
+     * @param languagesSpoken List of languages spoken available on series.
+     * @param subtitles List of subtitle languages available on series.
+     * @param numberOfSeasons Number of seasons who composed the series.
+     * @param currentSeason Current season of the series.
+     * @param startDate Release date of the series.
+     * @param endDate End date of the release.
+     * @param maxEpisodes Number of episode during the series.
+     * @param numberOfEpisode Average time of episode in minute.
+     * @param averageEpisodeRuntime Number of episode available on the season.
+     *
      * @version 1.2
+     * @since 1.0
      */
     public Series(String title, String originalTitle, String synopsis,
                   Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -142,44 +134,27 @@ public class Series extends Anime {
     /**
      * Constructor of the series object.
      *
-     * @param id
-     *  Identifier of the series.
-     * @param title
-     *  Title of the series.
-     * @param originalTitle
-     *  Original title of the series.
-     * @param synopsis
-     *  Synopsis of the series.
-     * @param mainActors
-     *  Main actors of the series.
-     * @param producers
-     *  List of all producers of the series.
-     * @param directors
-     *  List of all directors of the series.
-     * @param genres
-     *  List of all genres for the series.
-     * @param supports
-     *  Supports present for the series.
-     * @param languagesSpoken
-     *  List of languages spoken available on series.
-     * @param subtitles
-     *  List of subtitle languages available on series.
-     * @param numberOfSeasons
-     *  Number of seasons who composed the series.
-     * @param currentSeason
-     *  Current season of the series.
-     * @param startDate
-     *  Release date of the series.
-     * @param endDate
-     *  End date of the release.
-     * @param maxEpisodes
-     *  Number of episode during the series.
-     * @param numberOfEpisode
-     *  Average time of episode in minute.
-     * @param averageEpisodeRuntime
-     *  Number of episode available on the season.
-     * @since 1.0
+     * @param id Identifier of the series.
+     * @param title Title of the series.
+     * @param originalTitle Original title of the series.
+     * @param synopsis Synopsis of the series.
+     * @param mainActors Main actors of the series.
+     * @param producers List of all producers of the series.
+     * @param directors List of all directors of the series.
+     * @param genres List of all genres for the series.
+     * @param supports Supports present for the series.
+     * @param languagesSpoken List of languages spoken available on series.
+     * @param subtitles List of subtitle languages available on series.
+     * @param numberOfSeasons Number of seasons who composed the series.
+     * @param currentSeason Current season of the series.
+     * @param startDate Release date of the series.
+     * @param endDate End date of the release.
+     * @param maxEpisodes Number of episode during the series.
+     * @param numberOfEpisode Average time of episode in minute.
+     * @param averageEpisodeRuntime Number of episode available on the season.
+     *
      * @version 1.2
+     * @since 1.0
      */
     public Series(long id, String title, String originalTitle, String synopsis,
                   Set<Actor> mainActors, Set<Director> directors, Set<Producer> producers,
@@ -211,10 +186,10 @@ public class Series extends Anime {
     /**
      * Constructor use to update attribute of the current series by the series passed on parameter.
      *
-     * @param series
-     *  New content of each attribute of super.
-     * @since 1.0
+     * @param series New content of each attribute of super.
+     *
      * @version 1.1
+     * @since 1.0
      */
     public Series(Series series) {
         super.id = series.getId();
@@ -240,10 +215,10 @@ public class Series extends Anime {
     /**
      * Return the set composed by main actors.
      *
-     * @return
-     *  Set of the main actors.
-     * @since 1.0
+     * @return Set of the main actors.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<Actor> getMainActors() {
         return mainActors;
@@ -252,10 +227,10 @@ public class Series extends Anime {
     /**
      * Set main actors.
      *
-     * @param mainActors
-     *  New mainActors.
-     * @since 1.0
+     * @param mainActors New mainActors.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setMainActors(Set<Actor> mainActors) {
         this.mainActors = mainActors;
@@ -264,32 +239,32 @@ public class Series extends Anime {
     /**
      * Display Series information.
      *
-     * @return
-     *  A short description of the content of the series's attribute.
-     * @since 1.0
+     * @return A short description of the content of the series's attribute.
+     *
      * @version 2.0.1
+     * @since 1.0
      */
     @Override
     public String toString() {
         return "Series{" +
-                "id=" + super.id +
-                ", title='" + super.title + '\'' +
-                ", originalTitle='" + super.originalTitle + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.genres) +
-                ", synopsis='" + super.synopsis + '\'' +
-                ", mainActors='" + CollectionAsString.setToString(this.mainActors) + '\'' +
-                ", producers='" + CollectionAsString.setToString(super.producers) + '\'' +
-                ", directors='" + CollectionAsString.setToString(super.directors) + '\'' +
-                ", supports='" + CollectionAsString.listToString(super.supports) +
-                ", languageSpoken='" + CollectionAsString.listToString(super.languagesSpoken) +
-                ", subtitles='" + CollectionAsString.listToString(super.subtitles) +
-                ", numberOfSeasons=" + super.numberOfSeasons +
-                ", currentSeason=" + super.currentSeason +
-                ", startDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", endDate=" + DateFormatter.frenchDate(super.endDate) +
-                ", averageEpisodeRuntime=" + super.averageEpisodeRuntime +
-                ", numberOfEpisode=" + super.numberOfEpisode +
-                ", maxepisodes=" + super.maxEpisodes +
-                '}';
+               "id=" + super.id +
+               ", title='" + super.title + '\'' +
+               ", originalTitle='" + super.originalTitle + '\'' +
+               ", genres=" + CollectionAsString.collectionToString(super.genres) +
+               ", synopsis='" + super.synopsis + '\'' +
+               ", mainActors='" + CollectionAsString.collectionToString(this.mainActors) + '\'' +
+               ", producers='" + CollectionAsString.collectionToString(super.producers) + '\'' +
+               ", directors='" + CollectionAsString.collectionToString(super.directors) + '\'' +
+               ", supports='" + CollectionAsString.collectionToString(super.supports) +
+               ", languageSpoken='" + CollectionAsString.collectionToString(super.languagesSpoken) +
+               ", subtitles='" + CollectionAsString.collectionToString(super.subtitles) +
+               ", numberOfSeasons=" + super.numberOfSeasons +
+               ", currentSeason=" + super.currentSeason +
+               ", startDate=" + DateFormatter.frenchDate(super.releaseDate) +
+               ", endDate=" + DateFormatter.frenchDate(super.endDate) +
+               ", averageEpisodeRuntime=" + super.averageEpisodeRuntime +
+               ", numberOfEpisode=" + super.numberOfEpisode +
+               ", maxepisodes=" + super.maxEpisodes +
+               '}';
     }
 }

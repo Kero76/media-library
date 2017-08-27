@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -44,8 +46,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test SeriesController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.2
  * @version 1.0
+ * @since Media-Library 0.2
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientSeriesTest {
@@ -96,12 +98,13 @@ public class ClientSeriesTest {
         String messageExcepted = "404 null";
         int id = 666;
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 id, "Star Gate SG1", "Star Gate SG1", "My Synopsis",
                 new HashSet<Actor>(), new HashSet<Director>(), new HashSet<Producer>(),
-                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(),
+                new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(), new ArrayList<LanguageCode>(),
+                new ArrayList<LanguageCode>(),
                 startDate, endDate, 10, 2, 226, 22, 42
         );
 
@@ -130,7 +133,9 @@ public class ClientSeriesTest {
         String title = "Persistent System 2 : Return of the Empty Row";
 
         // When - Get one series from persistent system.
-        ResponseEntity<Series> series = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + title + "/" + 5, Series.class);
+        ResponseEntity<Series> series =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + title + "/" + 5,
+                                               Series.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(series.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -175,12 +180,12 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 22;
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 title, title, synopsis,
@@ -189,11 +194,14 @@ public class ClientSeriesTest {
         );
 
         // When - Send series to save it on persistent system.
-        ResponseEntity<Series> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
+        ResponseEntity<Series> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, Series.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -238,7 +246,7 @@ public class ClientSeriesTest {
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 title, title, synopsis,
@@ -249,7 +257,8 @@ public class ClientSeriesTest {
         ResponseEntity<SeriesException> responseEntity = null;
         // When - Send series to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, SeriesException.class);
+            responseEntity =
+                    this.restTemplate.postForEntity(REST_SERVICE_URI + "/series/", series, SeriesException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -294,12 +303,12 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 22;
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 title, title, synopsis,
@@ -310,28 +319,51 @@ public class ClientSeriesTest {
         // When - Get series from persistent system.
         ResponseEntity<Series> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER) + "/" + series.getCurrentSeason(), Series.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER) +
+                    "/" + series.getCurrentSeason(), Series.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and series retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(series.getTitle());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(series.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getEndDate().get(Calendar.YEAR)).isEqualTo(series.getEndDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(series.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(series.getSupports());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(series.getSynopsis());
-        assertThat(responseEntity.getBody().getAverageEpisodeRuntime()).isEqualTo(series.getAverageEpisodeRuntime());
-        assertThat(responseEntity.getBody().getCurrentSeason()).isEqualTo(series.getCurrentSeason());
-        assertThat(responseEntity.getBody().getNumberOfSeasons()).isEqualTo(series.getNumberOfSeasons());
-        assertThat(responseEntity.getBody().getNumberOfEpisode()).isEqualTo(series.getNumberOfEpisode());
-        assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getMainActors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(series.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(series.getReleaseDate()
+                                                                      .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getEndDate()
+                                 .get(Calendar.YEAR)).isEqualTo(series.getEndDate()
+                                                                      .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(series.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(series.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(series.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getAverageEpisodeRuntime()).isEqualTo(series.getAverageEpisodeRuntime());
+        assertThat(responseEntity.getBody()
+                                 .getCurrentSeason()).isEqualTo(series.getCurrentSeason());
+        assertThat(responseEntity.getBody()
+                                 .getNumberOfSeasons()).isEqualTo(series.getNumberOfSeasons());
+        assertThat(responseEntity.getBody()
+                                 .getNumberOfEpisode()).isEqualTo(series.getNumberOfEpisode());
+        assertThat(responseEntity.getBody()
+                                 .getDirectors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getMainActors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getProducers()
+                                 .size()).isEqualTo(sizeExpected);
 
-        System.out.println(responseEntity.getBody().toString());
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -371,12 +403,12 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 22;
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 title, title, synopsis,
@@ -387,7 +419,9 @@ public class ClientSeriesTest {
         // When - Get series from persistent system.
         ResponseEntity<Series> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER) + "/" + series.getCurrentSeason(), Series.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/search/title/" + URLEncoder.encode(series.getTitle(), URL_ENCODER) + "/" +
+                    series.getCurrentSeason(), Series.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -434,12 +468,12 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 22;
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 title, title, synopsis,
@@ -454,7 +488,8 @@ public class ClientSeriesTest {
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -492,12 +527,12 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 22;
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 id, title, title, synopsis,
@@ -507,10 +542,13 @@ public class ClientSeriesTest {
         this.restTemplate.put(REST_SERVICE_URI + "/series/" + series.getId(), series, Series.class);
 
         // When - Get series update and check if the difference appear.
-        ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" + series.getCurrentSeason(), Series.class);
+        ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" +
+                series.getCurrentSeason(), Series.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -550,12 +588,12 @@ public class ClientSeriesTest {
 
         int averageEpisodeRuntime = 44;
         int numberOfSeasons = 10;
-        int currentSeason   = 2;
+        int currentSeason = 2;
         int numberOfEpisode = 22;
         int maxEpisodes = 226;
 
         Calendar startDate = new GregorianCalendar(1997, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
-        Calendar endDate   = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
+        Calendar endDate = new GregorianCalendar(2007, GregorianCalendar.SEPTEMBER, GregorianCalendar.THURSDAY);
 
         Series series = new Series(
                 title, title, synopsis,
@@ -584,7 +622,9 @@ public class ClientSeriesTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/series/" + id);
 
         try {
-            ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" + 2, Series.class);
+            ResponseEntity<Series> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/series/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" + 2,
+                    Series.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

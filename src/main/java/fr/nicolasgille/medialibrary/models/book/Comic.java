@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.book;
 
 import fr.nicolasgille.medialibrary.models.Media;
@@ -37,10 +39,10 @@ import java.util.Set;
  * Representation of the comic in Media-Library.
  * It can be represent a <code>Manga</code>, a <code>American Comic</code> or an <code>European Comic</code>.
  *
- * @see Media
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.1
+ * @see Media
+ * @since Media-Library 0.4
  */
 @Entity
 @DiscriminatorValue(value = "comic")
@@ -67,10 +69,16 @@ public class Comic extends Book {
      */
     @JoinTable(
             name = "books_illustrator",
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "illustrator_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "book_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "illustrator_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Illustrator.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Illustrator.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Illustrator> illustrators;
 
@@ -85,28 +93,31 @@ public class Comic extends Book {
     /**
      * Constructor of the Comic.
      *
-     * @param title         Title of the comic.
+     * @param title Title of the comic.
      * @param originalTitle Original title of the comic.
-     * @param synopsis      Synopsis of the comic.
-     * @param releaseDate   Release date of the comic.
-     * @param nbPages       Number of page of the comic.
-     * @param isbn          ISBN of the comic.
-     * @param authors       Authors of the comic.
-     * @param publishers    Publishers of the comic.
-     * @param genres        Genres of the comic.
-     * @param supports      Supports of the comic.
-     * @param format        Format of the comic.
-     * @param volumes       Number of volume for the comic.
+     * @param synopsis Synopsis of the comic.
+     * @param releaseDate Release date of the comic.
+     * @param nbPages Number of page of the comic.
+     * @param isbn ISBN of the comic.
+     * @param authors Authors of the comic.
+     * @param publishers Publishers of the comic.
+     * @param genres Genres of the comic.
+     * @param supports Supports of the comic.
+     * @param format Format of the comic.
+     * @param volumes Number of volume for the comic.
      * @param currentVolume current volume for the comic.
-     * @param illustrators  Illustrators of the comic.
+     * @param illustrators Illustrators of the comic.
+     *
      * @version 1.0
      * @since 1.0
      */
     public Comic(String title, String originalTitle, String synopsis,
                  Calendar releaseDate, int nbPages, String isbn,
-                 Set<Author> authors, Set<Publisher> publishers, List<BookGenre> genres, List<MediaSupport> supports, BookFormat format,
+                 Set<Author> authors, Set<Publisher> publishers, List<BookGenre> genres, List<MediaSupport> supports,
+                 BookFormat format,
                  int volumes, int currentVolume, Set<Illustrator> illustrators) {
-        super(title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format);
+        super(title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+              format);
         this.volumes = volumes;
         this.currentVolume = currentVolume;
         this.illustrators = illustrators;
@@ -115,29 +126,32 @@ public class Comic extends Book {
     /**
      * Constructor of the Comic.
      *
-     * @param id            Identifier of the comic.
-     * @param title         Title of the comic.
+     * @param id Identifier of the comic.
+     * @param title Title of the comic.
      * @param originalTitle Original title of the comic.
-     * @param synopsis      Synopsis of the comic.
-     * @param releaseDate   Release date of the comic.
-     * @param nbPages       Number of page of the comic.
-     * @param isbn          ISBN of the comic.
-     * @param authors       Authors of the comic.
-     * @param publishers    Publishers of the comic.
-     * @param genres        Genres of the comic.
-     * @param supports      Supports of the comic.
-     * @param format        Format of the comic.
-     * @param volumes       Number of volume for the comic.
+     * @param synopsis Synopsis of the comic.
+     * @param releaseDate Release date of the comic.
+     * @param nbPages Number of page of the comic.
+     * @param isbn ISBN of the comic.
+     * @param authors Authors of the comic.
+     * @param publishers Publishers of the comic.
+     * @param genres Genres of the comic.
+     * @param supports Supports of the comic.
+     * @param format Format of the comic.
+     * @param volumes Number of volume for the comic.
      * @param currentVolume current volume for the comic.
-     * @param illustrators  Illustrators of the comic.
+     * @param illustrators Illustrators of the comic.
+     *
      * @version 1.0
      * @since 1.0
      */
     public Comic(long id, String title, String originalTitle, String synopsis,
                  Calendar releaseDate, int nbPages, String isbn,
-                 Set<Author> authors, Set<Publisher> publishers, List<BookGenre> genres, List<MediaSupport> supports, BookFormat format,
+                 Set<Author> authors, Set<Publisher> publishers, List<BookGenre> genres, List<MediaSupport> supports,
+                 BookFormat format,
                  int volumes, int currentVolume, Set<Illustrator> illustrators) {
-        super(id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports, format);
+        super(id, title, originalTitle, synopsis, releaseDate, nbPages, isbn, authors, publishers, genres, supports,
+              format);
         this.volumes = volumes;
         this.currentVolume = currentVolume;
         this.illustrators = illustrators;
@@ -146,10 +160,10 @@ public class Comic extends Book {
     /**
      * Constructor to copy another instance of Comic.
      *
-     * @param comic
-     *  Comic at copy.
-     * @since 1.0
+     * @param comic Comic at copy.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Comic(Comic comic) {
         super.id = comic.getId();
@@ -172,10 +186,10 @@ public class Comic extends Book {
     /**
      * Get the number of volumes for the comic.
      *
-     * @return
-     *  The number of volume who composed the comic.
-     * @since 1.0
+     * @return The number of volume who composed the comic.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getVolumes() {
         return volumes;
@@ -184,10 +198,10 @@ public class Comic extends Book {
     /**
      * Set the number of volumes available for the comic.
      *
-     * @param volumes
-     *  New number of volumes.
-     * @since 1.0
+     * @param volumes New number of volumes.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setVolumes(int volumes) {
         this.volumes = volumes;
@@ -196,10 +210,10 @@ public class Comic extends Book {
     /**
      * Get the number of the current volume of the comic.
      *
-     * @return
-     *  The current number of the volume for the comic.
-     * @since 1.0
+     * @return The current number of the volume for the comic.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getCurrentVolume() {
         return currentVolume;
@@ -208,10 +222,10 @@ public class Comic extends Book {
     /**
      * Set the current volume of the comic.
      *
-     * @param currentVolume
-     *  New current volume for the comic.
-     * @since 1.0
+     * @param currentVolume New current volume for the comic.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setCurrentVolume(int currentVolume) {
         this.currentVolume = currentVolume;
@@ -220,10 +234,10 @@ public class Comic extends Book {
     /**
      * Return the illustrators who draw the comic.
      *
-     * @return
-     *  The illustrators of the comic.
-     * @since 1.0
+     * @return The illustrators of the comic.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<Illustrator> getIllustrators() {
         return illustrators;
@@ -232,10 +246,10 @@ public class Comic extends Book {
     /**
      * Set the illustrator of the comic.
      *
-     * @param illustrators
-     *  New set of illustrators of the comic.
-     * @since 1.0
+     * @param illustrators New set of illustrators of the comic.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setIllustrators(Set<Illustrator> illustrators) {
         this.illustrators = illustrators;
@@ -244,29 +258,30 @@ public class Comic extends Book {
     /**
      * Some information about the Comic.
      *
-     * @return
-     *  The information about the comic.
-     * @since 1.0
+     * @return The information about the comic.
+     *
      * @version 1.0
+     * @since 1.0
      */
     @Override
     public String toString() {
         return "Comic{" +
-                "id=" + super.id +
-                ", isbn='" + super.getIsbn() + '\'' +
-                ", title='" + super.title + '\'' +
-                ", originalTitle='" + super.getOriginalTitle() + '\'' +
-                ", synopsis='" + super.getSynopsis() + '\'' +
-                ", genres=" + CollectionAsString.listToString(super.getGenres()) +
-                ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", supports='" + CollectionAsString.listToString(super.getSupports()) +
-                ", format=" + super.getFormat().getName() +
-                ", nbPages=" + super.getNbPages() +
-                ", authors=" + CollectionAsString.setToString(super.getAuthors()) +
-                ", publisher=" + CollectionAsString.setToString(super.getPublishers()) +
-                ", volumes=" + volumes +
-                ", currentVolume=" + currentVolume +
-                ", illustrator=" + CollectionAsString.setToString(this.illustrators) +
-                '}';
+               "id=" + super.id +
+               ", isbn='" + super.getIsbn() + '\'' +
+               ", title='" + super.title + '\'' +
+               ", originalTitle='" + super.getOriginalTitle() + '\'' +
+               ", synopsis='" + super.getSynopsis() + '\'' +
+               ", genres=" + CollectionAsString.collectionToString(super.getGenres()) +
+               ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
+               ", supports='" + CollectionAsString.collectionToString(super.getSupports()) +
+               ", format=" + super.getFormat()
+                                  .getName() +
+               ", nbPages=" + super.getNbPages() +
+               ", authors=" + CollectionAsString.collectionToString(super.getAuthors()) +
+               ", publisher=" + CollectionAsString.collectionToString(super.getPublishers()) +
+               ", volumes=" + volumes +
+               ", currentVolume=" + currentVolume +
+               ", illustrator=" + CollectionAsString.collectionToString(this.illustrators) +
+               '}';
     }
 }

@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.book;
 
 import fr.nicolasgille.medialibrary.models.Media;
@@ -37,14 +39,25 @@ import java.util.Set;
  * It must be extends by all subtype of book like <code>Manga</code> or <code>Comic</code>.
  * This class isn't abstract because books like <em>Novel</em> can be represented by this class.
  *
- * @see Media
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.1
+ * @see Media
+ * @since Media-Library 0.4
  */
 @Entity
 @DiscriminatorValue(value = "book")
 public class Book extends Media {
+
+    /**
+     * Genre of the media.
+     *
+     * @see BookGenre
+     * @since 1.1
+     */
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = BookGenre.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<BookGenre> genres;
 
     /**
      * ISBN of the book.
@@ -68,27 +81,22 @@ public class Book extends Media {
     private int nbPages;
 
     /**
-     * Genre of the media.
-     *
-     * @see BookGenre
-     * @since 1.1
-     */
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = BookGenre.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<BookGenre> genres;
-
-    /**
      * Set of all authors who written books.
      *
      * @since 1.0
      */
     @JoinTable(
             name = "books_authors",
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "authors_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "book_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "authors_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Author.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Author.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Author> authors;
 
@@ -99,10 +107,16 @@ public class Book extends Media {
      */
     @JoinTable(
             name = "books_publisher",
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = {@JoinColumn(name = "publisher_id", referencedColumnName = "id")}
+            joinColumns = @JoinColumn(name = "book_id",
+                                      referencedColumnName = "id"),
+            inverseJoinColumns = {
+                    @JoinColumn(name = "publisher_id",
+                                referencedColumnName = "id")
+            }
     )
-    @ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Publisher.class,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
+                fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Publisher> publishers;
 
@@ -118,38 +132,28 @@ public class Book extends Media {
     /**
      * Empty constructor.
      *
-     * @since 1.0
      * @version 1.0
+     * @since 1.0
      */
     public Book() {}
 
     /**
      * Constructor of the Book.
      *
-     * @param title
-     *  Title of the book.
-     * @param originalTitle
-     *  Original title of the book.
-     * @param synopsis
-     *  Synopsis of the book.
-     * @param releaseDate
-     *  Release date of the book.
-     * @param nbPages
-     *  Number of page of the book.
-     * @param isbn
-     *  ISBN of the book.
-     * @param authors
-     *  Authors of the book.
-     * @param publishers
-     *  Publishers of the book.
-     * @param genres
-     *  Genres of the book.
-     * @param supports
-     *  Supports of the book.
-     * @param format
-     *  Format of the book.
-     * @since 1.0
+     * @param title Title of the book.
+     * @param originalTitle Original title of the book.
+     * @param synopsis Synopsis of the book.
+     * @param releaseDate Release date of the book.
+     * @param nbPages Number of page of the book.
+     * @param isbn ISBN of the book.
+     * @param authors Authors of the book.
+     * @param publishers Publishers of the book.
+     * @param genres Genres of the book.
+     * @param supports Supports of the book.
+     * @param format Format of the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Book(String title, String originalTitle, String synopsis,
                 Calendar releaseDate, int nbPages, String isbn,
@@ -171,32 +175,21 @@ public class Book extends Media {
     /**
      * Constructor of the Book.
      *
-     * @param id
-     *  Identifier of the book.
-     * @param title
-     *  Title of the book.
-     * @param originalTitle
-     *  Original title of the book.
-     * @param synopsis
-     *  Synopsis of the book.
-     * @param releaseDate
-     *  Release date of the book.
-     * @param nbPages
-     *  Number of page of the book.
-     * @param isbn
-     *  ISBN of the book.
-     * @param authors
-     *  Authors of the book.
-     * @param publishers
-     *  Publishers of the book.
-     * @param genres
-     *  Genres of the book.
-     * @param supports
-     *  Supports of the book.
-     * @param format
-     *  Format of the book.
-     * @since 1.0
+     * @param id Identifier of the book.
+     * @param title Title of the book.
+     * @param originalTitle Original title of the book.
+     * @param synopsis Synopsis of the book.
+     * @param releaseDate Release date of the book.
+     * @param nbPages Number of page of the book.
+     * @param isbn ISBN of the book.
+     * @param authors Authors of the book.
+     * @param publishers Publishers of the book.
+     * @param genres Genres of the book.
+     * @param supports Supports of the book.
+     * @param format Format of the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Book(long id, String title, String originalTitle, String synopsis,
                 Calendar releaseDate, int nbPages, String isbn,
@@ -219,10 +212,10 @@ public class Book extends Media {
     /**
      * Constructor used to copy another book.
      *
-     * @param book
-     *  Book at copying.
-     * @since 1.0
+     * @param book Book at copying.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Book(Book book) {
         super.id = book.getId();
@@ -240,36 +233,12 @@ public class Book extends Media {
     }
 
     /**
-     * Get the ISBN of the book.
-     *
-     * @return
-     *  The ISBN of the book.
-     * @since 1.0
-     * @version 1.0
-     */
-    public String getIsbn() {
-        return isbn;
-    }
-
-    /**
-     * Set the ISBN of the book.
-     *
-     * @param isbn
-     *  New ISBN.
-     * @since 1.0
-     * @version 1.0
-     */
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    /**
      * Get the original title of the book.
      *
-     * @return
-     *  The original title of the book.
-     * @since 1.0
+     * @return The original title of the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getOriginalTitle() {
         return originalTitle;
@@ -278,10 +247,10 @@ public class Book extends Media {
     /**
      * Set the original title of the book.
      *
-     * @param originalTitle
-     *  New original title for the book.
-     * @since 1.0
+     * @param originalTitle New original title for the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setOriginalTitle(String originalTitle) {
         this.originalTitle = originalTitle;
@@ -290,34 +259,46 @@ public class Book extends Media {
     /**
      * Get the number of pages available on the book.
      *
-     * @return
-     *  The number of pages on the book.
-     * @since 1.0
+     * @return The number of pages on the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public int getNbPages() {
         return nbPages;
     }
 
     /**
-     * Set the number of pages available on the book.
+     * Get the ISBN of the book.
      *
-     * @param nbPages
-     *  New number of pages.
-     * @since 1.0
+     * @return The ISBN of the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    public void setNbPages(int nbPages) {
-        this.nbPages = nbPages;
+    public String getIsbn() {
+        return isbn;
+    }
+
+    /**
+     * Set the ISBN of the book.
+     *
+     * @param isbn New ISBN.
+     *
+     * @version 1.0
+     * @since 1.0
+     */
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     /**
      * Return all authors who written the book.
      *
-     * @return
-     *  All authors who written the book.
-     * @since 1.0
+     * @return All authors who written the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<Author> getAuthors() {
         return authors;
@@ -326,10 +307,10 @@ public class Book extends Media {
     /**
      * Set all authors who write the book.
      *
-     * @param authors
-     *  New st of Authors.
-     * @since 1.0
+     * @param authors New st of Authors.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
@@ -338,10 +319,10 @@ public class Book extends Media {
     /**
      * Get the publishers of the book.
      *
-     * @return
-     *  The publishers of the book.
-     * @since 1.0
+     * @return The publishers of the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public Set<Publisher> getPublishers() {
         return publishers;
@@ -350,23 +331,23 @@ public class Book extends Media {
     /**
      * Set the publisher of the book.
      *
-     * @param publishers
-     *  The new publisher.
-     * @since 1.0
+     * @param publishers The new publisher.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setPublishers(Set<Publisher> publishers) {
         this.publishers = publishers;
     }
 
-
     /**
      * Return the genres.
      *
      * @return The genres of the book.
+     *
+     * @version 1.0
      * @see BookGenre
      * @since 1.1
-     * @version 1.0
      */
     public List<BookGenre> getGenres() {
         return this.genres;
@@ -376,8 +357,9 @@ public class Book extends Media {
      * Set genres of Media.
      *
      * @param genres New book.
-     * @since 1.1
+     *
      * @version 1.0
+     * @since 1.1
      */
     public void setGenres(List<BookGenre> genres) {
         this.genres = genres;
@@ -386,10 +368,10 @@ public class Book extends Media {
     /**
      * Get the format of the book.
      *
-     * @return
-     *  The format of the book.
-     * @since 1.0
+     * @return The format of the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public BookFormat getFormat() {
         return format;
@@ -398,38 +380,50 @@ public class Book extends Media {
     /**
      * Set the format of the book.
      *
-     * @param format
-     *  New format for the book.
-     * @since 1.0
+     * @param format New format for the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setFormat(BookFormat format) {
         this.format = format;
     }
 
     /**
+     * Set the number of pages available on the book.
+     *
+     * @param nbPages New number of pages.
+     *
+     * @version 1.0
+     * @since 1.0
+     */
+    public void setNbPages(int nbPages) {
+        this.nbPages = nbPages;
+    }
+
+    /**
      * Some information about the Book.
      *
-     * @return
-     *  The information about the book.
-     * @since 1.0
+     * @return The information about the book.
+     *
      * @version 1.0
+     * @since 1.0
      */
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + super.id +
-                "isbn='" + isbn + '\'' +
-                ", title='" + super.title + '\'' +
-                ", originalTitle='" + originalTitle + '\'' +
-                ", synopsis='" + synopsis + '\'' +
-                ", genres=" + CollectionAsString.listToString(this.getGenres()) +
-                ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
-                ", supports='" + CollectionAsString.listToString(super.getSupports()) +
-                ", format=" + format.getName() +
-                ", nbPages=" + nbPages +
-                ", authors=" + CollectionAsString.setToString(this.authors) +
-                ", publishers=" + CollectionAsString.setToString(this.publishers) +
-                '}';
+               "id=" + super.id +
+               "isbn='" + isbn + '\'' +
+               ", title='" + super.title + '\'' +
+               ", originalTitle='" + originalTitle + '\'' +
+               ", synopsis='" + synopsis + '\'' +
+               ", genres=" + CollectionAsString.collectionToString(this.getGenres()) +
+               ", releaseDate=" + DateFormatter.frenchDate(super.releaseDate) +
+               ", supports='" + CollectionAsString.collectionToString(super.getSupports()) +
+               ", format=" + format.getName() +
+               ", nbPages=" + nbPages +
+               ", authors=" + CollectionAsString.collectionToString(this.authors) +
+               ", publishers=" + CollectionAsString.collectionToString(this.publishers) +
+               '}';
     }
 }

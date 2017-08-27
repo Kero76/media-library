@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.common.company;
 
 /**
@@ -22,48 +24,48 @@ package fr.nicolasgille.medialibrary.models.common.company;
  * It force all Company represented on the Media-Library to have a name and an id.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 public interface ICompany {
 
     /**
      * Return id of the company.
      *
-     * @return
-     *  Id of the company.
-     * @since 1.0
+     * @return Id of the company.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public long getId();
 
     /**
      * Set id of the company.
      *
-     * @param id
-     *  New id.
-     * @since 1.0
+     * @param id New id.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setId(long id);
 
     /**
      * Return the name of the company.
      *
-     * @return
-     *  The name of the company.
-     * @since 1.0
+     * @return The name of the company.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getName();
 
     /**
      * Set the name of the company.
      *
-     * @param name
-     *  New name of the company.
-     * @since 1.0
+     * @param name New name of the company.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setName(String name);
 }

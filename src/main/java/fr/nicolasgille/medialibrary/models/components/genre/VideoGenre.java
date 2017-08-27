@@ -1,27 +1,29 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.components.genre;
 
 /**
  * An enumeration representing all genres genre present on app.
  *
  * @author Nicolas GILLE
- * @since Media-Library 1.0
  * @version 1.0
+ * @since Media-Library 1.0
  */
 public enum VideoGenre {
     ACTION("Action"),
@@ -74,10 +76,10 @@ public enum VideoGenre {
     /**
      * Constructor of the Enum for instantiate value of attribute <code>name</code>.
      *
-     * @param name
-     *  Name stored in database.
-     * @since 1.0
+     * @param name Name stored in database.
+     *
      * @version 1.0
+     * @since 1.0
      */
     VideoGenre(String name) {
         this.name = name;
@@ -86,10 +88,10 @@ public enum VideoGenre {
     /**
      * Return the name.
      *
-     * @return
-     *  Return the name of the element.
-     * @since 1.0
+     * @return Return the name of the element.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getName() {
         return name;

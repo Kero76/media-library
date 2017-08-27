@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models;
 
 import fr.nicolasgille.medialibrary.models.components.MediaSupport;
@@ -28,8 +30,8 @@ import java.util.List;
  * Abstract class at inherit by all subclasses of media type.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.2
  * @version 2.0
+ * @since Media-Library 0.2
  */
 @Entity
 @Table(name = "media")
@@ -84,10 +86,10 @@ public abstract class Media implements IMedia {
     /**
      * Return the id.
      *
-     * @return
-     *  The id.
-     * @since 1.0
+     * @return The id.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public long getId() {
         return id;
@@ -96,10 +98,10 @@ public abstract class Media implements IMedia {
     /**
      * Set the id.
      *
-     * @param id
-     *  New id.
-     * @since 1.0
+     * @param id New id.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setId(long id) {
         this.id = id;
@@ -109,8 +111,9 @@ public abstract class Media implements IMedia {
      * Return the title.
      *
      * @return The title of the movie.
-     * @since 1.0
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getTitle() {
         return this.title;
@@ -120,8 +123,9 @@ public abstract class Media implements IMedia {
      * Set title.
      *
      * @param title New title.
-     * @since 1.0
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setTitle(String title) {
         this.title = title;
@@ -130,10 +134,10 @@ public abstract class Media implements IMedia {
     /**
      * Get the synopsis of the media.
      *
-     * @return
-     *  The synopsis of the media.
-     * @since 1.0
+     * @return The synopsis of the media.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getSynopsis() {
         return synopsis;
@@ -142,10 +146,10 @@ public abstract class Media implements IMedia {
     /**
      * Set the synopsis of the media.
      *
-     * @param synopsis
-     *  New synopsis.
-     * @since 1.0
+     * @param synopsis New synopsis.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
@@ -154,10 +158,10 @@ public abstract class Media implements IMedia {
     /**
      * Return the release date.
      *
-     * @return
-     *  The release date.
-     * @since 2.0
+     * @return The release date.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public Calendar getReleaseDate() {
         return releaseDate;
@@ -166,10 +170,10 @@ public abstract class Media implements IMedia {
     /**
      * Set releaseDate.
      *
-     * @param releaseDate
-     *  New date of release.
-     * @since 2.0
+     * @param releaseDate New date of release.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
@@ -178,10 +182,10 @@ public abstract class Media implements IMedia {
     /**
      * Return all supports for the video.
      *
-     * @return
-     *  List of all supports.
-     * @since 2.0
+     * @return List of all supports.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public List<MediaSupport> getSupports() {
         return supports;
@@ -190,10 +194,10 @@ public abstract class Media implements IMedia {
     /**
      * Set the supports for the video.
      *
-     * @param supports
-     *  New Supports.
-     * @since 2.0
+     * @param supports New Supports.
+     *
      * @version 1.0
+     * @since 2.0
      */
     public void setSupports(List<MediaSupport> supports) {
         this.supports = supports;

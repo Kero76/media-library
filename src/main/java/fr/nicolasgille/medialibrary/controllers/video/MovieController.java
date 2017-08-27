@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import fr.nicolasgille.medialibrary.exceptions.video.MovieException;
@@ -49,12 +51,20 @@ import java.util.Set;
  * You can add you own method of research if you would have a new research type of movie.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.1
  * @version 2.2.1
+ * @since Media-Library 0.1
  */
 @RestController
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/",
+                produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
+
+    /**
+     * Logger to get information during some process.
+     *
+     * @since 2.0
+     */
+    static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
     /**
      * Constant used to specified URL encoding.
@@ -96,25 +106,19 @@ public class MovieController {
     private DirectorRepository directorRepository;
 
     /**
-     * Logger to get information during some process.
-     *
-     * @since 2.0
-     */
-    static final Logger logger = LoggerFactory.getLogger(MovieController.class);
-
-    /**
      * Return all movies found on Database.
-     *
+     * <p>
      * This method return a ResponseEntity object who contains a list of movies found on the Database.
      * If the database is empty, this method return an error HTTP 204 : No Content.
      * This method can call only by GET request and take nothing parameter to work.
      *
-     * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 204 : No Content.
-     * @since 1.0
+     * @return A ResponseEntity with all movies found on Database, or an error HTTP 204 : No Content.
+     *
      * @version 2.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/movies/", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies/",
+                    method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<Movie> movies = movieRepository.findAll();
         if (movies.isEmpty()) {
@@ -125,50 +129,54 @@ public class MovieController {
 
     /**
      * Return a movie by his title.
-     *
+     * <p>
      * This method return a ResponseEntity with the movie retrieve from the Database.
      * If the database doesn't get the movie, this method return an HTTP error : 204.
      * In other case, this method return the movie found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
      * parameter the title of the movie at research.
-     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used
+     * on search process.
      *
-     * @param titleEncoded
-     *  Title of the movie encoded to search on Database.
-     * @return
-     *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
-     * @throws UnsupportedEncodingException
-     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
-     * @since 1.0
+     * @param titleEncoded Title of the movie encoded to search on Database.
+     *
+     * @return A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
+     *
+     * @throws UnsupportedEncodingException The method throw an <code>UnsupportedEncodingException</code> when a
+     *         problem occurred during title decoding.
      * @version 2.1.1
+     * @since 1.0
      */
-    @RequestMapping(value = "/movies/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/movies/search/title/{title}",
+                    method = RequestMethod.GET)
+    public ResponseEntity<?> getMovieByTitle(@PathVariable(value = "title") String titleEncoded)
+            throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, MovieController.ENCODING);
         logger.info("Fetching Movie with title {}", title);
         List<Movie> movies = movieRepository.findByTitleIgnoreCaseContaining(title);
         if (movies == null) {
             logger.error("Movie with title {} not found.", title);
-            return new ResponseEntity<Object>(new MovieException("Movie with title " + title + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new MovieException("Movie with title " + title + " not found."),
+                                              HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Movie>>(movies, HttpStatus.OK);
     }
 
     /**
      * Return a movie by his identifier.
-     *
+     * <p>
      * This method return a ResponseEntity with the movie retrieve from the Database.
      * If the database doesn't get the movie, this method return an HTTP error : 204.
      * In other case, this method return the movie found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
      * parameter the identifier of the movie at research.
      *
-     * @param id
-     *  Identifier of the movie on Database.
-     * @return
-     *  A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
-     * @since 2.2
+     * @param id Identifier of the movie on Database.
+     *
+     * @return A ResponseEntity with the movie found on Database, or an error HTTP 204 : No Content.
+     *
      * @version 1.0
+     * @since 2.2
      */
     @RequestMapping(value = "/movies/search/id/{id}")
     public ResponseEntity<?> getMovieById(@PathVariable(value = "id") long id) {
@@ -176,37 +184,41 @@ public class MovieController {
         Movie movie = movieRepository.findOne(id);
         if (movie == null) {
             logger.error("Movie with id {} not found.", id);
-            return new ResponseEntity<Object>(new MovieException("Movie with id " + id + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new MovieException("Movie with id " + id + " not found."),
+                                              HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Movie>(movie, HttpStatus.OK);
     }
 
     /**
      * Add a movie on the Database.
-     *
+     * <p>
      * Before added the movie on database, it check if the movie is already present on the database.
      * So, if the movie is present, the method return an error HTTP 409 : CONFLICT.
      * In other case, it return the code HTTP 200 and an uri to get information about the new movie insert.
      * So, this method is call by POST method and take the movie at insert on the BODY request.
      *
-     * @param movie
-     *  Movie at insert on Database.
-     * @param uriBuilder
-     *  UrlComponentsBuilder use to redirect user on movie page.
-     * @return
-     *  A ResponseEntity with the movie added, or an error HTTP 409 : CONFLICT.
-     * @since 1.0
+     * @param movie Movie at insert on Database.
+     * @param uriBuilder UrlComponentsBuilder use to redirect user on movie page.
+     *
+     * @return A ResponseEntity with the movie added, or an error HTTP 409 : CONFLICT.
+     *
      * @version 2.1
+     * @since 1.0
      */
-    @RequestMapping(value = "/movies/", method = RequestMethod.POST)
+    @RequestMapping(value = "/movies/",
+                    method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Movie movie, UriComponentsBuilder uriBuilder) {
         logger.info("Created movie : {}", movie);
 
         // Check if the movie already exist on database.
-        Movie movieExist = movieRepository.findByTitleAndRuntimeAndReleaseDate(movie.getTitle(), movie.getRuntime(), movie.getReleaseDate());
+        Movie movieExist = movieRepository.findByTitleAndRuntimeAndReleaseDate(movie.getTitle(), movie.getRuntime(),
+                                                                               movie.getReleaseDate());
         if (movieExist != null) {
             logger.error("Unable to create. The movie {} already exist", movie.getTitle());
-            return new ResponseEntity<MovieException>(new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"), HttpStatus.CONFLICT);
+            return new ResponseEntity<MovieException>(
+                    new MovieException("Unable to create. The movie " + movie.getTitle() + " already exist"),
+                    HttpStatus.CONFLICT);
         }
 
         // Check if the actors are present on Database or not.
@@ -249,12 +261,12 @@ public class MovieController {
         for (Director d : directorOnMovie) {
             Director directorExist = directorRepository.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
-            if (directorExist  == null) {
+            if (directorExist == null) {
                 logger.info("Created director : {}", d);
                 directorRepository.save(d);
                 directors.add(d);
             } else {
-                logger.info("Added director {} already present on persistent system.", directorExist );
+                logger.info("Added director {} already present on persistent system.", directorExist);
                 directors.add(directorExist);
             }
         }
@@ -262,35 +274,38 @@ public class MovieController {
         movieRepository.save(movie);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/movies/search/id/{id}").buildAndExpand(movie.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/movies/search/id/{id}")
+                                     .buildAndExpand(movie.getId())
+                                     .toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a movie present on the Database.
-     *
+     * <p>
      * It update a movie only if found on database.
      * It the movie is not found, the method return an error with the HTTP code 404.
      * In other case, it update the information about the movie and return in the body the movie update
      * can use to check if the modification are succeeded and the HTTP code 200.
      *
-     * @param id
-     *  Id of the movie on Database.
-     * @param movie
-     *  Movie with new content at update.
-     * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT FOUND.
-     * @since 1.0
+     * @param id Id of the movie on Database.
+     * @param movie Movie with new content at update.
+     *
+     * @return A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT FOUND.
+     *
      * @version 2.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/movies/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/movies/{id}",
+                    method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Movie movie) {
         logger.info("Updating Movie with id {}", id);
 
         Movie movieAtUpdate = movieRepository.findOne(id);
         if (movieAtUpdate == null) {
             logger.error("Unable to update. Movie with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to update. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(
+                    new MovieException("Unable to update. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         // Check if the actor are present on Database or not.
@@ -333,12 +348,12 @@ public class MovieController {
         for (Director d : directorOnMovie) {
             Director directorExist = directorRepository.findByFirstNameAndLastName(d.getFirstName(), d.getLastName());
             // If the director is not present on Database, he add on it.
-            if (directorExist  == null) {
+            if (directorExist == null) {
                 logger.info("Created director : {}", d);
                 directorRepository.save(d);
                 directors.add(d);
             } else {
-                logger.info("Added director {} already present on persistent system.", directorExist );
+                logger.info("Added director {} already present on persistent system.", directorExist);
                 directors.add(directorExist);
             }
         }
@@ -352,27 +367,29 @@ public class MovieController {
 
     /**
      * Remove a movie from the Database.
-     *
+     * <p>
      * It remove a movie if it found on database.
      * If the movie is not found on database, this method return an error and the HTTP code 404.
      * Otherwise, the method delete the movie thanks to the identifier and return in the body the movie deleted
      * and the code HTTP 200 to confirm the success of the deletion.
      *
-     * @param id
-     *  Id of the movie at delete.
-     * @return
-     *  A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT_FOUND.
-     * @since 1.0
+     * @param id Id of the movie at delete.
+     *
+     * @return A ResponseEntity with all movies found on Database, or an error HTTP 404 : NOT_FOUND.
+     *
      * @version 2.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/movies/{id}",
+                    method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Movie with id {}", id);
 
         Movie movie = movieRepository.findOne(id);
         if (movie == null) {
             logger.error("Unable to delete. Movie with id {} not found", id);
-            return new ResponseEntity<Object>(new MovieException("Unable to delete. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(
+                    new MovieException("Unable to delete. Movie with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         movieRepository.delete(movie);
@@ -382,12 +399,13 @@ public class MovieController {
     /**
      * Get all video genres present on Media Library.
      *
-     * @return
-     *  An array with all video genres.
-     * @since 1.0
+     * @return An array with all video genres.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/movies/genres/", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies/genres/",
+                    method = RequestMethod.GET)
     public ResponseEntity<?> getMediaGenre() {
         return new ResponseEntity<>(VideoGenre.values(), HttpStatus.OK);
     }

@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.book;
 
 import fr.nicolasgille.medialibrary.exceptions.book.ComicException;
@@ -44,8 +46,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test ComicController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientComicControllerTest {
@@ -99,7 +101,8 @@ public class ClientComicControllerTest {
 
         Comic comic = new Comic(
                 id, "", "", "", releaseDate, 0, "",
-                new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<BookGenre>(), new ArrayList<MediaSupport>(), BookFormat.CLASSICAL,
+                new HashSet<Author>(), new HashSet<Publisher>(), new ArrayList<BookGenre>(),
+                new ArrayList<MediaSupport>(), BookFormat.CLASSICAL,
                 17, 15, new HashSet<Illustrator>()
         );
 
@@ -129,7 +132,9 @@ public class ClientComicControllerTest {
         int currentVolume = 10;
 
         // When - Get one comic from persistent system.
-        ResponseEntity<Comic> comic = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + title + "/" + currentVolume, Comic.class);
+        ResponseEntity<Comic> comic =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + title + "/" + currentVolume,
+                                               Comic.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(comic.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -176,11 +181,14 @@ public class ClientComicControllerTest {
         );
 
         // When - Send comic to save it on persistent system.
-        ResponseEntity<Comic> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/comics/", comic, Comic.class);
+        ResponseEntity<Comic> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/comics/", comic, Comic.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -224,7 +232,8 @@ public class ClientComicControllerTest {
         ResponseEntity<ComicException> responseEntity = null;
         // When - Send comic to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/comics/", comic, ComicException.class);
+            responseEntity =
+                    this.restTemplate.postForEntity(REST_SERVICE_URI + "/comics/", comic, ComicException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -273,23 +282,39 @@ public class ClientComicControllerTest {
         // When - Get comic from persistent system.
         ResponseEntity<Comic> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER) + "/" + comic.getCurrentVolume(), Comic.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER) +
+                    "/" + comic.getCurrentVolume(), Comic.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and comic retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(comic.getTitle());
-        assertThat(responseEntity.getBody().getOriginalTitle()).isEqualTo(comic.getOriginalTitle());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(comic.getSynopsis());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(comic.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(comic.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(comic.getSupports());
-        assertThat(responseEntity.getBody().getAuthors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getPublishers().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getFormat()).isEqualTo(format);
-        System.out.println(responseEntity.getBody().toString());
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(comic.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getOriginalTitle()).isEqualTo(comic.getOriginalTitle());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(comic.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(comic.getReleaseDate()
+                                                                     .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(comic.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(comic.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getAuthors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getPublishers()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getFormat()).isEqualTo(format);
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -333,7 +358,9 @@ public class ClientComicControllerTest {
         // When - Get comic from persistent system.
         ResponseEntity<Comic> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER) + "/" + comic.getCurrentVolume(), Comic.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(comic.getTitle(), URL_ENCODER) +
+                    "/" + comic.getCurrentVolume(), Comic.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -387,7 +414,8 @@ public class ClientComicControllerTest {
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -428,10 +456,13 @@ public class ClientComicControllerTest {
         this.restTemplate.put(REST_SERVICE_URI + "/comics/" + comic.getId(), comic, Comic.class);
 
         // When - Get comic update and check if the difference appear.
-        ResponseEntity<Comic> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" + comic.getCurrentVolume(), Comic.class);
+        ResponseEntity<Comic> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(title, URL_ENCODER) + "/" +
+                comic.getCurrentVolume(), Comic.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -493,7 +524,8 @@ public class ClientComicControllerTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/comics/" + id);
 
         try {
-            ResponseEntity<Comic> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(title, URL_ENCODER), Comic.class);
+            ResponseEntity<Comic> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/comics/search/title/" + URLEncoder.encode(title, URL_ENCODER), Comic.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

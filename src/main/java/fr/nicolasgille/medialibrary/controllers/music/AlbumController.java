@@ -1,26 +1,27 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.music;
 
 import fr.nicolasgille.medialibrary.exceptions.music.AlbumException;
 import fr.nicolasgille.medialibrary.models.common.company.LabelRecords;
 import fr.nicolasgille.medialibrary.models.common.person.Singer;
 import fr.nicolasgille.medialibrary.models.components.genre.MusicGenre;
-import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.models.music.Album;
 import fr.nicolasgille.medialibrary.repositories.common.company.LabelRecordsRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.SingerRepository;
@@ -48,12 +49,20 @@ import java.util.Set;
  * You can add you own method of research if you would have a new research type of music album.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.1
+ * @since Media-Library 0.4
  */
 @RestController
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/",
+                produces = MediaType.APPLICATION_JSON_VALUE)
 public class AlbumController {
+
+    /**
+     * Logger to get information during some process.
+     *
+     * @since 1.0
+     */
+    static final Logger logger = LoggerFactory.getLogger(AlbumController.class);
 
     /**
      * Constant used to specified URL encoding.
@@ -87,25 +96,19 @@ public class AlbumController {
     private SingerRepository singerRepository;
 
     /**
-     * Logger to get information during some process.
-     *
-     * @since 1.0
-     */
-    static final Logger logger = LoggerFactory.getLogger(AlbumController.class);
-
-    /**
      * Return all albums found on Database.
-     *
+     * <p>
      * This method return a ResponseEntity object who contains a list of albums found on the Database.
      * If the database is empty, this method return an error HTTP 204 : No Content.
      * This method can call only by GET request and take nothing parameter to work.
      *
-     * @return
-     *  A ResponseEntity with all albums found on Database, or an error HTTP 204 : No Content.
-     * @since 1.0
+     * @return A ResponseEntity with all albums found on Database, or an error HTTP 204 : No Content.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/musics/", method = RequestMethod.GET)
+    @RequestMapping(value = "/musics/",
+                    method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<Album> albums = albumRepository.findAll();
         if (albums.isEmpty()) {
@@ -116,50 +119,54 @@ public class AlbumController {
 
     /**
      * Return all musics album by his title.
-     *
+     * <p>
      * This method return a ResponseEntity with the music album retrieve from the Database.
      * If the database doesn't get the music album, this method return an HTTP error : 204.
      * In other case, this method return the music album found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
      * parameter the title of the music album at research.
-     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used
+     * on search process.
      *
-     * @param titleEncoded
-     *  Title of the album encoded to search on Database.
-     * @return
-     *  A ResponseEntity with the album found on Database, or an error HTTP 204 : No Content.
-     * @throws UnsupportedEncodingException
-     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
-     * @since 1.0
+     * @param titleEncoded Title of the album encoded to search on Database.
+     *
+     * @return A ResponseEntity with the album found on Database, or an error HTTP 204 : No Content.
+     *
+     * @throws UnsupportedEncodingException The method throw an <code>UnsupportedEncodingException</code> when a
+     *         problem occurred during title decoding.
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/musics/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAlbumByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/musics/search/title/{title}",
+                    method = RequestMethod.GET)
+    public ResponseEntity<?> getAlbumByTitle(@PathVariable(value = "title") String titleEncoded)
+            throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, AlbumController.ENCODING);
         logger.info("Fetching Album with title {}", title);
         List<Album> albums = albumRepository.findByTitleIgnoreCaseContaining(title);
         if (albums == null) {
             logger.error("Album with title {} not found.", title);
-            return new ResponseEntity<Object>(new AlbumException("Album with title " + title + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new AlbumException("Album with title " + title + " not found."),
+                                              HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Album>>(albums, HttpStatus.OK);
     }
 
     /**
      * Return a music album by his identifier.
-     *
+     * <p>
      * This method return a ResponseEntity with the music album retrieve from the Database.
      * If the database doesn't get the music album, this method return an HTTP error : 204.
      * In other case, this method return the music album found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
      * parameter the identifier of the music album at research.
      *
-     * @param id
-     *  Identifier of the Album on Database.
-     * @return
-     *  A ResponseEntity with the album found on Database, or an error HTTP 204 : No Content.
-     * @since 1.1
+     * @param id Identifier of the Album on Database.
+     *
+     * @return A ResponseEntity with the album found on Database, or an error HTTP 204 : No Content.
+     *
      * @version 1.0
+     * @since 1.1
      */
     @RequestMapping(value = "/musics/search/id/{id}")
     public ResponseEntity<?> getAlbumById(@PathVariable(value = "id") long id) {
@@ -167,37 +174,41 @@ public class AlbumController {
         Album album = albumRepository.findOne(id);
         if (album == null) {
             logger.error("Album with id {} not found.", id);
-            return new ResponseEntity<Object>(new AlbumException("Album with id " + id + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new AlbumException("Album with id " + id + " not found."),
+                                              HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Album>(album, HttpStatus.OK);
     }
 
     /**
      * Add an album on the Database.
-     *
+     * <p>
      * Before added the music album on database, it check if the music album is already present on the database.
      * So, if the music album is present, the method return an error HTTP 409 : CONFLICT.
      * In other case, it return the code HTTP 200 and an uri to get information about the new music album insert.
      * So, this method is call by POST method and take the music album at insert on the BODY request.
      *
-     * @param album
-     *  Album at insert on Database.
-     * @param uriBuilder
-     *  UrlComponentsBuilder use to redirect user on album page.
-     * @return
-     *  A ResponseEntity with the album added, or an error HTTP 409 : CONFLICT.
-     * @since 1.0
+     * @param album Album at insert on Database.
+     * @param uriBuilder UrlComponentsBuilder use to redirect user on album page.
+     *
+     * @return A ResponseEntity with the album added, or an error HTTP 409 : CONFLICT.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/musics/", method = RequestMethod.POST)
+    @RequestMapping(value = "/musics/",
+                    method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Album album, UriComponentsBuilder uriBuilder) {
         logger.info("Created album : {}", album);
 
         // Check if the album already exist on database.
-        Album albumExist = albumRepository.findByTitleAndNbTracksAndLength(album.getTitle(), album.getNbTracks(), album.getLength());
+        Album albumExist = albumRepository.findByTitleAndNbTracksAndLength(album.getTitle(), album.getNbTracks(),
+                                                                           album.getLength());
         if (albumExist != null) {
             logger.error("Unable to create. The album {} already exist", album.getTitle());
-            return new ResponseEntity<AlbumException>(new AlbumException("Unable to create. The album " + album.getTitle() + " already exist"), HttpStatus.CONFLICT);
+            return new ResponseEntity<AlbumException>(
+                    new AlbumException("Unable to create. The album " + album.getTitle() + " already exist"),
+                    HttpStatus.CONFLICT);
         }
 
         // Check if the developer are present on Database or not.
@@ -236,35 +247,38 @@ public class AlbumController {
         albumRepository.save(album);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/musics/search/id/{id}").buildAndExpand(album.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/musics/search/id/{id}")
+                                     .buildAndExpand(album.getId())
+                                     .toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a album present on the Database.
-     *
+     * <p>
      * It update a music album only if found on database.
      * It the music album is not found, the method return an error with the HTTP code 404.
      * In other case, it update the information about the music album and return in the body the music album update
      * can use to check if the modification are succeeded and the HTTP code 200.
      *
-     * @param id
-     *  Id of the album on Database.
-     * @param album
-     *  Album with new content at update.
-     * @return
-     *  A ResponseEntity with all albums found on Database, or an error HTTP 404 : NOT FOUND.
-     * @since 1.0
+     * @param id Id of the album on Database.
+     * @param album Album with new content at update.
+     *
+     * @return A ResponseEntity with all albums found on Database, or an error HTTP 404 : NOT FOUND.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/musics/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/musics/{id}",
+                    method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Album album) {
         logger.info("Updating Album with id {}", id);
 
         Album albumAtUpdate = albumRepository.findOne(id);
         if (albumAtUpdate == null) {
             logger.error("Unable to update. Album with id {} not found", id);
-            return new ResponseEntity<Object>(new AlbumException("Unable to update. Album with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(
+                    new AlbumException("Unable to update. Album with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         // Check if the developer are present on Database or not.
@@ -309,27 +323,30 @@ public class AlbumController {
 
     /**
      * Remove a music album from the Database.
-     *
+     * <p>
      * It remove a music album if it found on database.
      * If the music album is not found on database, this method return an error and the HTTP code 404.
-     * Otherwise, the method delete the music album thanks to the identifier and return in the body the music album deleted
+     * Otherwise, the method delete the music album thanks to the identifier and return in the body the music album
+     * deleted
      * and the code HTTP 200 to confirm the success of the deletion.
      *
-     * @param id
-     *  Id of the album at delete.
-     * @return
-     *  A ResponseEntity with all albums found on Database, or an error HTTP 404 : NOT_FOUND.
-     * @since 1.0
+     * @param id Id of the album at delete.
+     *
+     * @return A ResponseEntity with all albums found on Database, or an error HTTP 404 : NOT_FOUND.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/musics/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/musics/{id}",
+                    method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Album with id {}", id);
 
         Album album = albumRepository.findOne(id);
         if (album == null) {
             logger.error("Unable to delete. Album with id {} not found", id);
-            return new ResponseEntity<Object>(new AlbumException("Unable to delete. Album with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(
+                    new AlbumException("Unable to delete. Album with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
 
         albumRepository.delete(album);
@@ -339,12 +356,13 @@ public class AlbumController {
     /**
      * Get all musics genres present on Media Library.
      *
-     * @return
-     *  An array with all musics genres.
-     * @since 1.0
+     * @return An array with all musics genres.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/musics/genres/", method = RequestMethod.GET)
+    @RequestMapping(value = "/musics/genres/",
+                    method = RequestMethod.GET)
     public ResponseEntity<?> getMediaGenre() {
         return new ResponseEntity<>(MusicGenre.values(), HttpStatus.OK);
     }

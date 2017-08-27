@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.music;
 
 import fr.nicolasgille.medialibrary.exceptions.music.AlbumException;
@@ -42,8 +44,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test AlbumController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientAlbumTest {
@@ -125,7 +127,8 @@ public class ClientAlbumTest {
         String title = "Crusader";
 
         // When - Get one album from persistent system.
-        ResponseEntity<Album> cartoon = this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/search/title/" + title, Album.class);
+        ResponseEntity<Album> cartoon =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/search/title/" + title, Album.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(cartoon.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -160,15 +163,18 @@ public class ClientAlbumTest {
         group.add(new Singer("Saxon", ""));
 
         Album album = new Album(
-            title, synopsis, releaseDate, genres, supports, nbTracks, length, labelRecords, group
+                title, synopsis, releaseDate, genres, supports, nbTracks, length, labelRecords, group
         );
 
         // When - Send album to save it on persistent system.
-        ResponseEntity<Album> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/musics/", album, Album.class);
+        ResponseEntity<Album> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/musics/", album, Album.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -204,7 +210,8 @@ public class ClientAlbumTest {
         ResponseEntity<AlbumException> responseEntity = null;
         // When - Send album to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/musics/", album, AlbumException.class);
+            responseEntity =
+                    this.restTemplate.postForEntity(REST_SERVICE_URI + "/musics/", album, AlbumException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -245,21 +252,35 @@ public class ClientAlbumTest {
         // When - Get album from persistent system.
         ResponseEntity<Album> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(album.getTitle(), URL_ENCODER), Album.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(album.getTitle(), URL_ENCODER),
+                    Album.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and album retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(album.getTitle());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(album.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(album.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(album.getSupports());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(album.getSynopsis());
-        assertThat(responseEntity.getBody().getLabelRecords().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getSingers().size()).isEqualTo(sizeExpected);
-        System.out.println(responseEntity.getBody().toString());
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(album.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(album.getReleaseDate()
+                                                                     .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(album.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(album.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(album.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getLabelRecords()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getSingers()
+                                 .size()).isEqualTo(sizeExpected);
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -295,7 +316,9 @@ public class ClientAlbumTest {
         // When - Get album from persistent system.
         ResponseEntity<Album> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(album.getTitle(), URL_ENCODER), Album.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(album.getTitle(), URL_ENCODER),
+                    Album.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -342,7 +365,8 @@ public class ClientAlbumTest {
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -376,10 +400,12 @@ public class ClientAlbumTest {
         this.restTemplate.put(REST_SERVICE_URI + "/musics/" + album.getId(), album, Album.class);
 
         // When - Get album update and check if the difference appear.
-        ResponseEntity<Album> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(title, URL_ENCODER), Album.class);
+        ResponseEntity<Album> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(title, URL_ENCODER), Album.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -434,7 +460,8 @@ public class ClientAlbumTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/musics/" + id);
 
         try {
-            ResponseEntity<Album> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(title, URL_ENCODER), Album.class);
+            ResponseEntity<Album> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/musics/search/title/" + URLEncoder.encode(title, URL_ENCODER), Album.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

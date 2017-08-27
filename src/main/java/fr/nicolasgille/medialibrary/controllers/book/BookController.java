@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.book;
 
 import fr.nicolasgille.medialibrary.exceptions.book.BookException;
@@ -22,7 +24,6 @@ import fr.nicolasgille.medialibrary.models.common.company.Publisher;
 import fr.nicolasgille.medialibrary.models.common.person.Author;
 import fr.nicolasgille.medialibrary.models.components.BookFormat;
 import fr.nicolasgille.medialibrary.models.components.genre.BookGenre;
-import fr.nicolasgille.medialibrary.models.components.genre.VideoGenre;
 import fr.nicolasgille.medialibrary.repositories.book.BookRepository;
 import fr.nicolasgille.medialibrary.repositories.common.company.PublisherRepository;
 import fr.nicolasgille.medialibrary.repositories.common.person.AuthorRepository;
@@ -49,12 +50,20 @@ import java.util.Set;
  * You can add you own method of research if you would have a new research type of book.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.1.1
+ * @since Media-Library 0.4
  */
 @RestController
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/",
+                produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookController {
+
+    /**
+     * Logger to get information during some process.
+     *
+     * @since 1.0
+     */
+    static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     /**
      * Constant used to specified URL encoding.
@@ -88,25 +97,19 @@ public class BookController {
     private PublisherRepository publisherRepository;
 
     /**
-     * Logger to get information during some process.
-     *
-     * @since 1.0
-     */
-    static final Logger logger = LoggerFactory.getLogger(BookController.class);
-
-    /**
      * Return all books found on Database.
-     *
+     * <p>
      * This method return a ResponseEntity object who contains a list of books found on the Database.
      * If the database is empty, this method return an error HTTP 204 : No Content.
      * This method can call only by GET request and take nothing parameter to work.
      *
-     * @return
-     *  A ResponseEntity with all books found on Database, or an error HTTP 204 : No Content.
-     * @since 1.0
+     * @return A ResponseEntity with all books found on Database, or an error HTTP 204 : No Content.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/", method = RequestMethod.GET)
+    @RequestMapping(value = "/books/",
+                    method = RequestMethod.GET)
     public ResponseEntity getAll() {
         List<Book> books = bookRepository.findAll();
         if (books.isEmpty()) {
@@ -117,50 +120,54 @@ public class BookController {
 
     /**
      * Return a list of books by his title.
-     *
+     * <p>
      * This method return a ResponseEntity with the book retrieve from the Database.
      * If the database doesn't get the book, this method return an HTTP error : 204.
      * In other case, this method return the book found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
      * parameter the title of the book at research.
-     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used on search process.
+     * The title is encoded in <code>UTF8</code> to avoid problems with specials characters and it decoded before used
+     * on search process.
      *
-     * @param titleEncoded
-     *  Title of the book encoded to search on Database.
-     * @return
-     *  A ResponseEntity with the all books found on Database, or an error HTTP 204 : No Content.
-     * @throws UnsupportedEncodingException
-     *  The method throw an <code>UnsupportedEncodingException</code> when a problem occurred during title decoding.
-     * @since 1.0
+     * @param titleEncoded Title of the book encoded to search on Database.
+     *
+     * @return A ResponseEntity with the all books found on Database, or an error HTTP 204 : No Content.
+     *
+     * @throws UnsupportedEncodingException The method throw an <code>UnsupportedEncodingException</code> when a
+     *         problem occurred during title decoding.
      * @version 1.0.1
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/search/title/{title}", method = RequestMethod.GET)
-    public ResponseEntity<?> getBooksByTitle(@PathVariable(value = "title") String titleEncoded) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/books/search/title/{title}",
+                    method = RequestMethod.GET)
+    public ResponseEntity<?> getBooksByTitle(@PathVariable(value = "title") String titleEncoded)
+            throws UnsupportedEncodingException {
         String title = URLDecoder.decode(titleEncoded, BookController.ENCODING);
         logger.info("Fetching Book with title {}", title);
         List<Book> books = bookRepository.findByTitleIgnoreCaseContaining(title);
         if (books == null) {
             logger.error("Book(s) with title {} not found.", title);
-            return new ResponseEntity<Object>(new BookException("Book(s) with title " + title + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new BookException("Book(s) with title " + title + " not found."),
+                                              HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
     /**
      * Return a book by his identifier.
-     *
+     * <p>
      * This method return a ResponseEntity with the book retrieve from the Database.
      * If the database doesn't get the book, this method return an HTTP error : 204.
      * In other case, this method return the book found in body response and the success code HTTP 200.
      * This method is call only by the method HTTP <em>GET</em>, and it's necessary to passed on
      * parameter the identifier of the book at research.
      *
-     * @param id
-     *  Identifier of the Book on Database.
-     * @return
-     *  A ResponseEntity with the book found on Database, or an error HTTP 204 : No Content.
-     * @since 1.1
+     * @param id Identifier of the Book on Database.
+     *
+     * @return A ResponseEntity with the book found on Database, or an error HTTP 204 : No Content.
+     *
      * @version 1.0
+     * @since 1.1
      */
     @RequestMapping(value = "/books/search/id/{id}")
     public ResponseEntity<?> getBookById(@PathVariable(value = "id") long id) {
@@ -168,29 +175,30 @@ public class BookController {
         Book book = bookRepository.findOne(id);
         if (book == null) {
             logger.error("Book with id {} not found.", id);
-            return new ResponseEntity<Object>(new BookException("Book with id " + id + " not found."), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Object>(new BookException("Book with id " + id + " not found."),
+                                              HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 
     /**
      * Add a book on the Database.
-     *
+     * <p>
      * Before added the book on database, it check if the book is already present on the database.
      * So, if the book is present, the method return an error HTTP 409 : CONFLICT.
      * In other case, it return the code HTTP 200 and an uri to get information about the new book insert.
      * So, this method is call by POST method and take the book at insert on the BODY request.
      *
-     * @param book
-     *  Book at insert on Database.
-     * @param uriBuilder
-     *  UrlComponentsBuilder use to redirect user on book page.
-     * @return
-     *  A ResponseEntity with the book added, or an error HTTP 409 : CONFLICT.
-     * @since 1.0
+     * @param book Book at insert on Database.
+     * @param uriBuilder UrlComponentsBuilder use to redirect user on book page.
+     *
+     * @return A ResponseEntity with the book added, or an error HTTP 409 : CONFLICT.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/", method = RequestMethod.POST)
+    @RequestMapping(value = "/books/",
+                    method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody Book book, UriComponentsBuilder uriBuilder) {
         logger.info("Created book : {}", book);
 
@@ -198,7 +206,9 @@ public class BookController {
         Book bookExist = bookRepository.findByTitleAndReleaseDate(book.getTitle(), book.getReleaseDate());
         if (bookExist != null) {
             logger.error("Unable to create. The book {} already exist", book.getTitle());
-            return new ResponseEntity<BookException>(new BookException("Unable to create. The book " + book.getTitle() + " already exist"), HttpStatus.CONFLICT);
+            return new ResponseEntity<BookException>(
+                    new BookException("Unable to create. The book " + book.getTitle() + " already exist"),
+                    HttpStatus.CONFLICT);
         }
 
         // Check if the author are present on Database or not.
@@ -237,35 +247,38 @@ public class BookController {
         bookRepository.save(book);
 
         HttpHeaders header = new HttpHeaders();
-        header.setLocation(uriBuilder.path("/media-library/books/search/id/{id}").buildAndExpand(book.getId()).toUri());
+        header.setLocation(uriBuilder.path("/media-library/books/search/id/{id}")
+                                     .buildAndExpand(book.getId())
+                                     .toUri());
         return new ResponseEntity<String>(header, HttpStatus.CREATED);
     }
 
     /**
      * Update a book present on the Database.
-     *
+     * <p>
      * It update a book only if found on database.
      * It the book is not found, the method return an error with the HTTP code 404.
      * In other case, it update the information about the book and return in the body the book update
      * can use to check if the modification are succeeded and the HTTP code 200.
      *
-     * @param id
-     *  Id of the book on Database.
-     * @param book
-     *  Book with new content at update.
-     * @return
-     *  A ResponseEntity with all books found on Database, or an error HTTP 404 : NOT FOUND.
-     * @since 1.0
+     * @param id Id of the book on Database.
+     * @param book Book with new content at update.
+     *
+     * @return A ResponseEntity with all books found on Database, or an error HTTP 404 : NOT FOUND.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/books/{id}",
+                    method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Book book) {
         logger.info("Updating Book with id {}", id);
 
         Book bookAtUpdate = bookRepository.findOne(id);
         if (bookAtUpdate == null) {
             logger.error("Unable to update. Book with id {} not found", id);
-            return new ResponseEntity<Object>(new BookException("Unable to update. Book with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(new BookException("Unable to update. Book with id " + id + " not found"),
+                                              HttpStatus.NOT_FOUND);
         }
 
         // Check if the author are present on Database or not.
@@ -310,27 +323,29 @@ public class BookController {
 
     /**
      * Remove a book from the Database.
-     *
+     * <p>
      * It remove a book if it found on database.
      * If the book is not found on database, this method return an error and the HTTP code 404.
      * Otherwise, the method delete the book thanks to the identifier and return in the body the book deleted
      * and the code HTTP 200 to confirm the success of the deletion.
      *
-     * @param id
-     *  Id of the book at delete.
-     * @return
-     *  A ResponseEntity with all books found on Database, or an error HTTP 404 : NOT_FOUND.
-     * @since 1.0
+     * @param id Id of the book at delete.
+     *
+     * @return A ResponseEntity with all books found on Database, or an error HTTP 404 : NOT_FOUND.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/books/{id}",
+                    method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         logger.info("Deleting Book with id {}", id);
 
         Book book = bookRepository.findOne(id);
         if (book == null) {
             logger.error("Unable to delete. Book with id {} not found", id);
-            return new ResponseEntity<Object>(new BookException("Unable to delete. Book with id " + id + " not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>(new BookException("Unable to delete. Book with id " + id + " not found"),
+                                              HttpStatus.NOT_FOUND);
         }
 
         bookRepository.delete(book);
@@ -340,12 +355,13 @@ public class BookController {
     /**
      * Get all books genres present on Media Library.
      *
-     * @return
-     *  An array with all books genres.
-     * @since 1.0
+     * @return An array with all books genres.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/genres/", method = RequestMethod.GET)
+    @RequestMapping(value = "/books/genres/",
+                    method = RequestMethod.GET)
     public ResponseEntity<?> getMediaGenre() {
         return new ResponseEntity<>(BookGenre.values(), HttpStatus.OK);
     }
@@ -353,12 +369,13 @@ public class BookController {
     /**
      * Get all books format present on Media Library.
      *
-     * @return
-     *  An array with all book format.
-     * @since 1.0
+     * @return An array with all book format.
+     *
      * @version 1.0
+     * @since 1.0
      */
-    @RequestMapping(value = "/books/formats/", method = RequestMethod.GET)
+    @RequestMapping(value = "/books/formats/",
+                    method = RequestMethod.GET)
     public ResponseEntity<?> getBookFormat() {
         return new ResponseEntity<>(BookFormat.values(), HttpStatus.OK);
     }

@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.common.person;
 
 import fr.nicolasgille.medialibrary.models.common.person.Author;
@@ -31,8 +33,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test AuthorController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.4
  * @version 1.0
+ * @since Media-Library 0.4
  */
 public class AuthorControllerTest {
 
@@ -63,11 +65,13 @@ public class AuthorControllerTest {
         int sizeExpected = 1;
 
         // When - Get all actors from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/authors/", List.class);
+        ResponseEntity<List> responseEntity =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/authors/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -83,7 +87,9 @@ public class AuthorControllerTest {
 
         // Then - Compare HTTP code and first and last name
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getFirstName()).isEqualTo(fnameExpected);
-        assertThat(responseEntity.getBody().getLastName()).isEqualTo(lnameExpected);
+        assertThat(responseEntity.getBody()
+                                 .getFirstName()).isEqualTo(fnameExpected);
+        assertThat(responseEntity.getBody()
+                                 .getLastName()).isEqualTo(lnameExpected);
     }
 }

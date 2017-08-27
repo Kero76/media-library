@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.controllers.video;
 
 import com.neovisionaries.i18n.LanguageCode;
@@ -43,8 +45,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Unit class test used to test CartoonController class.
  *
  * @author Nicolas GILLE
- * @since Media-Library 0.3
  * @version 1.0
+ * @since Media-Library 0.3
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientCartoonTest {
@@ -97,8 +99,9 @@ public class ClientCartoonTest {
         Calendar releaseDate = new GregorianCalendar(2016, GregorianCalendar.APRIL, GregorianCalendar.THURSDAY);
 
         Cartoon cartoon = new Cartoon(
-                id,  "My title", "My original title", "My Synopsis",
-                new HashSet<Director>(), new HashSet<Producer>(), new ArrayList<VideoGenre>(), new ArrayList<MediaSupport>(),
+                id, "My title", "My original title", "My Synopsis",
+                new HashSet<Director>(), new HashSet<Producer>(), new ArrayList<VideoGenre>(),
+                new ArrayList<MediaSupport>(),
                 new ArrayList<LanguageCode>(), new ArrayList<LanguageCode>(), releaseDate, 120
         );
 
@@ -127,7 +130,8 @@ public class ClientCartoonTest {
         String title = "Persistent System 2 : Return of the Empty Row";
 
         // When - Get one cartoon from persistent system.
-        ResponseEntity<Cartoon> cartoon = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/search/title/" + title, Cartoon.class);
+        ResponseEntity<Cartoon> cartoon =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/search/title/" + title, Cartoon.class);
 
         // Then - Error HTTP.No_CONTENT was encounter.
         assertThat(cartoon.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -175,11 +179,14 @@ public class ClientCartoonTest {
         );
 
         // When - Send cartoon to save it on persistent system.
-        ResponseEntity<Cartoon> responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/cartoons/", cartoon, Cartoon.class);
+        ResponseEntity<Cartoon> responseEntity =
+                this.restTemplate.postForEntity(REST_SERVICE_URI + "/cartoons/", cartoon, Cartoon.class);
 
         // Then - Compare HTTP status and uri.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getHeaders().getLocation().toASCIIString()).isEqualTo(uriExpected);
+        assertThat(responseEntity.getHeaders()
+                                 .getLocation()
+                                 .toASCIIString()).isEqualTo(uriExpected);
     }
 
     @Test
@@ -224,7 +231,8 @@ public class ClientCartoonTest {
         ResponseEntity<CartoonException> responseEntity = null;
         // When - Send cartoon to save it on persistent system.
         try {
-            responseEntity = this.restTemplate.postForEntity(REST_SERVICE_URI + "/cartoons/", cartoon, CartoonException.class);
+            responseEntity =
+                    this.restTemplate.postForEntity(REST_SERVICE_URI + "/cartoons/", cartoon, CartoonException.class);
         } catch (HttpClientErrorException httpClientErrorException) {
             // Then - Compare HTTP code error and message.
             assertThat(httpClientErrorException.getMessage()).isEqualTo(httpClientExceptionExpected);
@@ -274,22 +282,37 @@ public class ClientCartoonTest {
         // When - Get cartoon from persistent system.
         ResponseEntity<Cartoon> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(cartoon.getTitle(), URL_ENCODER), Cartoon.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(cartoon.getTitle(), URL_ENCODER),
+                    Cartoon.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         // Then - Compare Http code and cartoon retrieve.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().getTitle()).isEqualTo(cartoon.getTitle());
-        assertThat(responseEntity.getBody().getReleaseDate().get(Calendar.YEAR)).isEqualTo(cartoon.getReleaseDate().get(Calendar.YEAR));
-        assertThat(responseEntity.getBody().getGenres()).isEqualTo(cartoon.getGenres());
-        assertThat(responseEntity.getBody().getSupports()).isEqualTo(cartoon.getSupports());
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(cartoon.getSynopsis());
-        assertThat(responseEntity.getBody().getRuntime()).isEqualTo(cartoon.getRuntime());
-        assertThat(responseEntity.getBody().getDirectors().size()).isEqualTo(sizeExpected);
-        assertThat(responseEntity.getBody().getProducers().size()).isEqualTo(sizeExpected);
-        System.out.println(responseEntity.getBody().toString());
+        assertThat(responseEntity.getBody()
+                                 .getTitle()).isEqualTo(cartoon.getTitle());
+        assertThat(responseEntity.getBody()
+                                 .getReleaseDate()
+                                 .get(Calendar.YEAR)).isEqualTo(cartoon.getReleaseDate()
+                                                                       .get(Calendar.YEAR));
+        assertThat(responseEntity.getBody()
+                                 .getGenres()).isEqualTo(cartoon.getGenres());
+        assertThat(responseEntity.getBody()
+                                 .getSupports()).isEqualTo(cartoon.getSupports());
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(cartoon.getSynopsis());
+        assertThat(responseEntity.getBody()
+                                 .getRuntime()).isEqualTo(cartoon.getRuntime());
+        assertThat(responseEntity.getBody()
+                                 .getDirectors()
+                                 .size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .getProducers()
+                                 .size()).isEqualTo(sizeExpected);
+        System.out.println(responseEntity.getBody()
+                                         .toString());
     }
 
     @Test
@@ -334,7 +357,9 @@ public class ClientCartoonTest {
         // When - Get cartoon from persistent system.
         ResponseEntity<Cartoon> responseEntity = null;
         try {
-            responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(cartoon.getTitle(), URL_ENCODER), Cartoon.class);
+            responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(cartoon.getTitle(), URL_ENCODER),
+                    Cartoon.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {
@@ -385,11 +410,13 @@ public class ClientCartoonTest {
         this.restTemplate.postForEntity(REST_SERVICE_URI + "/cartoons/", cartoon, Cartoon.class);
 
         // When - Get all cartoons from persistent system.
-        ResponseEntity<List> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/", List.class);
+        ResponseEntity<List> responseEntity =
+                this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/", List.class);
 
         // Then - Compare size of elements and http code.
         assertThat(responseEntity.getStatusCode()).isEqualTo(httpStatusExpected);
-        assertThat(responseEntity.getBody().size()).isEqualTo(sizeExpected);
+        assertThat(responseEntity.getBody()
+                                 .size()).isEqualTo(sizeExpected);
     }
 
     @Test
@@ -431,10 +458,12 @@ public class ClientCartoonTest {
         this.restTemplate.put(REST_SERVICE_URI + "/cartoons/" + cartoon.getId(), cartoon, Cartoon.class);
 
         // When - Get cartoon update and check if the difference appear.
-        ResponseEntity<Cartoon> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(title, URL_ENCODER), Cartoon.class);
+        ResponseEntity<Cartoon> responseEntity = this.restTemplate.getForEntity(
+                REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(title, URL_ENCODER), Cartoon.class);
 
         // Then - Compare synopsis.
-        assertThat(responseEntity.getBody().getSynopsis()).isEqualTo(synopsis);
+        assertThat(responseEntity.getBody()
+                                 .getSynopsis()).isEqualTo(synopsis);
     }
 
     @Test
@@ -444,7 +473,8 @@ public class ClientCartoonTest {
 
         int id = 666;
         String title = "Persistent System 3 : A new Despair";
-        String synopsis = "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
+        String synopsis =
+                "The developer defeated the empty row fix, but a new developer appear has a new hope or despair ?";
 
         List<VideoGenre> genres = new ArrayList<VideoGenre>();
         genres.add(VideoGenre.FANTASY);
@@ -497,7 +527,9 @@ public class ClientCartoonTest {
         this.restTemplate.delete(REST_SERVICE_URI + "/cartoons/" + id);
 
         try {
-            ResponseEntity<Cartoon> responseEntity = this.restTemplate.getForEntity(REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(title, URL_ENCODER), Cartoon.class);
+            ResponseEntity<Cartoon> responseEntity = this.restTemplate.getForEntity(
+                    REST_SERVICE_URI + "/cartoons/search/title/" + URLEncoder.encode(title, URL_ENCODER),
+                    Cartoon.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpClientErrorException httpClientErrorException) {

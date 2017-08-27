@@ -1,19 +1,21 @@
 /*
- * This file is part of Media-Library.
+ * MediaLibrary.
+ * Copyright (C) 2017 Nicolas GILLE
  *
- * Media-Library is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Media-Library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Media-Library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package fr.nicolasgille.medialibrary.models.common.person;
 
 import javax.persistence.*;
@@ -22,15 +24,15 @@ import javax.persistence.*;
  * Main class to represent Human in Media-Library.
  * It implements the interface <code>IPerson</code> to impose many attributes :
  * <ul>
- *     <li>id : Identifier for the Database.</li>
- *     <li>firstName : First name of the Person.</li>
- *     <li>lastName : Last name of the Person.</li>
+ * <li>id : Identifier for the Database.</li>
+ * <li>firstName : First name of the Person.</li>
+ * <li>lastName : Last name of the Person.</li>
  * </ul>
  *
- * @see IPerson
  * @author Nicolas GILLE
- * @since Media-Library 0.2.1
  * @version 1.0
+ * @see IPerson
+ * @since Media-Library 0.2.1
  */
 @Entity
 @Table(name = "person")
@@ -67,10 +69,10 @@ abstract class Person implements IPerson {
     /**
      * Return id of the Person.
      *
-     * @return
-     *  Id of the Person.
-     * @since 1.0
+     * @return Id of the Person.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public long getId() {
         return id;
@@ -79,10 +81,10 @@ abstract class Person implements IPerson {
     /**
      * Set id of the Person.
      *
-     * @param id
-     *  New id.
-     * @since 1.0
+     * @param id New id.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setId(long id) {
         this.id = id;
@@ -91,10 +93,10 @@ abstract class Person implements IPerson {
     /**
      * Return first name of the Person.
      *
-     * @return
-     *  First name of the Person.
-     * @since 1.0
+     * @return First name of the Person.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getFirstName() {
         return firstName;
@@ -103,10 +105,10 @@ abstract class Person implements IPerson {
     /**
      * Set first name of the Person.
      *
-     * @param firstName
-     *  New first name.
-     * @since 1.0
+     * @param firstName New first name.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -115,10 +117,10 @@ abstract class Person implements IPerson {
     /**
      * Return last name of the Person.
      *
-     * @return
-     *  Last name of the Person.
-     * @since 1.0
+     * @return Last name of the Person.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public String getLastName() {
         return lastName;
@@ -127,10 +129,10 @@ abstract class Person implements IPerson {
     /**
      * Set the last name of the Person.
      *
-     * @param lastName
-     *  New last name.
-     * @since 1.0
+     * @param lastName New last name.
+     *
      * @version 1.0
+     * @since 1.0
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
